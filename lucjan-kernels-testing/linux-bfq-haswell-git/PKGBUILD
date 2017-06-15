@@ -67,7 +67,7 @@ pkgbase=linux-bfq-haswell-git
 # pkgname=('linux-bfq-haswell-git-kernel' 'linux-bfq-haswell-git-headers' 'linux-bfq-haswell-git-docs')
 _srcname=linux-stable
 pkgver=4.11.5.r0.gbe8335f6b5ee
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 url="http://algo.ing.unimo.it"
 license=('GPL2')
@@ -92,7 +92,7 @@ source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#b
          # standard config files for mkinitcpio ramdisk
         'linux.preset'
         # patches from https://github.com/linusw/linux-bfq/commits/bfq-v8
-        )
+        '0005-BFQ-v8r11-bugfix.patch')
 
 _kernelname=${pkgbase#linux}
         
@@ -107,7 +107,7 @@ prepare() {
             
     ### Patch source with BFQ
         msg "Patching source with BFQ patches"
-        for p in "${srcdir}"/000{1,2,3,4}-*BFQ*.patch; do
+        for p in "${srcdir}"/000{1,2,3,4,5}-*BFQ*.patch; do
         msg " $p"
         patch -Np1 -i "$p"
         done
@@ -488,5 +488,6 @@ sha512sums=('SKIP'
             '77d80d50d8c4323ed36fd2097ba9f6b49bb8d7cae59d32ffa76b309758a7e9f972d26fedd77046d88ce2691bb01a07909f8bdc34ba214414be3bc030ee31994d'
             '4a33569e2300ff652d91c091dde43827c953b0dbd8bbd2284390dbcfb90895b823aaa8b5e52846a710f1b9cfe0a0ad0cae543dba13e2915403776b3a7d9eb784'
             'd6faa67f3ef40052152254ae43fee031365d0b1524aa0718b659eb75afc21a3f79ea8d62d66ea311a800109bed545bc8f79e8752319cd378eef2cbd3a09aba22'
-            '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf')
+            '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf'
+            '0ce0056dc94aea13c57bf2290de9efe3339ed972ad261b9623833354be0e8cde765af0f0c45be40a4f00737bda4cec940f3e51e1d74e9a786532631f3f6ae6b1')
             

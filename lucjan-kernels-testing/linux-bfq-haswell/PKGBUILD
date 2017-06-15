@@ -67,7 +67,7 @@ pkgbase=linux-bfq-haswell
 # pkgname=('linux-bfq-haswell-kernel' 'linux-bfq-haswell-headers' 'linux-bfq-haswell-docs')
 _srcname=linux-4.11
 pkgver=4.11.5
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 url="http://algo.ing.unimo.it"
 license=('GPL2')
@@ -95,7 +95,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
          # standard config files for mkinitcpio ramdisk
         'linux.preset'
         # patches from https://github.com/linusw/linux-bfq/commits/bfq-v8
-        )
+        '0005-BFQ-v8r11-bugfix.patch')
         
 _kernelname=${pkgbase#linux} 
 
@@ -108,7 +108,7 @@ prepare() {
             
     ### Patch source with BFQ
         msg "Patching source with BFQ patches"
-        for p in "${srcdir}"/000{1,2,3,4}-*BFQ*.patch; do
+        for p in "${srcdir}"/000{1,2,3,4,5}-*BFQ*.patch; do
         msg " $p"
         patch -Np1 -i "$p"
         done
@@ -492,7 +492,8 @@ sha512sums=('6610eed97ffb7207c71771198c36179b8244ace7222bebb109507720e26c5f17d91
             '77d80d50d8c4323ed36fd2097ba9f6b49bb8d7cae59d32ffa76b309758a7e9f972d26fedd77046d88ce2691bb01a07909f8bdc34ba214414be3bc030ee31994d'
             'a6b1f2e947db4447a67e250cdba2a81b117bbf0741cc35d51aa5119efaf6c5f4cda8c02926ab2831968c4b879d4d0b1026f4ab812edadad0572d6baf8b8df878'
             'd6faa67f3ef40052152254ae43fee031365d0b1524aa0718b659eb75afc21a3f79ea8d62d66ea311a800109bed545bc8f79e8752319cd378eef2cbd3a09aba22'
-            '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf')
+            '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf'
+            '0ce0056dc94aea13c57bf2290de9efe3339ed972ad261b9623833354be0e8cde765af0f0c45be40a4f00737bda4cec940f3e51e1d74e9a786532631f3f6ae6b1')
             
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
