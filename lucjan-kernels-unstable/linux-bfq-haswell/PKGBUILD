@@ -66,9 +66,9 @@ _CFQ_disable=y
 pkgbase=linux-bfq-haswell
 # pkgname=('linux-bfq-haswell-kernel' 'linux-bfq-haswell-headers' 'linux-bfq-haswell-docs')
 _srcname=linux-4.11
-pkgver=4.11.6
-_pkgver=4.11.5
-__pkgver=4.11.6-rc1
+pkgver=4.11.7
+_pkgver=4.11.6
+__pkgver=4.11.7-rc1
 pkgrel=0.2
 arch=('x86_64')
 url="http://algo.ing.unimo.it"
@@ -491,9 +491,9 @@ done
 
 sha512sums=('6610eed97ffb7207c71771198c36179b8244ace7222bebb109507720e26c5f17d918079a56d5febdd8605844d67fb2df0ebe910fa2f2f53690daf6e2a8ad09c3'
             'SKIP'
-            'c337470c79961c88b806a449ee3bbb3b5428c1f1d6751133de00b67901a6ad8db2ed8899e0b5ca89ff902f29f58a6721053d25e286a2120e7cf2e578907c8645'
+            'e0e2de7d721575cd2770fa4fa61a1ecdfd54bb4239725363a90ab3b670aab44531a7c0f198ff769080643e86ce7e4806d26bb436a43437747e123715061b278b'
             'SKIP'
-            'e1cf4ca0f55130df37be7f4eb78480977f77b8afae7e3d6fab2b330c34d790a1ed33a79d338a073a9d5f7ddcc3724da4c4fa73c8f135de12f8dc2d5e32fad7cd'
+            '3daae5ef712c6143b8e4b3bac81f803ea483c3caa7b29e89d5891f92461d28f447aec00df882b06a55533e702ec02a8f0a448bf001def9c1ee6528ae69ca9de3'
             'SKIP'
             'c811d43f4e03c725ac03707f8f662f85670d1083db61c23104777c2998d9cf4d557b68b18b38e550ef5e3a06f2179ed960476fa7d3f09cb804ebb99d6e478e76'
             'e79d8d3302eb675e6becb21463b72e4fd11a0bae4bafc6f7eb963459b594a17be0fe20df76af846c763939ce5ede40f7cd2e536af5b8e77d3015925d797dcaec'
