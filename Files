@@ -17,7 +17,6 @@
 │       ├── linux.install
 │       └── linux.preset
 └── lucjan-kernels-unstable
-    ├── Files
     ├── linux-bfq-haswell
     │   ├── 0005-BFQ-v8r11-bugfix.patch
     │   ├── 90-linux.hook
@@ -33,4 +32,4 @@
         ├── linux.install
         └── linux.preset
 
-6 directories, 27 files
+6 directories, 26 files
