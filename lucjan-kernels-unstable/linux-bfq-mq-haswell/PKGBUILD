@@ -69,7 +69,7 @@ _srcname=linux-4.11
 pkgver=4.11.7
 _pkgver=4.11.6
 __pkgver=4.11.7-rc1
-pkgrel=0.2
+pkgrel=0.3
 arch=('x86_64')
 url="http://algo.ing.unimo.it"
 license=('GPL2')
@@ -265,10 +265,10 @@ build() {
 }
 
 _package-kernel() {
-    pkgdesc='Linux Kernel and modules with the  BFQ scheduler. Fourth Gen Intel Core i3/i5/i7 optimized.'
+    pkgdesc='Linux Kernel and modules with the  BFQ-MQ scheduler. Fourth Gen Intel Core i3/i5/i7 optimized.'
     depends=('coreutils' 'linux-firmware' 'mkinitcpio>=0.7')
     optdepends=('crda: to set the correct wireless channels of your country' 'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
-    groups=('linux-bfq-haswell')
+    groups=('linux-bfq-mq-haswell')
     backup=("etc/mkinitcpio.d/${pkgbase}.preset")
     install=linux.install
 
@@ -320,9 +320,9 @@ _package-kernel() {
 }
 
 _package-headers() {
-    pkgdesc='Header files and scripts to build modules for linux-bfq-haswell. Fourth Gen Intel Core i3/i5/i7 optimized.'
-    depends=('linux-bfq-haswell-kernel')
-    groups=('linux-bfq-haswell')
+    pkgdesc='Header files and scripts to build modules for linux-bfq-mq-haswell. Fourth Gen Intel Core i3/i5/i7 optimized.'
+    depends=('linux-bfq-mq-haswell-kernel')
+    groups=('linux-bfq-mq-haswell')
 
     install -dm755 "${pkgdir}/usr/lib/modules/${_kernver}"
 
@@ -459,9 +459,9 @@ _package-headers() {
 }
 
 _package-docs() {
-    pkgdesc='Kernel hackers manual - HTML documentation that comes with the linux-bfq-haswell kernel. Fourth Gen Intel Core i3/i5/i7 optimized.'
-    depends=('linux-bfq-haswell-kernel')
-    groups=('linux-bfq-haswell')
+    pkgdesc='Kernel hackers manual - HTML documentation that comes with the linux-bfq-mq-haswell kernel. Fourth Gen Intel Core i3/i5/i7 optimized.'
+    depends=('linux-bfq-mq-haswell-kernel')
+    groups=('linux-bfq-mq-haswell')
   
     cd "${srcdir}/${_srcname}"
 
@@ -470,7 +470,7 @@ _package-docs() {
     find "${pkgdir}" -type f -exec chmod 444 {} \;
     find "${pkgdir}" -type d -exec chmod 755 {} \;
 
-    # remove a file already in linux-bfq-haswell package
+    # remove a file already in linux-bfq-mq-haswell package
     rm -f "${pkgdir}/usr/lib/modules/${_kernver}/build/Documentation/DocBook/Makefile"
 }
 

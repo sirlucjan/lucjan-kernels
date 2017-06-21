@@ -67,7 +67,7 @@ pkgbase=linux-bfq-mq-haswell-git
 # pkgname=('linux-bfq-mq-haswell-git-kernel' 'linux-bfq-mq-haswell-git-headers' 'linux-bfq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
 pkgver=4.11.6.r79.g11479fef13dd
-pkgrel=0.3
+pkgrel=0.4
 arch=('x86_64')
 url="http://algo.ing.unimo.it"
 license=('GPL2')
@@ -256,10 +256,10 @@ build() {
 }
 
 _package-kernel() {
-    pkgdesc='Linux Kernel and modules with the  BFQ scheduler. Fourth Gen Intel Core i3/i5/i7 optimized.'
+    pkgdesc='Linux Kernel and modules with the  BFQ-MQ scheduler. Fourth Gen Intel Core i3/i5/i7 optimized.'
     depends=('coreutils' 'linux-firmware' 'mkinitcpio>=0.7')
     optdepends=('crda: to set the correct wireless channels of your country' 'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
-    groups=('linux-bfq-haswell-git')
+    groups=('linux-bfq-mq-haswell-git')
     backup=("etc/mkinitcpio.d/${pkgbase}.preset")
     install=linux.install
 
@@ -311,9 +311,9 @@ _package-kernel() {
 }
 
 _package-headers() {
-    pkgdesc='Header files and scripts to build modules for linux-bfq-haswell-git. Fourth Gen Intel Core i3/i5/i7 optimized.'
-    depends=('linux-bfq-haswell-git-kernel')
-    groups=('linux-bfq-haswell-git')
+    pkgdesc='Header files and scripts to build modules for linux-bfq-mq-haswell-git. Fourth Gen Intel Core i3/i5/i7 optimized.'
+    depends=('linux-bfq-mq-haswell-git-kernel')
+    groups=('linux-bfq-mq-haswell-git')
 
     install -dm755 "${pkgdir}/usr/lib/modules/${_kernver}"
 
@@ -450,9 +450,9 @@ _package-headers() {
 }
 
 _package-docs() {
-    pkgdesc='Kernel hackers manual - HTML documentation that comes with the linux-bfq-haswell-git kernel. Fourth Gen Intel Core i3/i5/i7 optimized.'
-    depends=('linux-bfq-haswell-git-kernel')
-    groups=('linux-bfq-haswell-git')
+    pkgdesc='Kernel hackers manual - HTML documentation that comes with the linux-bfq-mq-haswell-git kernel. Fourth Gen Intel Core i3/i5/i7 optimized.'
+    depends=('linux-bfq-mq-haswell-git-kernel')
+    groups=('linux-bfq-mq-haswell-git')
   
     cd "${srcdir}/${_srcname}"
 
@@ -461,7 +461,7 @@ _package-docs() {
     find "${pkgdir}" -type f -exec chmod 444 {} \;
     find "${pkgdir}" -type d -exec chmod 755 {} \;
 
-    # remove a file already in linux-bfq-haswell-git package
+    # remove a file already in linux-bfq-mq-haswell-git package
     rm -f "${pkgdir}/usr/lib/modules/${_kernver}/build/Documentation/DocBook/Makefile"
 }
 
