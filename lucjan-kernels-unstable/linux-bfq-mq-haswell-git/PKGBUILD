@@ -67,7 +67,7 @@ pkgbase=linux-bfq-mq-haswell-git
 # pkgname=('linux-bfq-mq-haswell-git-kernel' 'linux-bfq-mq-haswell-git-headers' 'linux-bfq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
 pkgver=4.11.6.r81.g49e22350ace8
-pkgrel=0.5
+pkgrel=0.6
 arch=('x86_64')
 url="http://algo.ing.unimo.it"
 license=('GPL2')
@@ -476,6 +476,6 @@ done
 sha512sums=('SKIP'
             '38b1a85b18d9477ed33b2d0303376f29e8e24197ff01bdfade460c0c7d722366f0c83c457097c25f339320d6f850bd55c16e247d1451572899cb1e6d663c19bf'
             '77d80d50d8c4323ed36fd2097ba9f6b49bb8d7cae59d32ffa76b309758a7e9f972d26fedd77046d88ce2691bb01a07909f8bdc34ba214414be3bc030ee31994d'
-            '24afab04c56663effc4409b75215dbfa2a60f4412a2e0346b8dfe2da49dd6d65d0ad035ec6d204fc38610a6651147b4c54dbf38d548d2de400278e6f4523d957'
+            '48e138bd0aa3c08afacdc409a73b7ffdec0305bb4e567db5e481bdd1b39f957cefbd44d163b03c2e933cf6e464afd5c0d80a08f6eefa9e30c5a462ecfb5d50b1'
             'd6faa67f3ef40052152254ae43fee031365d0b1524aa0718b659eb75afc21a3f79ea8d62d66ea311a800109bed545bc8f79e8752319cd378eef2cbd3a09aba22'
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf')

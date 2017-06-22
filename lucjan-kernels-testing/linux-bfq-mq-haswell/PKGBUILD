@@ -67,7 +67,7 @@ pkgbase=linux-bfq-mq-haswell
 # pkgname=('linux-bfq-mq-haswell-kernel' 'linux-bfq-mq-haswell-headers' 'linux-bfq-mq-haswell-docs')
 _srcname=linux-4.11
 pkgver=4.11.6
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 url="http://algo.ing.unimo.it"
 license=('GPL2')
@@ -481,7 +481,7 @@ sha512sums=('6610eed97ffb7207c71771198c36179b8244ace7222bebb109507720e26c5f17d91
             'SKIP'
             '38b1a85b18d9477ed33b2d0303376f29e8e24197ff01bdfade460c0c7d722366f0c83c457097c25f339320d6f850bd55c16e247d1451572899cb1e6d663c19bf'
             '77d80d50d8c4323ed36fd2097ba9f6b49bb8d7cae59d32ffa76b309758a7e9f972d26fedd77046d88ce2691bb01a07909f8bdc34ba214414be3bc030ee31994d'
-            'c8ab12e84de43f83dadd46a0c40caf2b26c9364f261bbef90d6fac19502bfec49d09c58ba4249faadc39e8cb3756473fe13e4ca74e675446b5c528235ee00753'
+            '1e0039648a1ef0ef89e671011a61d0989d0684b97a1c0f59a5a0c07bf9ec64465d9182e0d4d71475ae7699c6f3f09f2ad0a51c6a2be2f2a4773fe2053c0939e0'
             'd6faa67f3ef40052152254ae43fee031365d0b1524aa0718b659eb75afc21a3f79ea8d62d66ea311a800109bed545bc8f79e8752319cd378eef2cbd3a09aba22'
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf')
             
