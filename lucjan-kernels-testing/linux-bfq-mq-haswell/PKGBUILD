@@ -91,7 +91,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         '90-linux.hook'
          # standard config files for mkinitcpio ramdisk
         'linux.preset'
-        # patches from https://github.com/linusw/linux-bfq/commits/bfq-v8
+        # patches from https://github.com/Algodev-github/bfq-mq/commits/bfq-mq
         )
         
 _kernelname=${pkgbase#linux} 
