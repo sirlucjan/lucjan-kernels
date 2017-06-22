@@ -66,8 +66,8 @@ _CFQ_disable=y
 pkgbase=linux-bfq-mq-haswell-git
 # pkgname=('linux-bfq-mq-haswell-git-kernel' 'linux-bfq-mq-haswell-git-headers' 'linux-bfq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
-pkgver=4.11.6.r79.g11479fef13dd
-pkgrel=0.4
+pkgver=4.11.6.r81.g49e22350ace8
+pkgrel=0.5
 arch=('x86_64')
 url="http://algo.ing.unimo.it"
 license=('GPL2')
@@ -87,7 +87,7 @@ source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.gi
         '90-linux.hook'
          # standard config files for mkinitcpio ramdisk
         'linux.preset'
-        # patches from https://github.com/linusw/linux-bfq/commits/bfq-v8
+        # patches from https://github.com/Algodev-github/bfq-mq/commits/bfq-mq
         )
 
 _kernelname=${pkgbase#linux}
