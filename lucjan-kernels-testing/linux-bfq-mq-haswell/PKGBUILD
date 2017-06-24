@@ -66,8 +66,8 @@ _CFQ_disable=y
 pkgbase=linux-bfq-mq-haswell
 # pkgname=('linux-bfq-mq-haswell-kernel' 'linux-bfq-mq-haswell-headers' 'linux-bfq-mq-haswell-docs')
 _srcname=linux-4.11
-pkgver=4.11.6
-pkgrel=3
+pkgver=4.11.7
+pkgrel=1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -477,7 +477,7 @@ done
 
 sha512sums=('6610eed97ffb7207c71771198c36179b8244ace7222bebb109507720e26c5f17d918079a56d5febdd8605844d67fb2df0ebe910fa2f2f53690daf6e2a8ad09c3'
             'SKIP'
-            'e0e2de7d721575cd2770fa4fa61a1ecdfd54bb4239725363a90ab3b670aab44531a7c0f198ff769080643e86ce7e4806d26bb436a43437747e123715061b278b'
+            '8f02b3ae83cf499f59912207821d67a1e5a0cdb7d53644a2685ac8187fa43e39b0af4c64de2d299c389c4a85c011513a78f33297d8521eb99ef58b287bf9962a'
             'SKIP'
             '38b1a85b18d9477ed33b2d0303376f29e8e24197ff01bdfade460c0c7d722366f0c83c457097c25f339320d6f850bd55c16e247d1451572899cb1e6d663c19bf'
             '77d80d50d8c4323ed36fd2097ba9f6b49bb8d7cae59d32ffa76b309758a7e9f972d26fedd77046d88ce2691bb01a07909f8bdc34ba214414be3bc030ee31994d'
