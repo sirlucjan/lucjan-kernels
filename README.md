@@ -15,6 +15,8 @@ git clone https://github.com/sirlucjan/lucjan-kernels.git
 cd /some_path/lucjan-kernels/lucjan-kernels-testing/package_name
 makepkg -srci
 
+```
+
 # Unstable
 
 ```
