@@ -3,14 +3,14 @@
 ├── README.md
 ├── lucjan-kernels-testing
 │   ├── linux-bfq-haswell
-│   │   ├── 0005-BFQ-v8r11-bugfix.patch
+│   │   ├── 0005-BFQ-update-to-v8r12.patch
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
 │   │   ├── config.x86_64
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   ├── linux-bfq-haswell-git
-│   │   ├── 0005-BFQ-v8r11-bugfix.patch
+│   │   ├── 0005-BFQ-update-to-v8r12.patch
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
 │   │   ├── config.x86_64
@@ -30,14 +30,14 @@
 │       └── linux.preset
 └── lucjan-kernels-unstable
     ├── linux-bfq-haswell
-    │   ├── 0005-BFQ-v8r11-bugfix.patch
+    │   ├── 0005-BFQ-update-to-v8r12.patch
     │   ├── 90-linux.hook
     │   ├── PKGBUILD
     │   ├── config.x86_64
     │   ├── linux.install
     │   └── linux.preset
     ├── linux-bfq-haswell-git
-    │   ├── 0005-BFQ-v8r11-bugfix.patch
+    │   ├── 0005-BFQ-update-to-v8r12.patch
     │   ├── 90-linux.hook
     │   ├── PKGBUILD
     │   ├── config.x86_64
