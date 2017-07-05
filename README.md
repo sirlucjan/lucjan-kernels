@@ -25,4 +25,12 @@ makepkg -srci
 
 ```
 
+# Experimental
+
+```
+cd /some_path/lucjan-kernels/lucjan-kernels-experimental/package_name
+makepkg -srci
+
+```
+
 

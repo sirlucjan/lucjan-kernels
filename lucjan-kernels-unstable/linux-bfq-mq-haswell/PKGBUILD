@@ -86,7 +86,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_pkgver}.sign"
         "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.sign"
-        "${_bfqpath}/4.11-bfq-mq-${_bfq_mq_ver}.patch"
+        "${_bfqpath}/${_bfq_mq_patch}"
         "http://repo-ck.com/source/gcc_patch/${_gcc_patch}.gz"
          # the main kernel config files
         'config.x86_64'
