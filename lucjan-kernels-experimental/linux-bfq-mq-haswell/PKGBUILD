@@ -70,7 +70,7 @@ pkgbase=linux-bfq-mq-haswell
 # pkgname=('linux-bfq-mq-haswell-kernel' 'linux-bfq-mq-haswell-headers' 'linux-bfq-mq-haswell-docs')
 _srcname=linux-4.12
 pkgver=4.12
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -489,7 +489,7 @@ sha512sums=('8e81b41b253e63233e92948941f44c6482acb52aa3a3fd172f03a38a86f2c35b2ad
             'f4d411daf0308e9096ca1ddeff0b2b53d83263dd6d7c533d454bec20730185e1e523b870e04c79d1b285f492a20a29d784d3f215860ccb7b992398fd2649d02f'
             'd6faa67f3ef40052152254ae43fee031365d0b1524aa0718b659eb75afc21a3f79ea8d62d66ea311a800109bed545bc8f79e8752319cd378eef2cbd3a09aba22'
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf'
-            '48cd50fcbccab23e58d477888432bcbaef8a721b2de1a01667ff25da61b57c77937a3b092be538728d58efe6e08b326a7d1ab9ca8b1bd4f2a5cc075ba373469e')
+            '7ca62788ec29ed0295b2891ceed1aac82545cdfdc164529540397542a72b834ef69837b8b1473593b6f4341fbac4ea2b4c8c1e475cfde74583332257bb57f7b2')
             
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
