@@ -1,7 +1,7 @@
 From c0b73be6b49b0605d7e226b391d23c2d533ed3df Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@unimore.it>
 Date: Tue, 7 Apr 2015 13:39:12 +0200
-Subject: [PATCH 01/28] Add BFQ-v8r12
+Subject: [PATCH 01/29] Add BFQ-v8r12
 
 This commit is the result of the following operations.
 
@@ -9722,7 +9722,7 @@ index 25f6a0cb27d3..7077a012fddc 100644
 From 4d7a93050d82c254fd9247c73cee7c65fda55ba1 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 19 Dec 2016 16:59:33 +0100
-Subject: [PATCH 02/28] FIRST BFQ-MQ COMMIT: Copy bfq-sq-iosched.c as
+Subject: [PATCH 02/29] FIRST BFQ-MQ COMMIT: Copy bfq-sq-iosched.c as
  bfq-mq-iosched.c
 
 This commit introduces bfq-mq-iosched.c, the main source file that
@@ -15127,7 +15127,7 @@ index 000000000000..65e7c7e77f3c
 From fef4bb39ff3d5e3a6314739ad39602ec969eb53c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 19 Dec 2016 17:13:39 +0100
-Subject: [PATCH 03/28] Add config and build bits for bfq-mq-iosched
+Subject: [PATCH 03/29] Add config and build bits for bfq-mq-iosched
 
 Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
 ---
@@ -15804,7 +15804,7 @@ index f5751ea59d98..05a265dde98e 100644
 From 122965b04e16cf28e36f3e443cfb7be604ba838a Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Fri, 20 Jan 2017 09:18:25 +0100
-Subject: [PATCH 04/28] Increase max policies for io controller
+Subject: [PATCH 04/29] Increase max policies for io controller
 
 To let bfq-mq policy be plugged too (however cgroups
 suppport is not yet functional in bfq-mq).
@@ -15831,7 +15831,7 @@ index 7077a012fddc..c3a5d80d1947 100644
 From ce6cf1598c7decadb3f32cc9fe9ee77228a93aac Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 19 Dec 2016 18:11:33 +0100
-Subject: [PATCH 05/28] Copy header file bfq.h as bfq-mq.h
+Subject: [PATCH 05/29] Copy header file bfq.h as bfq-mq.h
 
 This commit introduces the header file bfq-mq.h, that will play
 for bfq-mq-iosched.c the same role that bfq.h plays for bfq-iosched.c.
@@ -16828,7 +16828,7 @@ index 000000000000..05a265dde98e
 From 8f948c2dafb688a665349c747fe57ba21b11c791 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Sat, 21 Jan 2017 12:41:14 +0100
-Subject: [PATCH 06/28] Move thinktime from bic to bfqq
+Subject: [PATCH 06/29] Move thinktime from bic to bfqq
 
 Prep change to make it possible to protect this field with a
 scheduler lock.
@@ -17011,7 +17011,7 @@ index 05a265dde98e..e8cf9cb66e2a 100644
 From 2f5ec8d126c97ca0fc277c039d1695a693302c75 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Wed, 18 Jan 2017 11:42:22 +0100
-Subject: [PATCH 07/28] Embed bfq-ioc.c and add locking on request queue
+Subject: [PATCH 07/29] Embed bfq-ioc.c and add locking on request queue
 
 The version of bfq-ioc.c for bfq-iosched.c is not correct any more for
 bfq-mq, because, in bfq-mq, the request queue lock is not being held
@@ -17091,7 +17091,7 @@ index bf7f019e75af..b96496d0b0c2 100644
 From 11e87a921d77da0464197d072be3f301a704bb60 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Tue, 20 Dec 2016 09:07:19 +0100
-Subject: [PATCH 08/28] Modify interface and operation to comply with
+Subject: [PATCH 08/29] Modify interface and operation to comply with
  blk-mq-sched
 
 As for modifications of the operation, the major changes are the introduction
@@ -18502,7 +18502,7 @@ index e8cf9cb66e2a..4734c70edd66 100644
 From dcb8fee4b5762f5cd0e8aacf7f396c91d7d3cc3e Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Fri, 3 Mar 2017 08:52:40 +0100
-Subject: [PATCH 09/28] Add checks and extra log messages - Part I
+Subject: [PATCH 09/29] Add checks and extra log messages - Part I
 
 Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
 ---
@@ -18812,7 +18812,7 @@ index e872fef715b5..d5160c7a6099 100644
 From fd8db0a688966e31d3061feed4ef82014a78018f Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Thu, 9 Feb 2017 10:36:27 +0100
-Subject: [PATCH 10/28] Add lock check in bfq_allow_bio_merge
+Subject: [PATCH 10/29] Add lock check in bfq_allow_bio_merge
 
 Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
 ---
@@ -18835,7 +18835,7 @@ index d5160c7a6099..64430738081c 100644
 From 56ada23407451ed264602be9b7c18755a1bbb3cf Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Tue, 7 Feb 2017 15:14:29 +0100
-Subject: [PATCH 11/28] bfq-mq: execute exit_icq operations immediately
+Subject: [PATCH 11/29] bfq-mq: execute exit_icq operations immediately
 
 Exploting Omar's patch that removes the taking of the queue lock in
 put_io_context_active, this patch moves back the operation of the bfq_exit_icq
@@ -18931,7 +18931,7 @@ index 4734c70edd66..70a23fd0e504 100644
 From edb25fec17b686a19b3d96e9f2139b8d720c184f Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Tue, 21 Feb 2017 10:26:22 +0100
-Subject: [PATCH 12/28] Unnest request-queue and ioc locks from scheduler locks
+Subject: [PATCH 12/29] Unnest request-queue and ioc locks from scheduler locks
 
 In some bio-merging functions, the request-queue lock needs to be
 taken, to lookup for the bic associated with the process that issued
@@ -19528,7 +19528,7 @@ index c8f7ec0c8867..64332d5e2c75 100644
 From 62ff003a78f83f5905a8f1db4bff423af2d9e853 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Fri, 3 Mar 2017 09:31:14 +0100
-Subject: [PATCH 13/28] Add checks and extra log messages - Part II
+Subject: [PATCH 13/29] Add checks and extra log messages - Part II
 
 Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
 ---
@@ -19733,7 +19733,7 @@ index 64332d5e2c75..c33884948101 100644
 From bb607abecf39f2c2f3867acbf4279d04b3b931ad Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Wed, 22 Feb 2017 11:30:01 +0100
-Subject: [PATCH 14/28] Fix unbalanced increment of rq_in_driver
+Subject: [PATCH 14/29] Fix unbalanced increment of rq_in_driver
 
 Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
 ---
@@ -19843,7 +19843,7 @@ index c32a3595685e..fbc9340e6bd8 100644
 From 572ff7b57e24c1eedc024e99114fd7f91d5efcb7 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Fri, 3 Mar 2017 09:39:35 +0100
-Subject: [PATCH 15/28] Add checks and extra log messages - Part III
+Subject: [PATCH 15/29] Add checks and extra log messages - Part III
 
 Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
 ---
@@ -19880,7 +19880,7 @@ index fbc9340e6bd8..37d95b24ff7c 100644
 From d8594053ef489521688dd22bc89c38b7cbdf19da Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Fri, 17 Feb 2017 14:28:02 +0100
-Subject: [PATCH 16/28] TESTING: Check wrong invocation of merge and
+Subject: [PATCH 16/29] TESTING: Check wrong invocation of merge and
  put_rq_priv functions
 
 Check that merge functions are not invoked on requests queued in the
@@ -19985,7 +19985,7 @@ index c3a5d80d1947..20168de1067b 100644
 From 4720ca8ed6fabd88fd0db2124f5432b7b3061cbc Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Sat, 25 Feb 2017 17:38:05 +0100
-Subject: [PATCH 17/28] Complete support for cgroups
+Subject: [PATCH 17/29] Complete support for cgroups
 
 This commit completes cgroups support for bfq-mq. In particular, it deals with
 a sort of circular dependency introduced in blk-mq: the function
@@ -20203,7 +20203,7 @@ index 2e17e16a4b98..68335b8e5444 100644
 From a5fac2641bec8bb51de1e30594b9ffe67ad30956 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Fri, 17 Mar 2017 06:15:18 +0100
-Subject: [PATCH 18/28] Remove all get and put of I/O contexts
+Subject: [PATCH 18/29] Remove all get and put of I/O contexts
 
 When a bfq queue is set in service and when it is merged, a reference
 to the I/O context associated with the queue is taken. This reference
@@ -20606,7 +20606,7 @@ index c33884948101..1c60de93c1a2 100644
 From c8377a851551c7c6e955a563d0635c59393809e8 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Wed, 29 Mar 2017 18:41:46 +0200
-Subject: [PATCH 19/28] BUGFIX: Remove unneeded and deadlock-causing lock in
+Subject: [PATCH 19/29] BUGFIX: Remove unneeded and deadlock-causing lock in
  request_merged
 
 Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
@@ -20638,7 +20638,7 @@ index 88282278264a..89546ceeac63 100644
 From a7f31a2c4d9cda3afa92e66c225ed7b5f82a4b16 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Wed, 29 Mar 2017 18:55:30 +0200
-Subject: [PATCH 20/28] Fix wrong unlikely
+Subject: [PATCH 20/29] Fix wrong unlikely
 
 Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
 ---
@@ -20662,7 +20662,7 @@ index 89546ceeac63..1228a9802b4e 100644
 From d6e57e316332348ffac8cbb7d2e4483f0b3144df Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Fri, 12 May 2017 09:51:18 +0200
-Subject: [PATCH 21/28] Change cgroup params prefix to bfq-mq for bfq-mq
+Subject: [PATCH 21/29] Change cgroup params prefix to bfq-mq for bfq-mq
 
 Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
 ---
@@ -20840,7 +20840,7 @@ index dfacca799b5e..9e9b0a09e26f 100644
 From 5ed6bd19b0565ae6798b51a0fbf15dc807e7112c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Fri, 12 May 2017 11:56:13 +0200
-Subject: [PATCH 22/28] Add tentative extra tests on groups, reqs and queues
+Subject: [PATCH 22/29] Add tentative extra tests on groups, reqs and queues
 
 Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
 ---
@@ -20908,7 +20908,7 @@ index 20168de1067b..2edb4526effe 100644
 From bde28d2d2175a8259a1e6ba0061781b683461da9 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 15 May 2017 22:25:03 +0200
-Subject: [PATCH 23/28] block, bfq-mq: access and cache blkg data only when
+Subject: [PATCH 23/29] block, bfq-mq: access and cache blkg data only when
  safe
 
 In blk-cgroup, operations on blkg objects are protected with the
@@ -21322,7 +21322,7 @@ index 5c378fe98823..f78d0f72c5d7 100644
 From 0c61d11a6d703a17685ae4b675df3e945a86995c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Sat, 17 Jun 2017 11:18:11 +0200
-Subject: [PATCH 24/28] bfq-mq: fix macro name in conditional invocation of
+Subject: [PATCH 24/29] bfq-mq: fix macro name in conditional invocation of
  policy_unregister
 
 This commit fixes the name of the macro in the conditional group that
@@ -21351,7 +21351,7 @@ index 1d454bed86ba..17b7b2e555c2 100644
 From 5b226e3dc7bd9cac1ade41780c939d33f5bfef00 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Wed, 5 Jul 2017 11:48:17 +0200
-Subject: [PATCH 25/28] Port of "blk-mq-sched: unify request finished methods"
+Subject: [PATCH 25/29] Port of "blk-mq-sched: unify request finished methods"
 
 No need to have two different callouts of bfq vs kyber.
 
@@ -21396,7 +21396,7 @@ index 17b7b2e555c2..fd999cc8dca2 100644
 From 63c15eb8c4057f383163d35f72fba30e87dd0acb Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Wed, 5 Jul 2017 11:54:57 +0200
-Subject: [PATCH 26/28] Port of "bfq-iosched: fix NULL ioc check in
+Subject: [PATCH 26/29] Port of "bfq-iosched: fix NULL ioc check in
  bfq_get_rq_private"
 
 icq_to_bic is a container_of operation, so we need to check for NULL
@@ -21453,7 +21453,7 @@ index fd999cc8dca2..b1168f199e1d 100644
 From fa893c3d79af5eeba54bf63ff74231f8a71d94e8 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Wed, 5 Jul 2017 12:02:16 +0200
-Subject: [PATCH 27/28] Port of "blk-mq-sched: unify request prepare methods"
+Subject: [PATCH 27/29] Port of "blk-mq-sched: unify request prepare methods"
 
 This patch makes sure we always allocate requests in the core blk-mq
 code and use a common prepare_request method to initialize them for
@@ -21530,7 +21530,7 @@ index b1168f199e1d..4205db442c79 100644
 From 7dffd8b06b6ebbffd2531153b614feb61e6c75c8 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Wed, 5 Jul 2017 12:43:22 +0200
-Subject: [PATCH 28/28] Add list of bfq instances to documentation
+Subject: [PATCH 28/29] Add list of bfq instances to documentation
 
 Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
 ---
@@ -21566,3 +21566,58 @@ index 05e2822a80b3..27892f56a1b0 100644
  
  CONTENTS
  
+
+From 3a471c4bb8aeb79256d2a2e24a82e2d9e3d66b1b Mon Sep 17 00:00:00 2001
+From: Paolo Valente <paolo.valente@linaro.org>
+Date: Wed, 5 Jul 2017 16:28:00 +0200
+Subject: [PATCH 29/29] bfq-sq: fix prefix of names of cgroups parameters
+
+Signed-off-by: Paolo Valente <paolo.valente@linaro.org>
+---
+ Documentation/block/bfq-iosched.txt | 12 +++++++-----
+ block/bfq-cgroup-included.c         |  2 +-
+ 2 files changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/block/bfq-iosched.txt b/Documentation/block/bfq-iosched.txt
+index 27892f56a1b0..d9c0318212d9 100644
+--- a/Documentation/block/bfq-iosched.txt
++++ b/Documentation/block/bfq-iosched.txt
+@@ -519,10 +519,12 @@ To get proportional sharing of bandwidth with BFQ for a given device,
+ BFQ must of course be the active scheduler for that device.
+ 
+ Within each group directory, the names of the files associated with
+-BFQ-specific cgroup parameters and stats begin with the "bfq."
+-prefix. So, with cgroups-v1 or cgroups-v2, the full prefix for
+-BFQ-specific files is "blkio.bfq." or "io.bfq." For example, the group
+-parameter to set the weight of a group with BFQ is blkio.bfq.weight
++BFQ-specific cgroup parameters and stats begin with the "bfq.",
++"bfq-sq." or "bfq-mq." prefix, depending on which instance of bfq you
++want to use. So, with cgroups-v1 or cgroups-v2, the full prefix for
++BFQ-specific files is "blkio.bfqX." or "io.bfqX.", where X can be ""
++(i.e., null string), "-sq" or "-mq". For example, the group parameter
++to set the weight of a group with the mainline BFQ is blkio.bfq.weight
+ or io.bfq.weight.
+ 
+ Parameters to set
+@@ -530,7 +532,7 @@ Parameters to set
+ 
+ For each group, there is only the following parameter to set.
+ 
+-weight (namely blkio.bfq.weight or io.bfq-weight): the weight of the
++weight (namely blkio.bfqX.weight or io.bfqX.weight): the weight of the
+ group inside its parent. Available values: 1..10000 (default 100). The
+ linear mapping between ioprio and weights, described at the beginning
+ of the tunable section, is still valid, but all weights higher than
+diff --git a/block/bfq-cgroup-included.c b/block/bfq-cgroup-included.c
+index d903393ee78a..631e53d9150d 100644
+--- a/block/bfq-cgroup-included.c
++++ b/block/bfq-cgroup-included.c
+@@ -1124,7 +1124,7 @@ bfq_create_group_hierarchy(struct bfq_data *bfqd, int node)
+ #ifdef BFQ_MQ
+ #define BFQ_CGROUP_FNAME(param) "bfq-mq."#param
+ #else
+-#define BFQ_CGROUP_FNAME(param) "bfq."#param
++#define BFQ_CGROUP_FNAME(param) "bfq-sq."#param
+ #endif
+ 
+ static struct cftype bfq_blkcg_legacy_files[] = {
