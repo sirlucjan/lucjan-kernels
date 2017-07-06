@@ -3,14 +3,12 @@
 ├── README.md
 ├── lucjan-kernels-experimental
 │   ├── linux-bfq-mq-haswell
-│   │   ├── 4.12-bfq-mq-20170705.patch
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
 │   │   ├── config.x86_64
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   └── linux-bfq-mq-haswell-git
-│       ├── 4.12-bfq-mq-20170705.patch
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
 │       ├── config.x86_64
@@ -71,4 +69,4 @@
         ├── linux.install
         └── linux.preset
 
-13 directories, 58 files
+13 directories, 56 files
