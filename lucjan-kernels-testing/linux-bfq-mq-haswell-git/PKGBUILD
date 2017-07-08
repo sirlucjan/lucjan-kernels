@@ -67,7 +67,7 @@ pkgbase=linux-bfq-mq-haswell-git
 # pkgname=('linux-bfq-mq-haswell-git-kernel' 'linux-bfq-mq-haswell-git-headers' 'linux-bfq-mq-haswell-git-docs')
 _srcname=linux-stable
 pkgver=4.11.9.r0.gf82a53b87594
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -87,6 +87,7 @@ source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#b
         '90-linux.hook'
          # standard config files for mkinitcpio ramdisk
         'linux.preset'
+        '4.11-bfq-mq-update-to-v8r12.patch'
         # patches from https://github.com/Algodev-github/bfq-mq/commits/bfq-mq
         )
 
@@ -104,6 +105,10 @@ prepare() {
     ### Patch source with BFQ-MQ
         msg "Patching source with BFQ-MQ patches"
         patch -Np1 -i "${srcdir}/${_bfq_mq_patch}"
+        
+    ### Update BFQ-MQ
+        msg "Update BFQ-MQ to v8r12"
+        patch -Np1 -i "${srcdir}/4.11-bfq-mq-update-to-v8r12.patch"    
 
     ### Patch source to enable more gcc CPU optimizatons via the make nconfig
         msg "Patching source with gcc patch to enable more cpus types"
@@ -478,5 +483,6 @@ sha512sums=('SKIP'
             '77d80d50d8c4323ed36fd2097ba9f6b49bb8d7cae59d32ffa76b309758a7e9f972d26fedd77046d88ce2691bb01a07909f8bdc34ba214414be3bc030ee31994d'
             '48e138bd0aa3c08afacdc409a73b7ffdec0305bb4e567db5e481bdd1b39f957cefbd44d163b03c2e933cf6e464afd5c0d80a08f6eefa9e30c5a462ecfb5d50b1'
             'd6faa67f3ef40052152254ae43fee031365d0b1524aa0718b659eb75afc21a3f79ea8d62d66ea311a800109bed545bc8f79e8752319cd378eef2cbd3a09aba22'
-            '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf')
+            '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf'
+            '2277183623a71ea296e33755a07910df9cb9df8ff8dade8ef5a12a92d8a789be136cbe268148f8c177337cdea7b0b312397a26f3a5b7f08b065051b8f6ce1735')
             

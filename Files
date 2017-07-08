@@ -30,12 +30,14 @@
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   ├── linux-bfq-mq-haswell
+│   │   ├── 4.11-bfq-mq-update-to-v8r12.patch
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
 │   │   ├── config.x86_64
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   └── linux-bfq-mq-haswell-git
+│       ├── 4.11-bfq-mq-update-to-v8r12.patch
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
 │       ├── config.x86_64
@@ -57,16 +59,18 @@
     │   ├── linux.install
     │   └── linux.preset
     ├── linux-bfq-mq-haswell
+    │   ├── 4.11-bfq-mq-update-to-v8r12.patch
     │   ├── 90-linux.hook
     │   ├── PKGBUILD
     │   ├── config.x86_64
     │   ├── linux.install
     │   └── linux.preset
     └── linux-bfq-mq-haswell-git
+        ├── 4.11-bfq-mq-update-to-v8r12.patch
         ├── 90-linux.hook
         ├── PKGBUILD
         ├── config.x86_64
         ├── linux.install
         └── linux.preset
 
-13 directories, 56 files
+13 directories, 60 files
