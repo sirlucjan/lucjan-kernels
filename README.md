@@ -33,4 +33,12 @@ makepkg -srci
 
 ```
 
+# Trunk
+
+```
+cd /some_path/lucjan-kernels/lucjan-kernels-trunk/package_name
+makepkg -srci
+
+```
+
 
