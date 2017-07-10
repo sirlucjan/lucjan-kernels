@@ -61,32 +61,36 @@ _deadline_disable=y
 ### Disable CFQ I/O scheduler
 _CFQ_disable=y
 
+### Disable Kyber I/O scheduler
+_kyber_disable=y
+
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-bfq-mq-haswell
 # pkgname=('linux-bfq-mq-haswell-kernel' 'linux-bfq-mq-haswell-headers' 'linux-bfq-mq-haswell-docs')
-_srcname=linux-4.11
-pkgver=4.11.10
-_pkgver=4.11.9
-__pkgver=4.11.10-rc1
+_srcname=linux-4.12
+pkgver=4.12.1
+#_pkgver=4.12
+__pkgver=4.12.1-rc1
 pkgrel=0
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf')
-_bfq_mq_ver='20170617'
-_bfq_mq_patch="4.11-bfq-mq-${_bfq_mq_ver}.patch"
+_bfq_mq_ver='20170710'
+_bfq_mq_patch="4.12-bfq-mq-${_bfq_mq_ver}.patch"
 _bfqpath="https://gitlab.com/tom81094/custom-patches/raw/master/bfq-mq/"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v3.15+.patch"
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_pkgver}.xz"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_pkgver}.sign"
+        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.sign"
         "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.sign"
-        "${_bfqpath}/${_bfq_mq_patch}"
+        #"${_bfqpath}/${_bfq_mq_patch}"
+        "${_bfqpath}/4.13-uuid-block-merge.patch"
         "http://repo-ck.com/source/gcc_patch/${_gcc_patch}.gz"
          # the main kernel config files
         'config.x86_64'
@@ -94,7 +98,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         '90-linux.hook'
          # standard config files for mkinitcpio ramdisk
         'linux.preset'
-        '4.11-bfq-mq-update-to-v8r12.patch'
+        '4.12-bfq-mq-20170710.patch'
         # patches from https://github.com/Algodev-github/bfq-mq/commits/bfq-mq
         )
         
@@ -104,21 +108,18 @@ prepare() {
     cd "${srcdir}/${_srcname}"
 
     ### Add upstream patch
-        msg "Add upstream patch"
-        patch -Np1 -i "${srcdir}/patch-${_pkgver}"
+        #msg "Add upstream patch"
+        #patch -Np1 -i "${srcdir}/patch-${pkgver}"
         
     ### Add patch from stable-review
         msg "Add patch from stable-review"  
-        patch -Np1 -i "${srcdir}/patch-${__pkgver}"
-    
+        patch -Np1 -i "${srcdir}/patch-${__pkgver}"    
+            
     ### Patch source with BFQ-MQ
         msg "Patching source with BFQ-MQ patches"
         patch -Np1 -i "${srcdir}/${_bfq_mq_patch}"
+        patch -Np1 -i "${srcdir}/4.13-uuid-block-merge.patch"
         
-    ### Update BFQ-MQ
-        msg "Update BFQ-MQ to v8r12"
-        patch -Np1 -i "${srcdir}/4.11-bfq-mq-update-to-v8r12.patch"    
-
     ### Patch source to enable more gcc CPU optimizatons via the make nconfig
         msg "Patching source with gcc patch to enable more cpus types"
 	patch -Np1 -i "${srcdir}/${_gcc_patch}"
@@ -184,15 +185,21 @@ prepare() {
 		msg "Disabling Deadline I/O scheduler..."
 		sed -i -e s'/CONFIG_IOSCHED_DEADLINE=y/# CONFIG_IOSCHED_DEADLINE is not set/' ./.config
 		sed -i -e s'/CONFIG_MQ_IOSCHED_DEADLINE=y/# CONFIG_MQ_IOSCHED_DEADLINE is not set/' ./.config
-	fi
-	 
+	fi	
+    
     ### Disable CFQ I/O scheduler
 	if [ -n "$_CFQ_disable" ]; then
 		msg "Disabling CFQ I/O scheduler..."
 		sed -i -e s'/CONFIG_IOSCHED_CFQ=y/# CONFIG_IOSCHED_CFQ is not set/' ./.config
 		sed -i -e s'/CONFIG_CFQ_GROUP_IOSCHED=y/# CONFIG_CFQ_GROUP_IOSCHED is not set/' ./.config	
-	fi 
-    
+	fi
+
+    ### Disable Kyber I/O scheduler
+	if [ -n "$_kyber_disable" ]; then
+		msg "Disabling Kyber I/O scheduler..."
+		sed -i -e s'/CONFIG_MQ_IOSCHED_KYBER=y/# CONFIG_MQ_IOSCHED_KYBER is not set/' ./.config
+	fi
+   
 	if [ "${_kernelname}" != "" ]; then
 		sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
 		sed -i "s|CONFIG_LOCALVERSION_AUTO=.*|CONFIG_LOCALVERSION_AUTO=n|" ./.config
@@ -454,7 +461,7 @@ _package-headers() {
 	esac
 	done
 	
-        # remove a files already in linux-bfq-haswell-docs package
+	# remove a files already in linux-bfq-haswell-docs package
         rm -f "${pkgdir}/usr/lib/modules/${_kernver}/build/Documentation/kbuild/Kconfig.recursion-issue-01"
         rm -f "${pkgdir}/usr/lib/modules/${_kernver}/build/Documentation/kbuild/Kconfig.recursion-issue-02"
         rm -f "${pkgdir}/usr/lib/modules/${_kernver}/build/Documentation/kbuild/Kconfig.select-break"
@@ -487,19 +494,17 @@ for _p in ${pkgname[@]}; do
   }"
 done
 
-sha512sums=('6610eed97ffb7207c71771198c36179b8244ace7222bebb109507720e26c5f17d918079a56d5febdd8605844d67fb2df0ebe910fa2f2f53690daf6e2a8ad09c3'
+sha512sums=('8e81b41b253e63233e92948941f44c6482acb52aa3a3fd172f03a38a86f2c35b2ad4fd407acd1bc3964673eba344fe104d3a03e3ff4bf9cd1f22bd44263bd728'
             'SKIP'
-            '0d9474810b175679ae1a6e1c59ea60da8d2c5fafdd736a827cf1abe5bbd99361a31a4584d3bc160ed83322d7876e822dbd537adf12c22a2dcec45acfcd645bca'
+            '799a0807de7108ccadf8984f113f36ef2f572712b72b6e647da60efb29bbaa2332be9b2edda265a9e15ce9aa96c6ea19ce9eb52e666beff9a24aa01fbb44548e'
             'SKIP'
-            '82ae1814a22186fd7ba7af5906ae193dcf20af501b60fbd8b321e0123e0118a957c55e460484c8210b29a5c4811c00a5c19a4a2d62bff593f22e45ddddfee7a6'
-            'SKIP'
-            '38b1a85b18d9477ed33b2d0303376f29e8e24197ff01bdfade460c0c7d722366f0c83c457097c25f339320d6f850bd55c16e247d1451572899cb1e6d663c19bf'
+            '25741e37a225cebb6cd4f82a9eb63a86836d060c7f855b8169cf4d9753fe9d7c1c0eb8fea56b20e484f81a93c071e4ac7626586c1b306b8cf9aa35f5840d44c2'
             '77d80d50d8c4323ed36fd2097ba9f6b49bb8d7cae59d32ffa76b309758a7e9f972d26fedd77046d88ce2691bb01a07909f8bdc34ba214414be3bc030ee31994d'
-            '1e0039648a1ef0ef89e671011a61d0989d0684b97a1c0f59a5a0c07bf9ec64465d9182e0d4d71475ae7699c6f3f09f2ad0a51c6a2be2f2a4773fe2053c0939e0'
+            '4b8dadf503ac008ef8ff8d35a39d7271a3ede6b55260df115630d88613ee40919a315e6050527c3553e1ba241aecbf27a2291390d6817b84d8136a76b3a61584'
             'd6faa67f3ef40052152254ae43fee031365d0b1524aa0718b659eb75afc21a3f79ea8d62d66ea311a800109bed545bc8f79e8752319cd378eef2cbd3a09aba22'
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf'
-            '2277183623a71ea296e33755a07910df9cb9df8ff8dade8ef5a12a92d8a789be136cbe268148f8c177337cdea7b0b312397a26f3a5b7f08b065051b8f6ce1735')
-
+            'dc5fcb4103f12f681015873f16fe6235f39889b3ac786f2c9c59a6e708da6c7b3f4982d6d80c299d77d228bb37d5f06836c0f07e77e030e2d747bb9b7a82a466')
+            
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
               '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
