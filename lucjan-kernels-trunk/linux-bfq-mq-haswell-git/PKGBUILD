@@ -70,7 +70,7 @@ pkgbase=linux-bfq-mq-haswell-git
 # pkgname=('linux-bfq-mq-haswell-git-kernel' 'linux-bfq-mq-haswell-git-headers' 'linux-bfq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
 pkgver=4.12.1.r11.g28917cd49df9
-pkgrel=0
+pkgrel=0.1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -488,7 +488,7 @@ done
 sha512sums=('SKIP'
             '25741e37a225cebb6cd4f82a9eb63a86836d060c7f855b8169cf4d9753fe9d7c1c0eb8fea56b20e484f81a93c071e4ac7626586c1b306b8cf9aa35f5840d44c2'
             '77d80d50d8c4323ed36fd2097ba9f6b49bb8d7cae59d32ffa76b309758a7e9f972d26fedd77046d88ce2691bb01a07909f8bdc34ba214414be3bc030ee31994d'
-            '335d774cea9b6438e32512de924794135d22b73123b32deb3779d38937dc186b538485d005384c04ff2c6e9a96247e0aeda062de1eab3cec03e44fdc3a5e0831'
+            '5ae96378d3f2276e00969d26aaee74a4d5bc527d9909a064f095ea1c0b2b5b6fcfe33de26117271d8331d0c7274926081a508d0be8a8ad7728241badf1835362'
             'd6faa67f3ef40052152254ae43fee031365d0b1524aa0718b659eb75afc21a3f79ea8d62d66ea311a800109bed545bc8f79e8752319cd378eef2cbd3a09aba22'
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf'
             'dc5fcb4103f12f681015873f16fe6235f39889b3ac786f2c9c59a6e708da6c7b3f4982d6d80c299d77d228bb37d5f06836c0f07e77e030e2d747bb9b7a82a466')
