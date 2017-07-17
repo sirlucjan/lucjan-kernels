@@ -70,19 +70,19 @@ pkgbase=linux-bfq-mq-haswell-git
 # pkgname=('linux-bfq-mq-haswell-git-kernel' 'linux-bfq-mq-haswell-git-headers' 'linux-bfq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
 pkgver=4.12.2.r0.gab35d16f66d6
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf')
-_bfq_mq_ver='20170710'
+_bfq_mq_ver='20170706'
 _bfq_mq_patch="4.12-bfq-mq-${_bfq_mq_ver}.patch"
 _bfqpath="https://gitlab.com/tom81094/custom-patches/raw/master/bfq-mq/"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v3.15+.patch"
 
 source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git#branch=linux-4.12.y'
-        #"${_bfqpath}/${_bfq_mq_patch}"
+        "${_bfqpath}/${_bfq_mq_patch}"
         "${_bfqpath}/4.13-uuid-block-merge.patch"
         "http://repo-ck.com/source/gcc_patch/${_gcc_patch}.gz"
          # the main kernel config files
@@ -91,7 +91,6 @@ source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.gi
         '90-linux.hook'
          # standard config files for mkinitcpio ramdisk
         'linux.preset'
-        '4.12-bfq-mq-20170710.patch'
         # patches from https://github.com/Algodev-github/bfq-mq/commits/bfq-mq
         )
 
@@ -105,8 +104,14 @@ pkgver() {
 
 prepare() {
     cd "${srcdir}/${_srcname}"
-            
+    
+    ### Fix naming schema in EXTRAVERSION
+        msg "Fix naming schema in EXTRAVERSION"
+        sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" ./Makefile
+    
     ### Patch source with BFQ-MQ
+        msg "Fix naming schema in SUBLEVEL"
+        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 2|g" "${srcdir}/${_bfq_mq_patch}"
         msg "Patching source with BFQ-MQ patches"
         patch -Np1 -i "${srcdir}/${_bfq_mq_patch}"
         patch -Np1 -i "${srcdir}/4.13-uuid-block-merge.patch"
@@ -486,9 +491,9 @@ for _p in ${pkgname[@]}; do
 done
 
 sha512sums=('SKIP'
+            'f0b1c69b6fd22dc84d4b06c9c0ef9ced6a0d32e4c0960cf8938bb726b856f9e4913de936b03f5752c5e434994773b310148727ddd76fa19ff5069e799339a2ed'
             '25741e37a225cebb6cd4f82a9eb63a86836d060c7f855b8169cf4d9753fe9d7c1c0eb8fea56b20e484f81a93c071e4ac7626586c1b306b8cf9aa35f5840d44c2'
             '77d80d50d8c4323ed36fd2097ba9f6b49bb8d7cae59d32ffa76b309758a7e9f972d26fedd77046d88ce2691bb01a07909f8bdc34ba214414be3bc030ee31994d'
             'ccb297500b3f2f79c380a574ff2c8b81f5dc7c74ad565542c368e4610b44633c80ca1c44bbfdee8d80bfb946579fc1ed13e6ed92f2155119a22498265a4213fb'
             'd6faa67f3ef40052152254ae43fee031365d0b1524aa0718b659eb75afc21a3f79ea8d62d66ea311a800109bed545bc8f79e8752319cd378eef2cbd3a09aba22'
-            '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf'
-            'dc5fcb4103f12f681015873f16fe6235f39889b3ac786f2c9c59a6e708da6c7b3f4982d6d80c299d77d228bb37d5f06836c0f07e77e030e2d747bb9b7a82a466')
+            '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf')
