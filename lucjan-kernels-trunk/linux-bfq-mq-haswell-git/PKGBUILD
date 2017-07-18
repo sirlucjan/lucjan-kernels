@@ -70,7 +70,7 @@ pkgbase=linux-bfq-mq-haswell-git
 # pkgname=('linux-bfq-mq-haswell-git-kernel' 'linux-bfq-mq-haswell-git-headers' 'linux-bfq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
 pkgver=4.12.2.r0.gab35d16f66d6
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -107,7 +107,7 @@ prepare() {
     
     ### Fix naming schema in EXTRAVERSION
         msg "Fix naming schema in EXTRAVERSION"
-        sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" ./Makefile
+        sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" "${srcdir}/${_srcname}/Makefile"
     
     ### Patch source with BFQ-MQ
         msg "Fix naming schema in SUBLEVEL"

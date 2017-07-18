@@ -72,7 +72,7 @@ _srcname=linux-4.12
 pkgver=4.12.2
 _pkgver=4.12.1
 __pkgver=4.12.2-rc1
-pkgrel=0.3
+pkgrel=0.4
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -111,10 +111,10 @@ prepare() {
         patch -Np1 -i "${srcdir}/patch-${_pkgver}"
         
     ### Add patch from stable-review
-        msg "Add patch from stable-review"  
-        patch -Np1 -i "${srcdir}/patch-${__pkgver}"
         msg "Fix naming schema in EXTRAVERSION"
-        sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" ./Makefile
+        sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" "${srcdir}/patch-${__pkgver}"
+	msg "Add patch from stable-review"  
+        patch -Np1 -i "${srcdir}/patch-${__pkgver}"
             
     ### Patch source with BFQ-MQ
         msg "Fix naming schema in SUBLEVEL"
