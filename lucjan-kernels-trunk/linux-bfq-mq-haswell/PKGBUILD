@@ -69,10 +69,10 @@ _kyber_disable=y
 pkgbase=linux-bfq-mq-haswell
 # pkgname=('linux-bfq-mq-haswell-kernel' 'linux-bfq-mq-haswell-headers' 'linux-bfq-mq-haswell-docs')
 _srcname=linux-4.12
-pkgver=4.12.2
-_pkgver=4.12.1
-__pkgver=4.12.2-rc1
-pkgrel=0.4
+pkgver=4.12.3
+_pkgver=4.12.2
+__pkgver=4.12.3-rc1
+pkgrel=0
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -118,7 +118,7 @@ prepare() {
             
     ### Patch source with BFQ-MQ
         msg "Fix naming schema in SUBLEVEL"
-        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 2|g" "${srcdir}/${_bfq_mq_patch}"
+        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 3|g" "${srcdir}/${_bfq_mq_patch}"
         msg "Patching source with BFQ-MQ patches"
         patch -Np1 -i "${srcdir}/${_bfq_mq_patch}"
         patch -Np1 -i "${srcdir}/4.13-uuid-block-merge.patch"
@@ -499,9 +499,9 @@ done
 
 sha512sums=('8e81b41b253e63233e92948941f44c6482acb52aa3a3fd172f03a38a86f2c35b2ad4fd407acd1bc3964673eba344fe104d3a03e3ff4bf9cd1f22bd44263bd728'
             'SKIP'
-            '41a3a6943659c05ec58e953215e5125027817be6867ee88b8faf0ac9c89f32876d5df865347be78bfb3fd9b0e4bcd07b84b6fcc6d7a60720280ce502f2d3af93'
+            '3d3e7cea82b20ba841d74f6f63e635143a52ee1428017792aa210ee591fcccf7ee1475c1576257722f0f5891547b69a192d48723ab6f4c189841e17ed8013300'
             'SKIP'
-            'e81c7f033e10990d9ea863c5c095ab8900b5ca2f41b4e42badd5ba6543cf6051acd1c8d9928172e6bae4dbff2a917a0e4a22626fdc510acdac2f40a43bc13eb7'
+            'c61b2fb4c98006d9ca4315de4ff5c3aa6ad6007288bb7ad46a91ab0de1697aa2604009f59f0dd770574e887540c9d681cbf009cc75472c2b26e0fde5a277e077'
             'SKIP'
             'f0b1c69b6fd22dc84d4b06c9c0ef9ced6a0d32e4c0960cf8938bb726b856f9e4913de936b03f5752c5e434994773b310148727ddd76fa19ff5069e799339a2ed'
             '25741e37a225cebb6cd4f82a9eb63a86836d060c7f855b8169cf4d9753fe9d7c1c0eb8fea56b20e484f81a93c071e4ac7626586c1b306b8cf9aa35f5840d44c2'
