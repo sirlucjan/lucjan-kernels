@@ -69,8 +69,8 @@ _kyber_disable=y
 pkgbase=linux-bfq-mq-haswell-git
 # pkgname=('linux-bfq-mq-haswell-git-kernel' 'linux-bfq-mq-haswell-git-headers' 'linux-bfq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
-pkgver=4.12.2.r0.gab35d16f66d6
-pkgrel=3
+pkgver=4.12.2.r85.g908a8d27d1c5
+pkgrel=0
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -111,7 +111,7 @@ prepare() {
     
     ### Patch source with BFQ-MQ
         msg "Fix naming schema in SUBLEVEL"
-        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 2|g" "${srcdir}/${_bfq_mq_patch}"
+        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 3|g" "${srcdir}/${_bfq_mq_patch}"
         msg "Patching source with BFQ-MQ patches"
         patch -Np1 -i "${srcdir}/${_bfq_mq_patch}"
         patch -Np1 -i "${srcdir}/4.13-uuid-block-merge.patch"
