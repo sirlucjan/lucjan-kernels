@@ -72,7 +72,7 @@ _srcname=linux-4.12
 pkgver=4.12.3
 _pkgver=4.12.2
 __pkgver=4.12.3-rc1
-pkgrel=0
+pkgrel=0.1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -111,14 +111,14 @@ prepare() {
         patch -Np1 -i "${srcdir}/patch-${_pkgver}"
         
     ### Add patch from stable-review
-        msg "Fix naming schema in EXTRAVERSION"
-        sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" "${srcdir}/patch-${__pkgver}"
+        #msg "Fix naming schema in EXTRAVERSION"
+        #sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" "${srcdir}/patch-${__pkgver}"
 	msg "Add patch from stable-review"  
         patch -Np1 -i "${srcdir}/patch-${__pkgver}"
             
     ### Patch source with BFQ-MQ
-        msg "Fix naming schema in SUBLEVEL"
-        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 3|g" "${srcdir}/${_bfq_mq_patch}"
+        #msg "Fix naming schema in SUBLEVEL"
+        #sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 3|g" "${srcdir}/${_bfq_mq_patch}"
         msg "Patching source with BFQ-MQ patches"
         patch -Np1 -i "${srcdir}/${_bfq_mq_patch}"
         patch -Np1 -i "${srcdir}/4.13-uuid-block-merge.patch"
@@ -503,7 +503,7 @@ sha512sums=('8e81b41b253e63233e92948941f44c6482acb52aa3a3fd172f03a38a86f2c35b2ad
             'SKIP'
             'c61b2fb4c98006d9ca4315de4ff5c3aa6ad6007288bb7ad46a91ab0de1697aa2604009f59f0dd770574e887540c9d681cbf009cc75472c2b26e0fde5a277e077'
             'SKIP'
-            'f0b1c69b6fd22dc84d4b06c9c0ef9ced6a0d32e4c0960cf8938bb726b856f9e4913de936b03f5752c5e434994773b310148727ddd76fa19ff5069e799339a2ed'
+            'aba8b68a98b7696ffd3b8c59b317332cf14c2b60521a5a1fbff16b780cb73c8bbb1ac7f1694c7e93d9d552eb6f5647fe210f8a004becffb3118461066e3787b4'
             '25741e37a225cebb6cd4f82a9eb63a86836d060c7f855b8169cf4d9753fe9d7c1c0eb8fea56b20e484f81a93c071e4ac7626586c1b306b8cf9aa35f5840d44c2'
             '77d80d50d8c4323ed36fd2097ba9f6b49bb8d7cae59d32ffa76b309758a7e9f972d26fedd77046d88ce2691bb01a07909f8bdc34ba214414be3bc030ee31994d'
             '1afb89e539fd624f4e28cc6ab1411dbfcaa578c2a9328d990dd11b6c781352fd45ce85e1a6db035d66ef7e553d1c2115682d9bc470b12186dc30b5f1a89df91c'
