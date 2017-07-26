@@ -76,7 +76,7 @@ _srcname=linux-4.12
 pkgver=4.12.4
 _pkgver=4.12.3
 __pkgver=4.12.4-rc1
-pkgrel=0.3
+pkgrel=0.4
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -96,7 +96,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         #${_bfqpath}/${_bfq_mq_patch}"
         "${_bfq_mq_patch}"
         "${_bfqpath}/4.13-uuid-block-merge.patch"
-        "${_bfqpath}/4.13-linux-block-for-linus.patch"
+        #"${_bfqpath}/4.13-linux-block-for-linus.patch"
+        "4.13-linux-block-for-linus.patch"
         "0001-Add-extra-checks-related-to-ioprio-class-changes.patch"
         "0001-Add-specific-check-on-st-idle-in-__bfq_requeue_entit.patch"
         "0001-Check-presence-on-tree-of-every-entity-after-every-a.patch"
@@ -527,7 +528,7 @@ sha512sums=('8e81b41b253e63233e92948941f44c6482acb52aa3a3fd172f03a38a86f2c35b2ad
             'SKIP'
             '8b4639f57920b07fd6efff46ae6498c5696907691d6444f8051aecf5ccbbc04ee900fc57351408b86a805255957570476a53d8bad6593d24db40fe4f0ca3ceca'
             '25741e37a225cebb6cd4f82a9eb63a86836d060c7f855b8169cf4d9753fe9d7c1c0eb8fea56b20e484f81a93c071e4ac7626586c1b306b8cf9aa35f5840d44c2'
-            'c5259cd6983853b36ee5c6b5bda3b6074ebde7e6f9db8acf898cfa9d090b129ae33ad9405bca309737f110f478888b88ba723da60620f3afce8ee5c752af92b0'
+            '8368b6847d6f32b6e0c88c097823fbdbe89e63e65a915a3198ae1a4330fe0c4a4cbfeac92b3bbd08d3828ccc8ac961e5122be56f9a41ee855f5c1615f8ca5694'
             'e73d528eb17dd52b7438ca94181feb492a6f6a501320f22443d99d187a4e90192f537ceff2bd0181359ef2fd2fc472351922fbb1a17f1b3db4aba5c00470d805'
             '9e9b9da82b12289d2933ab719025d77120d4b12ce1e7d644fa359b98afbee95915579cee8a2b9bc3766a149275374d00c96595a42e3996fab37761d28275d52f'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'

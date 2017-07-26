@@ -1,0 +1,2491 @@
+diff --git a/Documentation/block/data-integrity.txt b/Documentation/block/data-integrity.txt
+index f56ec97f0d14..934c44ea0c57 100644
+--- a/Documentation/block/data-integrity.txt
++++ b/Documentation/block/data-integrity.txt
+@@ -192,7 +192,7 @@ will require extra work due to the application tag.
+     supported by the block device.
+ 
+ 
+-    int bio_integrity_prep(bio);
++    bool bio_integrity_prep(bio);
+ 
+       To generate IMD for WRITE and to set up buffers for READ, the
+       filesystem must call bio_integrity_prep(bio).
+@@ -201,9 +201,7 @@ will require extra work due to the application tag.
+       sector must be set, and the bio should have all data pages
+       added.  It is up to the caller to ensure that the bio does not
+       change while I/O is in progress.
+-
+-      bio_integrity_prep() should only be called if
+-      bio_integrity_enabled() returned 1.
++      Complete bio with error if prepare failed for some reson.
+ 
+ 
+ 5.3 PASSING EXISTING INTEGRITY METADATA
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index 12bbc6b8657d..60a6835265fc 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -3483,11 +3483,17 @@ static void bfq_update_wr_data(struct bfq_data *bfqd, struct bfq_queue *bfqq)
+ 			}
+ 		}
+ 	}
+-	/* Update weight both if it must be raised and if it must be lowered */
++	/*
++	 * To improve latency (for this or other queues), immediately
++	 * update weight both if it must be raised and if it must be
++	 * lowered. Since, entity may be on some active tree here, and
++	 * might have a pending change of its ioprio class, invoke
++	 * next function with the last parameter unset (see the
++	 * comments on the function).
++	 */
+ 	if ((entity->weight > entity->orig_weight) != (bfqq->wr_coeff > 1))
+-		__bfq_entity_update_weight_prio(
+-			bfq_entity_service_tree(entity),
+-			entity);
++		__bfq_entity_update_weight_prio(bfq_entity_service_tree(entity),
++						entity, false);
+ }
+ 
+ /*
+diff --git a/block/bfq-iosched.h b/block/bfq-iosched.h
+index 5c3bf9861492..8fd83b885774 100644
+--- a/block/bfq-iosched.h
++++ b/block/bfq-iosched.h
+@@ -892,7 +892,8 @@ void bfq_put_idle_entity(struct bfq_service_tree *st,
+ 			 struct bfq_entity *entity);
+ struct bfq_service_tree *
+ __bfq_entity_update_weight_prio(struct bfq_service_tree *old_st,
+-				struct bfq_entity *entity);
++				struct bfq_entity *entity,
++				bool update_class_too);
+ void bfq_bfqq_served(struct bfq_queue *bfqq, int served);
+ void bfq_bfqq_charge_time(struct bfq_data *bfqd, struct bfq_queue *bfqq,
+ 			  unsigned long time_ms);
+diff --git a/block/bfq-wf2q.c b/block/bfq-wf2q.c
+index 8726ede19eef..5ec05cd42b80 100644
+--- a/block/bfq-wf2q.c
++++ b/block/bfq-wf2q.c
+@@ -694,10 +694,28 @@ struct bfq_service_tree *bfq_entity_service_tree(struct bfq_entity *entity)
+ 	return sched_data->service_tree + idx;
+ }
+ 
+-
++/*
++ * Update weight and priority of entity. If update_class_too is true,
++ * then update the ioprio_class of entity too.
++ *
++ * The reason why the update of ioprio_class is controlled through the
++ * last parameter is as follows. Changing the ioprio class of an
++ * entity implies changing the destination service trees for that
++ * entity. If such a change occurred when the entity is already on one
++ * of the service trees for its previous class, then the state of the
++ * entity would become more complex: none of the new possible service
++ * trees for the entity, according to bfq_entity_service_tree(), would
++ * match any of the possible service trees on which the entity
++ * is. Complex operations involving these trees, such as entity
++ * activations and deactivations, should take into account this
++ * additional complexity.  To avoid this issue, this function is
++ * invoked with update_class_too unset in the points in the code where
++ * entity may happen to be on some tree.
++ */
+ struct bfq_service_tree *
+ __bfq_entity_update_weight_prio(struct bfq_service_tree *old_st,
+-				struct bfq_entity *entity)
++				struct bfq_entity *entity,
++				bool update_class_too)
+ {
+ 	struct bfq_service_tree *new_st = old_st;
+ 
+@@ -739,9 +757,15 @@ __bfq_entity_update_weight_prio(struct bfq_service_tree *old_st,
+ 				  bfq_weight_to_ioprio(entity->orig_weight);
+ 		}
+ 
+-		if (bfqq)
++		if (bfqq && update_class_too)
+ 			bfqq->ioprio_class = bfqq->new_ioprio_class;
+-		entity->prio_changed = 0;
++
++		/*
++		 * Reset prio_changed only if the ioprio_class change
++		 * is not pending any longer.
++		 */
++		if (!bfqq || bfqq->ioprio_class == bfqq->new_ioprio_class)
++			entity->prio_changed = 0;
+ 
+ 		/*
+ 		 * NOTE: here we may be changing the weight too early,
+@@ -867,7 +891,12 @@ static void bfq_update_fin_time_enqueue(struct bfq_entity *entity,
+ {
+ 	struct bfq_queue *bfqq = bfq_entity_to_bfqq(entity);
+ 
+-	st = __bfq_entity_update_weight_prio(st, entity);
++	/*
++	 * When this function is invoked, entity is not in any service
++	 * tree, then it is safe to invoke next function with the last
++	 * parameter set (see the comments on the function).
++	 */
++	st = __bfq_entity_update_weight_prio(st, entity, true);
+ 	bfq_calc_finish(entity, entity->budget);
+ 
+ 	/*
+diff --git a/block/bio-integrity.c b/block/bio-integrity.c
+index b8a3a65f7364..83e92beb3c9f 100644
+--- a/block/bio-integrity.c
++++ b/block/bio-integrity.c
+@@ -102,7 +102,7 @@ EXPORT_SYMBOL(bio_integrity_alloc);
+  * Description: Used to free the integrity portion of a bio. Usually
+  * called from bio_free().
+  */
+-void bio_integrity_free(struct bio *bio)
++static void bio_integrity_free(struct bio *bio)
+ {
+ 	struct bio_integrity_payload *bip = bio_integrity(bio);
+ 	struct bio_set *bs = bio->bi_pool;
+@@ -120,8 +120,8 @@ void bio_integrity_free(struct bio *bio)
+ 	}
+ 
+ 	bio->bi_integrity = NULL;
++	bio->bi_opf &= ~REQ_INTEGRITY;
+ }
+-EXPORT_SYMBOL(bio_integrity_free);
+ 
+ /**
+  * bio_integrity_add_page - Attach integrity metadata
+@@ -160,44 +160,6 @@ int bio_integrity_add_page(struct bio *bio, struct page *page,
+ EXPORT_SYMBOL(bio_integrity_add_page);
+ 
+ /**
+- * bio_integrity_enabled - Check whether integrity can be passed
+- * @bio:	bio to check
+- *
+- * Description: Determines whether bio_integrity_prep() can be called
+- * on this bio or not.	bio data direction and target device must be
+- * set prior to calling.  The functions honors the write_generate and
+- * read_verify flags in sysfs.
+- */
+-bool bio_integrity_enabled(struct bio *bio)
+-{
+-	struct blk_integrity *bi = bdev_get_integrity(bio->bi_bdev);
+-
+-	if (bio_op(bio) != REQ_OP_READ && bio_op(bio) != REQ_OP_WRITE)
+-		return false;
+-
+-	if (!bio_sectors(bio))
+-		return false;
+-
+-	/* Already protected? */
+-	if (bio_integrity(bio))
+-		return false;
+-
+-	if (bi == NULL)
+-		return false;
+-
+-	if (bio_data_dir(bio) == READ && bi->profile->verify_fn != NULL &&
+-	    (bi->flags & BLK_INTEGRITY_VERIFY))
+-		return true;
+-
+-	if (bio_data_dir(bio) == WRITE && bi->profile->generate_fn != NULL &&
+-	    (bi->flags & BLK_INTEGRITY_GENERATE))
+-		return true;
+-
+-	return false;
+-}
+-EXPORT_SYMBOL(bio_integrity_enabled);
+-
+-/**
+  * bio_integrity_intervals - Return number of integrity intervals for a bio
+  * @bi:		blk_integrity profile for device
+  * @sectors:	Size of the bio in 512-byte sectors
+@@ -222,10 +184,11 @@ static inline unsigned int bio_integrity_bytes(struct blk_integrity *bi,
+ /**
+  * bio_integrity_process - Process integrity metadata for a bio
+  * @bio:	bio to generate/verify integrity metadata for
++ * @proc_iter:  iterator to process
+  * @proc_fn:	Pointer to the relevant processing function
+  */
+ static blk_status_t bio_integrity_process(struct bio *bio,
+-				 integrity_processing_fn *proc_fn)
++		struct bvec_iter *proc_iter, integrity_processing_fn *proc_fn)
+ {
+ 	struct blk_integrity *bi = bdev_get_integrity(bio->bi_bdev);
+ 	struct blk_integrity_iter iter;
+@@ -238,10 +201,10 @@ static blk_status_t bio_integrity_process(struct bio *bio,
+ 
+ 	iter.disk_name = bio->bi_bdev->bd_disk->disk_name;
+ 	iter.interval = 1 << bi->interval_exp;
+-	iter.seed = bip_get_seed(bip);
++	iter.seed = proc_iter->bi_sector;
+ 	iter.prot_buf = prot_buf;
+ 
+-	bio_for_each_segment(bv, bio, bviter) {
++	__bio_for_each_segment(bv, bio, bviter, *proc_iter) {
+ 		void *kaddr = kmap_atomic(bv.bv_page);
+ 
+ 		iter.data_buf = kaddr + bv.bv_offset;
+@@ -262,14 +225,15 @@ static blk_status_t bio_integrity_process(struct bio *bio,
+  * bio_integrity_prep - Prepare bio for integrity I/O
+  * @bio:	bio to prepare
+  *
+- * Description: Allocates a buffer for integrity metadata, maps the
+- * pages and attaches them to a bio.  The bio must have data
+- * direction, target device and start sector set priot to calling.  In
+- * the WRITE case, integrity metadata will be generated using the
+- * block device's integrity function.  In the READ case, the buffer
++ * Description:  Checks if the bio already has an integrity payload attached.
++ * If it does, the payload has been generated by another kernel subsystem,
++ * and we just pass it through. Otherwise allocates integrity payload.
++ * The bio must have data direction, target device and start sector set priot
++ * to calling.  In the WRITE case, integrity metadata will be generated using
++ * the block device's integrity function.  In the READ case, the buffer
+  * will be prepared for DMA and a suitable end_io handler set up.
+  */
+-int bio_integrity_prep(struct bio *bio)
++bool bio_integrity_prep(struct bio *bio)
+ {
+ 	struct bio_integrity_payload *bip;
+ 	struct blk_integrity *bi;
+@@ -279,20 +243,41 @@ int bio_integrity_prep(struct bio *bio)
+ 	unsigned int len, nr_pages;
+ 	unsigned int bytes, offset, i;
+ 	unsigned int intervals;
++	blk_status_t status;
+ 
+ 	bi = bdev_get_integrity(bio->bi_bdev);
+ 	q = bdev_get_queue(bio->bi_bdev);
+-	BUG_ON(bi == NULL);
+-	BUG_ON(bio_integrity(bio));
++	if (bio_op(bio) != REQ_OP_READ && bio_op(bio) != REQ_OP_WRITE)
++		return true;
+ 
++	if (!bio_sectors(bio))
++		return true;
++
++	/* Already protected? */
++	if (bio_integrity(bio))
++		return true;
++
++	if (bi == NULL)
++		return true;
++
++	if (bio_data_dir(bio) == READ) {
++		if (!bi->profile->verify_fn ||
++		    !(bi->flags & BLK_INTEGRITY_VERIFY))
++			return true;
++	} else {
++		if (!bi->profile->generate_fn ||
++		    !(bi->flags & BLK_INTEGRITY_GENERATE))
++			return true;
++	}
+ 	intervals = bio_integrity_intervals(bi, bio_sectors(bio));
+ 
+ 	/* Allocate kernel buffer for protection data */
+ 	len = intervals * bi->tuple_size;
+ 	buf = kmalloc(len, GFP_NOIO | q->bounce_gfp);
++	status = BLK_STS_RESOURCE;
+ 	if (unlikely(buf == NULL)) {
+ 		printk(KERN_ERR "could not allocate integrity buffer\n");
+-		return -ENOMEM;
++		goto err_end_io;
+ 	}
+ 
+ 	end = (((unsigned long) buf) + len + PAGE_SIZE - 1) >> PAGE_SHIFT;
+@@ -304,7 +289,8 @@ int bio_integrity_prep(struct bio *bio)
+ 	if (IS_ERR(bip)) {
+ 		printk(KERN_ERR "could not allocate data integrity bioset\n");
+ 		kfree(buf);
+-		return PTR_ERR(bip);
++		status = BLK_STS_RESOURCE;
++		goto err_end_io;
+ 	}
+ 
+ 	bip->bip_flags |= BIP_BLOCK_INTEGRITY;
+@@ -330,7 +316,7 @@ int bio_integrity_prep(struct bio *bio)
+ 					     bytes, offset);
+ 
+ 		if (ret == 0)
+-			return 0;
++			return false;
+ 
+ 		if (ret < bytes)
+ 			break;
+@@ -340,17 +326,18 @@ int bio_integrity_prep(struct bio *bio)
+ 		offset = 0;
+ 	}
+ 
+-	/* Install custom I/O completion handler if read verify is enabled */
+-	if (bio_data_dir(bio) == READ) {
+-		bip->bip_end_io = bio->bi_end_io;
+-		bio->bi_end_io = bio_integrity_endio;
++	/* Auto-generate integrity metadata if this is a write */
++	if (bio_data_dir(bio) == WRITE) {
++		bio_integrity_process(bio, &bio->bi_iter,
++				      bi->profile->generate_fn);
+ 	}
++	return true;
+ 
+-	/* Auto-generate integrity metadata if this is a write */
+-	if (bio_data_dir(bio) == WRITE)
+-		bio_integrity_process(bio, bi->profile->generate_fn);
++err_end_io:
++	bio->bi_status = status;
++	bio_endio(bio);
++	return false;
+ 
+-	return 0;
+ }
+ EXPORT_SYMBOL(bio_integrity_prep);
+ 
+@@ -368,16 +355,26 @@ static void bio_integrity_verify_fn(struct work_struct *work)
+ 		container_of(work, struct bio_integrity_payload, bip_work);
+ 	struct bio *bio = bip->bip_bio;
+ 	struct blk_integrity *bi = bdev_get_integrity(bio->bi_bdev);
++	struct bvec_iter iter = bio->bi_iter;
+ 
+-	bio->bi_status = bio_integrity_process(bio, bi->profile->verify_fn);
++	/*
++	 * At the moment verify is called bio's iterator was advanced
++	 * during split and completion, we need to rewind iterator to
++	 * it's original position.
++	 */
++	if (bio_rewind_iter(bio, &iter, iter.bi_done)) {
++		bio->bi_status = bio_integrity_process(bio, &iter,
++						       bi->profile->verify_fn);
++	} else {
++		bio->bi_status = BLK_STS_IOERR;
++	}
+ 
+-	/* Restore original bio completion handler */
+-	bio->bi_end_io = bip->bip_end_io;
++	bio_integrity_free(bio);
+ 	bio_endio(bio);
+ }
+ 
+ /**
+- * bio_integrity_endio - Integrity I/O completion function
++ * __bio_integrity_endio - Integrity I/O completion function
+  * @bio:	Protected bio
+  * @error:	Pointer to errno
+  *
+@@ -388,27 +385,19 @@ static void bio_integrity_verify_fn(struct work_struct *work)
+  * in process context.	This function postpones completion
+  * accordingly.
+  */
+-void bio_integrity_endio(struct bio *bio)
++bool __bio_integrity_endio(struct bio *bio)
+ {
+-	struct bio_integrity_payload *bip = bio_integrity(bio);
+-
+-	BUG_ON(bip->bip_bio != bio);
++	if (bio_op(bio) == REQ_OP_READ && !bio->bi_status) {
++		struct bio_integrity_payload *bip = bio_integrity(bio);
+ 
+-	/* In case of an I/O error there is no point in verifying the
+-	 * integrity metadata.  Restore original bio end_io handler
+-	 * and run it.
+-	 */
+-	if (bio->bi_status) {
+-		bio->bi_end_io = bip->bip_end_io;
+-		bio_endio(bio);
+-
+-		return;
++		INIT_WORK(&bip->bip_work, bio_integrity_verify_fn);
++		queue_work(kintegrityd_wq, &bip->bip_work);
++		return false;
+ 	}
+ 
+-	INIT_WORK(&bip->bip_work, bio_integrity_verify_fn);
+-	queue_work(kintegrityd_wq, &bip->bip_work);
++	bio_integrity_free(bio);
++	return true;
+ }
+-EXPORT_SYMBOL(bio_integrity_endio);
+ 
+ /**
+  * bio_integrity_advance - Advance integrity vector
+@@ -425,6 +414,7 @@ void bio_integrity_advance(struct bio *bio, unsigned int bytes_done)
+ 	struct blk_integrity *bi = bdev_get_integrity(bio->bi_bdev);
+ 	unsigned bytes = bio_integrity_bytes(bi, bytes_done >> 9);
+ 
++	bip->bip_iter.bi_sector += bytes_done >> 9;
+ 	bvec_iter_advance(bip->bip_vec, &bip->bip_iter, bytes);
+ }
+ EXPORT_SYMBOL(bio_integrity_advance);
+@@ -432,22 +422,15 @@ EXPORT_SYMBOL(bio_integrity_advance);
+ /**
+  * bio_integrity_trim - Trim integrity vector
+  * @bio:	bio whose integrity vector to update
+- * @offset:	offset to first data sector
+- * @sectors:	number of data sectors
+  *
+  * Description: Used to trim the integrity vector in a cloned bio.
+- * The ivec will be advanced corresponding to 'offset' data sectors
+- * and the length will be truncated corresponding to 'len' data
+- * sectors.
+  */
+-void bio_integrity_trim(struct bio *bio, unsigned int offset,
+-			unsigned int sectors)
++void bio_integrity_trim(struct bio *bio)
+ {
+ 	struct bio_integrity_payload *bip = bio_integrity(bio);
+ 	struct blk_integrity *bi = bdev_get_integrity(bio->bi_bdev);
+ 
+-	bio_integrity_advance(bio, offset << 9);
+-	bip->bip_iter.bi_size = bio_integrity_bytes(bi, sectors);
++	bip->bip_iter.bi_size = bio_integrity_bytes(bi, bio_sectors(bio));
+ }
+ EXPORT_SYMBOL(bio_integrity_trim);
+ 
+diff --git a/block/bio.c b/block/bio.c
+index 1cfcd0df3f30..9a63597aaacc 100644
+--- a/block/bio.c
++++ b/block/bio.c
+@@ -243,9 +243,6 @@ struct bio_vec *bvec_alloc(gfp_t gfp_mask, int nr, unsigned long *idx,
+ void bio_uninit(struct bio *bio)
+ {
+ 	bio_disassociate_task(bio);
+-
+-	if (bio_integrity(bio))
+-		bio_integrity_free(bio);
+ }
+ EXPORT_SYMBOL(bio_uninit);
+ 
+@@ -1813,6 +1810,8 @@ void bio_endio(struct bio *bio)
+ again:
+ 	if (!bio_remaining_done(bio))
+ 		return;
++	if (!bio_integrity_endio(bio))
++		return;
+ 
+ 	/*
+ 	 * Need to have a real endio function for chained bios, otherwise
+@@ -1834,6 +1833,8 @@ void bio_endio(struct bio *bio)
+ 	}
+ 
+ 	blk_throtl_bio_endio(bio);
++	/* release cgroup info */
++	bio_uninit(bio);
+ 	if (bio->bi_end_io)
+ 		bio->bi_end_io(bio);
+ }
+@@ -1868,7 +1869,7 @@ struct bio *bio_split(struct bio *bio, int sectors,
+ 	split->bi_iter.bi_size = sectors << 9;
+ 
+ 	if (bio_integrity(split))
+-		bio_integrity_trim(split, 0, sectors);
++		bio_integrity_trim(split);
+ 
+ 	bio_advance(bio, split->bi_iter.bi_size);
+ 
+@@ -1900,6 +1901,10 @@ void bio_trim(struct bio *bio, int offset, int size)
+ 	bio_advance(bio, offset << 9);
+ 
+ 	bio->bi_iter.bi_size = size;
++
++	if (bio_integrity(bio))
++		bio_integrity_trim(bio);
++
+ }
+ EXPORT_SYMBOL_GPL(bio_trim);
+ 
+diff --git a/block/blk-core.c b/block/blk-core.c
+index af393d5a9680..970b9c9638c5 100644
+--- a/block/blk-core.c
++++ b/block/blk-core.c
+@@ -1787,11 +1787,8 @@ static blk_qc_t blk_queue_bio(struct request_queue *q, struct bio *bio)
+ 
+ 	blk_queue_split(q, &bio);
+ 
+-	if (bio_integrity_enabled(bio) && bio_integrity_prep(bio)) {
+-		bio->bi_status = BLK_STS_IOERR;
+-		bio_endio(bio);
++	if (!bio_integrity_prep(bio))
+ 		return BLK_QC_T_NONE;
+-	}
+ 
+ 	if (op_is_flush(bio->bi_opf)) {
+ 		spin_lock_irq(q->queue_lock);
+diff --git a/block/blk-lib.c b/block/blk-lib.c
+index e8caecd71688..3fe0aec90597 100644
+--- a/block/blk-lib.c
++++ b/block/blk-lib.c
+@@ -261,6 +261,19 @@ static int __blkdev_issue_write_zeroes(struct block_device *bdev,
+ 	return 0;
+ }
+ 
++/*
++ * Convert a number of 512B sectors to a number of pages.
++ * The result is limited to a number of pages that can fit into a BIO.
++ * Also make sure that the result is always at least 1 (page) for the cases
++ * where nr_sects is lower than the number of sectors in a page.
++ */
++static unsigned int __blkdev_sectors_to_bio_pages(sector_t nr_sects)
++{
++	sector_t bytes = (nr_sects << 9) + PAGE_SIZE - 1;
++
++	return min(bytes >> PAGE_SHIFT, (sector_t)BIO_MAX_PAGES);
++}
++
+ /**
+  * __blkdev_issue_zeroout - generate number of zero filed write bios
+  * @bdev:	blockdev to issue
+@@ -307,18 +320,18 @@ int __blkdev_issue_zeroout(struct block_device *bdev, sector_t sector,
+ 
+ 	ret = 0;
+ 	while (nr_sects != 0) {
+-		bio = next_bio(bio, min(nr_sects, (sector_t)BIO_MAX_PAGES),
+-				gfp_mask);
++		bio = next_bio(bio, __blkdev_sectors_to_bio_pages(nr_sects),
++			       gfp_mask);
+ 		bio->bi_iter.bi_sector = sector;
+ 		bio->bi_bdev   = bdev;
+ 		bio_set_op_attrs(bio, REQ_OP_WRITE, 0);
+ 
+ 		while (nr_sects != 0) {
+-			sz = min((sector_t) PAGE_SIZE >> 9 , nr_sects);
+-			bi_size = bio_add_page(bio, ZERO_PAGE(0), sz << 9, 0);
++			sz = min((sector_t) PAGE_SIZE, nr_sects << 9);
++			bi_size = bio_add_page(bio, ZERO_PAGE(0), sz, 0);
+ 			nr_sects -= bi_size >> 9;
+ 			sector += bi_size >> 9;
+-			if (bi_size < (sz << 9))
++			if (bi_size < sz)
+ 				break;
+ 		}
+ 		cond_resched();
+diff --git a/block/blk-mq-sched.c b/block/blk-mq-sched.c
+index 7f0dc48ffb40..4ab69435708c 100644
+--- a/block/blk-mq-sched.c
++++ b/block/blk-mq-sched.c
+@@ -515,10 +515,12 @@ int blk_mq_init_sched(struct request_queue *q, struct elevator_type *e)
+ 	}
+ 
+ 	/*
+-	 * Default to 256, since we don't split into sync/async like the
+-	 * old code did. Additionally, this is a per-hw queue depth.
++	 * Default to double of smaller one between hw queue_depth and 128,
++	 * since we don't split into sync/async like the old code did.
++	 * Additionally, this is a per-hw queue depth.
+ 	 */
+-	q->nr_requests = 2 * BLKDEV_MAX_RQ;
++	q->nr_requests = 2 * min_t(unsigned int, q->tag_set->queue_depth,
++				   BLKDEV_MAX_RQ);
+ 
+ 	queue_for_each_hw_ctx(q, hctx, i) {
+ 		ret = blk_mq_sched_alloc_tags(q, hctx, i);
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 6cef42f419a5..041f7b7fa0d6 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -1547,10 +1547,8 @@ static blk_qc_t blk_mq_make_request(struct request_queue *q, struct bio *bio)
+ 
+ 	blk_queue_split(q, &bio);
+ 
+-	if (bio_integrity_enabled(bio) && bio_integrity_prep(bio)) {
+-		bio_io_error(bio);
++	if (!bio_integrity_prep(bio))
+ 		return BLK_QC_T_NONE;
+-	}
+ 
+ 	if (!is_flush_fua && !blk_queue_nomerges(q) &&
+ 	    blk_attempt_plug_merge(q, bio, &request_count, &same_queue_rq))
+diff --git a/block/blk.h b/block/blk.h
+index 01ebb8185f6b..3a3d715bd725 100644
+--- a/block/blk.h
++++ b/block/blk.h
+@@ -81,10 +81,21 @@ static inline void blk_queue_enter_live(struct request_queue *q)
+ 
+ #ifdef CONFIG_BLK_DEV_INTEGRITY
+ void blk_flush_integrity(void);
++bool __bio_integrity_endio(struct bio *);
++static inline bool bio_integrity_endio(struct bio *bio)
++{
++	if (bio_integrity(bio))
++		return __bio_integrity_endio(bio);
++	return true;
++}
+ #else
+ static inline void blk_flush_integrity(void)
+ {
+ }
++static inline bool bio_integrity_endio(struct bio *bio)
++{
++	return true;
++}
+ #endif
+ 
+ void blk_timeout_work(struct work_struct *work);
+diff --git a/block/t10-pi.c b/block/t10-pi.c
+index 3416dadf7b15..a98db384048f 100644
+--- a/block/t10-pi.c
++++ b/block/t10-pi.c
+@@ -28,9 +28,6 @@
+ 
+ typedef __be16 (csum_fn) (void *, unsigned int);
+ 
+-static const __be16 APP_ESCAPE = (__force __be16) 0xffff;
+-static const __be32 REF_ESCAPE = (__force __be32) 0xffffffff;
+-
+ static __be16 t10_pi_crc_fn(void *data, unsigned int len)
+ {
+ 	return cpu_to_be16(crc_t10dif(data, len));
+@@ -82,7 +79,7 @@ static blk_status_t t10_pi_verify(struct blk_integrity_iter *iter,
+ 		switch (type) {
+ 		case 1:
+ 		case 2:
+-			if (pi->app_tag == APP_ESCAPE)
++			if (pi->app_tag == T10_PI_APP_ESCAPE)
+ 				goto next;
+ 
+ 			if (be32_to_cpu(pi->ref_tag) !=
+@@ -95,8 +92,8 @@ static blk_status_t t10_pi_verify(struct blk_integrity_iter *iter,
+ 			}
+ 			break;
+ 		case 3:
+-			if (pi->app_tag == APP_ESCAPE &&
+-			    pi->ref_tag == REF_ESCAPE)
++			if (pi->app_tag == T10_PI_APP_ESCAPE &&
++			    pi->ref_tag == T10_PI_REF_ESCAPE)
+ 				goto next;
+ 			break;
+ 		}
+diff --git a/drivers/block/cciss.c b/drivers/block/cciss.c
+index 02a611993bb4..678af946be30 100644
+--- a/drivers/block/cciss.c
++++ b/drivers/block/cciss.c
+@@ -1944,6 +1944,13 @@ static void cciss_get_serial_no(ctlr_info_t *h, int logvol,
+ 	return;
+ }
+ 
++static void cciss_initialize_rq(struct request *rq)
++{
++	struct scsi_request *sreq = blk_mq_rq_to_pdu(rq);
++
++	scsi_req_init(sreq);
++}
++
+ /*
+  * cciss_add_disk sets up the block device queue for a logical drive
+  */
+@@ -1956,6 +1963,7 @@ static int cciss_add_disk(ctlr_info_t *h, struct gendisk *disk,
+ 
+ 	disk->queue->cmd_size = sizeof(struct scsi_request);
+ 	disk->queue->request_fn = do_cciss_request;
++	disk->queue->initialize_rq_fn = cciss_initialize_rq;
+ 	disk->queue->queue_lock = &h->lock;
+ 	queue_flag_set_unlocked(QUEUE_FLAG_SCSI_PASSTHROUGH, disk->queue);
+ 	if (blk_init_allocated_queue(disk->queue) < 0)
+diff --git a/drivers/block/mtip32xx/mtip32xx.c b/drivers/block/mtip32xx/mtip32xx.c
+index 61b046f256ca..4a3cfc7940de 100644
+--- a/drivers/block/mtip32xx/mtip32xx.c
++++ b/drivers/block/mtip32xx/mtip32xx.c
+@@ -174,7 +174,6 @@ static void mtip_init_cmd_header(struct request *rq)
+ {
+ 	struct driver_data *dd = rq->q->queuedata;
+ 	struct mtip_cmd *cmd = blk_mq_rq_to_pdu(rq);
+-	u32 host_cap_64 = readl(dd->mmio + HOST_CAP) & HOST_CAP_64;
+ 
+ 	/* Point the command headers at the command tables. */
+ 	cmd->command_header = dd->port->command_list +
+@@ -182,7 +181,7 @@ static void mtip_init_cmd_header(struct request *rq)
+ 	cmd->command_header_dma = dd->port->command_list_dma +
+ 				(sizeof(struct mtip_cmd_hdr) * rq->tag);
+ 
+-	if (host_cap_64)
++	if (test_bit(MTIP_PF_HOST_CAP_64, &dd->port->flags))
+ 		cmd->command_header->ctbau = __force_bit2int cpu_to_le32((cmd->command_dma >> 16) >> 16);
+ 
+ 	cmd->command_header->ctba = __force_bit2int cpu_to_le32(cmd->command_dma & 0xFFFFFFFF);
+@@ -386,6 +385,7 @@ static void mtip_init_port(struct mtip_port *port)
+ 			 port->mmio + PORT_LST_ADDR_HI);
+ 		writel((port->rxfis_dma >> 16) >> 16,
+ 			 port->mmio + PORT_FIS_ADDR_HI);
++		set_bit(MTIP_PF_HOST_CAP_64, &port->flags);
+ 	}
+ 
+ 	writel(port->command_list_dma & 0xFFFFFFFF,
+@@ -950,7 +950,7 @@ static int mtip_quiesce_io(struct mtip_port *port, unsigned long timeout)
+ 	unsigned long to;
+ 	bool active = true;
+ 
+-	blk_mq_stop_hw_queues(port->dd->queue);
++	blk_mq_quiesce_queue(port->dd->queue);
+ 
+ 	to = jiffies + msecs_to_jiffies(timeout);
+ 	do {
+@@ -970,10 +970,10 @@ static int mtip_quiesce_io(struct mtip_port *port, unsigned long timeout)
+ 			break;
+ 	} while (time_before(jiffies, to));
+ 
+-	blk_mq_start_stopped_hw_queues(port->dd->queue, true);
++	blk_mq_unquiesce_queue(port->dd->queue);
+ 	return active ? -EBUSY : 0;
+ err_fault:
+-	blk_mq_start_stopped_hw_queues(port->dd->queue, true);
++	blk_mq_unquiesce_queue(port->dd->queue);
+ 	return -EFAULT;
+ }
+ 
+@@ -2737,6 +2737,9 @@ static void mtip_abort_cmd(struct request *req, void *data,
+ 	struct mtip_cmd *cmd = blk_mq_rq_to_pdu(req);
+ 	struct driver_data *dd = data;
+ 
++	if (!blk_mq_request_started(req))
++		return;
++
+ 	dbg_printk(MTIP_DRV_NAME " Aborting request, tag = %d\n", req->tag);
+ 
+ 	clear_bit(req->tag, dd->port->cmds_to_issue);
+@@ -2749,6 +2752,9 @@ static void mtip_queue_cmd(struct request *req, void *data,
+ {
+ 	struct driver_data *dd = data;
+ 
++	if (!blk_mq_request_started(req))
++		return;
++
+ 	set_bit(req->tag, dd->port->cmds_to_issue);
+ 	blk_abort_request(req);
+ }
+@@ -2814,6 +2820,8 @@ static int mtip_service_thread(void *data)
+ 				dev_warn(&dd->pdev->dev,
+ 					"Completion workers still active!");
+ 
++			blk_mq_quiesce_queue(dd->queue);
++
+ 			spin_lock(dd->queue->queue_lock);
+ 			blk_mq_tagset_busy_iter(&dd->tags,
+ 							mtip_queue_cmd, dd);
+@@ -2826,6 +2834,8 @@ static int mtip_service_thread(void *data)
+ 							mtip_abort_cmd, dd);
+ 
+ 			clear_bit(MTIP_PF_TO_ACTIVE_BIT, &dd->port->flags);
++
++			blk_mq_unquiesce_queue(dd->queue);
+ 		}
+ 
+ 		if (test_bit(MTIP_PF_ISSUE_CMDS_BIT, &port->flags)) {
+@@ -3995,8 +4005,9 @@ static int mtip_block_remove(struct driver_data *dd)
+ 						dd->disk->disk_name);
+ 
+ 	blk_freeze_queue_start(dd->queue);
+-	blk_mq_stop_hw_queues(dd->queue);
++	blk_mq_quiesce_queue(dd->queue);
+ 	blk_mq_tagset_busy_iter(&dd->tags, mtip_no_dev_cleanup, dd);
++	blk_mq_unquiesce_queue(dd->queue);
+ 
+ 	/*
+ 	 * Delete our gendisk structure. This also removes the device
+diff --git a/drivers/block/mtip32xx/mtip32xx.h b/drivers/block/mtip32xx/mtip32xx.h
+index e8286af50e16..e20e55dab443 100644
+--- a/drivers/block/mtip32xx/mtip32xx.h
++++ b/drivers/block/mtip32xx/mtip32xx.h
+@@ -140,6 +140,7 @@ enum {
+ 				(1 << MTIP_PF_SE_ACTIVE_BIT) |
+ 				(1 << MTIP_PF_DM_ACTIVE_BIT) |
+ 				(1 << MTIP_PF_TO_ACTIVE_BIT)),
++	MTIP_PF_HOST_CAP_64         = 10, /* cache HOST_CAP_64 */
+ 
+ 	MTIP_PF_SVC_THD_ACTIVE_BIT  = 4,
+ 	MTIP_PF_ISSUE_CMDS_BIT      = 5,
+diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
+index 977ec960dd2f..dea7d85134ee 100644
+--- a/drivers/block/nbd.c
++++ b/drivers/block/nbd.c
+@@ -661,9 +661,9 @@ static void nbd_clear_req(struct request *req, void *data, bool reserved)
+ 
+ static void nbd_clear_que(struct nbd_device *nbd)
+ {
+-	blk_mq_stop_hw_queues(nbd->disk->queue);
++	blk_mq_quiesce_queue(nbd->disk->queue);
+ 	blk_mq_tagset_busy_iter(&nbd->tag_set, nbd_clear_req, NULL);
+-	blk_mq_start_hw_queues(nbd->disk->queue);
++	blk_mq_unquiesce_queue(nbd->disk->queue);
+ 	dev_dbg(disk_to_dev(nbd->disk), "queue cleared\n");
+ }
+ 
+diff --git a/drivers/block/null_blk.c b/drivers/block/null_blk.c
+index 71f4422eba81..85c24cace973 100644
+--- a/drivers/block/null_blk.c
++++ b/drivers/block/null_blk.c
+@@ -844,9 +844,6 @@ static int __init null_init(void)
+ 		queue_mode = NULL_Q_MQ;
+ 	}
+ 
+-	if (queue_mode == NULL_Q_MQ && shared_tags)
+-		null_init_tag_set(&tag_set);
+-
+ 	if (queue_mode == NULL_Q_MQ && use_per_node_hctx) {
+ 		if (submit_queues < nr_online_nodes) {
+ 			pr_warn("null_blk: submit_queues param is set to %u.",
+@@ -858,11 +855,19 @@ static int __init null_init(void)
+ 	else if (!submit_queues)
+ 		submit_queues = 1;
+ 
++	if (queue_mode == NULL_Q_MQ && shared_tags) {
++		ret = null_init_tag_set(&tag_set);
++		if (ret)
++			return ret;
++	}
++
+ 	mutex_init(&lock);
+ 
+ 	null_major = register_blkdev(0, "nullb");
+-	if (null_major < 0)
+-		return null_major;
++	if (null_major < 0) {
++		ret = null_major;
++		goto err_tagset;
++	}
+ 
+ 	if (use_lightnvm) {
+ 		ppa_cache = kmem_cache_create("ppa_cache", 64 * sizeof(u64),
+@@ -891,6 +896,9 @@ static int __init null_init(void)
+ 	kmem_cache_destroy(ppa_cache);
+ err_ppa:
+ 	unregister_blkdev(null_major, "nullb");
++err_tagset:
++	if (queue_mode == NULL_Q_MQ && shared_tags)
++		blk_mq_free_tag_set(&tag_set);
+ 	return ret;
+ }
+ 
+diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
+index 0297ad7c1452..4e02aa5fdac0 100644
+--- a/drivers/block/virtio_blk.c
++++ b/drivers/block/virtio_blk.c
+@@ -840,7 +840,7 @@ static int virtblk_freeze(struct virtio_device *vdev)
+ 	/* Make sure no work handler is accessing the device. */
+ 	flush_work(&vblk->config_work);
+ 
+-	blk_mq_stop_hw_queues(vblk->disk->queue);
++	blk_mq_quiesce_queue(vblk->disk->queue);
+ 
+ 	vdev->config->del_vqs(vdev);
+ 	return 0;
+@@ -857,7 +857,7 @@ static int virtblk_restore(struct virtio_device *vdev)
+ 
+ 	virtio_device_ready(vdev);
+ 
+-	blk_mq_start_stopped_hw_queues(vblk->disk->queue, true);
++	blk_mq_unquiesce_queue(vblk->disk->queue);
+ 	return 0;
+ }
+ #endif
+diff --git a/drivers/lightnvm/pblk-core.c b/drivers/lightnvm/pblk-core.c
+index 11fe0c5b2a9c..81501644fb15 100644
+--- a/drivers/lightnvm/pblk-core.c
++++ b/drivers/lightnvm/pblk-core.c
+@@ -1670,13 +1670,10 @@ void pblk_line_run_ws(struct pblk *pblk, struct pblk_line *line, void *priv,
+ 	queue_work(wq, &line_ws->ws);
+ }
+ 
+-void pblk_down_rq(struct pblk *pblk, struct ppa_addr *ppa_list, int nr_ppas,
+-		  unsigned long *lun_bitmap)
++static void __pblk_down_page(struct pblk *pblk, struct ppa_addr *ppa_list,
++			     int nr_ppas, int pos)
+ {
+-	struct nvm_tgt_dev *dev = pblk->dev;
+-	struct nvm_geo *geo = &dev->geo;
+-	struct pblk_lun *rlun;
+-	int pos = pblk_ppa_to_pos(geo, ppa_list[0]);
++	struct pblk_lun *rlun = &pblk->luns[pos];
+ 	int ret;
+ 
+ 	/*
+@@ -1690,14 +1687,8 @@ void pblk_down_rq(struct pblk *pblk, struct ppa_addr *ppa_list, int nr_ppas,
+ 		WARN_ON(ppa_list[0].g.lun != ppa_list[i].g.lun ||
+ 				ppa_list[0].g.ch != ppa_list[i].g.ch);
+ #endif
+-	/* If the LUN has been locked for this same request, do no attempt to
+-	 * lock it again
+-	 */
+-	if (test_and_set_bit(pos, lun_bitmap))
+-		return;
+ 
+-	rlun = &pblk->luns[pos];
+-	ret = down_timeout(&rlun->wr_sem, msecs_to_jiffies(5000));
++	ret = down_timeout(&rlun->wr_sem, msecs_to_jiffies(30000));
+ 	if (ret) {
+ 		switch (ret) {
+ 		case -ETIME:
+@@ -1710,6 +1701,50 @@ void pblk_down_rq(struct pblk *pblk, struct ppa_addr *ppa_list, int nr_ppas,
+ 	}
+ }
+ 
++void pblk_down_page(struct pblk *pblk, struct ppa_addr *ppa_list, int nr_ppas)
++{
++	struct nvm_tgt_dev *dev = pblk->dev;
++	struct nvm_geo *geo = &dev->geo;
++	int pos = pblk_ppa_to_pos(geo, ppa_list[0]);
++
++	__pblk_down_page(pblk, ppa_list, nr_ppas, pos);
++}
++
++void pblk_down_rq(struct pblk *pblk, struct ppa_addr *ppa_list, int nr_ppas,
++		  unsigned long *lun_bitmap)
++{
++	struct nvm_tgt_dev *dev = pblk->dev;
++	struct nvm_geo *geo = &dev->geo;
++	int pos = pblk_ppa_to_pos(geo, ppa_list[0]);
++
++	/* If the LUN has been locked for this same request, do no attempt to
++	 * lock it again
++	 */
++	if (test_and_set_bit(pos, lun_bitmap))
++		return;
++
++	__pblk_down_page(pblk, ppa_list, nr_ppas, pos);
++}
++
++void pblk_up_page(struct pblk *pblk, struct ppa_addr *ppa_list, int nr_ppas)
++{
++	struct nvm_tgt_dev *dev = pblk->dev;
++	struct nvm_geo *geo = &dev->geo;
++	struct pblk_lun *rlun;
++	int pos = pblk_ppa_to_pos(geo, ppa_list[0]);
++
++#ifdef CONFIG_NVM_DEBUG
++	int i;
++
++	for (i = 1; i < nr_ppas; i++)
++		WARN_ON(ppa_list[0].g.lun != ppa_list[i].g.lun ||
++				ppa_list[0].g.ch != ppa_list[i].g.ch);
++#endif
++
++	rlun = &pblk->luns[pos];
++	up(&rlun->wr_sem);
++}
++
+ void pblk_up_rq(struct pblk *pblk, struct ppa_addr *ppa_list, int nr_ppas,
+ 		unsigned long *lun_bitmap)
+ {
+diff --git a/drivers/lightnvm/pblk-recovery.c b/drivers/lightnvm/pblk-recovery.c
+index 0e48d3e4e143..cb556e06673e 100644
+--- a/drivers/lightnvm/pblk-recovery.c
++++ b/drivers/lightnvm/pblk-recovery.c
+@@ -340,9 +340,14 @@ static void pblk_end_io_recov(struct nvm_rq *rqd)
+ 	struct pblk *pblk = pad_rq->pblk;
+ 	struct nvm_tgt_dev *dev = pblk->dev;
+ 
+-	kref_put(&pad_rq->ref, pblk_recov_complete);
++	pblk_up_page(pblk, rqd->ppa_list, rqd->nr_ppas);
++
++	bio_put(rqd->bio);
+ 	nvm_dev_dma_free(dev->parent, rqd->meta_list, rqd->dma_meta_list);
+ 	pblk_free_rqd(pblk, rqd, WRITE);
++
++	atomic_dec(&pblk->inflight_io);
++	kref_put(&pad_rq->ref, pblk_recov_complete);
+ }
+ 
+ static int pblk_recov_pad_oob(struct pblk *pblk, struct pblk_line *line,
+@@ -385,7 +390,7 @@ static int pblk_recov_pad_oob(struct pblk *pblk, struct pblk_line *line,
+ 	rq_ppas = pblk_calc_secs(pblk, left_ppas, 0);
+ 	if (rq_ppas < pblk->min_write_pgs) {
+ 		pr_err("pblk: corrupted pad line %d\n", line->id);
+-		goto free_rq;
++		goto fail_free_pad;
+ 	}
+ 
+ 	rq_len = rq_ppas * geo->sec_size;
+@@ -393,7 +398,7 @@ static int pblk_recov_pad_oob(struct pblk *pblk, struct pblk_line *line,
+ 	meta_list = nvm_dev_dma_alloc(dev->parent, GFP_KERNEL, &dma_meta_list);
+ 	if (!meta_list) {
+ 		ret = -ENOMEM;
+-		goto free_data;
++		goto fail_free_pad;
+ 	}
+ 
+ 	ppa_list = (void *)(meta_list) + pblk_dma_meta_size;
+@@ -404,9 +409,9 @@ static int pblk_recov_pad_oob(struct pblk *pblk, struct pblk_line *line,
+ 		ret = PTR_ERR(rqd);
+ 		goto fail_free_meta;
+ 	}
+-	memset(rqd, 0, pblk_w_rq_size);
+ 
+-	bio = bio_map_kern(dev->q, data, rq_len, GFP_KERNEL);
++	bio = pblk_bio_map_addr(pblk, data, rq_ppas, rq_len,
++						PBLK_VMALLOC_META, GFP_KERNEL);
+ 	if (IS_ERR(bio)) {
+ 		ret = PTR_ERR(bio);
+ 		goto fail_free_rqd;
+@@ -453,15 +458,15 @@ static int pblk_recov_pad_oob(struct pblk *pblk, struct pblk_line *line,
+ 	}
+ 
+ 	kref_get(&pad_rq->ref);
++	pblk_down_page(pblk, rqd->ppa_list, rqd->nr_ppas);
+ 
+ 	ret = pblk_submit_io(pblk, rqd);
+ 	if (ret) {
+ 		pr_err("pblk: I/O submission failed: %d\n", ret);
+-		goto free_data;
++		pblk_up_page(pblk, rqd->ppa_list, rqd->nr_ppas);
++		goto fail_free_bio;
+ 	}
+ 
+-	atomic_dec(&pblk->inflight_io);
+-
+ 	left_line_ppas -= rq_ppas;
+ 	left_ppas -= rq_ppas;
+ 	if (left_ppas && left_line_ppas)
+@@ -475,17 +480,23 @@ static int pblk_recov_pad_oob(struct pblk *pblk, struct pblk_line *line,
+ 		ret = -ETIME;
+ 	}
+ 
++	if (!pblk_line_is_full(line))
++		pr_err("pblk: corrupted padded line: %d\n", line->id);
++
++	vfree(data);
+ free_rq:
+ 	kfree(pad_rq);
+-free_data:
+-	vfree(data);
+ 	return ret;
+ 
++fail_free_bio:
++	bio_put(bio);
+ fail_free_rqd:
+ 	pblk_free_rqd(pblk, rqd, WRITE);
+ fail_free_meta:
+ 	nvm_dev_dma_free(dev->parent, meta_list, dma_meta_list);
++fail_free_pad:
+ 	kfree(pad_rq);
++	vfree(data);
+ 	return ret;
+ }
+ 
+diff --git a/drivers/lightnvm/pblk-write.c b/drivers/lightnvm/pblk-write.c
+index d62a8f4faaf4..3ad9e56d2473 100644
+--- a/drivers/lightnvm/pblk-write.c
++++ b/drivers/lightnvm/pblk-write.c
+@@ -39,9 +39,7 @@ static unsigned long pblk_end_w_bio(struct pblk *pblk, struct nvm_rq *rqd,
+ 
+ 	ret = pblk_rb_sync_advance(&pblk->rwb, c_ctx->nr_valid);
+ 
+-	if (rqd->meta_list)
+-		nvm_dev_dma_free(dev->parent, rqd->meta_list,
+-							rqd->dma_meta_list);
++	nvm_dev_dma_free(dev->parent, rqd->meta_list, rqd->dma_meta_list);
+ 
+ 	bio_put(rqd->bio);
+ 	pblk_free_rqd(pblk, rqd, WRITE);
+@@ -178,15 +176,12 @@ static void pblk_end_io_write_meta(struct nvm_rq *rqd)
+ {
+ 	struct pblk *pblk = rqd->private;
+ 	struct nvm_tgt_dev *dev = pblk->dev;
+-	struct nvm_geo *geo = &dev->geo;
+ 	struct pblk_g_ctx *m_ctx = nvm_rq_to_pdu(rqd);
+ 	struct pblk_line *line = m_ctx->private;
+ 	struct pblk_emeta *emeta = line->emeta;
+-	int pos = pblk_ppa_to_pos(geo, rqd->ppa_list[0]);
+-	struct pblk_lun *rlun = &pblk->luns[pos];
+ 	int sync;
+ 
+-	up(&rlun->wr_sem);
++	pblk_up_page(pblk, rqd->ppa_list, rqd->nr_ppas);
+ 
+ 	if (rqd->error) {
+ 		pblk_log_write_err(pblk, rqd);
+@@ -203,6 +198,7 @@ static void pblk_end_io_write_meta(struct nvm_rq *rqd)
+ 								pblk->close_wq);
+ 
+ 	bio_put(rqd->bio);
++	nvm_dev_dma_free(dev->parent, rqd->meta_list, rqd->dma_meta_list);
+ 	pblk_free_rqd(pblk, rqd, READ);
+ 
+ 	atomic_dec(&pblk->inflight_io);
+@@ -226,9 +222,6 @@ static int pblk_alloc_w_rq(struct pblk *pblk, struct nvm_rq *rqd,
+ 	if (!rqd->meta_list)
+ 		return -ENOMEM;
+ 
+-	if (unlikely(nr_secs == 1))
+-		return 0;
+-
+ 	rqd->ppa_list = rqd->meta_list + pblk_dma_meta_size;
+ 	rqd->dma_ppa_list = rqd->dma_meta_list + pblk_dma_meta_size;
+ 
+@@ -367,7 +360,6 @@ int pblk_submit_meta_io(struct pblk *pblk, struct pblk_line *meta_line)
+ 	struct pblk_line_meta *lm = &pblk->lm;
+ 	struct pblk_emeta *emeta = meta_line->emeta;
+ 	struct pblk_g_ctx *m_ctx;
+-	struct pblk_lun *rlun;
+ 	struct bio *bio;
+ 	struct nvm_rq *rqd;
+ 	void *data;
+@@ -411,13 +403,6 @@ int pblk_submit_meta_io(struct pblk *pblk, struct pblk_line *meta_line)
+ 			rqd->ppa_list[i] = addr_to_gen_ppa(pblk, paddr, id);
+ 	}
+ 
+-	rlun = &pblk->luns[pblk_ppa_to_pos(geo, rqd->ppa_list[0])];
+-	ret = down_timeout(&rlun->wr_sem, msecs_to_jiffies(5000));
+-	if (ret) {
+-		pr_err("pblk: lun semaphore timed out (%d)\n", ret);
+-		goto fail_free_bio;
+-	}
+-
+ 	emeta->mem += rq_len;
+ 	if (emeta->mem >= lm->emeta_len[0]) {
+ 		spin_lock(&l_mg->close_lock);
+@@ -427,6 +412,8 @@ int pblk_submit_meta_io(struct pblk *pblk, struct pblk_line *meta_line)
+ 		spin_unlock(&l_mg->close_lock);
+ 	}
+ 
++	pblk_down_page(pblk, rqd->ppa_list, rqd->nr_ppas);
++
+ 	ret = pblk_submit_io(pblk, rqd);
+ 	if (ret) {
+ 		pr_err("pblk: emeta I/O submission failed: %d\n", ret);
+@@ -436,10 +423,13 @@ int pblk_submit_meta_io(struct pblk *pblk, struct pblk_line *meta_line)
+ 	return NVM_IO_OK;
+ 
+ fail_rollback:
++	pblk_up_page(pblk, rqd->ppa_list, rqd->nr_ppas);
+ 	spin_lock(&l_mg->close_lock);
+ 	pblk_dealloc_page(pblk, meta_line, rq_ppas);
+ 	list_add(&meta_line->list, &meta_line->list);
+ 	spin_unlock(&l_mg->close_lock);
++
++	nvm_dev_dma_free(dev->parent, rqd->meta_list, rqd->dma_meta_list);
+ fail_free_bio:
+ 	if (likely(l_mg->emeta_alloc_type == PBLK_VMALLOC_META))
+ 		bio_put(bio);
+diff --git a/drivers/lightnvm/pblk.h b/drivers/lightnvm/pblk.h
+index 15931381348c..0c5692cc2f60 100644
+--- a/drivers/lightnvm/pblk.h
++++ b/drivers/lightnvm/pblk.h
+@@ -739,8 +739,10 @@ u64 pblk_alloc_page(struct pblk *pblk, struct pblk_line *line, int nr_secs);
+ u64 __pblk_alloc_page(struct pblk *pblk, struct pblk_line *line, int nr_secs);
+ int pblk_calc_secs(struct pblk *pblk, unsigned long secs_avail,
+ 		   unsigned long secs_to_flush);
++void pblk_up_page(struct pblk *pblk, struct ppa_addr *ppa_list, int nr_ppas);
+ void pblk_down_rq(struct pblk *pblk, struct ppa_addr *ppa_list, int nr_ppas,
+ 		  unsigned long *lun_bitmap);
++void pblk_down_page(struct pblk *pblk, struct ppa_addr *ppa_list, int nr_ppas);
+ void pblk_up_rq(struct pblk *pblk, struct ppa_addr *ppa_list, int nr_ppas,
+ 		unsigned long *lun_bitmap);
+ void pblk_end_bio_sync(struct bio *bio);
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index 10cabe961bdb..2edbcc2d7d3f 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -1279,7 +1279,7 @@ static int clone_bio(struct dm_target_io *tio, struct bio *bio,
+ 	clone->bi_iter.bi_size = to_bytes(len);
+ 
+ 	if (unlikely(bio_integrity(bio) != NULL))
+-		bio_integrity_trim(clone, 0, len);
++		bio_integrity_trim(clone);
+ 
+ 	return 0;
+ }
+diff --git a/drivers/nvdimm/blk.c b/drivers/nvdimm/blk.c
+index f12d23c49771..345acca576b3 100644
+--- a/drivers/nvdimm/blk.c
++++ b/drivers/nvdimm/blk.c
+@@ -106,7 +106,8 @@ static int nd_blk_rw_integrity(struct nd_namespace_blk *nsblk,
+ 
+ 		len -= cur_len;
+ 		dev_offset += cur_len;
+-		bvec_iter_advance(bip->bip_vec, &bip->bip_iter, cur_len);
++		if (!bvec_iter_advance(bip->bip_vec, &bip->bip_iter, cur_len))
++			return -EIO;
+ 	}
+ 
+ 	return err;
+@@ -179,16 +180,8 @@ static blk_qc_t nd_blk_make_request(struct request_queue *q, struct bio *bio)
+ 	int err = 0, rw;
+ 	bool do_acct;
+ 
+-	/*
+-	 * bio_integrity_enabled also checks if the bio already has an
+-	 * integrity payload attached. If it does, we *don't* do a
+-	 * bio_integrity_prep here - the payload has been generated by
+-	 * another kernel subsystem, and we just pass it through.
+-	 */
+-	if (bio_integrity_enabled(bio) && bio_integrity_prep(bio)) {
+-		bio->bi_status = BLK_STS_IOERR;
+-		goto out;
+-	}
++	if (!bio_integrity_prep(bio))
++		return BLK_QC_T_NONE;
+ 
+ 	bip = bio_integrity(bio);
+ 	nsblk = q->queuedata;
+@@ -212,7 +205,6 @@ static blk_qc_t nd_blk_make_request(struct request_queue *q, struct bio *bio)
+ 	if (do_acct)
+ 		nd_iostat_end(bio, start);
+ 
+- out:
+ 	bio_endio(bio);
+ 	return BLK_QC_T_NONE;
+ }
+diff --git a/drivers/nvdimm/btt.c b/drivers/nvdimm/btt.c
+index 64216dea5278..14323faf8bd9 100644
+--- a/drivers/nvdimm/btt.c
++++ b/drivers/nvdimm/btt.c
+@@ -985,7 +985,8 @@ static int btt_rw_integrity(struct btt *btt, struct bio_integrity_payload *bip,
+ 
+ 		len -= cur_len;
+ 		meta_nsoff += cur_len;
+-		bvec_iter_advance(bip->bip_vec, &bip->bip_iter, cur_len);
++		if (!bvec_iter_advance(bip->bip_vec, &bip->bip_iter, cur_len))
++			return -EIO;
+ 	}
+ 
+ 	return ret;
+@@ -1203,16 +1204,8 @@ static blk_qc_t btt_make_request(struct request_queue *q, struct bio *bio)
+ 	int err = 0;
+ 	bool do_acct;
+ 
+-	/*
+-	 * bio_integrity_enabled also checks if the bio already has an
+-	 * integrity payload attached. If it does, we *don't* do a
+-	 * bio_integrity_prep here - the payload has been generated by
+-	 * another kernel subsystem, and we just pass it through.
+-	 */
+-	if (bio_integrity_enabled(bio) && bio_integrity_prep(bio)) {
+-		bio->bi_status = BLK_STS_IOERR;
+-		goto out;
+-	}
++	if (!bio_integrity_prep(bio))
++		return BLK_QC_T_NONE;
+ 
+ 	do_acct = nd_iostat_start(bio, &start);
+ 	bio_for_each_segment(bvec, bio, iter) {
+@@ -1239,7 +1232,6 @@ static blk_qc_t btt_make_request(struct request_queue *q, struct bio *bio)
+ 	if (do_acct)
+ 		nd_iostat_end(bio, start);
+ 
+-out:
+ 	bio_endio(bio);
+ 	return BLK_QC_T_NONE;
+ }
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index d70df1d0072d..cb96f4a7ae3a 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -131,7 +131,7 @@ void nvme_complete_rq(struct request *req)
+ {
+ 	if (unlikely(nvme_req(req)->status && nvme_req_needs_retry(req))) {
+ 		nvme_req(req)->retries++;
+-		blk_mq_requeue_request(req, !blk_mq_queue_stopped(req->q));
++		blk_mq_requeue_request(req, true);
+ 		return;
+ 	}
+ 
+@@ -2591,12 +2591,29 @@ static void nvme_release_instance(struct nvme_ctrl *ctrl)
+ 	spin_unlock(&dev_list_lock);
+ }
+ 
+-void nvme_uninit_ctrl(struct nvme_ctrl *ctrl)
++void nvme_stop_ctrl(struct nvme_ctrl *ctrl)
+ {
++	nvme_stop_keep_alive(ctrl);
+ 	flush_work(&ctrl->async_event_work);
+ 	flush_work(&ctrl->scan_work);
+-	nvme_remove_namespaces(ctrl);
++}
++EXPORT_SYMBOL_GPL(nvme_stop_ctrl);
+ 
++void nvme_start_ctrl(struct nvme_ctrl *ctrl)
++{
++	if (ctrl->kato)
++		nvme_start_keep_alive(ctrl);
++
++	if (ctrl->queue_count > 1) {
++		nvme_queue_scan(ctrl);
++		nvme_queue_async_events(ctrl);
++		nvme_start_queues(ctrl);
++	}
++}
++EXPORT_SYMBOL_GPL(nvme_start_ctrl);
++
++void nvme_uninit_ctrl(struct nvme_ctrl *ctrl)
++{
+ 	device_destroy(nvme_class, MKDEV(nvme_char_major, ctrl->instance));
+ 
+ 	spin_lock(&dev_list_lock);
+@@ -2694,9 +2711,6 @@ void nvme_kill_queues(struct nvme_ctrl *ctrl)
+ 	/* Forcibly unquiesce queues to avoid blocking dispatch */
+ 	blk_mq_unquiesce_queue(ctrl->admin_q);
+ 
+-	/* Forcibly start all queues to avoid having stuck requests */
+-	blk_mq_start_hw_queues(ctrl->admin_q);
+-
+ 	list_for_each_entry(ns, &ctrl->namespaces, list) {
+ 		/*
+ 		 * Revalidating a dead namespace sets capacity to 0. This will
+@@ -2709,16 +2723,6 @@ void nvme_kill_queues(struct nvme_ctrl *ctrl)
+ 
+ 		/* Forcibly unquiesce queues to avoid blocking dispatch */
+ 		blk_mq_unquiesce_queue(ns->queue);
+-
+-		/*
+-		 * Forcibly start all queues to avoid having stuck requests.
+-		 * Note that we must ensure the queues are not stopped
+-		 * when the final removal happens.
+-		 */
+-		blk_mq_start_hw_queues(ns->queue);
+-
+-		/* draining requests in requeue list */
+-		blk_mq_kick_requeue_list(ns->queue);
+ 	}
+ 	mutex_unlock(&ctrl->namespaces_mutex);
+ }
+@@ -2787,10 +2791,8 @@ void nvme_start_queues(struct nvme_ctrl *ctrl)
+ 	struct nvme_ns *ns;
+ 
+ 	mutex_lock(&ctrl->namespaces_mutex);
+-	list_for_each_entry(ns, &ctrl->namespaces, list) {
++	list_for_each_entry(ns, &ctrl->namespaces, list)
+ 		blk_mq_unquiesce_queue(ns->queue);
+-		blk_mq_kick_requeue_list(ns->queue);
+-	}
+ 	mutex_unlock(&ctrl->namespaces_mutex);
+ }
+ EXPORT_SYMBOL_GPL(nvme_start_queues);
+diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
+index ed87214fdc0e..d666ada39a9b 100644
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -148,13 +148,10 @@ struct nvme_fc_ctrl {
+ 	struct device		*dev;
+ 	struct nvme_fc_lport	*lport;
+ 	struct nvme_fc_rport	*rport;
+-	u32			queue_count;
+ 	u32			cnum;
+ 
+ 	u64			association_id;
+ 
+-	u64			cap;
+-
+ 	struct list_head	ctrl_list;	/* rport->ctrl_list */
+ 
+ 	struct blk_mq_tag_set	admin_tag_set;
+@@ -1614,7 +1611,7 @@ nvme_fc_free_io_queues(struct nvme_fc_ctrl *ctrl)
+ {
+ 	int i;
+ 
+-	for (i = 1; i < ctrl->queue_count; i++)
++	for (i = 1; i < ctrl->ctrl.queue_count; i++)
+ 		nvme_fc_free_queue(&ctrl->queues[i]);
+ }
+ 
+@@ -1635,10 +1632,10 @@ __nvme_fc_create_hw_queue(struct nvme_fc_ctrl *ctrl,
+ static void
+ nvme_fc_delete_hw_io_queues(struct nvme_fc_ctrl *ctrl)
+ {
+-	struct nvme_fc_queue *queue = &ctrl->queues[ctrl->queue_count - 1];
++	struct nvme_fc_queue *queue = &ctrl->queues[ctrl->ctrl.queue_count - 1];
+ 	int i;
+ 
+-	for (i = ctrl->queue_count - 1; i >= 1; i--, queue--)
++	for (i = ctrl->ctrl.queue_count - 1; i >= 1; i--, queue--)
+ 		__nvme_fc_delete_hw_queue(ctrl, queue, i);
+ }
+ 
+@@ -1648,7 +1645,7 @@ nvme_fc_create_hw_io_queues(struct nvme_fc_ctrl *ctrl, u16 qsize)
+ 	struct nvme_fc_queue *queue = &ctrl->queues[1];
+ 	int i, ret;
+ 
+-	for (i = 1; i < ctrl->queue_count; i++, queue++) {
++	for (i = 1; i < ctrl->ctrl.queue_count; i++, queue++) {
+ 		ret = __nvme_fc_create_hw_queue(ctrl, queue, i, qsize);
+ 		if (ret)
+ 			goto delete_queues;
+@@ -1667,7 +1664,7 @@ nvme_fc_connect_io_queues(struct nvme_fc_ctrl *ctrl, u16 qsize)
+ {
+ 	int i, ret = 0;
+ 
+-	for (i = 1; i < ctrl->queue_count; i++) {
++	for (i = 1; i < ctrl->ctrl.queue_count; i++) {
+ 		ret = nvme_fc_connect_queue(ctrl, &ctrl->queues[i], qsize,
+ 					(qsize / 5));
+ 		if (ret)
+@@ -1685,7 +1682,7 @@ nvme_fc_init_io_queues(struct nvme_fc_ctrl *ctrl)
+ {
+ 	int i;
+ 
+-	for (i = 1; i < ctrl->queue_count; i++)
++	for (i = 1; i < ctrl->ctrl.queue_count; i++)
+ 		nvme_fc_init_queue(ctrl, i, ctrl->ctrl.sqsize);
+ }
+ 
+@@ -1706,6 +1703,7 @@ nvme_fc_ctrl_free(struct kref *ref)
+ 	list_del(&ctrl->ctrl_list);
+ 	spin_unlock_irqrestore(&ctrl->rport->lock, flags);
+ 
++	blk_mq_unquiesce_queue(ctrl->ctrl.admin_q);
+ 	blk_cleanup_queue(ctrl->ctrl.admin_q);
+ 	blk_mq_free_tag_set(&ctrl->admin_tag_set);
+ 
+@@ -1969,10 +1967,9 @@ nvme_fc_start_fcp_op(struct nvme_fc_ctrl *ctrl, struct nvme_fc_queue *queue,
+ 		if (ret != -EBUSY)
+ 			return BLK_STS_IOERR;
+ 
+-		if (op->rq) {
+-			blk_mq_stop_hw_queues(op->rq->q);
+-			blk_mq_delay_queue(queue->hctx, NVMEFC_QUEUE_DELAY);
+-		}
++		if (op->rq)
++			blk_mq_delay_run_hw_queue(queue->hctx, NVMEFC_QUEUE_DELAY);
++
+ 		return BLK_STS_RESOURCE;
+ 	}
+ 
+@@ -2178,17 +2175,20 @@ static int
+ nvme_fc_create_io_queues(struct nvme_fc_ctrl *ctrl)
+ {
+ 	struct nvmf_ctrl_options *opts = ctrl->ctrl.opts;
++	unsigned int nr_io_queues;
+ 	int ret;
+ 
+-	ret = nvme_set_queue_count(&ctrl->ctrl, &opts->nr_io_queues);
++	nr_io_queues = min(min(opts->nr_io_queues, num_online_cpus()),
++				ctrl->lport->ops->max_hw_queues);
++	ret = nvme_set_queue_count(&ctrl->ctrl, &nr_io_queues);
+ 	if (ret) {
+ 		dev_info(ctrl->ctrl.device,
+ 			"set_queue_count failed: %d\n", ret);
+ 		return ret;
+ 	}
+ 
+-	ctrl->queue_count = opts->nr_io_queues + 1;
+-	if (!opts->nr_io_queues)
++	ctrl->ctrl.queue_count = nr_io_queues + 1;
++	if (!nr_io_queues)
+ 		return 0;
+ 
+ 	nvme_fc_init_io_queues(ctrl);
+@@ -2204,7 +2204,7 @@ nvme_fc_create_io_queues(struct nvme_fc_ctrl *ctrl)
+ 						sizeof(struct scatterlist)) +
+ 					ctrl->lport->ops->fcprqst_priv_sz;
+ 	ctrl->tag_set.driver_data = ctrl;
+-	ctrl->tag_set.nr_hw_queues = ctrl->queue_count - 1;
++	ctrl->tag_set.nr_hw_queues = ctrl->ctrl.queue_count - 1;
+ 	ctrl->tag_set.timeout = NVME_IO_TIMEOUT;
+ 
+ 	ret = blk_mq_alloc_tag_set(&ctrl->tag_set);
+@@ -2232,7 +2232,6 @@ nvme_fc_create_io_queues(struct nvme_fc_ctrl *ctrl)
+ out_delete_hw_queues:
+ 	nvme_fc_delete_hw_io_queues(ctrl);
+ out_cleanup_blk_queue:
+-	nvme_stop_keep_alive(&ctrl->ctrl);
+ 	blk_cleanup_queue(ctrl->ctrl.connect_q);
+ out_free_tag_set:
+ 	blk_mq_free_tag_set(&ctrl->tag_set);
+@@ -2248,17 +2247,21 @@ static int
+ nvme_fc_reinit_io_queues(struct nvme_fc_ctrl *ctrl)
+ {
+ 	struct nvmf_ctrl_options *opts = ctrl->ctrl.opts;
++	unsigned int nr_io_queues;
+ 	int ret;
+ 
+-	ret = nvme_set_queue_count(&ctrl->ctrl, &opts->nr_io_queues);
++	nr_io_queues = min(min(opts->nr_io_queues, num_online_cpus()),
++				ctrl->lport->ops->max_hw_queues);
++	ret = nvme_set_queue_count(&ctrl->ctrl, &nr_io_queues);
+ 	if (ret) {
+ 		dev_info(ctrl->ctrl.device,
+ 			"set_queue_count failed: %d\n", ret);
+ 		return ret;
+ 	}
+ 
++	ctrl->ctrl.queue_count = nr_io_queues + 1;
+ 	/* check for io queues existing */
+-	if (ctrl->queue_count == 1)
++	if (ctrl->ctrl.queue_count == 1)
+ 		return 0;
+ 
+ 	nvme_fc_init_io_queues(ctrl);
+@@ -2275,6 +2278,8 @@ nvme_fc_reinit_io_queues(struct nvme_fc_ctrl *ctrl)
+ 	if (ret)
+ 		goto out_delete_hw_queues;
+ 
++	blk_mq_update_nr_hw_queues(&ctrl->tag_set, nr_io_queues);
++
+ 	return 0;
+ 
+ out_delete_hw_queues:
+@@ -2316,7 +2321,7 @@ nvme_fc_create_association(struct nvme_fc_ctrl *ctrl)
+ 		goto out_delete_hw_queue;
+ 
+ 	if (ctrl->ctrl.state != NVME_CTRL_NEW)
+-		blk_mq_start_stopped_hw_queues(ctrl->ctrl.admin_q, true);
++		blk_mq_unquiesce_queue(ctrl->ctrl.admin_q);
+ 
+ 	ret = nvmf_connect_admin_queue(&ctrl->ctrl);
+ 	if (ret)
+@@ -2329,7 +2334,7 @@ nvme_fc_create_association(struct nvme_fc_ctrl *ctrl)
+ 	 * prior connection values
+ 	 */
+ 
+-	ret = nvmf_reg_read64(&ctrl->ctrl, NVME_REG_CAP, &ctrl->cap);
++	ret = nvmf_reg_read64(&ctrl->ctrl, NVME_REG_CAP, &ctrl->ctrl.cap);
+ 	if (ret) {
+ 		dev_err(ctrl->ctrl.device,
+ 			"prop_get NVME_REG_CAP failed\n");
+@@ -2337,9 +2342,9 @@ nvme_fc_create_association(struct nvme_fc_ctrl *ctrl)
+ 	}
+ 
+ 	ctrl->ctrl.sqsize =
+-		min_t(int, NVME_CAP_MQES(ctrl->cap) + 1, ctrl->ctrl.sqsize);
++		min_t(int, NVME_CAP_MQES(ctrl->ctrl.cap) + 1, ctrl->ctrl.sqsize);
+ 
+-	ret = nvme_enable_ctrl(&ctrl->ctrl, ctrl->cap);
++	ret = nvme_enable_ctrl(&ctrl->ctrl, ctrl->ctrl.cap);
+ 	if (ret)
+ 		goto out_disconnect_admin_queue;
+ 
+@@ -2360,8 +2365,6 @@ nvme_fc_create_association(struct nvme_fc_ctrl *ctrl)
+ 		goto out_disconnect_admin_queue;
+ 	}
+ 
+-	nvme_start_keep_alive(&ctrl->ctrl);
+-
+ 	/* FC-NVME supports normal SGL Data Block Descriptors */
+ 
+ 	if (opts->queue_size > ctrl->ctrl.maxcmd) {
+@@ -2381,7 +2384,7 @@ nvme_fc_create_association(struct nvme_fc_ctrl *ctrl)
+ 	 * Create the io queues
+ 	 */
+ 
+-	if (ctrl->queue_count > 1) {
++	if (ctrl->ctrl.queue_count > 1) {
+ 		if (ctrl->ctrl.state == NVME_CTRL_NEW)
+ 			ret = nvme_fc_create_io_queues(ctrl);
+ 		else
+@@ -2395,17 +2398,12 @@ nvme_fc_create_association(struct nvme_fc_ctrl *ctrl)
+ 
+ 	ctrl->ctrl.nr_reconnects = 0;
+ 
+-	if (ctrl->queue_count > 1) {
+-		nvme_start_queues(&ctrl->ctrl);
+-		nvme_queue_scan(&ctrl->ctrl);
+-		nvme_queue_async_events(&ctrl->ctrl);
+-	}
++	nvme_start_ctrl(&ctrl->ctrl);
+ 
+ 	return 0;	/* Success */
+ 
+ out_term_aen_ops:
+ 	nvme_fc_term_aen_ops(ctrl);
+-	nvme_stop_keep_alive(&ctrl->ctrl);
+ out_disconnect_admin_queue:
+ 	/* send a Disconnect(association) LS to fc-nvme target */
+ 	nvme_fc_xmt_disconnect_assoc(ctrl);
+@@ -2428,8 +2426,6 @@ nvme_fc_delete_association(struct nvme_fc_ctrl *ctrl)
+ {
+ 	unsigned long flags;
+ 
+-	nvme_stop_keep_alive(&ctrl->ctrl);
+-
+ 	spin_lock_irqsave(&ctrl->lock, flags);
+ 	ctrl->flags |= FCCTRL_TERMIO;
+ 	ctrl->iocnt = 0;
+@@ -2447,7 +2443,7 @@ nvme_fc_delete_association(struct nvme_fc_ctrl *ctrl)
+ 	 * io requests back to the block layer as part of normal completions
+ 	 * (but with error status).
+ 	 */
+-	if (ctrl->queue_count > 1) {
++	if (ctrl->ctrl.queue_count > 1) {
+ 		nvme_stop_queues(&ctrl->ctrl);
+ 		blk_mq_tagset_busy_iter(&ctrl->tag_set,
+ 				nvme_fc_terminate_exchange, &ctrl->ctrl);
+@@ -2470,7 +2466,7 @@ nvme_fc_delete_association(struct nvme_fc_ctrl *ctrl)
+ 	 * use blk_mq_tagset_busy_itr() and the transport routine to
+ 	 * terminate the exchanges.
+ 	 */
+-	blk_mq_stop_hw_queues(ctrl->ctrl.admin_q);
++	blk_mq_quiesce_queue(ctrl->ctrl.admin_q);
+ 	blk_mq_tagset_busy_iter(&ctrl->admin_tag_set,
+ 				nvme_fc_terminate_exchange, &ctrl->ctrl);
+ 
+@@ -2511,7 +2507,8 @@ nvme_fc_delete_ctrl_work(struct work_struct *work)
+ 
+ 	cancel_work_sync(&ctrl->ctrl.reset_work);
+ 	cancel_delayed_work_sync(&ctrl->connect_work);
+-
++	nvme_stop_ctrl(&ctrl->ctrl);
++	nvme_remove_namespaces(&ctrl->ctrl);
+ 	/*
+ 	 * kill the association on the link side.  this will block
+ 	 * waiting for io to terminate
+@@ -2606,6 +2603,7 @@ nvme_fc_reset_ctrl_work(struct work_struct *work)
+ 		container_of(work, struct nvme_fc_ctrl, ctrl.reset_work);
+ 	int ret;
+ 
++	nvme_stop_ctrl(&ctrl->ctrl);
+ 	/* will block will waiting for io to terminate */
+ 	nvme_fc_delete_association(ctrl);
+ 
+@@ -2702,18 +2700,17 @@ nvme_fc_init_ctrl(struct device *dev, struct nvmf_ctrl_options *opts,
+ 	spin_lock_init(&ctrl->lock);
+ 
+ 	/* io queue count */
+-	ctrl->queue_count = min_t(unsigned int,
++	ctrl->ctrl.queue_count = min_t(unsigned int,
+ 				opts->nr_io_queues,
+ 				lport->ops->max_hw_queues);
+-	opts->nr_io_queues = ctrl->queue_count;	/* so opts has valid value */
+-	ctrl->queue_count++;	/* +1 for admin queue */
++	ctrl->ctrl.queue_count++;	/* +1 for admin queue */
+ 
+ 	ctrl->ctrl.sqsize = opts->queue_size - 1;
+ 	ctrl->ctrl.kato = opts->kato;
+ 
+ 	ret = -ENOMEM;
+-	ctrl->queues = kcalloc(ctrl->queue_count, sizeof(struct nvme_fc_queue),
+-				GFP_KERNEL);
++	ctrl->queues = kcalloc(ctrl->ctrl.queue_count,
++				sizeof(struct nvme_fc_queue), GFP_KERNEL);
+ 	if (!ctrl->queues)
+ 		goto out_free_ida;
+ 
+diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
+index d70ff0fdd36b..8f2a168ddc01 100644
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -142,7 +142,9 @@ struct nvme_ctrl {
+ 	u16 cntlid;
+ 
+ 	u32 ctrl_config;
++	u32 queue_count;
+ 
++	u64 cap;
+ 	u32 page_size;
+ 	u32 max_hw_sectors;
+ 	u16 oncs;
+@@ -278,6 +280,8 @@ int nvme_shutdown_ctrl(struct nvme_ctrl *ctrl);
+ int nvme_init_ctrl(struct nvme_ctrl *ctrl, struct device *dev,
+ 		const struct nvme_ctrl_ops *ops, unsigned long quirks);
+ void nvme_uninit_ctrl(struct nvme_ctrl *ctrl);
++void nvme_start_ctrl(struct nvme_ctrl *ctrl);
++void nvme_stop_ctrl(struct nvme_ctrl *ctrl);
+ void nvme_put_ctrl(struct nvme_ctrl *ctrl);
+ int nvme_init_identify(struct nvme_ctrl *ctrl);
+ 
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index b7a84c523475..d10d2f279d19 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -35,7 +35,6 @@
+ 
+ #include "nvme.h"
+ 
+-#define NVME_Q_DEPTH		1024
+ #define SQ_SIZE(depth)		(depth * sizeof(struct nvme_command))
+ #define CQ_SIZE(depth)		(depth * sizeof(struct nvme_completion))
+ 
+@@ -57,6 +56,16 @@ module_param(max_host_mem_size_mb, uint, 0444);
+ MODULE_PARM_DESC(max_host_mem_size_mb,
+ 	"Maximum Host Memory Buffer (HMB) size per controller (in MiB)");
+ 
++static int io_queue_depth_set(const char *val, const struct kernel_param *kp);
++static const struct kernel_param_ops io_queue_depth_ops = {
++	.set = io_queue_depth_set,
++	.get = param_get_int,
++};
++
++static int io_queue_depth = 1024;
++module_param_cb(io_queue_depth, &io_queue_depth_ops, &io_queue_depth, 0644);
++MODULE_PARM_DESC(io_queue_depth, "set io queue depth, should >= 2");
++
+ struct nvme_dev;
+ struct nvme_queue;
+ 
+@@ -74,7 +83,6 @@ struct nvme_dev {
+ 	struct device *dev;
+ 	struct dma_pool *prp_page_pool;
+ 	struct dma_pool *prp_small_pool;
+-	unsigned queue_count;
+ 	unsigned online_queues;
+ 	unsigned max_qid;
+ 	int q_depth;
+@@ -105,6 +113,17 @@ struct nvme_dev {
+ 	void **host_mem_desc_bufs;
+ };
+ 
++static int io_queue_depth_set(const char *val, const struct kernel_param *kp)
++{
++	int n = 0, ret;
++
++	ret = kstrtoint(val, 10, &n);
++	if (ret != 0 || n < 2)
++		return -EINVAL;
++
++	return param_set_int(val, kp);
++}
++
+ static inline unsigned int sq_idx(unsigned int qid, u32 stride)
+ {
+ 	return qid * 2 * stride;
+@@ -1099,9 +1118,9 @@ static void nvme_free_queues(struct nvme_dev *dev, int lowest)
+ {
+ 	int i;
+ 
+-	for (i = dev->queue_count - 1; i >= lowest; i--) {
++	for (i = dev->ctrl.queue_count - 1; i >= lowest; i--) {
+ 		struct nvme_queue *nvmeq = dev->queues[i];
+-		dev->queue_count--;
++		dev->ctrl.queue_count--;
+ 		dev->queues[i] = NULL;
+ 		nvme_free_queue(nvmeq);
+ 	}
+@@ -1126,7 +1145,7 @@ static int nvme_suspend_queue(struct nvme_queue *nvmeq)
+ 	spin_unlock_irq(&nvmeq->q_lock);
+ 
+ 	if (!nvmeq->qid && nvmeq->dev->ctrl.admin_q)
+-		blk_mq_stop_hw_queues(nvmeq->dev->ctrl.admin_q);
++		blk_mq_quiesce_queue(nvmeq->dev->ctrl.admin_q);
+ 
+ 	pci_free_irq(to_pci_dev(nvmeq->dev->dev), vector, nvmeq);
+ 
+@@ -1145,8 +1164,7 @@ static void nvme_disable_admin_queue(struct nvme_dev *dev, bool shutdown)
+ 	if (shutdown)
+ 		nvme_shutdown_ctrl(&dev->ctrl);
+ 	else
+-		nvme_disable_ctrl(&dev->ctrl, lo_hi_readq(
+-						dev->bar + NVME_REG_CAP));
++		nvme_disable_ctrl(&dev->ctrl, dev->ctrl.cap);
+ 
+ 	spin_lock_irq(&nvmeq->q_lock);
+ 	nvme_process_cq(nvmeq);
+@@ -1221,7 +1239,7 @@ static struct nvme_queue *nvme_alloc_queue(struct nvme_dev *dev, int qid,
+ 	nvmeq->qid = qid;
+ 	nvmeq->cq_vector = -1;
+ 	dev->queues[qid] = nvmeq;
+-	dev->queue_count++;
++	dev->ctrl.queue_count++;
+ 
+ 	return nvmeq;
+ 
+@@ -1317,7 +1335,7 @@ static void nvme_dev_remove_admin(struct nvme_dev *dev)
+ 		 * user requests may be waiting on a stopped queue. Start the
+ 		 * queue to flush these to completion.
+ 		 */
+-		blk_mq_start_stopped_hw_queues(dev->ctrl.admin_q, true);
++		blk_mq_unquiesce_queue(dev->ctrl.admin_q);
+ 		blk_cleanup_queue(dev->ctrl.admin_q);
+ 		blk_mq_free_tag_set(&dev->admin_tagset);
+ 	}
+@@ -1354,7 +1372,7 @@ static int nvme_alloc_admin_tags(struct nvme_dev *dev)
+ 			return -ENODEV;
+ 		}
+ 	} else
+-		blk_mq_start_stopped_hw_queues(dev->ctrl.admin_q, true);
++		blk_mq_unquiesce_queue(dev->ctrl.admin_q);
+ 
+ 	return 0;
+ }
+@@ -1385,11 +1403,10 @@ static int nvme_remap_bar(struct nvme_dev *dev, unsigned long size)
+ 	return 0;
+ }
+ 
+-static int nvme_configure_admin_queue(struct nvme_dev *dev)
++static int nvme_pci_configure_admin_queue(struct nvme_dev *dev)
+ {
+ 	int result;
+ 	u32 aqa;
+-	u64 cap = lo_hi_readq(dev->bar + NVME_REG_CAP);
+ 	struct nvme_queue *nvmeq;
+ 
+ 	result = nvme_remap_bar(dev, db_bar_size(dev, 0));
+@@ -1397,13 +1414,13 @@ static int nvme_configure_admin_queue(struct nvme_dev *dev)
+ 		return result;
+ 
+ 	dev->subsystem = readl(dev->bar + NVME_REG_VS) >= NVME_VS(1, 1, 0) ?
+-						NVME_CAP_NSSRC(cap) : 0;
++				NVME_CAP_NSSRC(dev->ctrl.cap) : 0;
+ 
+ 	if (dev->subsystem &&
+ 	    (readl(dev->bar + NVME_REG_CSTS) & NVME_CSTS_NSSRO))
+ 		writel(NVME_CSTS_NSSRO, dev->bar + NVME_REG_CSTS);
+ 
+-	result = nvme_disable_ctrl(&dev->ctrl, cap);
++	result = nvme_disable_ctrl(&dev->ctrl, dev->ctrl.cap);
+ 	if (result < 0)
+ 		return result;
+ 
+@@ -1422,7 +1439,7 @@ static int nvme_configure_admin_queue(struct nvme_dev *dev)
+ 	lo_hi_writeq(nvmeq->sq_dma_addr, dev->bar + NVME_REG_ASQ);
+ 	lo_hi_writeq(nvmeq->cq_dma_addr, dev->bar + NVME_REG_ACQ);
+ 
+-	result = nvme_enable_ctrl(&dev->ctrl, cap);
++	result = nvme_enable_ctrl(&dev->ctrl, dev->ctrl.cap);
+ 	if (result)
+ 		return result;
+ 
+@@ -1441,7 +1458,7 @@ static int nvme_create_io_queues(struct nvme_dev *dev)
+ 	unsigned i, max;
+ 	int ret = 0;
+ 
+-	for (i = dev->queue_count; i <= dev->max_qid; i++) {
++	for (i = dev->ctrl.queue_count; i <= dev->max_qid; i++) {
+ 		/* vector == qid - 1, match nvme_create_queue */
+ 		if (!nvme_alloc_queue(dev, i, dev->q_depth,
+ 		     pci_irq_get_node(to_pci_dev(dev->dev), i - 1))) {
+@@ -1450,7 +1467,7 @@ static int nvme_create_io_queues(struct nvme_dev *dev)
+ 		}
+ 	}
+ 
+-	max = min(dev->max_qid, dev->queue_count - 1);
++	max = min(dev->max_qid, dev->ctrl.queue_count - 1);
+ 	for (i = dev->online_queues; i <= max; i++) {
+ 		ret = nvme_create_queue(dev->queues[i], i);
+ 		if (ret)
+@@ -1585,9 +1602,10 @@ static void nvme_free_host_mem(struct nvme_dev *dev)
+ static int nvme_alloc_host_mem(struct nvme_dev *dev, u64 min, u64 preferred)
+ {
+ 	struct nvme_host_mem_buf_desc *descs;
+-	u32 chunk_size, max_entries, i = 0;
++	u32 chunk_size, max_entries;
++	int i = 0;
+ 	void **bufs;
+-	u64 size, tmp;
++	u64 size = 0, tmp;
+ 
+ 	/* start big and work our way down */
+ 	chunk_size = min(preferred, (u64)PAGE_SIZE << MAX_ORDER);
+@@ -1866,7 +1884,6 @@ static int nvme_dev_add(struct nvme_dev *dev)
+ 
+ static int nvme_pci_enable(struct nvme_dev *dev)
+ {
+-	u64 cap;
+ 	int result = -ENOMEM;
+ 	struct pci_dev *pdev = to_pci_dev(dev->dev);
+ 
+@@ -1893,10 +1910,11 @@ static int nvme_pci_enable(struct nvme_dev *dev)
+ 	if (result < 0)
+ 		return result;
+ 
+-	cap = lo_hi_readq(dev->bar + NVME_REG_CAP);
++	dev->ctrl.cap = lo_hi_readq(dev->bar + NVME_REG_CAP);
+ 
+-	dev->q_depth = min_t(int, NVME_CAP_MQES(cap) + 1, NVME_Q_DEPTH);
+-	dev->db_stride = 1 << NVME_CAP_STRIDE(cap);
++	dev->q_depth = min_t(int, NVME_CAP_MQES(dev->ctrl.cap) + 1,
++				io_queue_depth);
++	dev->db_stride = 1 << NVME_CAP_STRIDE(dev->ctrl.cap);
+ 	dev->dbs = dev->bar + 4096;
+ 
+ 	/*
+@@ -1908,6 +1926,12 @@ static int nvme_pci_enable(struct nvme_dev *dev)
+ 		dev_warn(dev->ctrl.device, "detected Apple NVMe controller, "
+ 			"set queue depth=%u to work around controller resets\n",
+ 			dev->q_depth);
++	} else if (pdev->vendor == PCI_VENDOR_ID_SAMSUNG &&
++		   (pdev->device == 0xa821 || pdev->device == 0xa822) &&
++		   NVME_CAP_MQES(dev->ctrl.cap) == 0) {
++		dev->q_depth = 64;
++		dev_err(dev->ctrl.device, "detected PM1725 NVMe controller, "
++                        "set queue depth=%u\n", dev->q_depth);
+ 	}
+ 
+ 	/*
+@@ -1996,7 +2020,7 @@ static void nvme_dev_disable(struct nvme_dev *dev, bool shutdown)
+ 	nvme_stop_queues(&dev->ctrl);
+ 
+ 	queues = dev->online_queues - 1;
+-	for (i = dev->queue_count - 1; i > 0; i--)
++	for (i = dev->ctrl.queue_count - 1; i > 0; i--)
+ 		nvme_suspend_queue(dev->queues[i]);
+ 
+ 	if (dead) {
+@@ -2004,7 +2028,7 @@ static void nvme_dev_disable(struct nvme_dev *dev, bool shutdown)
+ 		 * probe, before the admin queue is configured. Thus,
+ 		 * queue_count can be 0 here.
+ 		 */
+-		if (dev->queue_count)
++		if (dev->ctrl.queue_count)
+ 			nvme_suspend_queue(dev->queues[0]);
+ 	} else {
+ 		nvme_disable_io_queues(dev, queues);
+@@ -2094,7 +2118,7 @@ static void nvme_reset_work(struct work_struct *work)
+ 	if (result)
+ 		goto out;
+ 
+-	result = nvme_configure_admin_queue(dev);
++	result = nvme_pci_configure_admin_queue(dev);
+ 	if (result)
+ 		goto out;
+ 
+@@ -2133,15 +2157,6 @@ static void nvme_reset_work(struct work_struct *work)
+ 		goto out;
+ 
+ 	/*
+-	 * A controller that can not execute IO typically requires user
+-	 * intervention to correct. For such degraded controllers, the driver
+-	 * should not submit commands the user did not request, so skip
+-	 * registering for asynchronous event notification on this condition.
+-	 */
+-	if (dev->online_queues > 1)
+-		nvme_queue_async_events(&dev->ctrl);
+-
+-	/*
+ 	 * Keep the controller around but remove all namespaces if we don't have
+ 	 * any working I/O queue.
+ 	 */
+@@ -2161,8 +2176,7 @@ static void nvme_reset_work(struct work_struct *work)
+ 		goto out;
+ 	}
+ 
+-	if (dev->online_queues > 1)
+-		nvme_queue_scan(&dev->ctrl);
++	nvme_start_ctrl(&dev->ctrl);
+ 	return;
+ 
+  out:
+@@ -2341,11 +2355,13 @@ static void nvme_remove(struct pci_dev *pdev)
+ 	}
+ 
+ 	flush_work(&dev->ctrl.reset_work);
+-	nvme_uninit_ctrl(&dev->ctrl);
++	nvme_stop_ctrl(&dev->ctrl);
++	nvme_remove_namespaces(&dev->ctrl);
+ 	nvme_dev_disable(dev, true);
+ 	nvme_free_host_mem(dev);
+ 	nvme_dev_remove_admin(dev);
+ 	nvme_free_queues(dev, 0);
++	nvme_uninit_ctrl(&dev->ctrl);
+ 	nvme_release_prp_pools(dev);
+ 	nvme_dev_unmap(dev);
+ 	nvme_put_ctrl(&dev->ctrl);
+@@ -2458,6 +2474,10 @@ static const struct pci_device_id nvme_id_table[] = {
+ 		.driver_data = NVME_QUIRK_DELAY_BEFORE_CHK_RDY, },
+ 	{ PCI_DEVICE(0x1c5f, 0x0540),	/* Memblaze Pblaze4 adapter */
+ 		.driver_data = NVME_QUIRK_DELAY_BEFORE_CHK_RDY, },
++	{ PCI_DEVICE(0x144d, 0xa821),   /* Samsung PM1725 */
++		.driver_data = NVME_QUIRK_DELAY_BEFORE_CHK_RDY, },
++	{ PCI_DEVICE(0x144d, 0xa822),   /* Samsung PM1725a */
++		.driver_data = NVME_QUIRK_DELAY_BEFORE_CHK_RDY, },
+ 	{ PCI_DEVICE_CLASS(PCI_CLASS_STORAGE_EXPRESS, 0xffffff) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2001) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2003) },
+diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
+index 7692a96c9065..1e6dcc241b3c 100644
+--- a/drivers/nvme/target/fc.c
++++ b/drivers/nvme/target/fc.c
+@@ -1164,18 +1164,24 @@ nvmet_fc_ls_create_association(struct nvmet_fc_tgtport *tgtport,
+ 
+ 	memset(acc, 0, sizeof(*acc));
+ 
+-	if (iod->rqstdatalen < sizeof(struct fcnvme_ls_cr_assoc_rqst))
++	/*
++	 * FC-NVME spec changes. There are initiators sending different
++	 * lengths as padding sizes for Create Association Cmd descriptor
++	 * was incorrect.
++	 * Accept anything of "minimum" length. Assume format per 1.15
++	 * spec (with HOSTID reduced to 16 bytes), ignore how long the
++	 * trailing pad length is.
++	 */
++	if (iod->rqstdatalen < FCNVME_LSDESC_CRA_RQST_MINLEN)
+ 		ret = VERR_CR_ASSOC_LEN;
+-	else if (rqst->desc_list_len !=
+-			fcnvme_lsdesc_len(
+-				sizeof(struct fcnvme_ls_cr_assoc_rqst)))
++	else if (rqst->desc_list_len <
++			cpu_to_be32(FCNVME_LSDESC_CRA_RQST_MIN_LISTLEN))
+ 		ret = VERR_CR_ASSOC_RQST_LEN;
+ 	else if (rqst->assoc_cmd.desc_tag !=
+ 			cpu_to_be32(FCNVME_LSDESC_CREATE_ASSOC_CMD))
+ 		ret = VERR_CR_ASSOC_CMD;
+-	else if (rqst->assoc_cmd.desc_len !=
+-			fcnvme_lsdesc_len(
+-				sizeof(struct fcnvme_lsdesc_cr_assoc_cmd)))
++	else if (rqst->assoc_cmd.desc_len <
++			cpu_to_be32(FCNVME_LSDESC_CRA_CMD_DESC_MIN_DESCLEN))
+ 		ret = VERR_CR_ASSOC_CMD_LEN;
+ 	else if (!rqst->assoc_cmd.ersp_ratio ||
+ 		 (be16_to_cpu(rqst->assoc_cmd.ersp_ratio) >=
+diff --git a/drivers/nvme/target/io-cmd.c b/drivers/nvme/target/io-cmd.c
+index 40128793e613..3b4d47a6abdb 100644
+--- a/drivers/nvme/target/io-cmd.c
++++ b/drivers/nvme/target/io-cmd.c
+@@ -85,7 +85,7 @@ static void nvmet_execute_rw(struct nvmet_req *req)
+ 			bio_set_op_attrs(bio, op, op_flags);
+ 
+ 			bio_chain(bio, prev);
+-			cookie = submit_bio(prev);
++			submit_bio(prev);
+ 		}
+ 
+ 		sector += sg->length >> 9;
+diff --git a/drivers/nvme/target/loop.c b/drivers/nvme/target/loop.c
+index 5f55c683b338..717ed7ddb2f6 100644
+--- a/drivers/nvme/target/loop.c
++++ b/drivers/nvme/target/loop.c
+@@ -44,12 +44,10 @@ struct nvme_loop_iod {
+ 
+ struct nvme_loop_ctrl {
+ 	struct nvme_loop_queue	*queues;
+-	u32			queue_count;
+ 
+ 	struct blk_mq_tag_set	admin_tag_set;
+ 
+ 	struct list_head	list;
+-	u64			cap;
+ 	struct blk_mq_tag_set	tag_set;
+ 	struct nvme_loop_iod	async_event_iod;
+ 	struct nvme_ctrl	ctrl;
+@@ -241,7 +239,7 @@ static int nvme_loop_init_hctx(struct blk_mq_hw_ctx *hctx, void *data,
+ 	struct nvme_loop_ctrl *ctrl = data;
+ 	struct nvme_loop_queue *queue = &ctrl->queues[hctx_idx + 1];
+ 
+-	BUG_ON(hctx_idx >= ctrl->queue_count);
++	BUG_ON(hctx_idx >= ctrl->ctrl.queue_count);
+ 
+ 	hctx->driver_data = queue;
+ 	return 0;
+@@ -307,7 +305,7 @@ static void nvme_loop_destroy_io_queues(struct nvme_loop_ctrl *ctrl)
+ {
+ 	int i;
+ 
+-	for (i = 1; i < ctrl->queue_count; i++)
++	for (i = 1; i < ctrl->ctrl.queue_count; i++)
+ 		nvmet_sq_destroy(&ctrl->queues[i].nvme_sq);
+ }
+ 
+@@ -330,7 +328,7 @@ static int nvme_loop_init_io_queues(struct nvme_loop_ctrl *ctrl)
+ 		if (ret)
+ 			goto out_destroy_queues;
+ 
+-		ctrl->queue_count++;
++		ctrl->ctrl.queue_count++;
+ 	}
+ 
+ 	return 0;
+@@ -344,7 +342,7 @@ static int nvme_loop_connect_io_queues(struct nvme_loop_ctrl *ctrl)
+ {
+ 	int i, ret;
+ 
+-	for (i = 1; i < ctrl->queue_count; i++) {
++	for (i = 1; i < ctrl->ctrl.queue_count; i++) {
+ 		ret = nvmf_connect_io_queue(&ctrl->ctrl, i);
+ 		if (ret)
+ 			return ret;
+@@ -372,7 +370,7 @@ static int nvme_loop_configure_admin_queue(struct nvme_loop_ctrl *ctrl)
+ 	error = nvmet_sq_init(&ctrl->queues[0].nvme_sq);
+ 	if (error)
+ 		return error;
+-	ctrl->queue_count = 1;
++	ctrl->ctrl.queue_count = 1;
+ 
+ 	error = blk_mq_alloc_tag_set(&ctrl->admin_tag_set);
+ 	if (error)
+@@ -388,7 +386,7 @@ static int nvme_loop_configure_admin_queue(struct nvme_loop_ctrl *ctrl)
+ 	if (error)
+ 		goto out_cleanup_queue;
+ 
+-	error = nvmf_reg_read64(&ctrl->ctrl, NVME_REG_CAP, &ctrl->cap);
++	error = nvmf_reg_read64(&ctrl->ctrl, NVME_REG_CAP, &ctrl->ctrl.cap);
+ 	if (error) {
+ 		dev_err(ctrl->ctrl.device,
+ 			"prop_get NVME_REG_CAP failed\n");
+@@ -396,9 +394,9 @@ static int nvme_loop_configure_admin_queue(struct nvme_loop_ctrl *ctrl)
+ 	}
+ 
+ 	ctrl->ctrl.sqsize =
+-		min_t(int, NVME_CAP_MQES(ctrl->cap), ctrl->ctrl.sqsize);
++		min_t(int, NVME_CAP_MQES(ctrl->ctrl.cap), ctrl->ctrl.sqsize);
+ 
+-	error = nvme_enable_ctrl(&ctrl->ctrl, ctrl->cap);
++	error = nvme_enable_ctrl(&ctrl->ctrl, ctrl->ctrl.cap);
+ 	if (error)
+ 		goto out_cleanup_queue;
+ 
+@@ -409,8 +407,6 @@ static int nvme_loop_configure_admin_queue(struct nvme_loop_ctrl *ctrl)
+ 	if (error)
+ 		goto out_cleanup_queue;
+ 
+-	nvme_start_keep_alive(&ctrl->ctrl);
+-
+ 	return 0;
+ 
+ out_cleanup_queue:
+@@ -424,9 +420,7 @@ static int nvme_loop_configure_admin_queue(struct nvme_loop_ctrl *ctrl)
+ 
+ static void nvme_loop_shutdown_ctrl(struct nvme_loop_ctrl *ctrl)
+ {
+-	nvme_stop_keep_alive(&ctrl->ctrl);
+-
+-	if (ctrl->queue_count > 1) {
++	if (ctrl->ctrl.queue_count > 1) {
+ 		nvme_stop_queues(&ctrl->ctrl);
+ 		blk_mq_tagset_busy_iter(&ctrl->tag_set,
+ 					nvme_cancel_request, &ctrl->ctrl);
+@@ -436,9 +430,10 @@ static void nvme_loop_shutdown_ctrl(struct nvme_loop_ctrl *ctrl)
+ 	if (ctrl->ctrl.state == NVME_CTRL_LIVE)
+ 		nvme_shutdown_ctrl(&ctrl->ctrl);
+ 
+-	blk_mq_stop_hw_queues(ctrl->ctrl.admin_q);
++	blk_mq_quiesce_queue(ctrl->ctrl.admin_q);
+ 	blk_mq_tagset_busy_iter(&ctrl->admin_tag_set,
+ 				nvme_cancel_request, &ctrl->ctrl);
++	blk_mq_unquiesce_queue(ctrl->ctrl.admin_q);
+ 	nvme_loop_destroy_admin_queue(ctrl);
+ }
+ 
+@@ -447,8 +442,10 @@ static void nvme_loop_del_ctrl_work(struct work_struct *work)
+ 	struct nvme_loop_ctrl *ctrl = container_of(work,
+ 				struct nvme_loop_ctrl, delete_work);
+ 
+-	nvme_uninit_ctrl(&ctrl->ctrl);
++	nvme_stop_ctrl(&ctrl->ctrl);
++	nvme_remove_namespaces(&ctrl->ctrl);
+ 	nvme_loop_shutdown_ctrl(ctrl);
++	nvme_uninit_ctrl(&ctrl->ctrl);
+ 	nvme_put_ctrl(&ctrl->ctrl);
+ }
+ 
+@@ -496,6 +493,7 @@ static void nvme_loop_reset_ctrl_work(struct work_struct *work)
+ 	bool changed;
+ 	int ret;
+ 
++	nvme_stop_ctrl(&ctrl->ctrl);
+ 	nvme_loop_shutdown_ctrl(ctrl);
+ 
+ 	ret = nvme_loop_configure_admin_queue(ctrl);
+@@ -510,13 +508,13 @@ static void nvme_loop_reset_ctrl_work(struct work_struct *work)
+ 	if (ret)
+ 		goto out_destroy_io;
+ 
++	blk_mq_update_nr_hw_queues(&ctrl->tag_set,
++			ctrl->ctrl.queue_count - 1);
++
+ 	changed = nvme_change_ctrl_state(&ctrl->ctrl, NVME_CTRL_LIVE);
+ 	WARN_ON_ONCE(!changed);
+ 
+-	nvme_queue_scan(&ctrl->ctrl);
+-	nvme_queue_async_events(&ctrl->ctrl);
+-
+-	nvme_start_queues(&ctrl->ctrl);
++	nvme_start_ctrl(&ctrl->ctrl);
+ 
+ 	return;
+ 
+@@ -559,7 +557,7 @@ static int nvme_loop_create_io_queues(struct nvme_loop_ctrl *ctrl)
+ 	ctrl->tag_set.cmd_size = sizeof(struct nvme_loop_iod) +
+ 		SG_CHUNK_SIZE * sizeof(struct scatterlist);
+ 	ctrl->tag_set.driver_data = ctrl;
+-	ctrl->tag_set.nr_hw_queues = ctrl->queue_count - 1;
++	ctrl->tag_set.nr_hw_queues = ctrl->ctrl.queue_count - 1;
+ 	ctrl->tag_set.timeout = NVME_IO_TIMEOUT;
+ 	ctrl->ctrl.tagset = &ctrl->tag_set;
+ 
+@@ -651,10 +649,7 @@ static struct nvme_ctrl *nvme_loop_create_ctrl(struct device *dev,
+ 	list_add_tail(&ctrl->list, &nvme_loop_ctrl_list);
+ 	mutex_unlock(&nvme_loop_ctrl_mutex);
+ 
+-	if (opts->nr_io_queues) {
+-		nvme_queue_scan(&ctrl->ctrl);
+-		nvme_queue_async_events(&ctrl->ctrl);
+-	}
++	nvme_start_ctrl(&ctrl->ctrl);
+ 
+ 	return &ctrl->ctrl;
+ 
+diff --git a/drivers/scsi/lpfc/lpfc_scsi.c b/drivers/scsi/lpfc/lpfc_scsi.c
+index cfe1d01eb73f..adc784539061 100644
+--- a/drivers/scsi/lpfc/lpfc_scsi.c
++++ b/drivers/scsi/lpfc/lpfc_scsi.c
+@@ -26,6 +26,7 @@
+ #include <linux/export.h>
+ #include <linux/delay.h>
+ #include <asm/unaligned.h>
++#include <linux/t10-pi.h>
+ #include <linux/crc-t10dif.h>
+ #include <net/checksum.h>
+ 
+@@ -2934,8 +2935,8 @@ lpfc_calc_bg_err(struct lpfc_hba *phba, struct lpfc_scsi_buf *lpfc_cmd)
+ 				 * First check to see if a protection data
+ 				 * check is valid
+ 				 */
+-				if ((src->ref_tag == 0xffffffff) ||
+-				    (src->app_tag == 0xffff)) {
++				if ((src->ref_tag == T10_PI_REF_ESCAPE) ||
++				    (src->app_tag == T10_PI_APP_ESCAPE)) {
+ 					start_ref_tag++;
+ 					goto skipit;
+ 				}
+diff --git a/drivers/scsi/qla2xxx/qla_isr.c b/drivers/scsi/qla2xxx/qla_isr.c
+index 6c6e624a5aa6..7b3b702ef622 100644
+--- a/drivers/scsi/qla2xxx/qla_isr.c
++++ b/drivers/scsi/qla2xxx/qla_isr.c
+@@ -2040,9 +2040,9 @@ qla2x00_handle_dif_error(srb_t *sp, struct sts_entry_24xx *sts24)
+ 	 * For type     3: ref & app tag is all 'f's
+ 	 * For type 0,1,2: app tag is all 'f's
+ 	 */
+-	if ((a_app_tag == 0xffff) &&
++	if ((a_app_tag == T10_PI_APP_ESCAPE) &&
+ 	    ((scsi_get_prot_type(cmd) != SCSI_PROT_DIF_TYPE3) ||
+-	     (a_ref_tag == 0xffffffff))) {
++	     (a_ref_tag == T10_PI_REF_ESCAPE))) {
+ 		uint32_t blocks_done, resid;
+ 		sector_t lba_s = scsi_get_lba(cmd);
+ 
+@@ -2084,9 +2084,9 @@ qla2x00_handle_dif_error(srb_t *sp, struct sts_entry_24xx *sts24)
+ 			spt = page_address(sg_page(sg)) + sg->offset;
+ 			spt += j;
+ 
+-			spt->app_tag = 0xffff;
++			spt->app_tag = T10_PI_APP_ESCAPE;
+ 			if (scsi_get_prot_type(cmd) == SCSI_PROT_DIF_TYPE3)
+-				spt->ref_tag = 0xffffffff;
++				spt->ref_tag = T10_PI_REF_ESCAPE;
+ 		}
+ 
+ 		return 0;
+diff --git a/drivers/target/target_core_sbc.c b/drivers/target/target_core_sbc.c
+index 4316f7b65fb7..dc9456e7dac9 100644
+--- a/drivers/target/target_core_sbc.c
++++ b/drivers/target/target_core_sbc.c
+@@ -1450,7 +1450,7 @@ sbc_dif_verify(struct se_cmd *cmd, sector_t start, unsigned int sectors,
+ 				 (unsigned long long)sector, sdt->guard_tag,
+ 				 sdt->app_tag, be32_to_cpu(sdt->ref_tag));
+ 
+-			if (sdt->app_tag == cpu_to_be16(0xffff)) {
++			if (sdt->app_tag == T10_PI_APP_ESCAPE) {
+ 				dsg_off += block_size;
+ 				goto next;
+ 			}
+diff --git a/include/linux/bio.h b/include/linux/bio.h
+index 664a27da276d..7b1cf4ba0902 100644
+--- a/include/linux/bio.h
++++ b/include/linux/bio.h
+@@ -165,10 +165,27 @@ static inline void bio_advance_iter(struct bio *bio, struct bvec_iter *iter,
+ {
+ 	iter->bi_sector += bytes >> 9;
+ 
+-	if (bio_no_advance_iter(bio))
++	if (bio_no_advance_iter(bio)) {
+ 		iter->bi_size -= bytes;
+-	else
++		iter->bi_done += bytes;
++	} else {
+ 		bvec_iter_advance(bio->bi_io_vec, iter, bytes);
++		/* TODO: It is reasonable to complete bio with error here. */
++	}
++}
++
++static inline bool bio_rewind_iter(struct bio *bio, struct bvec_iter *iter,
++		unsigned int bytes)
++{
++	iter->bi_sector -= bytes >> 9;
++
++	if (bio_no_advance_iter(bio)) {
++		iter->bi_size += bytes;
++		iter->bi_done -= bytes;
++		return true;
++	}
++
++	return bvec_iter_rewind(bio->bi_io_vec, iter, bytes);
+ }
+ 
+ #define __bio_for_each_segment(bvl, bio, iter, start)			\
+@@ -303,8 +320,6 @@ struct bio_integrity_payload {
+ 
+ 	struct bvec_iter	bip_iter;
+ 
+-	bio_end_io_t		*bip_end_io;	/* saved I/O completion fn */
+-
+ 	unsigned short		bip_slab;	/* slab the bip came from */
+ 	unsigned short		bip_vcnt;	/* # of integrity bio_vecs */
+ 	unsigned short		bip_max_vcnt;	/* integrity bio_vec slots */
+@@ -722,13 +737,10 @@ struct biovec_slab {
+ 		bip_for_each_vec(_bvl, _bio->bi_integrity, _iter)
+ 
+ extern struct bio_integrity_payload *bio_integrity_alloc(struct bio *, gfp_t, unsigned int);
+-extern void bio_integrity_free(struct bio *);
+ extern int bio_integrity_add_page(struct bio *, struct page *, unsigned int, unsigned int);
+-extern bool bio_integrity_enabled(struct bio *bio);
+-extern int bio_integrity_prep(struct bio *);
+-extern void bio_integrity_endio(struct bio *);
++extern bool bio_integrity_prep(struct bio *);
+ extern void bio_integrity_advance(struct bio *, unsigned int);
+-extern void bio_integrity_trim(struct bio *, unsigned int, unsigned int);
++extern void bio_integrity_trim(struct bio *);
+ extern int bio_integrity_clone(struct bio *, struct bio *, gfp_t);
+ extern int bioset_integrity_create(struct bio_set *, int);
+ extern void bioset_integrity_free(struct bio_set *);
+@@ -741,11 +753,6 @@ static inline void *bio_integrity(struct bio *bio)
+ 	return NULL;
+ }
+ 
+-static inline bool bio_integrity_enabled(struct bio *bio)
+-{
+-	return false;
+-}
+-
+ static inline int bioset_integrity_create(struct bio_set *bs, int pool_size)
+ {
+ 	return 0;
+@@ -756,14 +763,9 @@ static inline void bioset_integrity_free (struct bio_set *bs)
+ 	return;
+ }
+ 
+-static inline int bio_integrity_prep(struct bio *bio)
+-{
+-	return 0;
+-}
+-
+-static inline void bio_integrity_free(struct bio *bio)
++static inline bool bio_integrity_prep(struct bio *bio)
+ {
+-	return;
++	return true;
+ }
+ 
+ static inline int bio_integrity_clone(struct bio *bio, struct bio *bio_src,
+@@ -778,8 +780,7 @@ static inline void bio_integrity_advance(struct bio *bio,
+ 	return;
+ }
+ 
+-static inline void bio_integrity_trim(struct bio *bio, unsigned int offset,
+-				      unsigned int sectors)
++static inline void bio_integrity_trim(struct bio *bio)
+ {
+ 	return;
+ }
+diff --git a/include/linux/bvec.h b/include/linux/bvec.h
+index 89b65b82d98f..ec8a4d7af6bd 100644
+--- a/include/linux/bvec.h
++++ b/include/linux/bvec.h
+@@ -22,6 +22,7 @@
+ 
+ #include <linux/kernel.h>
+ #include <linux/bug.h>
++#include <linux/errno.h>
+ 
+ /*
+  * was unsigned short, but we might as well be ready for > 64kB I/O pages
+@@ -39,6 +40,8 @@ struct bvec_iter {
+ 
+ 	unsigned int		bi_idx;		/* current index into bvl_vec */
+ 
++	unsigned int            bi_done;	/* number of bytes completed */
++
+ 	unsigned int            bi_bvec_done;	/* number of bytes completed in
+ 						   current bvec */
+ };
+@@ -66,12 +69,14 @@ struct bvec_iter {
+ 	.bv_offset	= bvec_iter_offset((bvec), (iter)),	\
+ })
+ 
+-static inline void bvec_iter_advance(const struct bio_vec *bv,
+-				     struct bvec_iter *iter,
+-				     unsigned bytes)
++static inline bool bvec_iter_advance(const struct bio_vec *bv,
++		struct bvec_iter *iter, unsigned bytes)
+ {
+-	WARN_ONCE(bytes > iter->bi_size,
+-		  "Attempted to advance past end of bvec iter\n");
++	if (WARN_ONCE(bytes > iter->bi_size,
++		     "Attempted to advance past end of bvec iter\n")) {
++		iter->bi_size = 0;
++		return false;
++	}
+ 
+ 	while (bytes) {
+ 		unsigned iter_len = bvec_iter_len(bv, *iter);
+@@ -80,12 +85,38 @@ static inline void bvec_iter_advance(const struct bio_vec *bv,
+ 		bytes -= len;
+ 		iter->bi_size -= len;
+ 		iter->bi_bvec_done += len;
++		iter->bi_done += len;
+ 
+ 		if (iter->bi_bvec_done == __bvec_iter_bvec(bv, *iter)->bv_len) {
+ 			iter->bi_bvec_done = 0;
+ 			iter->bi_idx++;
+ 		}
+ 	}
++	return true;
++}
++
++static inline bool bvec_iter_rewind(const struct bio_vec *bv,
++				     struct bvec_iter *iter,
++				     unsigned int bytes)
++{
++	while (bytes) {
++		unsigned len = min(bytes, iter->bi_bvec_done);
++
++		if (iter->bi_bvec_done == 0) {
++			if (WARN_ONCE(iter->bi_idx == 0,
++				      "Attempted to rewind iter beyond "
++				      "bvec's boundaries\n")) {
++				return false;
++			}
++			iter->bi_idx--;
++			iter->bi_bvec_done = __bvec_iter_bvec(bv, *iter)->bv_len;
++			continue;
++		}
++		bytes -= len;
++		iter->bi_size += len;
++		iter->bi_bvec_done -= len;
++	}
++	return true;
+ }
+ 
+ #define for_each_bvec(bvl, bio_vec, iter, start)			\
+diff --git a/include/linux/nvme-fc.h b/include/linux/nvme-fc.h
+index bc711a10be05..21c37e39e41a 100644
+--- a/include/linux/nvme-fc.h
++++ b/include/linux/nvme-fc.h
+@@ -17,6 +17,7 @@
+ 
+ /*
+  * This file contains definitions relative to FC-NVME r1.14 (16-020vB).
++ * The fcnvme_lsdesc_cr_assoc_cmd struct reflects expected r1.16 content.
+  */
+ 
+ #ifndef _NVME_FC_H
+@@ -193,9 +194,21 @@ struct fcnvme_lsdesc_cr_assoc_cmd {
+ 	uuid_t	hostid;
+ 	u8	hostnqn[FCNVME_ASSOC_HOSTNQN_LEN];
+ 	u8	subnqn[FCNVME_ASSOC_SUBNQN_LEN];
+-	u8	rsvd632[384];
++	__be32	rsvd584[108];		/* pad to 1016 bytes,
++					 * which makes overall LS rqst
++					 * payload 1024 bytes
++					 */
+ };
+ 
++#define FCNVME_LSDESC_CRA_CMD_DESC_MINLEN	\
++		offsetof(struct fcnvme_lsdesc_cr_assoc_cmd, rsvd584)
++
++#define FCNVME_LSDESC_CRA_CMD_DESC_MIN_DESCLEN	\
++		(FCNVME_LSDESC_CRA_CMD_DESC_MINLEN - \
++		 offsetof(struct fcnvme_lsdesc_cr_assoc_cmd, ersp_ratio))
++
++
++
+ /* FCNVME_LSDESC_CREATE_CONN_CMD */
+ struct fcnvme_lsdesc_cr_conn_cmd {
+ 	__be32	desc_tag;		/* FCNVME_LSDESC_xxx */
+@@ -273,6 +286,14 @@ struct fcnvme_ls_cr_assoc_rqst {
+ 	struct fcnvme_lsdesc_cr_assoc_cmd	assoc_cmd;
+ };
+ 
++#define FCNVME_LSDESC_CRA_RQST_MINLEN	\
++		(offsetof(struct fcnvme_ls_cr_assoc_rqst, assoc_cmd) + \
++			FCNVME_LSDESC_CRA_CMD_DESC_MINLEN)
++
++#define FCNVME_LSDESC_CRA_RQST_MIN_LISTLEN	\
++		FCNVME_LSDESC_CRA_CMD_DESC_MINLEN
++
++
+ struct fcnvme_ls_cr_assoc_acc {
+ 	struct fcnvme_ls_acc_hdr		hdr;
+ 	struct fcnvme_lsdesc_assoc_id		associd;
+diff --git a/include/linux/t10-pi.h b/include/linux/t10-pi.h
+index 9375d23a24e7..635a3c5706bd 100644
+--- a/include/linux/t10-pi.h
++++ b/include/linux/t10-pi.h
+@@ -33,6 +33,8 @@ struct t10_pi_tuple {
+ 	__be32 ref_tag;		/* Target LBA or indirect LBA */
+ };
+ 
++#define T10_PI_APP_ESCAPE cpu_to_be16(0xffff)
++#define T10_PI_REF_ESCAPE cpu_to_be32(0xffffffff)
+ 
+ extern const struct blk_integrity_profile t10_pi_type1_crc;
+ extern const struct blk_integrity_profile t10_pi_type1_ip;
