@@ -6,6 +6,7 @@
 # Set these variables to ANYTHING that is not null to enable them
 
 ### Use tentative patches from https://groups.google.com/forum/#!forum/bfq-iosched
+### Thx to Tom 'monotykamary' Nguyen
 _use_tentative_patches=y
 
 ### Tweak kernel options prior to a build via nconfig
