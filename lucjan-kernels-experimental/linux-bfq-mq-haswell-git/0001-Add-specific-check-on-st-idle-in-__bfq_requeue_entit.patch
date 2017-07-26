@@ -1,0 +1,24 @@
+From eddda72aec67f4145bf86f147cfe182d58236360 Mon Sep 17 00:00:00 2001
+From: Paolo Valente <paolo.valente@linaro.org>
+Date: Thu, 20 Jul 2017 15:59:04 +0200
+Subject: [PATCH] Add specific check on st->idle in __bfq_requeue_entity
+
+---
+ block/bfq-sched.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/block/bfq-sched.c b/block/bfq-sched.c
+index 74d2244..b6eb258 100644
+--- a/block/bfq-sched.c
++++ b/block/bfq-sched.c
+@@ -1209,6 +1209,7 @@ static void __bfq_requeue_entity(struct bfq_entity *entity)
+ 		 */
+ 		bfq_calc_finish(entity, entity->service);
+ 		entity->start = entity->finish;
++		BUG_ON(entity->tree && entity->tree == &st->idle);
+ 		BUG_ON(entity->tree && entity->tree != &st->active);
+ 		/*
+ 		 * In addition, if the entity had more than one child
+-- 
+2.10.0
+
