@@ -72,7 +72,7 @@ _srcname=linux-4.12
 pkgver=4.12.4
 _pkgver=4.12.3
 __pkgver=4.12.4-rc1
-pkgrel=0.1
+pkgrel=0.2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -119,11 +119,11 @@ prepare() {
             
     ### Patch source with BFQ-MQ
         msg "Fix naming schema in BFQ-MQ patch"
-        sed -i -e "s|PATCHLEVEL = 13|PATCHLEVEL = 12|g" "${srcdir}/${_bfq_mq_patch}"
-        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 4|g" "${srcdir}/${_bfq_mq_patch}"
-        sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" "${srcdir}/${_bfq_mq_patch}"
-        sed -i -e "s|EXTRAVERSION = -bfq-rc1|EXTRAVERSION =|g" "${srcdir}/${_bfq_mq_patch}"
-        sed -i -e "s|EXTRAVERSION =-bfq-mq|EXTRAVERSION =|g" "${srcdir}/${_bfq_mq_patch}"
+        sed -i -e "s|PATCHLEVEL = 13|PATCHLEVEL = 12|g" \
+            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 4|g" \
+            -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" \
+            -i -e "s|EXTRAVERSION = -bfq-rc1|EXTRAVERSION =|g" \
+            -i -e "s|EXTRAVERSION =-bfq-mq|EXTRAVERSION =|g" "${srcdir}/${_bfq_mq_patch}"
         msg "Patching source with BFQ-MQ patches"
         patch -Np1 -i "${srcdir}/${_bfq_mq_patch}"
         patch -Np1 -i "${srcdir}/4.13-uuid-block-merge.patch"
@@ -157,27 +157,27 @@ prepare() {
     ### Set GCC flags
         if [ -n "$_gcc_haswell" ]; then
                 msg "Setting GCC flags for Intel Haswell CPU..."
-                sed -i -e s'/CONFIG_GENERIC_CPU=y/# CONFIG_GENERIC_CPU is not set/' ./.config
-                sed -i -e s'/# CONFIG_MHASWELL is not set/CONFIG_MHASWELL=y/' ./.config
+                sed -i -e s'/^CONFIG_GENERIC_CPU=y/# CONFIG_GENERIC_CPU is not set/' \
+                    -i -e s'/^# CONFIG_MHASWELL is not set/CONFIG_MHASWELL=y/' ./.config
         fi  
         
     ### Enable fancontrol
         if [ -n "$_dell_fancontrol" ]; then
                 msg "Enabling I8K for Dell..."
-                sed -i -e s'/CONFIG_I8K=m/CONFIG_I8K=y/' ./.config
-                sed -i -e s'/CONFIG_SENSORS_DELL_SMM=m/CONFIG_SENSORS_DELL_SMM=y/' ./.config    
+                sed -i -e s'/^CONFIG_I8K=m/CONFIG_I8K=y/' \
+                    -i -e s'/^CONFIG_SENSORS_DELL_SMM=m/CONFIG_SENSORS_DELL_SMM=y/' ./.config    
         fi    
         
     ### Set performance governor
         if [ -n "$_per_gov" ]; then
                 msg "Setting performance governor.."
-                sed -i -e s'/CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL=y/# CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL is not set/' ./.config
-                sed -i -e s'/# CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE is not set/CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y/' ./.config
+                sed -i -e s'/^CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL=y/# CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL is not set/' \
+                    -i -e s'/^# CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE is not set/CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y/' ./.config
                 msg "Disabling uneeded governors..."
-                sed -i -e s'/CONFIG_CPU_FREQ_GOV_ONDEMAND=m/# CONFIG_CPU_FREQ_GOV_ONDEMAND is not set/' ./.config
-                sed -i -e s'/CONFIG_CPU_FREQ_GOV_CONSERVATIVE=m/# CONFIG_CPU_FREQ_GOV_CONSERVATIVE is not set/' ./.config
-                sed -i -e s'/CONFIG_CPU_FREQ_GOV_USERSPACE=m/# CONFIG_CPU_FREQ_GOV_USERSPACE is not set/' ./.config
-                sed -i -e s'/CONFIG_CPU_FREQ_GOV_SCHEDUTIL=y/# CONFIG_CPU_FREQ_GOV_SCHEDUTIL is not set/' ./.config
+                sed -i -e s'/^CONFIG_CPU_FREQ_GOV_ONDEMAND=m/# CONFIG_CPU_FREQ_GOV_ONDEMAND is not set/' \
+                    -i -e s'/^CONFIG_CPU_FREQ_GOV_CONSERVATIVE=m/# CONFIG_CPU_FREQ_GOV_CONSERVATIVE is not set/' \
+                    -i -e s'/^CONFIG_CPU_FREQ_GOV_USERSPACE=m/# CONFIG_CPU_FREQ_GOV_USERSPACE is not set/' \
+                    -i -e s'/^CONFIG_CPU_FREQ_GOV_SCHEDUTIL=y/# CONFIG_CPU_FREQ_GOV_SCHEDUTIL is not set/' ./.config
         fi 
         
     ### Optionally set tickrate to 1000 
@@ -188,24 +188,24 @@ prepare() {
 			-i -e 's/^CONFIG_HZ=300/CONFIG_HZ=1000/' .config
 	fi
 	
-    ### Disable Deadline I/O scheduler
+	### Disable Deadline I/O scheduler
 	if [ -n "$_deadline_disable" ]; then
 		msg "Disabling Deadline I/O scheduler..."
-		sed -i -e s'/CONFIG_IOSCHED_DEADLINE=y/# CONFIG_IOSCHED_DEADLINE is not set/' ./.config
-		sed -i -e s'/CONFIG_MQ_IOSCHED_DEADLINE=y/# CONFIG_MQ_IOSCHED_DEADLINE is not set/' ./.config
-	fi	
-    
-    ### Disable CFQ I/O scheduler
+		sed -i -e s'/^CONFIG_IOSCHED_DEADLINE=y/# CONFIG_IOSCHED_DEADLINE is not set/' \
+		    -i -e s'/^CONFIG_MQ_IOSCHED_DEADLINE=y/# CONFIG_MQ_IOSCHED_DEADLINE is not set/' ./.config
+	fi
+	
+	### Disable CFQ I/O scheduler
 	if [ -n "$_CFQ_disable" ]; then
 		msg "Disabling CFQ I/O scheduler..."
-		sed -i -e s'/CONFIG_IOSCHED_CFQ=y/# CONFIG_IOSCHED_CFQ is not set/' ./.config
-		sed -i -e s'/CONFIG_CFQ_GROUP_IOSCHED=y/# CONFIG_CFQ_GROUP_IOSCHED is not set/' ./.config	
+		sed -i -e s'/^CONFIG_IOSCHED_CFQ=y/# CONFIG_IOSCHED_CFQ is not set/' \
+		    -i -e s'/^CONFIG_CFQ_GROUP_IOSCHED=y/# CONFIG_CFQ_GROUP_IOSCHED is not set/' ./.config	
 	fi
-
-    ### Disable Kyber I/O scheduler
+	
+	### Disable Kyber I/O scheduler
 	if [ -n "$_kyber_disable" ]; then
 		msg "Disabling Kyber I/O scheduler..."
-		sed -i -e s'/CONFIG_MQ_IOSCHED_KYBER=y/# CONFIG_MQ_IOSCHED_KYBER is not set/' ./.config
+		sed -i -e s'/^CONFIG_MQ_IOSCHED_KYBER=y/# CONFIG_MQ_IOSCHED_KYBER is not set/' ./.config
 	fi
    
 	if [ "${_kernelname}" != "" ]; then
