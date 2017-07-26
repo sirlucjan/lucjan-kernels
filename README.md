@@ -1,4 +1,5 @@
-# My own kernels. Use at your own risk
+# My own kernels. Use at your own risk.
+# Dell Inspiron 15-3542 (3542-2538) with Fourth Gen Intel Core i3/i5/i7 optimized.
 
 # Download:
 
