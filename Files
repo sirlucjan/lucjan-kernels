@@ -3,12 +3,8 @@
 ├── README.md
 ├── lucjan-kernels-experimental
 │   ├── linux-bfq-mq-haswell
-│   │   ├── 0001-Add-extra-checks-related-to-ioprio-class-changes.patch
-│   │   ├── 0001-Add-specific-check-on-st-idle-in-__bfq_requeue_entit.patch
 │   │   ├── 0001-Check-presence-on-tree-of-every-entity-after-every-a.patch
-│   │   ├── 0001-Consider-also-in_service_entity-to-state-whether-an-.patch
-│   │   ├── 0001-block-bfq-reset-in_service_entity-if-the-pointed-ent.patch
-│   │   ├── 4.12-bfq-mq-20170717.patch
+│   │   ├── 4.12-bfq-mq-20170729.patch
 │   │   ├── 4.13-linux-block-for-linus.patch
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
@@ -16,12 +12,8 @@
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   └── linux-bfq-mq-haswell-git
-│       ├── 0001-Add-extra-checks-related-to-ioprio-class-changes.patch
-│       ├── 0001-Add-specific-check-on-st-idle-in-__bfq_requeue_entit.patch
 │       ├── 0001-Check-presence-on-tree-of-every-entity-after-every-a.patch
-│       ├── 0001-Consider-also-in_service_entity-to-state-whether-an-.patch
-│       ├── 0001-block-bfq-reset-in_service_entity-if-the-pointed-ent.patch
-│       ├── 4.12-bfq-mq-20170717.patch
+│       ├── 4.12-bfq-mq-20170729.patch
 │       ├── 4.13-linux-block-for-linus.patch
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
@@ -59,12 +51,8 @@
 │       └── linux.preset
 ├── lucjan-kernels-trunk
 │   ├── linux-bfq-mq-haswell
-│   │   ├── 0001-Add-extra-checks-related-to-ioprio-class-changes.patch
-│   │   ├── 0001-Add-specific-check-on-st-idle-in-__bfq_requeue_entit.patch
 │   │   ├── 0001-Check-presence-on-tree-of-every-entity-after-every-a.patch
-│   │   ├── 0001-Consider-also-in_service_entity-to-state-whether-an-.patch
-│   │   ├── 0001-block-bfq-reset-in_service_entity-if-the-pointed-ent.patch
-│   │   ├── 4.12-bfq-mq-20170717.patch
+│   │   ├── 4.12-bfq-mq-20170729.patch
 │   │   ├── 4.13-linux-block-for-linus.patch
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
@@ -72,12 +60,8 @@
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   └── linux-bfq-mq-haswell-git
-│       ├── 0001-Add-extra-checks-related-to-ioprio-class-changes.patch
-│       ├── 0001-Add-specific-check-on-st-idle-in-__bfq_requeue_entit.patch
 │       ├── 0001-Check-presence-on-tree-of-every-entity-after-every-a.patch
-│       ├── 0001-Consider-also-in_service_entity-to-state-whether-an-.patch
-│       ├── 0001-block-bfq-reset-in_service_entity-if-the-pointed-ent.patch
-│       ├── 4.12-bfq-mq-20170717.patch
+│       ├── 4.12-bfq-mq-20170729.patch
 │       ├── 4.13-linux-block-for-linus.patch
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
@@ -114,4 +98,4 @@
         ├── linux.install
         └── linux.preset
 
-16 directories, 98 files
+16 directories, 82 files
