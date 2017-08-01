@@ -77,13 +77,13 @@ pkgbase=linux-bfq-mq-haswell-git
 # pkgname=('linux-bfq-mq-haswell-git-kernel' 'linux-bfq-mq-haswell-git-headers' 'linux-bfq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
 pkgver=4.12.4.r0.g13df91dbc06e
-pkgrel=4
+pkgrel=5
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf')
-_bfq_mq_ver='20170729'
+_bfq_mq_ver='20170801'
 _bfq_mq_patch="4.12-bfq-mq-${_bfq_mq_ver}.patch"
 _bfqpath="https://gitlab.com/tom81094/custom-patches/raw/master/bfq-mq/"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v3.15+.patch"
@@ -520,7 +520,7 @@ for _p in ${pkgname[@]}; do
 done
 
 sha512sums=('SKIP'
-            '38792eed552a4c81679279ee468a60800f17533e3bfcef2362aba0deb787ffd9f2a7106249edc420ba795eb9abd8ec4c2496fdde11549ccf4f36ab1339a81321'
+            'e6d464d30f3ae8bb2d5d63acbda5069c403ba098587ebc4d8e298ee7c93c58995c97cef58c5e6e0c0bb906c5c6b430f55f6ace8fcc60da10c4975a818883b35e'
             '25741e37a225cebb6cd4f82a9eb63a86836d060c7f855b8169cf4d9753fe9d7c1c0eb8fea56b20e484f81a93c071e4ac7626586c1b306b8cf9aa35f5840d44c2'
             '8368b6847d6f32b6e0c88c097823fbdbe89e63e65a915a3198ae1a4330fe0c4a4cbfeac92b3bbd08d3828ccc8ac961e5122be56f9a41ee855f5c1615f8ca5694'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
