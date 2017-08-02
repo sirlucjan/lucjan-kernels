@@ -40,6 +40,7 @@
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   ├── linux-bfq-mq-haswell
+│   │   ├── 0006-BFQ-bugfix-for-v8r12.patch
 │   │   ├── 4.11-bfq-mq-20170704.patch
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
@@ -47,6 +48,7 @@
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   └── linux-bfq-mq-haswell-git
+│       ├── 0006-BFQ-bugfix-for-v8r12.patch
 │       ├── 4.11-bfq-mq-20170704.patch
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
@@ -92,6 +94,7 @@
     │   ├── linux.install
     │   └── linux.preset
     ├── linux-bfq-mq-haswell
+    │   ├── 0006-BFQ-bugfix-for-v8r12.patch
     │   ├── 4.11-bfq-mq-20170704.patch
     │   ├── 90-linux.hook
     │   ├── PKGBUILD
@@ -99,6 +102,7 @@
     │   ├── linux.install
     │   └── linux.preset
     └── linux-bfq-mq-haswell-git
+        ├── 0006-BFQ-bugfix-for-v8r12.patch
         ├── 4.11-bfq-mq-20170704.patch
         ├── 90-linux.hook
         ├── PKGBUILD
@@ -106,4 +110,4 @@
         ├── linux.install
         └── linux.preset
 
-16 directories, 90 files
+16 directories, 94 files
