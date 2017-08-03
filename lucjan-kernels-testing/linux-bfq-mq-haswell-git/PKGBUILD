@@ -88,7 +88,8 @@ source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#b
         '90-linux.hook'
          # standard config files for mkinitcpio ramdisk
         'linux.preset'
-        # patches from https://github.com/Algodev-github/bfq-mq/commits/bfq-mq
+         # patches from https://github.com/linusw/linux-bfq/commits/bfq-mq-v4.11
+         # patches from https://github.com/linusw/linux-bfq/commits/bfq-v8-v4.11
         '0006-BFQ-bugfix-for-v8r12.patch')
 
 _kernelname=${pkgbase#linux}
