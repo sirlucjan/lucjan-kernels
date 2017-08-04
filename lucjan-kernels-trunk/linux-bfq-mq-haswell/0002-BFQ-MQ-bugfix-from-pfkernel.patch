@@ -1,40 +1,7 @@
-From 512e1995c5d29c524630b5f47eec5de6f74f33cb Mon Sep 17 00:00:00 2001
-From: Christoph Hellwig <hch@lst.de>
-Date: Fri, 21 Jul 2017 13:46:10 +0200
-Subject: [PATCH 1/3] block: disable runtime-pm for blk-mq
-
-The blk-mq code lacks support for looking at the rpm_status field, tracking
-active requests and the RQF_PM flag.
-
-Due to the default switch to blk-mq for scsi people start to run into
-suspend / resume issue due to this fact, so make sure we disable the runtime
-PM functionality until it is properly implemented.
-
-Signed-off-by: Christoph Hellwig <hch@lst.de>
----
- block/blk-core.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/block/blk-core.c b/block/blk-core.c
-index a7421b772d0e0..56a7fac71439c 100644
---- a/block/blk-core.c
-+++ b/block/blk-core.c
-@@ -3307,6 +3307,10 @@ EXPORT_SYMBOL(blk_finish_plug);
-  */
- void blk_pm_runtime_init(struct request_queue *q, struct device *dev)
- {
-+	/* not support for RQF_PM and ->rpm_status in blk-mq yet */
-+	if (q->mq_ops)
-+		return;
-+
- 	q->dev = dev;
- 	q->rpm_status = RPM_ACTIVE;
- 	pm_runtime_set_autosuspend_delay(q->dev, -1);
-
 From 804a461415167ecc15291ef1cb219f385c3aee2f Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Fri, 21 Jul 2017 18:30:24 +0200
-Subject: [PATCH 2/3] bfq-mq: consider also in_service_entity to state whether
+Subject: [PATCH 1/2] bfq-mq: consider also in_service_entity to state whether
  an entity is backlogged
 
 ---
@@ -58,7 +25,7 @@ index 979f8f21b7e2b..952fa82893284 100644
 From fd2229a6ea10fa78032c9d9dfc8c8261e7c84a30 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Fri, 21 Jul 2017 18:32:12 +0200
-Subject: [PATCH 3/3] bfq-mq: reset in_service_entity if the pointed entity
+Subject: [PATCH 2/2] bfq-mq: reset in_service_entity if the pointed entity
 
 ---
  block/bfq-wf2q.c | 4 +++-

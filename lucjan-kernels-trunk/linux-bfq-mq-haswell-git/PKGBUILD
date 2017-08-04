@@ -77,7 +77,7 @@ pkgbase=linux-bfq-mq-haswell-git
 # pkgname=('linux-bfq-mq-haswell-git-kernel' 'linux-bfq-mq-haswell-git-headers' 'linux-bfq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
 pkgver=4.12.4.r32.gf329933e350f
-pkgrel=0
+pkgrel=0.1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -89,11 +89,14 @@ _bfqpath="https://gitlab.com/tom81094/custom-patches/raw/master/bfq-mq/"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v3.15+.patch"
 
 source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git#branch=linux-4.12.y'
-        #"${_bfqpath}/${_bfq_mq_patch}"
+         #${_bfqpath}/${_bfq_mq_patch}"
         "${_bfq_mq_patch}"
         "${_bfqpath}/4.13-uuid-block-merge.patch"
-        #"${_bfqpath}/4.13-linux-block-for-linus.patch"
+        "${_bfqpath}/4.13-irq-core-for-linus.patch"
+         #"${_bfqpath}/4.13-linux-block-for-linus.patch"
         "4.13-linux-block-for-linus.patch"
+        "${_bfqpath}/4.13-linux-block-for-linus_2.patch"
+        "${_bfqpath}/4.13-linux-block-for-linus_3.patch"
         "0001-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "0002-BFQ-MQ-bugfix-from-pfkernel.patch"
         "http://repo-ck.com/source/gcc_patch/${_gcc_patch}.gz"
@@ -130,8 +133,16 @@ prepare() {
             -i -e "s|EXTRAVERSION =-bfq-mq|EXTRAVERSION =|g" "${srcdir}/${_bfq_mq_patch}"
         msg "Patching source with BFQ-MQ patches"
         patch -Np1 -i "${srcdir}/${_bfq_mq_patch}"
+        msg "Apply for-4.13/block merge"
         patch -Np1 -i "${srcdir}/4.13-uuid-block-merge.patch"
+        msg "Apply irq-core-for-linus merge"
+        patch -Np1 -i "${srcdir}/4.13-irq-core-for-linus.patch"
+        msg "Apply for-linus linux-block merge 1"
         patch -Np1 -i "${srcdir}/4.13-linux-block-for-linus.patch"
+        msg "Apply for-linus linux-block merge 2"
+        patch -Np1 -i "${srcdir}/4.13-linux-block-for-linus_2.patch"
+        msg "Apply for-linus linux-block merge 3"
+        patch -Np1 -i "${srcdir}/4.13-linux-block-for-linus_3.patch"
 
     ### Patches related to BUG_ON(entity->tree && entity->tree != &st->active) in __bfq_requeue_entity();
         if [ -n "$_use_tentative_patches" ]; then
@@ -522,9 +533,12 @@ done
 sha512sums=('SKIP'
             '45ae4c7834731aa50869feaaddaae37fc08741a283599d3d5f60150cf2cc37503be16cbb51e0caaceca1ac0b9db6bbf0893920beeb86fa0666fbe02f84f8c627'
             '25741e37a225cebb6cd4f82a9eb63a86836d060c7f855b8169cf4d9753fe9d7c1c0eb8fea56b20e484f81a93c071e4ac7626586c1b306b8cf9aa35f5840d44c2'
+            'e00947363e7c364ec5931c52ac87060cf1c7ded0d994e2a9dfc5e99fb07875979471d9a0e2acb3439dc7aaeaf7d8fffcc6cfbac1dae8925a509d147e3f4fcc04'
             '8368b6847d6f32b6e0c88c097823fbdbe89e63e65a915a3198ae1a4330fe0c4a4cbfeac92b3bbd08d3828ccc8ac961e5122be56f9a41ee855f5c1615f8ca5694'
+            '00f2b86d3e9b10fe3c866be7d3316a016e5322c30b5e0431843bb7baaca07f7618d247601ef05f14a2b39dde222d9a060f295212caa362fce9220b7a94a8e634'
+            '545c823e78bf5ce62aa57b90e6e7d984c2f82616289ad77e5e148e052607c124bc17286f5530b8ea3dea2a6afc462fcd06d3184b461c05c6e3efc00bc4083858'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
-            '4de18441481703b40b0ef3647e0b29ac579a108833d1c18a2a4a4ac43864fadffd2dcbc820ba6104013bc15e5b8164adcca1b98ffe2e4fe4bdb8dd03a37d60dc'
+            'f1968c221c2c3f09950135ed8e8cff8e1480c390be9386bbd42c9b5b16242d1d6b6cc63ad0886cc4a6486a0cf3501b590bb0b2b7b46aea632c5a32f3892594b9'
             '77d80d50d8c4323ed36fd2097ba9f6b49bb8d7cae59d32ffa76b309758a7e9f972d26fedd77046d88ce2691bb01a07909f8bdc34ba214414be3bc030ee31994d'
             'ccb297500b3f2f79c380a574ff2c8b81f5dc7c74ad565542c368e4610b44633c80ca1c44bbfdee8d80bfb946579fc1ed13e6ed92f2155119a22498265a4213fb'
             'd6faa67f3ef40052152254ae43fee031365d0b1524aa0718b659eb75afc21a3f79ea8d62d66ea311a800109bed545bc8f79e8752319cd378eef2cbd3a09aba22'
