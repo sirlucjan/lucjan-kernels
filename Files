@@ -4,6 +4,7 @@
 ├── lucjan-kernels-experimental
 │   ├── linux-bfq-mq-haswell
 │   │   ├── 0001-Check-presence-on-tree-of-every-entity-after-every-a.patch
+│   │   ├── 0002-BFQ-MQ-bugfix-from-pfkernel-2.patch
 │   │   ├── 0002-BFQ-MQ-bugfix-from-pfkernel.patch
 │   │   ├── 4.12-bfq-mq-20170804.patch
 │   │   ├── 4.13-linux-block-for-linus.patch
@@ -14,6 +15,7 @@
 │   │   └── linux.preset
 │   └── linux-bfq-mq-haswell-git
 │       ├── 0001-Check-presence-on-tree-of-every-entity-after-every-a.patch
+│       ├── 0002-BFQ-MQ-bugfix-from-pfkernel-2.patch
 │       ├── 0002-BFQ-MQ-bugfix-from-pfkernel.patch
 │       ├── 4.12-bfq-mq-20170804.patch
 │       ├── 4.13-linux-block-for-linus.patch
@@ -58,6 +60,7 @@
 ├── lucjan-kernels-trunk
 │   ├── linux-bfq-mq-haswell
 │   │   ├── 0001-Check-presence-on-tree-of-every-entity-after-every-a.patch
+│   │   ├── 0002-BFQ-MQ-bugfix-from-pfkernel-2.patch
 │   │   ├── 0002-BFQ-MQ-bugfix-from-pfkernel.patch
 │   │   ├── 4.12-bfq-mq-20170804.patch
 │   │   ├── 4.13-linux-block-for-linus.patch
@@ -68,6 +71,7 @@
 │   │   └── linux.preset
 │   └── linux-bfq-mq-haswell-git
 │       ├── 0001-Check-presence-on-tree-of-every-entity-after-every-a.patch
+│       ├── 0002-BFQ-MQ-bugfix-from-pfkernel-2.patch
 │       ├── 0002-BFQ-MQ-bugfix-from-pfkernel.patch
 │       ├── 4.12-bfq-mq-20170804.patch
 │       ├── 4.13-linux-block-for-linus.patch
@@ -110,4 +114,4 @@
         ├── linux.install
         └── linux.preset
 
-16 directories, 94 files
+16 directories, 98 files

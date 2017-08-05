@@ -79,7 +79,7 @@ _srcname=linux-4.12
 pkgver=4.12.5
 _pkgver=4.12.4
 __pkgver=4.12.5-rc1
-pkgrel=0.1
+pkgrel=0.2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -106,6 +106,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "${_bfqpath}/4.13-linux-block-for-linus_3.patch"
         "0001-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "0002-BFQ-MQ-bugfix-from-pfkernel.patch"
+        "0002-BFQ-MQ-bugfix-from-pfkernel-2.patch"
         "http://repo-ck.com/source/gcc_patch/${_gcc_patch}.gz"
          # the main kernel config files
         'config.x86_64'
@@ -154,19 +155,22 @@ prepare() {
     ### Patches related to BUG_ON(entity->tree && entity->tree != &st->active) in __bfq_requeue_entity();
         if [ -n "$_use_tentative_patches" ]; then
         msg "Apply tentative patches"
-        for p in "${srcdir}"/0001*.patch*; do patch -Np1 -i "$p"; done
+        for p in "${srcdir}"/0001*.patch*; do 
+        msg " $p"
+        patch -Np1 -i "$p"; done
         fi
-    
+        
     ### Patches from https://github.com/pfactum/pf-kernel/
         if [ -n "$_use_pfkernel_patch" ]; then
         msg "Apply pfkernel patches"
-        for p in "${srcdir}"/0002*.patch*; do patch -Np1 -i "$p"; done
+        for p in "${srcdir}"/0002*.patch*; do 
+        msg " $p" 
+        patch -Np1 -i "$p"; done
         fi
         
     ### Patch source to enable more gcc CPU optimizatons via the make nconfig
         msg "Patching source with gcc patch to enable more cpus types"
 	patch -Np1 -i "${srcdir}/${_gcc_patch}"
-
 	
     ### Clean tree and copy ARCH config over
 	msg "Running make mrproper to clean source tree"
@@ -551,6 +555,7 @@ sha512sums=('8e81b41b253e63233e92948941f44c6482acb52aa3a3fd172f03a38a86f2c35b2ad
             '545c823e78bf5ce62aa57b90e6e7d984c2f82616289ad77e5e148e052607c124bc17286f5530b8ea3dea2a6afc462fcd06d3184b461c05c6e3efc00bc4083858'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             'f1968c221c2c3f09950135ed8e8cff8e1480c390be9386bbd42c9b5b16242d1d6b6cc63ad0886cc4a6486a0cf3501b590bb0b2b7b46aea632c5a32f3892594b9'
+            'dd6b56458a0495f5fc7f84e3e3ba9770c7d0909505bba5e79f821bdecdd8bbd669a9ac917a844667e3c729b3ccf88904fa36954e0a9ffa62985fdb65ec657b3c'
             '77d80d50d8c4323ed36fd2097ba9f6b49bb8d7cae59d32ffa76b309758a7e9f972d26fedd77046d88ce2691bb01a07909f8bdc34ba214414be3bc030ee31994d'
             '1afb89e539fd624f4e28cc6ab1411dbfcaa578c2a9328d990dd11b6c781352fd45ce85e1a6db035d66ef7e553d1c2115682d9bc470b12186dc30b5f1a89df91c'
             'd6faa67f3ef40052152254ae43fee031365d0b1524aa0718b659eb75afc21a3f79ea8d62d66ea311a800109bed545bc8f79e8752319cd378eef2cbd3a09aba22'
