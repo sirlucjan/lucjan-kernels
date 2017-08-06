@@ -7,7 +7,6 @@
 │   │   ├── 0002-BFQ-MQ-bugfix-from-pfkernel-2.patch
 │   │   ├── 0002-BFQ-MQ-bugfix-from-pfkernel.patch
 │   │   ├── 4.12-bfq-mq-20170804.patch
-│   │   ├── 4.13-linux-block-for-linus.patch
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
 │   │   ├── config.x86_64
@@ -18,7 +17,6 @@
 │       ├── 0002-BFQ-MQ-bugfix-from-pfkernel-2.patch
 │       ├── 0002-BFQ-MQ-bugfix-from-pfkernel.patch
 │       ├── 4.12-bfq-mq-20170804.patch
-│       ├── 4.13-linux-block-for-linus.patch
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
 │       ├── config.x86_64
@@ -63,7 +61,6 @@
 │   │   ├── 0002-BFQ-MQ-bugfix-from-pfkernel-2.patch
 │   │   ├── 0002-BFQ-MQ-bugfix-from-pfkernel.patch
 │   │   ├── 4.12-bfq-mq-20170804.patch
-│   │   ├── 4.13-linux-block-for-linus.patch
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
 │   │   ├── config.x86_64
@@ -74,7 +71,6 @@
 │       ├── 0002-BFQ-MQ-bugfix-from-pfkernel-2.patch
 │       ├── 0002-BFQ-MQ-bugfix-from-pfkernel.patch
 │       ├── 4.12-bfq-mq-20170804.patch
-│       ├── 4.13-linux-block-for-linus.patch
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
 │       ├── config.x86_64
@@ -114,4 +110,4 @@
         ├── linux.install
         └── linux.preset
 
-16 directories, 98 files
+16 directories, 94 files
