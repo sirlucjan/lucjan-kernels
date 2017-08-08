@@ -1,4 +1,4 @@
-From 493c15c90a12961dc3a61ac37ecf4c8839eb189e Mon Sep 17 00:00:00 2001
+From 4a0d3afe1c051d205b4be7fe710d3fbe0526a344 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Thu, 4 May 2017 17:47:13 +0200
 Subject: [PATCH 1/5] block, bfq: update wr_busy_queues if needed on a queue
@@ -162,7 +162,7 @@ index a56888ea9d94..5e8cbeab45a1 100644
  
  	spin_lock_irqsave(q->queue_lock, flags);
  	bfq_check_ioprio_change(bic, bio);
-@@ -4613,6 +4641,8 @@ static int bfq_set_request(struct request_queue *q, struct request *rq,
+@@ -4613,6 +4641,8 @@ new_queue:
  			split = true;
  			if (!bfqq)
  				goto new_queue;
@@ -171,7 +171,7 @@ index a56888ea9d94..5e8cbeab45a1 100644
  		}
  	}
  
-@@ -4638,7 +4668,8 @@ static int bfq_set_request(struct request_queue *q, struct request *rq,
+@@ -4638,7 +4668,8 @@ new_queue:
  			 * queue, restore the idle window and the possible
  			 * weight raising period.
  			 */
@@ -182,10 +182,10 @@ index a56888ea9d94..5e8cbeab45a1 100644
  	}
  
 diff --git a/block/bfq-sched.c b/block/bfq-sched.c
-index 1fde0702bfef..36fb773c0832 100644
+index 8311bdbeceea..d8efd6bad965 100644
 --- a/block/bfq-sched.c
 +++ b/block/bfq-sched.c
-@@ -1988,8 +1988,10 @@ static void bfq_del_bfqq_busy(struct bfq_data *bfqd, struct bfq_queue *bfqq,
+@@ -1932,8 +1932,10 @@ static void bfq_del_bfqq_busy(struct bfq_data *bfqd, struct bfq_queue *bfqq,
  		bfq_weights_tree_remove(bfqd, &bfqq->entity,
  					&bfqd->queue_weights_tree);
  
@@ -197,7 +197,7 @@ index 1fde0702bfef..36fb773c0832 100644
  
  	bfqg_stats_update_dequeue(bfqq_group(bfqq));
  
-@@ -2018,6 +2020,9 @@ static void bfq_add_bfqq_busy(struct bfq_data *bfqd, struct bfq_queue *bfqq)
+@@ -1962,6 +1964,9 @@ static void bfq_add_bfqq_busy(struct bfq_data *bfqd, struct bfq_queue *bfqq)
  			bfq_weights_tree_add(bfqd, &bfqq->entity,
  					     &bfqd->queue_weights_tree);
  
@@ -208,8 +208,11 @@ index 1fde0702bfef..36fb773c0832 100644
 +	}
 +
  }
+-- 
+2.14.0
 
-From 69373c8ac58080b60ca461689db6afb200d962e2 Mon Sep 17 00:00:00 2001
+
+From 1a71554e44699acbd850773cd2ace0d99ab454ee Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Tue, 9 May 2017 12:52:16 +0200
 Subject: [PATCH 2/5] block, bfq: stress that low_latency must be off to get
@@ -288,8 +291,11 @@ index 5e8cbeab45a1..cdf608e76048 100644
   * BFQ is described in [1], where also a reference to the initial, more
   * theoretical paper on BFQ can be found. The interested reader can find
   * in the latter paper full details on the main algorithm, as well as
+-- 
+2.14.0
 
-From eb93d3e00badadb619cc8f62c1c04d1bf61e2890 Mon Sep 17 00:00:00 2001
+
+From ca9918baddbab615b7646a1e7fbf6048e1cd94fe Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Fri, 12 May 2017 10:19:52 +0200
 Subject: [PATCH 3/5] Fix commit "don't dereference bic before null checking
@@ -312,8 +318,11 @@ index cdf608e76048..c98dff9637c0 100644
  
  	if (!bic)
  		goto queue_fail;
+-- 
+2.14.0
 
-From 8a119d7f3e592372a52d87093b2b4eb90330f055 Mon Sep 17 00:00:00 2001
+
+From 9d7e1cdf7e2a08a46e73d33d0500ddbb1bec21ea Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Wed, 14 Jun 2017 15:35:44 +0200
 Subject: [PATCH 4/5] block, bfq: don't change ioprio class for a bfq_queue on
@@ -378,10 +387,10 @@ index c98dff9637c0..c390711ea523 100644
  
  /*
 diff --git a/block/bfq-sched.c b/block/bfq-sched.c
-index 36fb773c0832..d9a107dadc6d 100644
+index d8efd6bad965..90d2856358a1 100644
 --- a/block/bfq-sched.c
 +++ b/block/bfq-sched.c
-@@ -766,9 +766,28 @@ static void bfq_forget_idle(struct bfq_service_tree *st)
+@@ -765,9 +765,28 @@ static void bfq_forget_idle(struct bfq_service_tree *st)
  		bfq_put_idle_entity(st, first_idle);
  }
  
@@ -411,7 +420,7 @@ index 36fb773c0832..d9a107dadc6d 100644
  {
  	struct bfq_service_tree *new_st = old_st;
  
-@@ -813,9 +832,15 @@ __bfq_entity_update_weight_prio(struct bfq_service_tree *old_st,
+@@ -812,9 +831,15 @@ __bfq_entity_update_weight_prio(struct bfq_service_tree *old_st,
  				  bfq_weight_to_ioprio(entity->orig_weight);
  		}
  
@@ -429,7 +438,7 @@ index 36fb773c0832..d9a107dadc6d 100644
  
  		/*
  		 * NOTE: here we may be changing the weight too early,
-@@ -964,7 +989,12 @@ static void bfq_update_fin_time_enqueue(struct bfq_entity *entity,
+@@ -963,7 +988,12 @@ static void bfq_update_fin_time_enqueue(struct bfq_entity *entity,
  	struct bfq_queue *bfqq = bfq_entity_to_bfqq(entity);
  	struct bfq_sched_data *sd = entity->sched_data;
  
@@ -443,8 +452,11 @@ index 36fb773c0832..d9a107dadc6d 100644
  	bfq_calc_finish(entity, entity->budget);
  
  	/*
+-- 
+2.14.0
 
-From 2024487bd20c823bb5f96fe7ffbccf136628a2f7 Mon Sep 17 00:00:00 2001
+
+From a9c7d4c85b3d5cd465d0cf681645209109769c18 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
 Date: Mon, 3 Jul 2017 22:00:29 +0200
 Subject: [PATCH 5/5] BFQ-v8r12
@@ -469,7 +481,7 @@ index c390711ea523..ea92c7461b89 100644
  #ifdef CONFIG_BFQ_GROUP_IOSCHED
  	ret = blkcg_policy_register(&blkcg_policy_bfq);
 diff --git a/block/bfq.h b/block/bfq.h
-index 5f08990be66e..fe7816832035 100644
+index 344d074aee2c..77dc72c35fbf 100644
 --- a/block/bfq.h
 +++ b/block/bfq.h
 @@ -1,5 +1,5 @@
@@ -479,3 +491,6 @@ index 5f08990be66e..fe7816832035 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+

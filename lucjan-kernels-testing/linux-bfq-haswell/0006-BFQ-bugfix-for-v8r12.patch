@@ -63,6 +63,9 @@ index 90d2856358a1..b6eb25887262 100644
  		BUG_ON(entity->tree && entity->tree != &st->active);
  		/*
  		 * In addition, if the entity had more than one child
+-- 
+2.14.0
+
 
 From 6af8852b69527087d11c81a4dcb49d24f297dbce Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -121,6 +124,9 @@ index b6eb25887262..fdf1c713d050 100644
  
  	if (entity->tree == &st->active)
  		bfq_active_extract(st, entity);
+-- 
+2.14.0
+
 
 From 52ce0ffe68b5e3fefaed21cfb32f104202eddc25 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -441,6 +447,9 @@ index 77dc72c35fbf..ffa833863d88 100644
   */
  struct bfq_sched_data {
  	struct bfq_entity *in_service_entity;  /* entity in service */
+-- 
+2.14.0
+
 
 From ef8d4eb597ec77088b5d8cd08ff5a9145c47a57c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -520,7 +529,7 @@ index ea92c7461b89..e75df37a1cd3 100644
  
  	/*
  	 * Increase, decrease or leave budget unchanged according to
-@@ -3298,7 +3298,10 @@ static bool bfq_may_expire_for_budg_timeout(struct bfq_queue *bfqq)
+@@ -3298,35 +3298,55 @@ static bool bfq_may_expire_for_budg_timeout(struct bfq_queue *bfqq)
  static bool bfq_bfqq_may_idle(struct bfq_queue *bfqq)
  {
  	struct bfq_data *bfqd = bfqq->bfqd;
@@ -532,10 +541,10 @@ index ea92c7461b89..e75df37a1cd3 100644
  		idling_needed_for_service_guarantees,
  		asymmetric_scenario;
  
-@@ -3306,27 +3309,44 @@ static bool bfq_bfqq_may_idle(struct bfq_queue *bfqq)
+ 	if (bfqd->strict_guarantees)
  		return true;
  
- 	/*
++	/*
 +	 * Idling is performed only if slice_idle > 0. In addition, we
 +	 * do not idle if
 +	 * (a) bfqq is async
@@ -549,7 +558,7 @@ index ea92c7461b89..e75df37a1cd3 100644
 +
 +	bfqq_sequential_and_IO_bound = !BFQQ_SEEKY(bfqq) &&
 +		bfq_bfqq_IO_bound(bfqq) && bfq_bfqq_has_short_ttime(bfqq);
-+	/*
+ 	/*
  	 * The next variable takes into account the cases where idling
  	 * boosts the throughput.
  	 *
@@ -778,3 +787,6 @@ index ffa833863d88..1f2c7518d507 100644
  BFQ_BFQQ_FNS(sync);
  BFQ_BFQQ_FNS(IO_bound);
  BFQ_BFQQ_FNS(in_large_burst);
+-- 
+2.14.0
+
