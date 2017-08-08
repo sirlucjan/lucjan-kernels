@@ -99,6 +99,9 @@ index 01a696b0a4d3..29d537ddc261 100644
  
  typedef void (rq_end_io_fn)(struct request *, int);
  
+-- 
+2.14.0
+
 
 From f591c77ee4353672d3bc441a9ddaa49d3e1edefe Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@unimore.it>
@@ -7206,6 +7209,9 @@ index 000000000000..2bf54ae89ff0
 +static void bfq_exit_bfqq(struct bfq_data *bfqd, struct bfq_queue *bfqq);
 +
 +#endif /* _BFQ_H */
+-- 
+2.14.0
+
 
 From a21ca2b7c8a3355566bb9bc04dba3684e40addaa Mon Sep 17 00:00:00 2001
 From: Mauro Andreolini <mauro.andreolini@unimore.it>
@@ -8053,10 +8059,11 @@ index 85e216905a5d..cf3e9b1800c9 100644
  	rq->fifo_time = jiffies + bfqd->bfq_fifo_expire[rq_is_sync(rq)];
  	list_add_tail(&rq->queuelist, &bfqq->fifo);
  
-@@ -3099,6 +3693,32 @@ static void bfq_put_request(struct request *rq)
+@@ -3098,6 +3692,32 @@ static void bfq_put_request(struct request *rq)
+ 	}
  }
  
- /*
++/*
 + * Returns NULL if a new bfqq should be allocated, or the old bfqq if this
 + * was the last process referring to said bfqq.
 + */
@@ -8082,10 +8089,9 @@ index 85e216905a5d..cf3e9b1800c9 100644
 +	return NULL;
 +}
 +
-+/*
+ /*
   * Allocate bfq data structures associated with this request.
   */
- static int bfq_set_request(struct request_queue *q, struct request *rq,
 @@ -3110,6 +3730,7 @@ static int bfq_set_request(struct request_queue *q, struct request *rq,
  	const int is_sync = rq_is_sync(rq);
  	struct bfq_queue *bfqq;
@@ -8305,6 +8311,9 @@ index 2bf54ae89ff0..fcce85528377 100644
  static void bfq_check_ioprio_change(struct bfq_io_cq *bic, struct bio *bio);
  static void bfq_put_queue(struct bfq_queue *bfqq);
  static void bfq_dispatch_insert(struct request_queue *q, struct request *rq);
+-- 
+2.14.0
+
 
 From b70d9020afe16276d17d37a22f14b805555b0373 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -8328,6 +8337,9 @@ index 4b074a904106..4afff93602f1 100644
  NAME = Fearless Coyote
  
  # *DOCUMENTATION*
+-- 
+2.14.0
+
 
 From bd8cfa834f38788b7d555bbfb253fa06a54531b6 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -8351,6 +8363,9 @@ index fcce85528377..4fff15ea7fc5 100644
  #include <linux/blk-cgroup.h>
  
  #define BFQ_IOPRIO_CLASSES	3
+-- 
+2.14.0
+
 
 From 2c591e62bae1d31a0df238509682323b2efac7b4 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -8375,6 +8390,9 @@ index cf3e9b1800c9..b21642a0a5da 100644
  
  /* Expiration time of sync (0) and async (1) requests, in jiffies. */
  static const int bfq_fifo_expire[2] = { HZ / 4, HZ / 8 };
+-- 
+2.14.0
+
 
 From a8085ae72da8d595016356f20e93536de2272a44 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -9105,7 +9123,7 @@ index a5ed6948471a..f583ae7112c8 100644
  			}
  			entity->orig_weight = entity->new_weight;
  			if (bfqq)
-@@ -996,8 +999,8 @@ static struct bfq_entity *bfq_first_active_entity(struct bfq_service_tree *st)
+@@ -996,8 +999,8 @@ left:
   * Update the virtual time in @st and return the first eligible entity
   * it contains.
   */
@@ -9158,6 +9176,9 @@ index 4fff15ea7fc5..907c42bf2661 100644
  #endif
  
  	unsigned int wr_time_left;
+-- 
+2.14.0
+
 
 From 1d1a0cc77f6f0cc58e0d7583ae3166534adf5230 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -9315,6 +9336,9 @@ index 90d0eab7f762..3d9fa1518976 100644
  		bfq_log_bfqq(bfqd, bfqq, "put_async_bfqq: putting %p, %d",
  			     bfqq, atomic_read(&bfqq->ref));
  		bfq_put_queue(bfqq);
+-- 
+2.14.0
+
 
 From b0837e20e4e8c1daf78afcc0fb000d6e0896483c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -9409,6 +9433,9 @@ index 907c42bf2661..3dd1a8de1b46 100644
  
  #define bfq_log(bfqd, fmt, args...) \
  	blk_add_trace_msg((bfqd)->queue, "bfq " fmt, ##args)
+-- 
+2.14.0
+
 
 From 74a757a0ebe734a23861ae8247c06b103f89534d Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -9434,6 +9461,9 @@ index 3d9fa1518976..38a30c3a7b23 100644
  	if (!bfq_bfqq_sync(bfqq))
  		max_dispatch = bfqd->bfq_max_budget_async_rq;
  
+-- 
+2.14.0
+
 
 From 9949a4a8bffeefd08688d5e38c4da669aedf19f4 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -9702,6 +9732,9 @@ index 3dd1a8de1b46..c02c8db38283 100644
  
  	unsigned int bfq_coop_thresh;
  	unsigned int bfq_failed_cooperations;
+-- 
+2.14.0
+
 
 From 287c7fb28a0c21380da708d0d5d4416a4d9075a2 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -9855,6 +9888,9 @@ index d127e06b1ff3..7dece2269907 100644
  		BUG_ON(!entity);
  		entity->service = 0;
  	}
+-- 
+2.14.0
+
 
 From ccf8df7bb4b95656d14e214eab63ffd18299f72a Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -9871,7 +9907,7 @@ diff --git a/block/bfq-sched.c b/block/bfq-sched.c
 index 7dece2269907..31bc47c7e71f 100644
 --- a/block/bfq-sched.c
 +++ b/block/bfq-sched.c
-@@ -89,7 +89,7 @@ static int bfq_update_next_in_service(struct bfq_sched_data *sd)
+@@ -89,7 +89,7 @@ exit:
  static void bfq_check_next_in_service(struct bfq_sched_data *sd,
  				      struct bfq_entity *entity)
  {
@@ -9920,6 +9956,9 @@ index c02c8db38283..cc215f91bfe5 100644
   * @service_tree: array of service trees, one per ioprio_class.
   *
   * bfq_sched_data is the basic scheduler queue.  It supports three
+-- 
+2.14.0
+
 
 From a54ffdeb8cf2f7ea623909218b1108e059073eb0 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -9957,6 +9996,9 @@ index f28654dcd69a..e587cd4a66f2 100644
  }
  
  /**
+-- 
+2.14.0
+
 
 From 02e85ab02defb61e12fae7827bfd9400ead58759 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -10687,7 +10729,7 @@ index e587cd4a66f2..1ebe4185a4fc 100644
  		if (bfqd->low_latency && old_wr_coeff == 1 && !rq_is_sync(rq) &&
  		    time_is_before_jiffies(
  				bfqq->last_wr_start_finish +
-@@ -1055,16 +1360,43 @@ static void bfq_add_request(struct request *rq)
+@@ -1055,16 +1360,43 @@ add_bfqq_busy:
  			bfqq->wr_cur_max_time = bfq_wr_duration(bfqd);
  
  			bfqd->wr_busy_queues++;
@@ -11118,7 +11160,7 @@ index e587cd4a66f2..1ebe4185a4fc 100644
  {
  	struct task_struct *tsk = current;
  	int ioprio_class;
-@@ -3214,6 +3648,8 @@ static struct bfq_queue *bfq_find_alloc_queue(struct bfq_data *bfqd,
+@@ -3214,6 +3648,8 @@ retry:
  
  	rcu_read_unlock();
  
@@ -11411,7 +11453,7 @@ index 31bc47c7e71f..02f83b47359b 100644
  		 * we want to propagate the dequeue upwards.
  		 */
  		requeue = 1;
-@@ -954,19 +1032,19 @@ static void bfq_deactivate_entity(struct bfq_entity *entity, int requeue)
+@@ -954,19 +1032,19 @@ update:
  	entity = parent;
  	for_each_entity(entity) {
  		struct bfq_queue *bfqq = bfq_entity_to_bfqq(entity);
@@ -11549,6 +11591,9 @@ index cc215f91bfe5..234d41db4144 100644
  };
  
  #ifdef CONFIG_BFQ_GROUP_IOSCHED
+-- 
+2.14.0
+
 
 From 3af59c732d16dec5081b05268e7750ebea4bf42d Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -11769,7 +11814,7 @@ index 1ebe4185a4fc..dc40e3292110 100644
 -			     bool idle_for_long_time)
 +static void bfq_handle_burst(struct bfq_data *bfqd, struct bfq_queue *bfqq)
  {
- 	/*
+-	/*
 -	 * If bfqq happened to be activated in a burst, but has been idle
 -	 * for at least as long as an interactive queue, then we assume
 -	 * that, in the overall I/O initiated in the burst, the I/O
@@ -11786,7 +11831,7 @@ index 1ebe4185a4fc..dc40e3292110 100644
 -		bfq_clear_bfqq_in_large_burst(bfqq);
 -	}
 -
--	/*
+ 	/*
  	 * If bfqq is already in the burst list or is part of a large
 -	 * burst, then there is nothing else to do.
 +	 * burst, or finally has just been split, then there is
@@ -11891,7 +11936,7 @@ index 1ebe4185a4fc..dc40e3292110 100644
  			bfq_put_queue(bfqq);
  			if (bic_to_bfqq(RQ_BIC(rq), 1) == bfqq)
  				bfq_merge_bfqqs(bfqd, RQ_BIC(rq),
-@@ -4147,12 +4175,28 @@ static int bfq_set_request(struct request_queue *q, struct request *rq,
+@@ -4147,12 +4175,28 @@ new_queue:
  	bfqq = bic_to_bfqq(bic, is_sync);
  	if (!bfqq || bfqq == &bfqd->oom_bfqq) {
  		bfqq = bfq_get_queue(bfqd, bio, is_sync, bic, gfp_mask);
@@ -11922,7 +11967,7 @@ index 1ebe4185a4fc..dc40e3292110 100644
  				bfq_clear_bfqq_in_large_burst(bfqq);
  				if (bic->was_in_burst_list)
  					hlist_add_head(&bfqq->burst_list_node,
-@@ -4163,6 +4207,11 @@ static int bfq_set_request(struct request_queue *q, struct request *rq,
+@@ -4163,6 +4207,11 @@ new_queue:
  		/* If the queue was seeky for too long, break it apart. */
  		if (bfq_bfqq_coop(bfqq) && bfq_bfqq_split_coop(bfqq)) {
  			bfq_log_bfqq(bfqd, bfqq, "breaking apart bfqq");
@@ -11934,7 +11979,7 @@ index 1ebe4185a4fc..dc40e3292110 100644
  			bfqq = bfq_split_bfqq(bic, bfqq);
  			split = true;
  			if (!bfqq)
-@@ -4198,6 +4247,9 @@ static int bfq_set_request(struct request_queue *q, struct request *rq,
+@@ -4198,6 +4247,9 @@ new_queue:
  		}
  	}
  
@@ -12003,6 +12048,9 @@ index 234d41db4144..79d86012d32e 100644
  BFQ_BFQQ_FNS(busy);
  BFQ_BFQQ_FNS(wait_request);
  BFQ_BFQQ_FNS(non_blocking_wait_rq);
+-- 
+2.14.0
+
 
 From 5bdd146a8dfe3a57b1cec35b8d71efee6f7cfcf3 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -12140,7 +12188,7 @@ index dc40e3292110..8ff11bf1508a 100644
  	    unlikely(in_service_bfqq == &bfqd->oom_bfqq))
  		goto check_scheduled;
  
-@@ -1861,7 +1883,15 @@ bfq_setup_cooperator(struct bfq_data *bfqd, struct bfq_queue *bfqq,
+@@ -1861,7 +1883,15 @@ check_scheduled:
  
  	BUG_ON(new_bfqq && bfqq->entity.parent != new_bfqq->entity.parent);
  
@@ -12341,7 +12389,7 @@ index dc40e3292110..8ff11bf1508a 100644
   */
  static struct bfq_queue *
  bfq_split_bfqq(struct bfq_io_cq *bic, struct bfq_queue *bfqq)
-@@ -4202,6 +4187,7 @@ static int bfq_set_request(struct request_queue *q, struct request *rq,
+@@ -4202,6 +4187,7 @@ new_queue:
  					hlist_add_head(&bfqq->burst_list_node,
  						       &bfqd->burst_list);
  			}
@@ -12349,7 +12397,7 @@ index dc40e3292110..8ff11bf1508a 100644
  		}
  	} else {
  		/* If the queue was seeky for too long, break it apart. */
-@@ -4237,7 +4223,6 @@ static int bfq_set_request(struct request_queue *q, struct request *rq,
+@@ -4237,7 +4223,6 @@ new_queue:
  	if (likely(bfqq != &bfqd->oom_bfqq) && bfqq_process_refs(bfqq) == 1) {
  		bfqq->bic = bic;
  		if (split) {
@@ -12444,6 +12492,9 @@ index 79d86012d32e..7b81cb6fa819 100644
  BFQ_BFQQ_FNS(softrt_update);
  #undef BFQ_BFQQ_FNS
  
+-- 
+2.14.0
+
 
 From b1d9d33014ec1a26d0ffc725d60d533015e779f6 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -12814,6 +12865,9 @@ index 7b81cb6fa819..0e74f49347bf 100644
  BFQ_BFQQ_FNS(coop);
  BFQ_BFQQ_FNS(split_coop);
  BFQ_BFQQ_FNS(softrt_update);
+-- 
+2.14.0
+
 
 From 757a0a1d8c38a3fb2e4c088bdb70a6d9b8070750 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -13411,6 +13465,9 @@ index d528aa8e3fa5..38c1c5f864f2 100644
  }
  
  /**
+-- 
+2.14.0
+
 
 From cb3553d7a10e902c504351c2f33cc5168a6da341 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -13785,6 +13842,9 @@ index 0e74f49347bf..c6d299a08bf4 100644
  BFQ_BFQQ_FNS(IO_bound);
  BFQ_BFQQ_FNS(in_large_burst);
  BFQ_BFQQ_FNS(coop);
+-- 
+2.14.0
+
 
 From 037e2a328c5ee9728138a5591235ffa857e47e0c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -13809,6 +13869,9 @@ index c6d299a08bf4..5846e2cebc40 100644
  
  	BUG_ON(idx >= BFQ_IOPRIO_CLASSES);
  	BUG_ON(sched_data == NULL);
+-- 
+2.14.0
+
 
 From 027529f5126cd32dbd15cde652b6f0b659a9c27d Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -14018,6 +14081,9 @@ index 5846e2cebc40..8305bd9b705b 100644
  	return sched_data->service_tree + idx;
  }
  
+-- 
+2.14.0
+
 
 From e287c15143b65da0c19cf94eb2e825fe9cc5e4a3 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -14041,6 +14107,9 @@ index 1bb6b6ee78ec..2c01ce4ec596 100644
  	return pd_to_bfqg(pd);
  }
  
+-- 
+2.14.0
+
 
 From 7955718a2154a1caa7723ef9b21417119aea96cc Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -14136,6 +14205,9 @@ index 4d251c380ec3..a3f2cd39de0c 100644
  	else
  		return bfq_default_max_budget;
  }
+-- 
+2.14.0
+
 
 From 41bd65c5e3c65c5f5a59d5fc1ef0b92eb054a056 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -14159,6 +14231,9 @@ index 8305bd9b705b..0ac1cc992b21 100644
  #define BFQ_DEFAULT_GRP_IOPRIO	0
  #define BFQ_DEFAULT_GRP_CLASS	IOPRIO_CLASS_BE
  
+-- 
+2.14.0
+
 
 From 5d22189f94a1e47ea5b2e5c38d7fad2a44197e4b Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -14254,6 +14329,9 @@ index 0ac1cc992b21..285b36127eed 100644
  
  	/* parameters of the low_latency heuristics */
  	unsigned int bfq_wr_coeff;
+-- 
+2.14.0
+
 
 From 507bc4f1857960d0e9dbbebc28eabfb51e657137 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -14278,6 +14356,9 @@ index b1ab0caf8dc6..ab4e6dc81d73 100644
  	default n
  	---help---
  	  Enable hierarchical scheduling in BFQ, using the blkio controller.
+-- 
+2.14.0
+
 
 From cefa8a1229608cd100eb9917d8678bafec1d84b5 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -14303,6 +14384,9 @@ index 8bff8dc86e84..eb48f2699ba7 100644
  
  	if (bfqd->hw_tag == 1)
  		return;
+-- 
+2.14.0
+
 
 From 7fb150847e00be73dfcb9bd3d4eccb54bbff05a9 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -14326,6 +14410,9 @@ index eb48f2699ba7..546b12867e71 100644
  		return NULL;
  
  	return rq;
+-- 
+2.14.0
+
 
 From 19a018b213f24cc208c71c05b2f14d1fbea679e6 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -14414,6 +14501,9 @@ index 76f39816acaf..f4b5b95ac831 100644
  		 */
  		requeue = 1;
  	}
+-- 
+2.14.0
+
 
 From 796843096e00f90b9225f82b8bce355f8544d85c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -14439,6 +14529,9 @@ index f4b5b95ac831..93e6f9829cf7 100644
  }
  
  /**
+-- 
+2.14.0
+
 
 From cd1d9453196f0be4c9a4a89fee75f3880b91149e Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -14500,6 +14593,9 @@ index 285b36127eed..66d6ee2ebc44 100644
  #define BFQ_DEFAULT_GRP_IOPRIO	0
  #define BFQ_DEFAULT_GRP_CLASS	IOPRIO_CLASS_BE
  
+-- 
+2.14.0
+
 
 From e62dc1561a005299f4abaa02128db2799835b4ab Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -14535,6 +14631,9 @@ index 66d6ee2ebc44..a956070e209c 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From a85665d2af342e2655043257e3eb40bca2fe064c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -14693,7 +14792,7 @@ index 93e6f9829cf7..3cba436cca3f 100644
  	}
  }
  
-@@ -1075,6 +1080,7 @@ static void bfq_deactivate_entity(struct bfq_entity *entity, int requeue)
+@@ -1075,6 +1080,7 @@ update:
  		if (bfqq)
  			bfq_log_bfqq(bfqq->bfqd, bfqq,
  				     "invoking udpdate_next for this queue");
@@ -14701,7 +14800,7 @@ index 93e6f9829cf7..3cba436cca3f 100644
  		else {
  			struct bfq_group *bfqg =
  				container_of(entity,
-@@ -1083,6 +1089,7 @@ static void bfq_deactivate_entity(struct bfq_entity *entity, int requeue)
+@@ -1083,6 +1089,7 @@ update:
  			bfq_log_bfqg((struct bfq_data *)bfqg->bfqd, bfqg,
  				     "invoking udpdate_next for this entity");
  		}
@@ -14852,6 +14951,9 @@ index a956070e209c..8e02a47f4985 100644
  static void bfq_exit_bfqq(struct bfq_data *bfqd, struct bfq_queue *bfqq);
  
  #endif /* _BFQ_H */
+-- 
+2.14.0
+
 
 From b00323760aed324bdddf0a53bdfed76baf56981b Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -14905,6 +15007,9 @@ index 0ec233005845..70d5542c1058 100644
  	atomic_inc(&bfqq->ref);
  	bfq_log_bfqq(bfqd, bfqq, "get_queue, at end: %p, %d", bfqq,
  		     atomic_read(&bfqq->ref));
+-- 
+2.14.0
+
 
 From 7d2d7860cff95109b78ac1ebef6332303f6a04c4 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -14928,6 +15033,9 @@ index 70d5542c1058..6264d3f63bcf 100644
  		atomic_inc(&bfqq->ref);
  		bfq_log_bfqq(bfqd, bfqq, "get_queue, bfqq not in async: %p, %d",
  			     bfqq, atomic_read(&bfqq->ref));
+-- 
+2.14.0
+
 
 From 24bfd5bc8c0aa314bf4dd4bf4ab04c1fc30a64b3 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -14951,6 +15059,9 @@ index 6264d3f63bcf..7a93c13baa8e 100644
  		bfqq = bfq_get_queue(bfqd, bio, is_sync, bic, gfp_mask);
  		BUG_ON(!hlist_unhashed(&bfqq->burst_list_node));
  
+-- 
+2.14.0
+
 
 From 8c2541e116dcec72ec4683208e24fbfc44e26bb8 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -15032,6 +15143,9 @@ index 7a93c13baa8e..2af362d7785f 100644
  	if (bfqq)
  		bfq_set_next_ioprio_data(bfqq, bic);
  
+-- 
+2.14.0
+
 
 From a65cc43a52e9e113bcf52fbd93e06959fa9561b2 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -15142,6 +15256,9 @@ index 8e02a47f4985..1db17767ce55 100644
  #ifdef CONFIG_BFQ_GROUP_IOSCHED
  
  static struct bfq_group *bfq_bfqq_to_bfqg(struct bfq_queue *bfqq)
+-- 
+2.14.0
+
 
 From b03bfd71668277d6d796f2ce6949603486661f28 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -15165,6 +15282,9 @@ index fa75d0fc3517..17b83cc62a71 100644
  		bic_set_bfqq(bic, bfqq, false);
  		bfq_log_bfqq(bfqd, bfqq,
  			     "check_ioprio_change: bfqq %p %d",
+-- 
+2.14.0
+
 
 From 9087a32c4025df1aebd0e00af1e06ee9fa2a9bd6 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -15206,7 +15326,7 @@ index 17b83cc62a71..b8fa044bcefa 100644
  	rcu_read_lock();
  
  	blkcg = bio_blkcg(bio);
-@@ -3713,24 +3711,9 @@ static struct bfq_queue *bfq_find_alloc_queue(struct bfq_data *bfqd,
+@@ -3713,24 +3711,9 @@ retry:
  	 * originally, since it should just be a temporary situation.
  	 */
  	if (!bfqq || bfqq == &bfqd->oom_bfqq) {
@@ -15234,7 +15354,7 @@ index 17b83cc62a71..b8fa044bcefa 100644
  
  		if (bfqq) {
  			bfq_init_bfqq(bfqd, bfqq, bic, current->pid,
-@@ -3743,9 +3726,6 @@ static struct bfq_queue *bfq_find_alloc_queue(struct bfq_data *bfqd,
+@@ -3743,9 +3726,6 @@ retry:
  		}
  	}
  
@@ -15273,7 +15393,7 @@ index 17b83cc62a71..b8fa044bcefa 100644
  	spin_lock_irqsave(q->queue_lock, flags);
  	bfq_check_ioprio_change(bic, bio);
  
-@@ -4217,7 +4195,7 @@ static int bfq_set_request(struct request_queue *q, struct request *rq,
+@@ -4217,7 +4195,7 @@ new_queue:
  	if (!bfqq || bfqq == &bfqd->oom_bfqq) {
  		if (bfqq)
  			bfq_put_queue(bfqq);
@@ -15297,6 +15417,9 @@ index 1db17767ce55..4c38bec271ad 100644
  static void bfq_end_wr_async_queues(struct bfq_data *bfqd,
  				    struct bfq_group *bfqg);
  #ifdef CONFIG_BFQ_GROUP_IOSCHED
+-- 
+2.14.0
+
 
 From dc9934ff6ec6bdfb1c3acc0d9915fdd7cf673664 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -15412,7 +15535,7 @@ index b8fa044bcefa..564f07df3b09 100644
  		atomic_inc(&bfqq->ref);
  		bfq_log_bfqq(bfqd, bfqq, "get_queue, bfqq not in async: %p, %d",
  			     bfqq, atomic_read(&bfqq->ref));
-@@ -3793,6 +3761,7 @@ static struct bfq_queue *bfq_get_queue(struct bfq_data *bfqd,
+@@ -3793,6 +3761,7 @@ out:
  	atomic_inc(&bfqq->ref);
  	bfq_log_bfqq(bfqd, bfqq, "get_queue, at end: %p, %d", bfqq,
  		     atomic_read(&bfqq->ref));
@@ -15420,6 +15543,9 @@ index b8fa044bcefa..564f07df3b09 100644
  	return bfqq;
  }
  
+-- 
+2.14.0
+
 
 From 2ac59f035df5250a1c6c6b3a0ddb2999745fe3b0 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -15551,7 +15677,7 @@ index 564f07df3b09..3ee39026c1c3 100644
  		bfq_put_queue(bfqq);
  	}
  }
-@@ -4211,9 +4209,8 @@ static int bfq_set_request(struct request_queue *q, struct request *rq,
+@@ -4211,9 +4209,8 @@ new_queue:
  	}
  
  	bfqq->allocated[rw]++;
@@ -15619,6 +15745,9 @@ index 4c38bec271ad..5c9a9b2fc9f6 100644
  	struct bfq_data *bfqd;
  
  	unsigned short ioprio, new_ioprio;
+-- 
+2.14.0
+
 
 From c87d0d896f85546a6f6202e90b0c6a58b2ef8b89 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -15654,6 +15783,9 @@ index 2deff7e03fd5..02aa9c2f93ee 100644
  }
  
  /**
+-- 
+2.14.0
+
 
 From 2c68598544de7b9a1f4c2b1d7be19668fe44a6e1 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -15677,6 +15809,9 @@ index 3ee39026c1c3..713c390c9780 100644
  	BUG_ON(timer_pending(&bfqd->idle_slice_timer));
  
  #ifdef CONFIG_BFQ_GROUP_IOSCHED
+-- 
+2.14.0
+
 
 From 8b080f3c8f08588ce41d9772bc934aa27fb380ad Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -15712,6 +15847,9 @@ index 5c9a9b2fc9f6..47824376f1b4 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From 235598eaad93682df12c3d3882aa172f53c83ca8 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -15735,6 +15873,9 @@ index 85c10753b4e7..2888b90f128d 100644
  
  	/*
  	 * Thresholds that determine the switch between speed classes
+-- 
+2.14.0
+
 
 From 446291a71eb3049018a9018b91d1ec0120796743 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -15770,6 +15911,9 @@ index 2888b90f128d..91099e300901 100644
  
  	return 0;
  
+-- 
+2.14.0
+
 
 From 49f6d4969f14431214c62937e1e2e03118370042 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -15793,6 +15937,9 @@ index 91099e300901..0b08e2594ff1 100644
  
  	/*
  	 * Can be 0 on HZ < 1000 setups.
+-- 
+2.14.0
+
 
 From 894497e07693f255fb9dffd5048083fea398fc42 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -15817,6 +15964,9 @@ index 34dcb378cb52..8757a1ce00b9 100644
  	}
  }
  
+-- 
+2.14.0
+
 
 From c455c77910131d395767db45a70d42cd6a261e3d Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -15874,6 +16024,9 @@ index 8757a1ce00b9..ae30d9a51cce 100644
  	 *
  	 * As a special case, if bfqq is weight-raised, push up
  	 * timestamps much less, to keep very low the probability that
+-- 
+2.14.0
+
 
 From 85727ab56034896ab1a6c2909993d1a022a95d05 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -15897,6 +16050,9 @@ index b137ba86f777..6ddc545b030c 100644
  
  	/*
  	 * Can be 0 on HZ < 1000 setups.
+-- 
+2.14.0
+
 
 From 4b5b284caa8bb2d95f26b449d2880c29f1b2321d Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -15920,6 +16076,9 @@ index 6ddc545b030c..d87532c2cf1b 100644
  		pr_crit("bfq_set_next_ioprio_data: new_ioprio %d\n",
  			bfqq->new_ioprio);
  		BUG();
+-- 
+2.14.0
+
 
 From e730e0137ac832302c2abd7faeafb9dfe50a06c9 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -15994,6 +16153,9 @@ index 47824376f1b4..4180bbf47fae 100644
  };
  
  #else
+-- 
+2.14.0
+
 
 From 5e0d4dc2e89b53c09f586c1cc1aa96a5865d1734 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -16016,6 +16178,9 @@ index ae30d9a51cce..a3773f1a5dac 100644
   *
   * Activate @entity and all the entities on the path from it to the root.
   */
+-- 
+2.14.0
+
 
 From bf9b0fd34945289ac3de23fa94123be35898f6b2 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -16094,6 +16259,9 @@ index 4180bbf47fae..10d4837b7e55 100644
  	int wr_busy_queues;
  	int queued;
  	int rq_in_driver;
+-- 
+2.14.0
+
 
 From 69cf2199c0700cd6525a9ef4cb9c4270ecf82b00 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -16147,6 +16315,9 @@ index 0ac23c8512b6..2c9d085a20ad 100644
  static bool bfq_may_expire_for_budg_timeout(struct bfq_queue *bfqq)
  {
  	bfq_log_bfqq(bfqq->bfqd, bfqq,
+-- 
+2.14.0
+
 
 From 668e60cccaec26a6d821f1813e98bed4943f0b91 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -16905,6 +17076,9 @@ index 10d4837b7e55..deec5575ea1c 100644
  	struct bfq_queue oom_bfqq;
  };
  
+-- 
+2.14.0
+
 
 From 147ad650fb49b9bac7a0f9553a01dbfe2f316f3d Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -16928,6 +17102,9 @@ index e03f27f01a05..18db2b4e2933 100644
  
  	/*
  	 * Can be 0 on HZ < 1000 setups.
+-- 
+2.14.0
+
 
 From 928513e9dba42ccd05511277637f8973c44b125b Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -16951,6 +17128,9 @@ index 18db2b4e2933..4a601ee5aaf9 100644
  
  	/*
  	 * Can be 0 on HZ < 1000 setups.
+-- 
+2.14.0
+
 
 From 72b8294099cc4b70c178c3e49391480325d9f74d Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -17003,6 +17183,9 @@ index 4a601ee5aaf9..824083fadf05 100644
  	return 1;
  }
  
+-- 
+2.14.0
+
 
 From 16efb55b9da7e64cdfd57054070e4b1f05e7bad3 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -17064,6 +17247,9 @@ index deec5575ea1c..59d8ef8a4918 100644
  };
  
  /**
+-- 
+2.14.0
+
 
 From 8df97af5554c2e091e9cc730e2c1ab0db8f46b25 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -17092,6 +17278,9 @@ index 8c69166c2899..72e6ae40afed 100644
  			root = bfqq ? &bfqd->queue_weights_tree :
  				      &bfqd->group_weights_tree;
  			bfq_weights_tree_remove(bfqd, entity, root);
+-- 
+2.14.0
+
 
 From dda583d172b9f1431bee94daff42b861cf17fd4f Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -17162,6 +17351,9 @@ index 59d8ef8a4918..7eb11d66a97c 100644
  struct bfq_entity;
  
  /**
+-- 
+2.14.0
+
 
 From c24daffc006b49d2b1b791a26d13af6072c03d6d Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -17197,6 +17389,9 @@ index 7eb11d66a97c..017f90dcf0da 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From 859ae43797d4fc66d8b95d5493783bd959e05fb2 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -17259,6 +17454,9 @@ index c6f63575574b..e00667c20498 100644
  
  	assert_spin_locked(bfqd->queue->queue_lock);
  	bfq_update_hw_tag(bfqd);
+-- 
+2.14.0
+
 
 From 11a00de0aa27475a920970249133eeb8927c4aeb Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -17360,6 +17558,9 @@ index e00667c20498..c4c9b45c712e 100644
  
  	if (!is_sync) {
  		async_bfqq = bfq_async_queue_prio(bfqd, bfqg, ioprio_class,
+-- 
+2.14.0
+
 
 From d11603079cea40226f8f5641d6d78882782758eb Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -17395,6 +17596,9 @@ index 017f90dcf0da..3c4e0f627ce2 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From 53c9b9c1d420f05e82d0ed64b3947c8626b65734 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -17422,6 +17626,9 @@ index d111500519e2..573494a39b5a 100644
  			bfqq->wr_coeff = 1;
  			bfq_log_bfqq(bfqd, bfqq,
  				     "wrais ending at %lu, rais_max_time %u",
+-- 
+2.14.0
+
 
 From 61377f7fe06cbb5620bb66a0cfb2a59129cadfec Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -17457,6 +17664,9 @@ index 3c4e0f627ce2..f85a06ddc265 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From 2116475fd5ed5de0d5ad5b70bdae29f0af6abb8b Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo@MacBook-Pro-di-Paolo.local>
@@ -17531,6 +17741,9 @@ index f85a06ddc265..dcab4d10e8ff 100644
   */
  
  #ifndef _BFQ_H
+-- 
+2.14.0
+
 
 From 029aefda773916030abafdcc756733057804f9ab Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -17679,6 +17892,9 @@ index dcab4d10e8ff..f733893964b3 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From 9d9d7693085ce89c1398a7fdab70fc150f710956 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -17841,6 +18057,9 @@ index 349686142a06..e1290b915975 100644
  	if (bfqd &&
  	    jiffies - bfqd->bfq_class_idle_last_service >
  	    BFQ_CL_IDLE_TIMEOUT) {
+-- 
+2.14.0
+
 
 From 3e55ec681956f3d012bd7c8cdc375d2ef39394fc Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -17976,7 +18195,7 @@ index e95a2cc249f2..9d7ee931eaa4 100644
  	struct bfq_queue *bfqq;
  	unsigned long flags;
  	enum bfqq_expiration reason;
-@@ -4337,11 +4339,12 @@ static void bfq_idle_slice_timer(unsigned long data)
+@@ -4337,11 +4339,12 @@ schedule_dispatch:
  	bfq_schedule_dispatch(bfqd);
  
  	spin_unlock_irqrestore(bfqd->queue->queue_lock, flags);
@@ -18160,6 +18379,9 @@ index f733893964b3..b99f47e0f00d 100644
  	/* weight of backward seeks wrt forward ones */
  	unsigned int bfq_back_penalty;
  	/* maximum allowed backward seek */
+-- 
+2.14.0
+
 
 From 5b1a7b54a1b34c9845fcd82f7a8fdfd9adaf246c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -18246,7 +18468,7 @@ index 9d7ee931eaa4..6f507b20b81f 100644
  }
  
  static void bfq_exit_icq(struct io_cq *icq)
-@@ -3795,13 +3794,15 @@ static struct bfq_queue *bfq_get_queue(struct bfq_data *bfqd,
+@@ -3795,13 +3794,15 @@ out:
  static void bfq_update_io_thinktime(struct bfq_data *bfqd,
  				    struct bfq_io_cq *bic)
  {
@@ -18305,6 +18527,9 @@ index b99f47e0f00d..b68d8e76d436 100644
  	/* last time CLASS_IDLE was served */
  	u64 bfq_class_idle_last_service;
  
+-- 
+2.14.0
+
 
 From f53abf43b6729f318fbad0db0d7cf01891f15088 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -18369,6 +18594,9 @@ index 4f05096f7417..f8960a4e9652 100644
  }
  
  static void bfq_deactivate_bfqq(struct bfq_data *bfqd, struct bfq_queue *bfqq,
+-- 
+2.14.0
+
 
 From a7810b18cbcc86e5f3285f0e36242a36c9691d11 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -18469,6 +18697,9 @@ index f8960a4e9652..45d63d3ff9c6 100644
  		bfq_forget_idle(st);
  	}
  }
+-- 
+2.14.0
+
 
 From 14473ad7a96ffb6d9549f8b98a908efb18ecadd4 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -18565,10 +18796,11 @@ index 6178b4896671..42038990a116 100644
  }
  
  static void bfq_deactivate_request(struct request_queue *q, struct request *rq)
-@@ -2218,6 +2234,315 @@ static void bfq_arm_slice_timer(struct bfq_data *bfqd)
+@@ -2217,6 +2233,315 @@ static void bfq_arm_slice_timer(struct bfq_data *bfqd)
+ 		div_u64(bfqd->bfq_slice_idle, NSEC_PER_MSEC));
  }
  
- /*
++/*
 + * In autotuning mode, max_budget is dynamically recomputed as the
 + * amount of sectors transferred in timeout at the estimated peak
 + * rate. This enables BFQ to utilize a full timeslice with a full
@@ -18877,10 +19109,9 @@ index 6178b4896671..42038990a116 100644
 +	"update_peak_rate: samples at end %d", bfqd->peak_rate_samples);
 +}
 +
-+/*
+ /*
   * Move request from internal lists to the dispatch list of the request queue
   */
- static void bfq_dispatch_insert(struct request_queue *q, struct request *rq)
 @@ -2235,6 +2560,7 @@ static void bfq_dispatch_insert(struct request_queue *q, struct request *rq)
  	 * incrementing bfqq->dispatched.
  	 */
@@ -19315,6 +19546,9 @@ index b68d8e76d436..a016b9805d62 100644
  	/* maximum budget allotted to a bfq_queue before rescheduling */
  	int bfq_max_budget;
  
+-- 
+2.14.0
+
 
 From 21433a24b0716d41f5f1289224e251d73b630200 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -19361,6 +19595,9 @@ index 42038990a116..4dfac11785f1 100644
  	bfqq = bfq_select_queue(bfqd);
  	if (!bfqq)
  		return 0;
+-- 
+2.14.0
+
 
 From d7769fa3b610702017400a626125890249baa65a Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -19447,6 +19684,9 @@ index a016b9805d62..f8828714c9b7 100644
  	/* last time CLASS_IDLE was served */
  	u64 bfq_class_idle_last_service;
  
+-- 
+2.14.0
+
 
 From ebcf976a0fe7e23f69d97180ee02d46129abd796 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -19492,7 +19732,7 @@ index 6c2fd793e9b0..ed58e219fe29 100644
  }
  
  static int bfqq_process_refs(struct bfq_queue *bfqq)
-@@ -1950,18 +1964,22 @@ bfq_setup_cooperator(struct bfq_data *bfqd, struct bfq_queue *bfqq,
+@@ -1950,18 +1964,22 @@ check_scheduled:
  
  static void bfq_bfqq_save_state(struct bfq_queue *bfqq)
  {
@@ -19546,6 +19786,9 @@ index f8828714c9b7..4e598f6fc337 100644
  };
  
  enum bfq_device_speed {
+-- 
+2.14.0
+
 
 From 5dfbf95b038d65bbf47c78e2f0d8d689ce2cbbbc Mon Sep 17 00:00:00 2001
 From: Luca Miccio <lucmiccio@gmail.com>
@@ -19625,6 +19868,9 @@ index ed58e219fe29..b4f640b27852 100644
  		bfq_log_bfqq(bfqd, bfqq,
  			"raising period dur %u/%u msec, old coeff %u, w %d(%d)",
  			jiffies_to_msecs(jiffies - bfqq->last_wr_start_finish),
+-- 
+2.14.0
+
 
 From 6852df4a6b83277a51c73f4efae461cbe8d3b257 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -19865,6 +20111,9 @@ index 4e598f6fc337..82cb5d0ab66e 100644
  };
  
  enum bfq_device_speed {
+-- 
+2.14.0
+
 
 From 4d1b8844e67414f91088a2da1d4fecb829dc616a Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -20062,7 +20311,7 @@ index 8778f6d9d4b8..97fe7e2338b1 100644
  		goto update_last_values;
  
  update_rate_and_reset:
-@@ -2567,7 +2570,7 @@ void bfq_update_peak_rate(struct bfq_data *bfqd, struct request *rq)
+@@ -2567,7 +2570,7 @@ update_last_values:
  
  	bfq_log(bfqd,
  	"update_peak_rate: delta_first %lluus last_pos %llu peak_rate %llu",
@@ -20132,6 +20381,9 @@ index 82cb5d0ab66e..f18cc3869077 100644
  	/* current estimate of device peak rate */
  	u32 peak_rate;
  
+-- 
+2.14.0
+
 
 From 6edc451ffc4e19706910f2fbdd329e114fe0a4e5 Mon Sep 17 00:00:00 2001
 From: Lee Tibbert <LeeTibbert@users.noreply.github.com>
@@ -20171,6 +20423,9 @@ index 2e464f2ba0f6..b50ae8ec620d 100644
  	if (async_bfqq) {
  		entity = &async_bfqq->entity;
  
+-- 
+2.14.0
+
 
 From b44b84400e05e9f2165b892920233eb7f13c9d4f Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -20207,6 +20462,9 @@ index f18cc3869077..249a221194f7 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From 8477d5d9d2bba244c901b1ce88dbc254de9cc0c0 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -20748,6 +21006,9 @@ index 000000000000..67e12699221f
 +    Slightly extended version:
 +    http://algogroup.unimore.it/people/paolo/disk_sched/bfq-v1-suite-
 +							results.pdf
+-- 
+2.14.0
+
 
 From 578c2c67c905597e4e11e6cad242cdf5c8b1fd24 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -20780,6 +21041,9 @@ index ccbc079ccc28..6fc4136aa293 100644
  			if (time_is_after_jiffies(bfqq->last_wr_start_finish)) {
  			       pr_crit(
  			       "BFQ WARNING:last %lu budget %lu jiffies %lu",
+-- 
+2.14.0
+
 
 From 3c91df2150d606b683d10fccc50011f11367f692 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -20816,6 +21080,9 @@ index 67e12699221f..8626b140ef97 100644
  
  1-2 Server systems
  ------------------
+-- 
+2.14.0
+
 
 From ff063526d4f212817fcf6dae6de2a49f18f0c70c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -20849,6 +21116,9 @@ index ab4e6dc81d73..db12faae445c 100644
  
  config BFQ_GROUP_IOSCHED
  	bool "BFQ hierarchical scheduling support"
+-- 
+2.14.0
+
 
 From 3cad69c8d928a43b42c6725e86059a9da78bc81d Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -20871,6 +21141,9 @@ index 6fc4136aa293..12c831d010ae 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From ea29068786b1f2b3b538bab5240d8797d0020c54 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -20897,6 +21170,9 @@ index 12c831d010ae..e5b6ff61b8da 100644
  	list_add_tail(&rq->queuelist, &bfqq->fifo);
  
  	bfq_rq_enqueued(bfqd, bfqq, rq);
+-- 
+2.14.0
+
 
 From 61edfb2d7e752f4c375d1f8df7d8cb3df5f58aef Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -20925,6 +21201,9 @@ index 8626b140ef97..8979408a8277 100644
  - ioprio classes are served in strict priority order, i.e.,
    lower-priority queues are not served as long as there are
    higher-priority queues.  Among queues in the same class, the
+-- 
+2.14.0
+
 
 From 58c54877a86e3e1b96390e5829dcf09f8ada7be5 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -20981,6 +21260,9 @@ index e5b6ff61b8da..3ff7e35becdc 100644
  /* Target observation time interval for a peak-rate update (ns) */
  #define BFQ_RATE_REF_INTERVAL	NSEC_PER_SEC
  
+-- 
+2.14.0
+
 
 From 0080954b39557e6cb58582e53175c994afc2b86c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -21005,6 +21287,9 @@ index 8979408a8277..5ba67af3d3c6 100644
  the percentage of sequential I/O requests issued. The price of larger
  values is that they coarsen the granularity of short-term bandwidth
  and latency guarantees.
+-- 
+2.14.0
+
 
 From 85f45a60b02615f7b168825200a2709db3ac1b53 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -21041,6 +21326,9 @@ index 249a221194f7..3a38ae2f74d7 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From d360cb910ca08c23d967ca5362f32fb164a1a4f5 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -21135,6 +21423,9 @@ index db12faae445c..99a42261677a 100644
  
  choice
  	prompt "Default I/O scheduler"
+-- 
+2.14.0
+
 
 From fdaf553bbb426d321442813fbc6fd46be8b26780 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -21177,6 +21468,9 @@ index c74c72cd7095..9d14ceb5bb30 100644
   *
   * http://algogroup.unimo.it/people/paolo/disk_sched/bf1-v1-suite-results.pdf
   *
+-- 
+2.14.0
+
 
 From 090be32ac2185d081974cdc07bb60ada55379c4f Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -21201,6 +21495,9 @@ index 45d63d3ff9c6..9afeaab333b2 100644
   * structures.
   */
  static struct bfq_entity *bfq_lookup_next_entity(struct bfq_sched_data *sd,
+-- 
+2.14.0
+
 
 From 2855d321844d7655f6a54286ce0710e10c3b262d Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -21225,6 +21522,9 @@ index 9d14ceb5bb30..c15d50f6da3d 100644
  	int ret = bfq_var_store(&__data, (page), count);		\
  	if (__data < (MIN))						\
  		__data = (MIN);						\
+-- 
+2.14.0
+
 
 From 582bbbe0bdf6218751846f6e33ee02946d48c839 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -21541,7 +21841,7 @@ index 9afeaab333b2..2f54ac555521 100644
  		bfq_idle_extract(st, entity);
  	else if (entity->tree)
  		BUG();
-@@ -1124,19 +1160,13 @@ static void bfq_deactivate_entity(struct bfq_entity *entity, int requeue)
+@@ -1124,19 +1160,13 @@ update:
  }
  
  /**
@@ -21638,7 +21938,7 @@ index 9afeaab333b2..2f54ac555521 100644
  				node = node->rb_left;
  				goto left;
  			}
-@@ -1209,28 +1249,71 @@ static struct bfq_entity *bfq_first_active_entity(struct bfq_service_tree *st)
+@@ -1209,28 +1249,71 @@ left:
   * __bfq_lookup_next_entity - return the first eligible entity in @st.
   * @st: the service tree.
   *
@@ -21879,10 +22179,11 @@ index 9afeaab333b2..2f54ac555521 100644
  
  	return entity;
  }
-@@ -1356,6 +1410,43 @@ static bool next_queue_may_preempt(struct bfq_data *bfqd)
+@@ -1355,6 +1409,43 @@ static bool next_queue_may_preempt(struct bfq_data *bfqd)
+ 	return sd->next_in_service != sd->in_service_entity;
  }
  
- /*
++/*
 + * This function tells whether entity stops being a candidate for next
 + * service, according to the following logic.
 + *
@@ -21919,10 +22220,9 @@ index 9afeaab333b2..2f54ac555521 100644
 +	return false;
 +}
 +
-+/*
+ /*
   * Get next queue for service.
   */
- static struct bfq_queue *bfq_get_next_queue(struct bfq_data *bfqd)
 @@ -1369,6 +1460,11 @@ static struct bfq_queue *bfq_get_next_queue(struct bfq_data *bfqd)
  	if (bfqd->busy_queues == 0)
  		return NULL;
@@ -22083,6 +22383,9 @@ index 3a38ae2f74d7..a0c367400436 100644
  
  	/* user-configured max budget value (0 for auto-tuning) */
  	int bfq_user_max_budget;
+-- 
+2.14.0
+
 
 From b580f6154617dd42e402d132f0916625778d61d6 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -22119,6 +22422,9 @@ index a0c367400436..cbd17e685a16 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From 22c5b64112946354b6dd08d746ce90dc0b11e667 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -22164,6 +22470,9 @@ index b2b74ef1aa48..c1abe22f93dd 100644
  }
  
  /*
+-- 
+2.14.0
+
 
 From 5ec45ea980a43179fa3a878ebc9a3fc2d1e03577 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -22190,6 +22499,9 @@ index c1abe22f93dd..2871aac97757 100644
  
  		bfqq->wr_coeff = 1;
  	}
+-- 
+2.14.0
+
 
 From 98f9c9ac64460831e06102a1a1ae93c7f25d7e77 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -22256,6 +22568,9 @@ index 2f54ac555521..fae28ee83dd0 100644
  
  	BUG_ON(bfqq->entity.budget < 0);
  }
+-- 
+2.14.0
+
 
 From 7cee4ddbe8d98ae633bb47097f2a9fd3e843dd8e Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -22417,6 +22732,9 @@ index fae28ee83dd0..52911cc1222d 100644
  
  	BUG_ON(bfqq->entity.budget < 0);
  }
+-- 
+2.14.0
+
 
 From f689574029f784acc36fb29b491194f9da084b50 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -22636,7 +22954,7 @@ index 52911cc1222d..09e494b83e6f 100644
  
  	if (!requeue || !bfq_gt(entity->finish, st->vtime))
  		bfq_forget_entity(st, entity);
-@@ -1169,7 +1253,7 @@ static void bfq_deactivate_entity(struct bfq_entity *entity, int requeue)
+@@ -1169,7 +1253,7 @@ update_schedule:
  				     "invoking udpdate_next for this entity");
  		}
  #endif
@@ -22645,7 +22963,7 @@ index 52911cc1222d..09e494b83e6f 100644
  			break;
  	}
  }
-@@ -1183,28 +1267,27 @@ static void bfq_deactivate_entity(struct bfq_entity *entity, int requeue)
+@@ -1183,28 +1267,27 @@ update_schedule:
   */
  static u64 bfq_calc_vtime_jump(struct bfq_service_tree *st)
  {
@@ -22718,6 +23036,9 @@ index cbd17e685a16..3e580fdcd49a 100644
  
  	BUG_ON(idx >= BFQ_IOPRIO_CLASSES);
  	BUG_ON(sched_data == NULL);
+-- 
+2.14.0
+
 
 From c6f2010c7e70af03cad7c9a33f767f275204b90c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -22779,6 +23100,9 @@ index 3e580fdcd49a..ca67f3f2a8bd 100644
  };
  
  enum bfq_device_speed {
+-- 
+2.14.0
+
 
 From bdf75a5427358c9e707404c48a9f174ee97e3ae4 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -23459,7 +23783,7 @@ index 09e494b83e6f..3b8e05b9d522 100644
  		if (bfqq)
  			bfq_log_bfqq(bfqq->bfqd, bfqq,
  				     "invoking udpdate_next for this queue");
-@@ -1253,7 +1355,13 @@ static void bfq_deactivate_entity(struct bfq_entity *entity, int requeue)
+@@ -1253,7 +1355,13 @@ update_schedule:
  				     "invoking udpdate_next for this entity");
  		}
  #endif
@@ -23577,6 +23901,9 @@ index ca67f3f2a8bd..7ee94b712cdf 100644
  
  	u64 finish; /* B-WF2Q+ finish timestamp (aka F_i) */
  	u64 start;  /* B-WF2Q+ start timestamp (aka S_i) */
+-- 
+2.14.0
+
 
 From 57adfa73e0bf895bd538171c9397b0bc05db9ac2 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -23644,6 +23971,9 @@ index 7ee94b712cdf..c88e19a881a5 100644
  
  /* Expiration reasons. */
  enum bfqq_expiration {
+-- 
+2.14.0
+
 
 From f4aa8a76c3a9dcfb1c4e9d01c5de41620485ebf4 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -23679,6 +24009,9 @@ index c88e19a881a5..b7e352682e3b 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From 7e7c5a26a2cbc795a6a87ed147e94e1dcb4aaf09 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -23748,6 +24081,9 @@ index 3b8e05b9d522..41fd5c9446aa 100644
  		/*
  		 * If there is already a next_in_service candidate
  		 * entity, then compare class priorities or timestamps
+-- 
+2.14.0
+
 
 From 997cb6c7599270bbcb1990779c666d924e851011 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -23856,6 +24192,9 @@ index 41fd5c9446aa..4af77f45de71 100644
  {
  }
  #endif
+-- 
+2.14.0
+
 
 From cc4f4ea47955a9ff5d829addf71442b22042516b Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -23892,6 +24231,9 @@ index b7e352682e3b..1be611342648 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From c1e55d2625046e31dfe1dce14b04e9dc89b18ac5 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -23916,6 +24258,9 @@ index bbaecd00449e..f988e8a3f1c1 100644
  	if (!bgd)
  		return NULL;
  	return &bgd->pd;
+-- 
+2.14.0
+
 
 From 819ebcc9dd5937d65e3f703750de26597e352c2e Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -23941,6 +24286,9 @@ index 593e458d5ba6..21cb56349618 100644
  				     bfqd->queue->node);
  
  	if (bfqq) {
+-- 
+2.14.0
+
 
 From 307c0d770c9722a72c087c85f43ecba079d12f3c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -24097,6 +24445,9 @@ index 21cb56349618..0721f9b0b598 100644
  	if (bfqq)
  		return __bfq_may_queue(bfqq);
  
+-- 
+2.14.0
+
 
 From 7e9b64f705809770cb779dc41af1dc65fad7dffa Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -24112,10 +24463,11 @@ diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
 index 0721f9b0b598..c4890b1772a2 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
-@@ -199,15 +199,6 @@ static void bfq_schedule_dispatch(struct bfq_data *bfqd);
+@@ -198,15 +198,6 @@ static void bfq_schedule_dispatch(struct bfq_data *bfqd);
+ 
  #define bfq_sample_valid(samples)	((samples) > 80)
  
- /*
+-/*
 - * We regard a request as SYNC, if either it's a read or has the SYNC bit
 - * set (in which case it could also be a direct WRITE).
 - */
@@ -24124,10 +24476,9 @@ index 0721f9b0b598..c4890b1772a2 100644
 -	return bio_data_dir(bio) == READ || (bio->bi_opf & REQ_SYNC);
 -}
 -
--/*
+ /*
   * Scheduler run of queue, if there are requests pending and no one in the
   * driver that will restart queueing.
-  */
 @@ -1465,7 +1456,7 @@ static struct request *bfq_find_rq_fmerge(struct bfq_data *bfqd,
  	if (!bic)
  		return NULL;
@@ -24162,6 +24513,9 @@ index 0721f9b0b598..c4890b1772a2 100644
  	/*
  	 * We take advantage of this function to perform an early merge
  	 * of the queues of possible cooperating processes.
+-- 
+2.14.0
+
 
 From a4fcfe3c41466fa6d396d5b826bf4aa16aec8f4e Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -24198,6 +24552,9 @@ index 1be611342648..f7d233b2c140 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From 0e57c56f3325852c4bebeee06c3f8e671d1377e8 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -24388,10 +24745,11 @@ index 4af77f45de71..797bce75db01 100644
  			 * requeueing needed for expiration: stop
  			 * here.
  			 */
-@@ -1627,43 +1666,6 @@ static bool next_queue_may_preempt(struct bfq_data *bfqd)
+@@ -1626,43 +1665,6 @@ static bool next_queue_may_preempt(struct bfq_data *bfqd)
+ 	return sd->next_in_service != sd->in_service_entity;
  }
  
- /*
+-/*
 - * This function tells whether entity stops being a candidate for next
 - * service, according to the following logic.
 - *
@@ -24428,10 +24786,12 @@ index 4af77f45de71..797bce75db01 100644
 -	return false;
 -}
 -
--/*
+ /*
   * Get next queue for service.
   */
- static struct bfq_queue *bfq_get_next_queue(struct bfq_data *bfqd)
+-- 
+2.14.0
+
 
 From 4e439a14c9e8f0eab783fe0fcc659e08e56aab4f Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -24468,6 +24828,9 @@ index f7d233b2c140..a9da00230178 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From 8d7bc3ffff5e34de000af708f58ffcf723714609 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -24495,6 +24858,9 @@ index 797bce75db01..2e9dc59de0ed 100644
  
  	for_each_entity_safe(entity, parent) {
  		sd = entity->sched_data;
+-- 
+2.14.0
+
 
 From 94b14badffeafed9fb862c6c129bbd7884ffa35c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -24558,7 +24924,7 @@ index fe1feff827b0..37471a6c41ff 100644
  {
  	u32 rate, weight, divisor;
  
-@@ -2503,7 +2503,7 @@ void bfq_update_rate_reset(struct bfq_data *bfqd, struct request *rq)
+@@ -2503,7 +2503,7 @@ reset_computation:
   * of the observed dispatch rate. The function assumes to be invoked
   * on every request dispatch.
   */
@@ -24567,6 +24933,9 @@ index fe1feff827b0..37471a6c41ff 100644
  {
  	u64 now_ns = ktime_get_ns();
  
+-- 
+2.14.0
+
 
 From 8fd356c3e48b12fc8c32b84dde2d8da99f50d496 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -24639,6 +25008,9 @@ index 37471a6c41ff..16029b78b85a 100644
  	kfree(bfqd->root_group);
  #endif
  
+-- 
+2.14.0
+
 
 From 43a3b2c8f8e1de806e3d65fe3a2751729a61f28f Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -24668,6 +25040,9 @@ index 16029b78b85a..1fe7cb1ca512 100644
  	     rate <= bfqd->peak_rate) ||
  		rate > 20<<BFQ_RATE_SHIFT) {
  		bfq_log(bfqd,
+-- 
+2.14.0
+
 
 From 95113bd71d0b4ac06ff668952872eb5a528fd962 Mon Sep 17 00:00:00 2001
 From: Luca Miccio <lucmiccio@gmail.com>
@@ -24701,6 +25076,9 @@ index 1fe7cb1ca512..a0e3aacd09f1 100644
  	T_fast[0] = msecs_to_jiffies(7000); /* actually 8 sec */
  	T_fast[1] = msecs_to_jiffies(2500); /* actually 3 sec */
  
+-- 
+2.14.0
+
 
 From 50a2c5ba7b6ec4850ed6de34f9d4f81708c47219 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -24737,6 +25115,9 @@ index a9da00230178..32e900cccdbd 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From da5485f361495f5acaffca49432b5cb4b77abc40 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -24762,7 +25143,7 @@ diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
 index b0b08d34d0f5..004d8768c631 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
-@@ -510,13 +510,45 @@ static void bfq_weights_tree_remove(struct bfq_data *bfqd,
+@@ -510,13 +510,45 @@ reset_entity_pointer:
  	entity->weight_counter = NULL;
  }
  
@@ -24883,7 +25264,7 @@ index b0b08d34d0f5..004d8768c631 100644
  			reason = BFQ_BFQQ_BUDGET_EXHAUSTED;
  			goto expire;
  		} else {
-@@ -3547,9 +3572,16 @@ static struct bfq_queue *bfq_select_queue(struct bfq_data *bfqd)
+@@ -3547,9 +3572,16 @@ expire:
  	bfq_bfqq_expire(bfqd, bfqq, false, reason);
  new_queue:
  	bfqq = bfq_set_in_service_queue(bfqd);
@@ -24952,6 +25333,9 @@ index b0b08d34d0f5..004d8768c631 100644
  	bfq_bfqq_served(bfqq, service_to_charge);
  
  	BUG_ON(bfqq->entity.budget < bfqq->entity.service);
+-- 
+2.14.0
+
 
 From 8391a2ed0834b349c15bef202aaf70b7e84b4cd6 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -25006,6 +25390,9 @@ index 32e900cccdbd..999b9e2df1f3 100644
   */
  
  #ifndef _BFQ_H
+-- 
+2.14.0
+
 
 From a1191d3da848203d19d15d4510bd1cf9756e56d8 Mon Sep 17 00:00:00 2001
 From: Oleksandr Natalenko <oleksandr@natalenko.name>
@@ -25039,6 +25426,9 @@ index bbc34cc932ca..0125275035ef 100644
  
  static void bfq_end_wr_async(struct bfq_data *bfqd)
  {
+-- 
+2.14.0
+
 
 From f6fbae61ac7bd0861dfe9bdff6f711f9997e48da Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -25075,6 +25465,9 @@ index 999b9e2df1f3..f433cfed16c3 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From 93be48b2b4aca0d0b781c146948620b85b91764e Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -25150,6 +25543,9 @@ index f433cfed16c3..3b8f31022dd9 100644
  
  #else /* CONFIG_BFQ_REDIRECT_TO_CONSOLE */
  #ifdef CONFIG_BFQ_GROUP_IOSCHED
+-- 
+2.14.0
+
 
 From 280eff3196f63cbb0465acbe9c12f66ce5a76060 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -25186,6 +25582,9 @@ index 07ec6f77800d..2bfa371cda4d 100644
  {
  	if (type == ELEVATOR_FRONT_MERGE &&
  	    rb_prev(&req->rb_node) &&
+-- 
+2.14.0
+
 
 From dd672c2ad6886d353522cff4a8084f97a777b176 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -25212,6 +25611,9 @@ index 2bfa371cda4d..a87c79acbff2 100644
  		.elevator_merge_fn =		bfq_merge,
  		.elevator_merged_fn =		bfq_merged_request,
  		.elevator_merge_req_fn =	bfq_merged_requests,
+-- 
+2.14.0
+
 
 From e30b8101f2f142836567b69465b8c86feb163df3 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -25236,6 +25638,9 @@ index a87c79acbff2..48242983f2c9 100644
  			"bfq: bad prio class %d\n", ioprio_class);
  	case IOPRIO_CLASS_NONE:
  		/*
+-- 
+2.14.0
+
 
 From e9d31d729006959b61566f469b52db5cd31617d2 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -25578,6 +25983,9 @@ index 2e9dc59de0ed..70aac56b02ef 100644
  }
  
  /*
+-- 
+2.14.0
+
 
 From a42c473d68b2f91e7cbe4a391879b4c709ef9284 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -25614,6 +26022,9 @@ index 3b8f31022dd9..c261494cf814 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From d9dc5c88ff8cc5835359dd7e5610e0ef96b815a2 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -25652,6 +26063,9 @@ index 8b442819cef7..599bf6325f4c 100644
  	entity->weight_counter->weight = entity->weight;
  	rb_link_node(&entity->weight_counter->weights_node, parent, new);
  	rb_insert_color(&entity->weight_counter->weights_node, root);
+-- 
+2.14.0
+
 
 From f2a2ac27effc7e4f00ccafdb30f9f118f570b3f6 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -25688,6 +26102,9 @@ index 599bf6325f4c..e58114fd3118 100644
  
  		return slow;
  	}
+-- 
+2.14.0
+
 
 From 8429f2025dd5951ee877946993402e85b264a1b7 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -25724,6 +26141,9 @@ index c261494cf814..ba28c20a34fe 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From 76462609ff1733e8b485a225eae3813c783ce73e Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -25760,6 +26180,9 @@ index ba28c20a34fe..cc5c75b4c3e2 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From b9f6c411886b31d6becd975ba057a28f37be3a28 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -25810,6 +26233,9 @@ index 70aac56b02ef..8311bdbeceea 100644
  	BUG_ON(is_in_service && entity->tree && entity->tree != &st->active);
  
  	if (is_in_service)
+-- 
+2.14.0
+
 
 From d738b3bddb3b21850b53541751d13edaa99aab50 Mon Sep 17 00:00:00 2001
 From: Colin Ian King <colin.king@canonical.com>
@@ -25843,6 +26269,9 @@ index 5a1a84c766d6..fab3de8ca454 100644
  	bfq_bic_update_cgroup(bic, bio);
  
  new_queue:
+-- 
+2.14.0
+
 
 From d56938c1c44189c5d35f0bb2010e1a7989230467 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -25879,6 +26308,9 @@ index cc5c75b4c3e2..6a0129990630 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From 952268bc1b17f75c148e6f88ceed842b21345eaf Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -25959,6 +26391,9 @@ index a56888ea9d94..72b98417e992 100644
   * BFQ is described in [1], where also a reference to the initial, more
   * theoretical paper on BFQ can be found. The interested reader can find
   * in the latter paper full details on the main algorithm, as well as
+-- 
+2.14.0
+
 
 From b8df72af6c8ca253eecfeb43800343b4454465ed Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -25983,6 +26418,9 @@ index 72b98417e992..f63bcc17672e 100644
  
  	if (!bic)
  		goto queue_fail;
+-- 
+2.14.0
+
 
 From 622dcecbb31cd7c8af90394b7157f6fc67128feb Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -26114,6 +26552,9 @@ index 8311bdbeceea..d146c7ac78ce 100644
  	bfq_calc_finish(entity, entity->budget);
  
  	/*
+-- 
+2.14.0
+
 
 From 1085937d9871b62380d72c8113d98e425660a4e6 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -26279,7 +26720,7 @@ index e676db2141f2..c390711ea523 100644
  
  	spin_lock_irqsave(q->queue_lock, flags);
  
-@@ -4623,6 +4651,8 @@ static int bfq_set_request(struct request_queue *q, struct request *rq,
+@@ -4623,6 +4651,8 @@ new_queue:
  			split = true;
  			if (!bfqq)
  				goto new_queue;
@@ -26288,7 +26729,7 @@ index e676db2141f2..c390711ea523 100644
  		}
  	}
  
-@@ -4648,7 +4678,8 @@ static int bfq_set_request(struct request_queue *q, struct request *rq,
+@@ -4648,7 +4678,8 @@ new_queue:
  			 * queue, restore the idle window and the possible
  			 * weight raising period.
  			 */
@@ -26325,6 +26766,9 @@ index d146c7ac78ce..90d2856358a1 100644
 +	}
 +
  }
+-- 
+2.14.0
+
 
 From b08f6808ad1346582a03874d821dc80182f9fbbc Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -26361,6 +26805,9 @@ index 6a0129990630..d940153dc5f2 100644
   *
   * Based on ideas and code from CFQ:
   * Copyright (C) 2003 Jens Axboe <axboe@kernel.dk>
+-- 
+2.14.0
+
 
 From fc39b0e2bc99a6a21975f30078d96736842f866d Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -31766,6 +32213,9 @@ index 000000000000..ea92c7461b89
 +
 +MODULE_AUTHOR("Arianna Avanzini, Fabio Checconi, Paolo Valente");
 +MODULE_LICENSE("GPL");
+-- 
+2.14.0
+
 
 From 2c05a881cf04d988864f169eb05c809a5733a11e Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -31955,7 +32405,7 @@ index ea92c7461b89..43eeb96ab6b2 100644
  	blkcg_policy_unregister(&blkcg_policy_bfq);
  #endif
  	return ret;
-@@ -5366,7 +5366,7 @@ static int __init bfq_init(void)
+@@ -5366,7 +5366,7 @@ err_pol_unreg:
  static void __exit bfq_exit(void)
  {
  	elv_unregister(&iosched_bfq);
@@ -32075,7 +32525,7 @@ index ea92c7461b89..2a9fe276ccae 100644
  	blkcg_policy_unregister(&blkcg_policy_bfq);
  #endif
  	return ret;
-@@ -5366,7 +5367,7 @@ static int __init bfq_init(void)
+@@ -5366,7 +5367,7 @@ err_pol_unreg:
  static void __exit bfq_exit(void)
  {
  	elv_unregister(&iosched_bfq);
@@ -32443,6 +32893,9 @@ index d940153dc5f2..e88b549a7a58 100644
  static void bfq_put_async_queues(struct bfq_data *bfqd, struct bfq_group *bfqg);
  #endif
  static void bfq_exit_bfqq(struct bfq_data *bfqd, struct bfq_queue *bfqq);
+-- 
+2.14.0
+
 
 From b250ecfec9656dd1686037603064c7936db67872 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -32470,6 +32923,9 @@ index 29d537ddc261..14a05fff90f9 100644
  
  typedef void (rq_end_io_fn)(struct request *, int);
  
+-- 
+2.14.0
+
 
 From e9890fde50a4baef43aadf64f54f09203d1e198e Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -33467,6 +33923,9 @@ index 000000000000..e88b549a7a58
 +static void bfq_exit_bfqq(struct bfq_data *bfqd, struct bfq_queue *bfqq);
 +
 +#endif /* _BFQ_H */
+-- 
+2.14.0
+
 
 From 2409df10a3f7fb44c1db1787047d8f8671c0abec Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -33533,7 +33992,7 @@ index 4924d234f682..df2e66d2b0d1 100644
  	bfq_mark_bfqq_IO_bound(bfqq);
  
  	/* Tentative initial value to trade off between thr and lat */
-@@ -4172,14 +4172,14 @@ static struct bfq_queue *bfq_get_queue(struct bfq_data *bfqd,
+@@ -4172,14 +4172,14 @@ out:
  }
  
  static void bfq_update_io_thinktime(struct bfq_data *bfqd,
@@ -33585,10 +34044,11 @@ diff --git a/block/bfq-mq.h b/block/bfq-mq.h
 index e88b549a7a58..05cf1c97af8c 100644
 --- a/block/bfq-mq.h
 +++ b/block/bfq-mq.h
-@@ -197,6 +197,18 @@ struct bfq_entity {
+@@ -196,6 +196,18 @@ struct bfq_entity {
+ 
  struct bfq_group;
  
- /**
++/**
 + * struct bfq_ttime - per process thinktime stats.
 + */
 +struct bfq_ttime {
@@ -33600,10 +34060,9 @@ index e88b549a7a58..05cf1c97af8c 100644
 +
 +};
 +
-+/**
+ /**
   * struct bfq_queue - leaf schedulable entity.
   *
-  * A bfq_queue is a leaf request queue; it can be associated with an
 @@ -257,6 +269,9 @@ struct bfq_queue {
  	/* node for active/idle bfqq list inside parent bfqd */
  	struct list_head bfqq_list;
@@ -33614,10 +34073,11 @@ index e88b549a7a58..05cf1c97af8c 100644
  	/* bit vector: a 1 for each seeky requests in history */
  	u32 seek_history;
  
-@@ -320,18 +335,6 @@ struct bfq_queue {
+@@ -319,18 +334,6 @@ struct bfq_queue {
+ 	unsigned long split_time; /* time of last split */
  };
  
- /**
+-/**
 - * struct bfq_ttime - per process thinktime stats.
 - */
 -struct bfq_ttime {
@@ -33629,10 +34089,9 @@ index e88b549a7a58..05cf1c97af8c 100644
 -
 -};
 -
--/**
+ /**
   * struct bfq_io_cq - per (request_queue, io_context) structure.
   */
- struct bfq_io_cq {
 @@ -339,8 +342,6 @@ struct bfq_io_cq {
  	struct io_cq icq; /* must be the first member */
  	/* array of two process queues, the sync and the async */
@@ -33650,6 +34109,9 @@ index e88b549a7a58..05cf1c97af8c 100644
  };
  
  enum bfq_device_speed {
+-- 
+2.14.0
+
 
 From cbef3f816c7578bde3b6061d6e9737b8e793e42d Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -33730,6 +34192,9 @@ index df2e66d2b0d1..fe6af7386f60 100644
  	if (!bic)
  		return NULL;
  
+-- 
+2.14.0
+
 
 From 759b1d97494d8e85723ae934688a846963d44646 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -34026,7 +34491,7 @@ index fe6af7386f60..b1ae9a39a2c6 100644
  		bfq_clear_bfqq_fifo_expire(bfqq);
  
  		bfqd->budgets_assigned = (bfqd->budgets_assigned*7 + 256) / 8;
-@@ -2703,27 +2731,28 @@ static void bfq_update_peak_rate(struct bfq_data *bfqd, struct request *rq)
+@@ -2703,27 +2731,28 @@ update_last_values:
  }
  
  /*
@@ -34076,7 +34541,7 @@ index fe6af7386f60..b1ae9a39a2c6 100644
  	    !bfq_bfqq_must_idle(bfqq))
  		goto expire;
  
-@@ -3627,7 +3656,6 @@ static struct bfq_queue *bfq_select_queue(struct bfq_data *bfqd)
+@@ -3627,7 +3656,6 @@ check_queue:
  			 * arrives.
  			 */
  			if (bfq_bfqq_wait_request(bfqq)) {
@@ -34084,7 +34549,7 @@ index fe6af7386f60..b1ae9a39a2c6 100644
  				/*
  				 * If we get here: 1) at least a new request
  				 * has arrived but we have not disabled the
-@@ -3654,7 +3682,7 @@ static struct bfq_queue *bfq_select_queue(struct bfq_data *bfqd)
+@@ -3654,7 +3682,7 @@ check_queue:
  	 * for a new request, or has requests waiting for a completion and
  	 * may idle after their completion, then keep it anyway.
  	 */
@@ -34659,7 +35124,7 @@ index fe6af7386f60..b1ae9a39a2c6 100644
  
  	if (!bic)
  		goto queue_fail;
-@@ -4648,7 +4710,7 @@ static int bfq_set_request(struct request_queue *q, struct request *rq,
+@@ -4648,7 +4710,7 @@ new_queue:
  		bic_set_bfqq(bic, bfqq, is_sync);
  		if (split && is_sync) {
  			bfq_log_bfqq(bfqd, bfqq,
@@ -34668,7 +35133,7 @@ index fe6af7386f60..b1ae9a39a2c6 100644
  				     "was_in_large_burst %d "
  				     "large burst in progress %d",
  				     bic->was_in_burst_list,
-@@ -4658,12 +4720,12 @@ static int bfq_set_request(struct request_queue *q, struct request *rq,
+@@ -4658,12 +4720,12 @@ new_queue:
  			if ((bic->was_in_burst_list && bfqd->large_burst) ||
  			    bic->saved_in_large_burst) {
  				bfq_log_bfqq(bfqd, bfqq,
@@ -34683,7 +35148,7 @@ index fe6af7386f60..b1ae9a39a2c6 100644
  					     "large burst");
  				bfq_clear_bfqq_in_large_burst(bfqq);
  				if (bic->was_in_burst_list)
-@@ -4690,9 +4752,12 @@ static int bfq_set_request(struct request_queue *q, struct request *rq,
+@@ -4690,9 +4752,12 @@ new_queue:
  		}
  	}
  
@@ -34698,7 +35163,7 @@ index fe6af7386f60..b1ae9a39a2c6 100644
  
  	rq->elv.priv[0] = bic;
  	rq->elv.priv[1] = bfqq;
-@@ -4720,26 +4785,53 @@ static int bfq_set_request(struct request_queue *q, struct request *rq,
+@@ -4720,26 +4785,53 @@ new_queue:
  	if (unlikely(bfq_bfqq_just_created(bfqq)))
  		bfq_handle_burst(bfqd, bfqq);
  
@@ -34996,7 +35461,7 @@ index fe6af7386f60..b1ae9a39a2c6 100644
  	if (ret)
  		goto err_pol_unreg;
  
-@@ -5399,8 +5461,8 @@ static int __init bfq_init(void)
+@@ -5399,8 +5461,8 @@ err_pol_unreg:
  
  static void __exit bfq_exit(void)
  {
@@ -35141,6 +35606,9 @@ index 05cf1c97af8c..4734c70edd66 100644
  static struct bfq_queue *bfq_get_queue(struct bfq_data *bfqd,
  				       struct bio *bio, bool is_sync,
  				       struct bfq_io_cq *bic);
+-- 
+2.14.0
+
 
 From 2d1361ad425e4c62fbf29fee7c2d46d65ec41362 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -35271,7 +35739,7 @@ index b1ae9a39a2c6..2e72ac868ba5 100644
  		goto exit;
  	}
  
-@@ -3890,7 +3932,20 @@ static struct request *__bfq_dispatch_request(struct blk_mq_hw_ctx *hctx)
+@@ -3890,7 +3932,20 @@ exit:
  	if (rq) {
  		rq->rq_flags |= RQF_STARTED;
  		bfqd->rq_in_driver++;
@@ -35451,6 +35919,9 @@ index b1ae9a39a2c6..2e72ac868ba5 100644
  	kfree(bfqd);
  }
  
+-- 
+2.14.0
+
 
 From c675bb1f94d874a0e54859a8e1a46b50a6ff1363 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -35474,6 +35945,9 @@ index 2e72ac868ba5..be967b1ae1c7 100644
  	bfqq = bic_to_bfqq(bic, is_sync);
  	/*
  	 * We take advantage of this function to perform an early merge
+-- 
+2.14.0
+
 
 From a02e3cd04d19ccfba981a460bbda3c98f1b77326 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -35570,6 +36044,9 @@ index 4734c70edd66..70a23fd0e504 100644
  	/*
  	 * Snapshot of the idle window before merging; taken to
  	 * remember this value while the queue is merged, so as to be
+-- 
+2.14.0
+
 
 From 4ad87f474c6dfae81b08624b055ae968ece98423 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -35768,7 +36245,7 @@ index 7e407e79f172..a89ffe7039f9 100644
  	return bfqq == RQ_BFQQ(rq);
  }
  
-@@ -3951,14 +3972,43 @@ static struct request *__bfq_dispatch_request(struct blk_mq_hw_ctx *hctx)
+@@ -3951,14 +3972,43 @@ exit:
  	return rq;
  }
  
@@ -36036,7 +36513,7 @@ index 7e407e79f172..a89ffe7039f9 100644
  		/* If the queue was seeky for too long, break it apart. */
  		if (bfq_bfqq_coop(bfqq) && bfq_bfqq_split_coop(bfqq)) {
  			bfq_log_bfqq(bfqd, bfqq, "breaking apart bfqq");
-@@ -4828,9 +4895,19 @@ static int bfq_get_rq_private(struct request_queue *q, struct request *rq,
+@@ -4828,9 +4895,19 @@ new_queue:
  				bic->saved_in_large_burst = true;
  
  			bfqq = bfq_split_bfqq(bic, bfqq);
@@ -36058,7 +36535,7 @@ index 7e407e79f172..a89ffe7039f9 100644
  			else
  				bfqq_already_existing = true;
  		}
-@@ -4848,18 +4925,17 @@ static int bfq_get_rq_private(struct request_queue *q, struct request *rq,
+@@ -4848,18 +4925,17 @@ new_queue:
  
  	/*
  	 * If a bfq_queue has only one process reference, it is owned
@@ -36084,7 +36561,7 @@ index 7e407e79f172..a89ffe7039f9 100644
  			 */
  			bfq_bfqq_resume_state(bfqq, bfqd, bic,
  					      bfqq_already_existing);
-@@ -4869,7 +4945,7 @@ static int bfq_get_rq_private(struct request_queue *q, struct request *rq,
+@@ -4869,7 +4945,7 @@ new_queue:
  	if (unlikely(bfq_bfqq_just_created(bfqq)))
  		bfq_handle_burst(bfqd, bfqq);
  
@@ -36168,6 +36645,9 @@ index c8f7ec0c8867..64332d5e2c75 100644
  		bfqd->in_service_bic = NULL;
  	}
  
+-- 
+2.14.0
+
 
 From b25cb25b530a5a7848afff760f7a949aef716dfb Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -36373,6 +36853,9 @@ index 64332d5e2c75..c33884948101 100644
  		/*
  		 * Schedule the release of a reference to
  		 * bfqd->in_service_bic->icq.ioc to right after the
+-- 
+2.14.0
+
 
 From 6f491c2651f0f17ac14c8fe85214b4850d5a369f Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -36450,7 +36933,7 @@ index 65def590b8de..34e0364a8f03 100644
  		if (bfqq)
  			bfq_log_bfqq(bfqd, bfqq,
  				"dispatched %s request %p, rq_in_driver %d",
-@@ -3978,6 +4016,7 @@ static struct request *__bfq_dispatch_request(struct blk_mq_hw_ctx *hctx)
+@@ -3978,6 +4016,7 @@ exit:
  		"returned NULL request, rq_in_driver %d",
  			bfqd->rq_in_driver);
  
@@ -36483,6 +36966,9 @@ index 65def590b8de..34e0364a8f03 100644
  
  	rq->elv.priv[0] = bic;
  	rq->elv.priv[1] = bfqq;
+-- 
+2.14.0
+
 
 From 641910e76160194598e2bd3b8733a259349bd61c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -36520,6 +37006,9 @@ index 34e0364a8f03..09bfa0fb7139 100644
  	} else {
  		__bfq_insert_request(bfqd, rq);
  
+-- 
+2.14.0
+
 
 From 5c8a5ef9217d73fa713c9bd52d24f5d00955da62 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -36625,6 +37114,9 @@ index 14a05fff90f9..7499fd1d5dbd 100644
  
  /* flags that prevent us from merging requests: */
  #define RQF_NOMERGE_FLAGS \
+-- 
+2.14.0
+
 
 From 4b84781358847cf5cfeb5768c1b354e641f11e60 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -36696,10 +37188,11 @@ index 806889a91d6e..daebd0524ac4 100644
  /*
   * Scheduler run of queue, if there are requests pending and no one in the
   * driver that will restart queueing.
-@@ -255,6 +245,43 @@ static void bfq_schedule_dispatch(struct bfq_data *bfqd)
+@@ -254,6 +244,43 @@ static void bfq_schedule_dispatch(struct bfq_data *bfqd)
+ 	}
  }
  
- /*
++/*
 + * Next two functions release bfqd->lock and put the io context
 + * pointed by bfqd->ioc_to_put. This delayed put is used to not risk
 + * to take an ioc->lock while the scheduler lock is being held.
@@ -36736,11 +37229,10 @@ index 806889a91d6e..daebd0524ac4 100644
 +
 +#define bfq_sample_valid(samples)	((samples) > 80)
 +
-+/*
+ /*
   * Lifted from AS - choose which of rq1 and rq2 that is best served now.
   * We choose the request that is closesr to the head right now.  Distance
-  * behind the head is penalized and only allowed to a certain extent.
-@@ -4036,34 +4063,6 @@ static struct request *__bfq_dispatch_request(struct blk_mq_hw_ctx *hctx)
+@@ -4036,34 +4063,6 @@ exit:
  	return rq;
  }
  
@@ -36843,6 +37335,9 @@ index 2e17e16a4b98..68335b8e5444 100644
  #define BFQ_GROUP_IOSCHED_ENABLED
  #endif
  
+-- 
+2.14.0
+
 
 From b3668ebfe8f0124c712f1c20304608ada1c613e5 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -37013,19 +37508,19 @@ index daebd0524ac4..a66b1f6a650c 100644
  static void
  bfq_merge_bfqqs(struct bfq_data *bfqd, struct bfq_io_cq *bic,
  		struct bfq_queue *bfqq, struct bfq_queue *new_bfqq)
-@@ -2280,12 +2237,6 @@ bfq_merge_bfqqs(struct bfq_data *bfqd, struct bfq_io_cq *bic,
+@@ -2279,12 +2236,6 @@ bfq_merge_bfqqs(struct bfq_data *bfqd, struct bfq_io_cq *bic,
+ 	bfq_log_bfqq(bfqd, new_bfqq, "merge_bfqqs: wr_busy %d",
  		     bfqd->wr_busy_queues);
  
- 	/*
+-	/*
 -	 * Grab a reference to the bic, to prevent it from being destroyed
 -	 * before being possibly touched by a bfq_split_bfqq().
 -	 */
 -	bfq_get_bic_reference(bfqq);
 -	bfq_get_bic_reference(new_bfqq);
--	/*
+ 	/*
  	 * Merge queues (that is, let bic redirect its requests to new_bfqq)
  	 */
- 	bic_set_bfqq(bic, new_bfqq, 1);
 @@ -2472,16 +2423,10 @@ static struct bfq_queue *bfq_set_in_service_queue(struct bfq_data *bfqd)
  static void bfq_arm_slice_timer(struct bfq_data *bfqd)
  {
@@ -37246,6 +37741,9 @@ index c33884948101..1c60de93c1a2 100644
  	bfq_clear_bfqq_wait_request(in_serv_bfqq);
  	hrtimer_try_to_cancel(&bfqd->idle_slice_timer);
  	bfqd->in_service_queue = NULL;
+-- 
+2.14.0
+
 
 From 20e9bbe4b249336556b12ab7a15fbce4f566e8fe Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -37278,6 +37776,9 @@ index a66b1f6a650c..b35d633bfeee 100644
  	}
  }
  
+-- 
+2.14.0
+
 
 From d6292259a66f647f51c1aa0ee91e97d3e0e2f8e7 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -37302,6 +37803,9 @@ index b35d633bfeee..0e407e24dff4 100644
  		/* If the queue was seeky for too long, break it apart. */
  		if (bfq_bfqq_coop(bfqq) && bfq_bfqq_split_coop(bfqq)) {
  			BUG_ON(!is_sync);
+-- 
+2.14.0
+
 
 From 18cce3e031902f97b53ba9e043f4592832ceadbc Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -37480,6 +37984,9 @@ index dfacca799b5e..9e9b0a09e26f 100644
  #else /* BFQ_GROUP_IOSCHED_ENABLED */
  
  static inline void bfqg_stats_update_io_add(struct bfq_group *bfqg,
+-- 
+2.14.0
+
 
 From 53795531dbe8a7e5e5a92e9f93b00edffd973bc0 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -37548,6 +38055,9 @@ index 7499fd1d5dbd..f507a5d59aef 100644
  
  /* flags that prevent us from merging requests: */
  #define RQF_NOMERGE_FLAGS \
+-- 
+2.14.0
+
 
 From b35554d2a9b78ae95ae6ab5f9183d2a19937440c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -37962,6 +38472,9 @@ index 5c378fe98823..f78d0f72c5d7 100644
  	struct bfq_entity entity;
  	struct bfq_sched_data sched_data;
  
+-- 
+2.14.0
+
 
 From ec7e10af09803856a0252add492b90c3e1a66dbd Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -37982,7 +38495,7 @@ diff --git a/block/bfq-mq-iosched.c b/block/bfq-mq-iosched.c
 index 1036f061df2a..e054678b5f85 100644
 --- a/block/bfq-mq-iosched.c
 +++ b/block/bfq-mq-iosched.c
-@@ -5656,7 +5656,7 @@ static int __init bfq_init(void)
+@@ -5656,7 +5656,7 @@ err_pol_unreg:
  static void __exit bfq_exit(void)
  {
  	elv_unregister(&iosched_bfq_mq);
@@ -37991,3 +38504,6 @@ index 1036f061df2a..e054678b5f85 100644
  	blkcg_policy_unregister(&blkcg_policy_bfq);
  #endif
  	bfq_slab_kill();
+-- 
+2.14.0
+

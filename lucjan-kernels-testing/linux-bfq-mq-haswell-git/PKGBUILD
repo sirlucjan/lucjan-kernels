@@ -74,7 +74,7 @@ license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf')
 _bfq_mq_ver='20170704'
-_bfq_mq_patch="4.11-bfq-mq-${_bfq_mq_ver}.patch"
+_bfq_mq_patch="4.11-bfq-mq-git-${_bfq_mq_ver}.patch"
 _bfqpath="https://gitlab.com/tom81094/custom-patches/raw/master/bfq-mq/"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v3.15+.patch"
 
@@ -483,7 +483,7 @@ for _p in ${pkgname[@]}; do
 done
 
 sha512sums=('SKIP'
-            '692245654436a9e31a1b33d4d4ee4c9b657b7cbf2d857511cd11d08bec6329ecffd237b3616e6b5b04bae1a5486d85e7f860c1f0064b021bfd33b5a04368b850'
+            'c8ec576b112e928547c8e72bd057bc31e957d30614509032e7920dc3f06fc6897304fbe185e1527b3600f395096ff67967de57f0d6d678afd31125c92d023442'
             '77d80d50d8c4323ed36fd2097ba9f6b49bb8d7cae59d32ffa76b309758a7e9f972d26fedd77046d88ce2691bb01a07909f8bdc34ba214414be3bc030ee31994d'
             '48e138bd0aa3c08afacdc409a73b7ffdec0305bb4e567db5e481bdd1b39f957cefbd44d163b03c2e933cf6e464afd5c0d80a08f6eefa9e30c5a462ecfb5d50b1'
             'd6faa67f3ef40052152254ae43fee031365d0b1524aa0718b659eb75afc21a3f79ea8d62d66ea311a800109bed545bc8f79e8752319cd378eef2cbd3a09aba22'

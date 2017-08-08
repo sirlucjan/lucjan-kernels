@@ -6,7 +6,7 @@
 │   │   ├── 0001-Check-presence-on-tree-of-every-entity-after-every-a.patch
 │   │   ├── 0002-BFQ-MQ-bugfix-from-pfkernel-2.patch
 │   │   ├── 0002-BFQ-MQ-bugfix-from-pfkernel.patch
-│   │   ├── 4.12-bfq-mq-20170804.patch
+│   │   ├── 4.12-bfq-mq-git-20170804.patch
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
 │   │   ├── config.x86_64
@@ -16,7 +16,7 @@
 │       ├── 0001-Check-presence-on-tree-of-every-entity-after-every-a.patch
 │       ├── 0002-BFQ-MQ-bugfix-from-pfkernel-2.patch
 │       ├── 0002-BFQ-MQ-bugfix-from-pfkernel.patch
-│       ├── 4.12-bfq-mq-20170804.patch
+│       ├── 4.12-bfq-mq-git-20170804.patch
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
 │       ├── config.x86_64
@@ -41,7 +41,7 @@
 │   │   └── linux.preset
 │   ├── linux-bfq-mq-haswell
 │   │   ├── 0006-BFQ-bugfix-for-v8r12.patch
-│   │   ├── 4.11-bfq-mq-20170704.patch
+│   │   ├── 4.11-bfq-mq-git-20170704.patch
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
 │   │   ├── config.x86_64
@@ -49,7 +49,7 @@
 │   │   └── linux.preset
 │   └── linux-bfq-mq-haswell-git
 │       ├── 0006-BFQ-bugfix-for-v8r12.patch
-│       ├── 4.11-bfq-mq-20170704.patch
+│       ├── 4.11-bfq-mq-git-20170704.patch
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
 │       ├── config.x86_64
@@ -60,7 +60,7 @@
 │   │   ├── 0001-Check-presence-on-tree-of-every-entity-after-every-a.patch
 │   │   ├── 0002-BFQ-MQ-bugfix-from-pfkernel-2.patch
 │   │   ├── 0002-BFQ-MQ-bugfix-from-pfkernel.patch
-│   │   ├── 4.12-bfq-mq-20170804.patch
+│   │   ├── 4.12-bfq-mq-git-20170804.patch
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
 │   │   ├── config.x86_64
@@ -70,7 +70,7 @@
 │       ├── 0001-Check-presence-on-tree-of-every-entity-after-every-a.patch
 │       ├── 0002-BFQ-MQ-bugfix-from-pfkernel-2.patch
 │       ├── 0002-BFQ-MQ-bugfix-from-pfkernel.patch
-│       ├── 4.12-bfq-mq-20170804.patch
+│       ├── 4.12-bfq-mq-git-20170804.patch
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
 │       ├── config.x86_64
@@ -95,7 +95,7 @@
     │   └── linux.preset
     ├── linux-bfq-mq-haswell
     │   ├── 0006-BFQ-bugfix-for-v8r12.patch
-    │   ├── 4.11-bfq-mq-20170704.patch
+    │   ├── 4.11-bfq-mq-git-20170704.patch
     │   ├── 90-linux.hook
     │   ├── PKGBUILD
     │   ├── config.x86_64
@@ -103,7 +103,7 @@
     │   └── linux.preset
     └── linux-bfq-mq-haswell-git
         ├── 0006-BFQ-bugfix-for-v8r12.patch
-        ├── 4.11-bfq-mq-20170704.patch
+        ├── 4.11-bfq-mq-git-20170704.patch
         ├── 90-linux.hook
         ├── PKGBUILD
         ├── config.x86_64

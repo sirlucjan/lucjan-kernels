@@ -9718,6 +9718,9 @@ index 25f6a0cb27d3..7077a012fddc 100644
  
  typedef void (rq_end_io_fn)(struct request *, blk_status_t);
  
+-- 
+2.14.0
+
 
 From e32a23c5684f15e791b117533e4fc88b00eedbea Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -9784,6 +9787,9 @@ index ac8991bca9fa..5ddf9af4261e 100644
  		BUG_ON(entity->tree && entity->tree != &st->active);
  		/*
  		 * In addition, if the entity had more than one child
+-- 
+2.14.0
+
 
 From f0163d81b9179b62e83315bd5cc52118372e0dc1 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -9842,6 +9848,9 @@ index 5ddf9af4261e..a07a06eb5c72 100644
  
  	if (entity->tree == &st->active)
  		bfq_active_extract(st, entity);
+-- 
+2.14.0
+
 
 From ab51ef0da5010cd9b90cbbde10c4fa80d489c642 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -10162,6 +10171,9 @@ index f5751ea59d98..ebd9688b9f61 100644
   */
  struct bfq_sched_data {
  	struct bfq_entity *in_service_entity;  /* entity in service */
+-- 
+2.14.0
+
 
 From cc4f4ff81107b9c9ae1b8edac60c56dda06ffe1a Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -10241,7 +10253,7 @@ index 65e7c7e77f3c..30d019fc67e0 100644
  
  	/*
  	 * Increase, decrease or leave budget unchanged according to
-@@ -3298,7 +3298,10 @@ static bool bfq_may_expire_for_budg_timeout(struct bfq_queue *bfqq)
+@@ -3298,35 +3298,55 @@ static bool bfq_may_expire_for_budg_timeout(struct bfq_queue *bfqq)
  static bool bfq_bfqq_may_idle(struct bfq_queue *bfqq)
  {
  	struct bfq_data *bfqd = bfqq->bfqd;
@@ -10253,10 +10265,10 @@ index 65e7c7e77f3c..30d019fc67e0 100644
  		idling_needed_for_service_guarantees,
  		asymmetric_scenario;
  
-@@ -3306,27 +3309,44 @@ static bool bfq_bfqq_may_idle(struct bfq_queue *bfqq)
+ 	if (bfqd->strict_guarantees)
  		return true;
  
- 	/*
++	/*
 +	 * Idling is performed only if slice_idle > 0. In addition, we
 +	 * do not idle if
 +	 * (a) bfqq is async
@@ -10270,7 +10282,7 @@ index 65e7c7e77f3c..30d019fc67e0 100644
 +
 +	bfqq_sequential_and_IO_bound = !BFQQ_SEEKY(bfqq) &&
 +		bfq_bfqq_IO_bound(bfqq) && bfq_bfqq_has_short_ttime(bfqq);
-+	/*
+ 	/*
  	 * The next variable takes into account the cases where idling
  	 * boosts the throughput.
  	 *
@@ -10499,6 +10511,9 @@ index ebd9688b9f61..34fc4697fd89 100644
  BFQ_BFQQ_FNS(sync);
  BFQ_BFQQ_FNS(IO_bound);
  BFQ_BFQQ_FNS(in_large_burst);
+-- 
+2.14.0
+
 
 From f2c6cfe8292a113f390cda534b27d1f63068e07c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -15917,6 +15932,9 @@ index 000000000000..30d019fc67e0
 +
 +MODULE_AUTHOR("Arianna Avanzini, Fabio Checconi, Paolo Valente");
 +MODULE_LICENSE("GPL");
+-- 
+2.14.0
+
 
 From b2c53a7ab915d11817db8d2913dbfa6173b2ca95 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -16594,6 +16612,9 @@ index 34fc4697fd89..53954d1b87f8 100644
  static void bfq_put_async_queues(struct bfq_data *bfqd, struct bfq_group *bfqg);
  #endif
  static void bfq_exit_bfqq(struct bfq_data *bfqd, struct bfq_queue *bfqq);
+-- 
+2.14.0
+
 
 From 94c0037edf9f850e07cc953402df211572d9bd44 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -16621,6 +16642,9 @@ index 7077a012fddc..c3a5d80d1947 100644
  
  typedef void (rq_end_io_fn)(struct request *, blk_status_t);
  
+-- 
+2.14.0
+
 
 From c6802bccae4b53a5376ac2a478f9222fdf6bdcff Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -17631,6 +17655,9 @@ index 000000000000..53954d1b87f8
 +static void bfq_exit_bfqq(struct bfq_data *bfqd, struct bfq_queue *bfqq);
 +
 +#endif /* _BFQ_H */
+-- 
+2.14.0
+
 
 From 3ef6797770fd136125cfa57b6a81276f33a16481 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -17749,10 +17776,11 @@ diff --git a/block/bfq-mq.h b/block/bfq-mq.h
 index 53954d1b87f8..0f51f270469c 100644
 --- a/block/bfq-mq.h
 +++ b/block/bfq-mq.h
-@@ -210,6 +210,18 @@ struct bfq_entity {
+@@ -209,6 +209,18 @@ struct bfq_entity {
+ 
  struct bfq_group;
  
- /**
++/**
 + * struct bfq_ttime - per process thinktime stats.
 + */
 +struct bfq_ttime {
@@ -17764,10 +17792,9 @@ index 53954d1b87f8..0f51f270469c 100644
 +
 +};
 +
-+/**
+ /**
   * struct bfq_queue - leaf schedulable entity.
   *
-  * A bfq_queue is a leaf request queue; it can be associated with an
 @@ -270,6 +282,9 @@ struct bfq_queue {
  	/* node for active/idle bfqq list inside parent bfqd */
  	struct list_head bfqq_list;
@@ -17778,10 +17805,11 @@ index 53954d1b87f8..0f51f270469c 100644
  	/* bit vector: a 1 for each seeky requests in history */
  	u32 seek_history;
  
-@@ -333,18 +348,6 @@ struct bfq_queue {
+@@ -332,18 +347,6 @@ struct bfq_queue {
+ 	unsigned long split_time; /* time of last split */
  };
  
- /**
+-/**
 - * struct bfq_ttime - per process thinktime stats.
 - */
 -struct bfq_ttime {
@@ -17793,10 +17821,9 @@ index 53954d1b87f8..0f51f270469c 100644
 -
 -};
 -
--/**
+ /**
   * struct bfq_io_cq - per (request_queue, io_context) structure.
   */
- struct bfq_io_cq {
 @@ -352,8 +355,6 @@ struct bfq_io_cq {
  	struct io_cq icq; /* must be the first member */
  	/* array of two process queues, the sync and the async */
@@ -17814,6 +17841,9 @@ index 53954d1b87f8..0f51f270469c 100644
  };
  
  enum bfq_device_speed {
+-- 
+2.14.0
+
 
 From e6d46e1f9bb475e16643f159bfcd2014c280298c Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -17894,6 +17924,9 @@ index 65f5dfb79417..756a618d5902 100644
  	if (!bic)
  		return NULL;
  
+-- 
+2.14.0
+
 
 From 2297cfd24b11daf89f398acd40e59276fa03fc77 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -19305,6 +19338,9 @@ index 0f51f270469c..c3fcd5ebd735 100644
  static struct bfq_queue *bfq_get_queue(struct bfq_data *bfqd,
  				       struct bio *bio, bool is_sync,
  				       struct bfq_io_cq *bic);
+-- 
+2.14.0
+
 
 From 39f842b01b70538beb0eb143f92ecffd658812f1 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -19615,6 +19651,9 @@ index c963d92a32c2..40eadb3f7073 100644
  	kfree(bfqd);
  }
  
+-- 
+2.14.0
+
 
 From 8300b1f7324f52d2053e54a8906517b00ec0330e Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -19638,6 +19677,9 @@ index 40eadb3f7073..21b876aeba16 100644
  	bfqq = bic_to_bfqq(bic, is_sync);
  	/*
  	 * We take advantage of this function to perform an early merge
+-- 
+2.14.0
+
 
 From 1018476c11f79fddef0417f8e3fc6833a44c78b7 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -19734,6 +19776,9 @@ index c3fcd5ebd735..23744b246db6 100644
  	/*
  	 * Snapshot of the has_short_time flag before merging; taken
  	 * to remember its value while the queue is merged, so as to
+-- 
+2.14.0
+
 
 From 8b4f330b0baa22cc48c9ff9097cad2266659b65e Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -20331,6 +20376,9 @@ index b54a638186e3..a5c8b4acd33c 100644
  		bfqd->in_service_bic = NULL;
  	}
  
+-- 
+2.14.0
+
 
 From f3ccd9e21d764b004b89e7a58a9dec6dfbd188fa Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -20536,6 +20584,9 @@ index a5c8b4acd33c..85e59eeb3569 100644
  		/*
  		 * Schedule the release of a reference to
  		 * bfqd->in_service_bic->icq.ioc to right after the
+-- 
+2.14.0
+
 
 From bb1aefecbd35fdfa951873b506f2905b7c14078e Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -20646,6 +20697,9 @@ index 5707d42b160d..9cbcb8d43d81 100644
  
  	rq->elv.priv[0] = bic;
  	rq->elv.priv[1] = bfqq;
+-- 
+2.14.0
+
 
 From 5281adb1ec78279c3b82ba00306caf3dcf1c1a69 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -20683,6 +20737,9 @@ index 9cbcb8d43d81..24b529a2edc7 100644
  	} else {
  		__bfq_insert_request(bfqd, rq);
  
+-- 
+2.14.0
+
 
 From 28def78f2edf950852bd6334c4843aa6c40a2153 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -20788,6 +20845,9 @@ index c3a5d80d1947..20168de1067b 100644
  
  /* flags that prevent us from merging requests: */
  #define RQF_NOMERGE_FLAGS \
+-- 
+2.14.0
+
 
 From 00278249ea037df223f42aa962947e583feab021 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -20859,10 +20919,11 @@ index b4d40bb712d2..02a1e7fd0ea4 100644
  /*
   * Scheduler run of queue, if there are requests pending and no one in the
   * driver that will restart queueing.
-@@ -255,6 +245,43 @@ static void bfq_schedule_dispatch(struct bfq_data *bfqd)
+@@ -254,6 +244,43 @@ static void bfq_schedule_dispatch(struct bfq_data *bfqd)
+ 	}
  }
  
- /*
++/*
 + * Next two functions release bfqd->lock and put the io context
 + * pointed by bfqd->ioc_to_put. This delayed put is used to not risk
 + * to take an ioc->lock while the scheduler lock is being held.
@@ -20899,10 +20960,9 @@ index b4d40bb712d2..02a1e7fd0ea4 100644
 +
 +#define bfq_sample_valid(samples)	((samples) > 80)
 +
-+/*
+ /*
   * Lifted from AS - choose which of rq1 and rq2 that is best served now.
   * We choose the request that is closesr to the head right now.  Distance
-  * behind the head is penalized and only allowed to a certain extent.
 @@ -4050,34 +4077,6 @@ static struct request *__bfq_dispatch_request(struct blk_mq_hw_ctx *hctx)
  	return rq;
  }
@@ -21006,6 +21066,9 @@ index bd83f1c02573..2c81c02bccc4 100644
  #define BFQ_GROUP_IOSCHED_ENABLED
  #endif
  
+-- 
+2.14.0
+
 
 From d9cbff333fc80c9074f1fd2a833f410df5b9db24 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -21176,19 +21239,19 @@ index 02a1e7fd0ea4..8e7589d3280f 100644
  static void
  bfq_merge_bfqqs(struct bfq_data *bfqd, struct bfq_io_cq *bic,
  		struct bfq_queue *bfqq, struct bfq_queue *new_bfqq)
-@@ -2280,12 +2237,6 @@ bfq_merge_bfqqs(struct bfq_data *bfqd, struct bfq_io_cq *bic,
+@@ -2279,12 +2236,6 @@ bfq_merge_bfqqs(struct bfq_data *bfqd, struct bfq_io_cq *bic,
+ 	bfq_log_bfqq(bfqd, new_bfqq, "merge_bfqqs: wr_busy %d",
  		     bfqd->wr_busy_queues);
  
- 	/*
+-	/*
 -	 * Grab a reference to the bic, to prevent it from being destroyed
 -	 * before being possibly touched by a bfq_split_bfqq().
 -	 */
 -	bfq_get_bic_reference(bfqq);
 -	bfq_get_bic_reference(new_bfqq);
--	/*
+ 	/*
  	 * Merge queues (that is, let bic redirect its requests to new_bfqq)
  	 */
- 	bic_set_bfqq(bic, new_bfqq, 1);
 @@ -2472,16 +2423,10 @@ static struct bfq_queue *bfq_set_in_service_queue(struct bfq_data *bfqd)
  static void bfq_arm_slice_timer(struct bfq_data *bfqd)
  {
@@ -21409,6 +21472,9 @@ index 85e59eeb3569..9c4e6797d8c9 100644
  	bfq_clear_bfqq_wait_request(in_serv_bfqq);
  	hrtimer_try_to_cancel(&bfqd->idle_slice_timer);
  	bfqd->in_service_queue = NULL;
+-- 
+2.14.0
+
 
 From 929a2e94966fddfeab49cf5d97076afef9d54d33 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -21441,6 +21507,9 @@ index 8e7589d3280f..bb046335ff4f 100644
  	}
  }
  
+-- 
+2.14.0
+
 
 From 466ac511ca981f4d802163169e9e791beda78cb2 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -21465,6 +21534,9 @@ index bb046335ff4f..3ae9bd424b3f 100644
  		/* If the queue was seeky for too long, break it apart. */
  		if (bfq_bfqq_coop(bfqq) && bfq_bfqq_split_coop(bfqq)) {
  			BUG_ON(!is_sync);
+-- 
+2.14.0
+
 
 From 83137462274b3d8c1a98eb023e33baa134831872 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -21643,6 +21715,9 @@ index dfacca799b5e..9e9b0a09e26f 100644
  #else /* BFQ_GROUP_IOSCHED_ENABLED */
  
  static inline void bfqg_stats_update_io_add(struct bfq_group *bfqg,
+-- 
+2.14.0
+
 
 From 3ebb9237da07f9dedc9c203831cf7cae877ff643 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -21711,6 +21786,9 @@ index 20168de1067b..2edb4526effe 100644
  
  /* flags that prevent us from merging requests: */
  #define RQF_NOMERGE_FLAGS \
+-- 
+2.14.0
+
 
 From 77a52561591631c6cabf4cf439f64088551a4aa8 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -22125,6 +22203,9 @@ index 36ee24a87dda..77ab0f22ed22 100644
  	struct bfq_entity entity;
  	struct bfq_sched_data sched_data;
  
+-- 
+2.14.0
+
 
 From cb30f23c72efbad1d9a07413b93161ede7de14db Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -22154,6 +22235,9 @@ index 4eb668eeacdc..bc1de3f70ea8 100644
  	blkcg_policy_unregister(&blkcg_policy_bfq);
  #endif
  	bfq_slab_kill();
+-- 
+2.14.0
+
 
 From 09bcaf3c42a6d457f069a980f3dd15c30aa65b98 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -22199,6 +22283,9 @@ index bc1de3f70ea8..2598602a0b10 100644
  		.exit_icq		= bfq_exit_icq,
  		.insert_requests	= bfq_insert_requests,
  		.dispatch_request	= bfq_dispatch_request,
+-- 
+2.14.0
+
 
 From 94c9927c93803609608abdb6ec5140a454662739 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -22256,6 +22343,9 @@ index 2598602a0b10..c57774a60911 100644
  }
  
  static void bfq_idle_slice_timer_body(struct bfq_queue *bfqq)
+-- 
+2.14.0
+
 
 From 3b9a2c3bee319aee3d35809760ae3eff403b50f2 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -22333,6 +22423,9 @@ index c57774a60911..49ffca1ad6e7 100644
  		.finish_request         = bfq_finish_request,
  		.exit_icq		= bfq_exit_icq,
  		.insert_requests	= bfq_insert_requests,
+-- 
+2.14.0
+
 
 From e13df734107ce392ba283926e5c03a301b1498dc Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -22373,6 +22466,9 @@ index 05e2822a80b3..27892f56a1b0 100644
  
  CONTENTS
  
+-- 
+2.14.0
+
 
 From ecb1a341ad80608c68d896dc389788cc4c2ab6ea Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -22428,6 +22524,9 @@ index d903393ee78a..631e53d9150d 100644
  #endif
  
  static struct cftype bfq_blkcg_legacy_files[] = {
+-- 
+2.14.0
+
 
 From f2a066ceff698f60dda479a1d904ad6407e84398 Mon Sep 17 00:00:00 2001
 From: Paolo Valente <paolo.valente@linaro.org>
@@ -22458,6 +22557,9 @@ index d9c0318212d9..8e093a2ceadb 100644
  
  In its default configuration, BFQ privileges latency over
  throughput. So, when needed for achieving a lower latency, BFQ builds
+-- 
+2.14.0
+
 
 From 6dff163f7ddfce9978d02437092fd81024074154 Mon Sep 17 00:00:00 2001
 From: Lee Tibbert <lee.tibbert@gmail.com>
@@ -22637,3 +22739,6 @@ index 53954d1b87f8..15d326f466b7 100644
  #endif /* CONFIG_BFQ_REDIRECT_TO_CONSOLE */
  
  /* Expiration reasons. */
+-- 
+2.14.0
+
