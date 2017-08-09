@@ -72,6 +72,9 @@
 │       ├── 0002-BFQ-MQ-bugfix-from-pfkernel-2.patch
 │       ├── 4.12-bfq-mq-git-20170804.patch
 │       ├── 90-linux.hook
+│       ├── Merge-branch-for-4.13-block-of-linux-block_1.patch
+│       ├── Merge-branch-for-4.13-block-of-linux-block_4.patch
+│       ├── Merge-branch-irq-core-for-linus.patch
 │       ├── PKGBUILD
 │       ├── config.x86_64
 │       ├── linux.install
@@ -110,4 +113,4 @@
         ├── linux.install
         └── linux.preset
 
-16 directories, 94 files
+16 directories, 97 files
