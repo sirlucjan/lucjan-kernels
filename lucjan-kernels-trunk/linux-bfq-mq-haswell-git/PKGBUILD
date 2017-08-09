@@ -5,13 +5,6 @@
 ### BUILD OPTIONS
 # Set these variables to ANYTHING that is not null to enable them
 
-### Use tentative patches from https://groups.google.com/forum/#!forum/bfq-iosched
-### Thx to Tom 'monotykamary' Nguyen
-_use_tentative_patches=y
-
-### Use patches from https://github.com/pfactum/pf-kernel/
-_use_pfkernel_patches=y
-
 ### Tweak kernel options prior to a build via nconfig
 _makenconfig=
 
@@ -68,41 +61,26 @@ _deadline_disable=y
 ### Disable CFQ I/O scheduler
 _CFQ_disable=y
 
-### Disable Kyber I/O scheduler
-_kyber_disable=y
-
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-bfq-mq-haswell-git
 # pkgname=('linux-bfq-mq-haswell-git-kernel' 'linux-bfq-mq-haswell-git-headers' 'linux-bfq-mq-haswell-git-docs')
-_srcname=linux-stable-rc
-pkgver=4.12.5.r107.ge6f7239c338e
-pkgrel=0.2
+_srcname=linux-stable
+pkgver=4.11.12.r0.gbd1a9eb6a755
+pkgrel=4
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf')
-_bfq_mq_ver='20170804'
-_bfq_mq_patch="4.12-bfq-mq-git-${_bfq_mq_ver}.patch"
+_bfq_mq_ver='20170704'
+_bfq_mq_patch="4.11-bfq-mq-git-${_bfq_mq_ver}.patch"
 _bfqpath="https://gitlab.com/tom81094/custom-patches/raw/master/bfq-mq/"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v3.15+.patch"
 
-source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git#branch=linux-4.12.y'
-         #${_bfqpath}/${_bfq_mq_patch}"
+source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#branch=linux-4.11.y'
+        #"${_bfqpath}/${_bfq_mq_patch}"
         "${_bfq_mq_patch}"
-        "${_bfqpath}/merges/4.12.6-rc1/0001-Merge-tag-uuid-for-4.13-of-git-git.infradead.org-use.patch"
-        "${_bfqpath}/merges/4.12.6-rc1/0002-Merge-branch-for-4.13-block-of-git-git.kernel.dk-lin.patch"
-        "${_bfqpath}/merges/4.12.6-rc1/0003-Merge-branch-irq-core-for-linus-of-git-git.kernel.or.patch"
-        "${_bfqpath}/merges/4.12.6-rc1/0004-Merge-branch-for-linus-of-git-git.kernel.org-pub-scm.patch"
-        "${_bfqpath}/merges/4.12.6-rc1/0005-Merge-tag-for-linus-v4.13-2-of-git-git.kernel.org-pu.patch"
-        "${_bfqpath}/merges/4.12.6-rc1/0006-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
-        "${_bfqpath}/merges/4.12.6-rc1/0007-Merge-tag-mmc-v4.13-2-of-git-git.kernel.org-pub-scm-.patch"
-        "${_bfqpath}/merges/4.12.6-rc1/0008-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
-        "${_bfqpath}/merges/4.12.6-rc1/0009-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
-        "0010-Check-presence-on-tree-of-every-entity-after-every-a.patch"
-        "0020-BFQ-MQ-bugfix-from-pfkernel-1.patch"
-        "0020-BFQ-MQ-bugfix-from-pfkernel-2.patch"
         "http://repo-ck.com/source/gcc_patch/${_gcc_patch}.gz"
          # the main kernel config files
         'config.x86_64'
@@ -110,8 +88,9 @@ source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.gi
         '90-linux.hook'
          # standard config files for mkinitcpio ramdisk
         'linux.preset'
-        # patches from https://github.com/Algodev-github/bfq-mq/commits/bfq-mq
-        )
+         # patches from https://github.com/linusw/linux-bfq/commits/bfq-mq-v4.11
+         # patches from https://github.com/linusw/linux-bfq/commits/bfq-v8-v4.11
+        '0006-BFQ-bugfix-for-v8r12.patch')
 
 _kernelname=${pkgbase#linux}
         
@@ -123,59 +102,22 @@ pkgver() {
 
 prepare() {
     cd "${srcdir}/${_srcname}"
-    
-    ### Fix naming schema in EXTRAVERSION
-        msg "Fix naming schema in EXTRAVERSION"
-        sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" "${srcdir}/${_srcname}/Makefile"
-    
+            
     ### Patch source with BFQ-MQ
         msg "Fix naming schema in BFQ-MQ patch"
-        sed -i -e "s|PATCHLEVEL = 13|PATCHLEVEL = 12|g" \
-            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 6|g" \
-            -i -e "s|EXTRAVERSION = -rc3|EXTRAVERSION =|g" \
-            -i -e "s|EXTRAVERSION = -bfq-rc3|EXTRAVERSION =|g" \
-            -i -e "s|EXTRAVERSION =-bfq-mq|EXTRAVERSION =|g" "${srcdir}/${_bfq_mq_patch}"
+        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 12|g" \
+            -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
+            -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" "${srcdir}/${_bfq_mq_patch}"
         msg "Patching source with BFQ-MQ patches"
         patch -Np1 -i "${srcdir}/${_bfq_mq_patch}"
-        msg "Apply uuid merges"
-        patch -Np1 -i "${srcdir}/0001-Merge-tag-uuid-for-4.13-of-git-git.infradead.org-use.patch"
-        msg "Apply block merges 1"
-        patch -Np1 -i "${srcdir}/0002-Merge-branch-for-4.13-block-of-git-git.kernel.dk-lin.patch"
-        msg "Apply irq-core merges"
-        patch -Np1 -i "${srcdir}/0003-Merge-branch-irq-core-for-linus-of-git-git.kernel.or.patch"
-        msg "Apply s390 merges"
-        patch -Np1 -i "${srcdir}/0004-Merge-branch-for-linus-of-git-git.kernel.org-pub-scm.patch"
-        msg "Apply jlayton merges"
-        patch -Np1 -i "${srcdir}/0005-Merge-tag-for-linus-v4.13-2-of-git-git.kernel.org-pu.patch"
-        msg "Apply block merges 2"
-        patch -Np1 -i "${srcdir}/0006-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
-        msg "Apply tag mmc"
-        patch -Np1 -i "${srcdir}/0007-Merge-tag-mmc-v4.13-2-of-git-git.kernel.org-pub-scm-.patch"
-        msg "Apply block merges 3"
-        patch -Np1 -i "${srcdir}/0008-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
-        msg "Apply block merges 4"
-        patch -Np1 -i "${srcdir}/0009-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
-        
-    ### Patches related to BUG_ON(entity->tree && entity->tree != &st->active) in __bfq_requeue_entity();
-        if [ -n "$_use_tentative_patches" ]; then
-        msg "Apply tentative patches"
-        for p in "${srcdir}"/0010*.patch*; do 
-        msg " $p"
-        patch -Np1 -i "$p"; done
-        fi
-        
-    ### Patches from https://github.com/pfactum/pf-kernel/
-        if [ -n "$_use_pfkernel_patches" ]; then
-        msg "Apply pfkernel patches"
-        for p in "${srcdir}"/0020*.patch*; do 
-        msg " $p" 
-        patch -Np1 -i "$p"; done
-        fi
-        
+        msg "Patching source with BFQ bugfix patch"
+        patch -Np1 -i "${srcdir}/0006-BFQ-bugfix-for-v8r12.patch"
+
     ### Patch source to enable more gcc CPU optimizatons via the make nconfig
         msg "Patching source with gcc patch to enable more cpus types"
 	patch -Np1 -i "${srcdir}/${_gcc_patch}"
 
+	
     ### Clean tree and copy ARCH config over
 	msg "Running make mrproper to clean source tree"
 	make mrproper
@@ -231,31 +173,26 @@ prepare() {
 			-i -e 's/^CONFIG_HZ=300/CONFIG_HZ=1000/' .config
 	fi
 	
-	### Disable Deadline I/O scheduler
+	
+    ### Disable Deadline I/O scheduler
 	if [ -n "$_deadline_disable" ]; then
 		msg "Disabling Deadline I/O scheduler..."
 		sed -i -e s'/^CONFIG_IOSCHED_DEADLINE=y/# CONFIG_IOSCHED_DEADLINE is not set/' \
 		    -i -e s'/^CONFIG_MQ_IOSCHED_DEADLINE=y/# CONFIG_MQ_IOSCHED_DEADLINE is not set/' ./.config
 	fi
 	
-	### Disable CFQ I/O scheduler
+    ### Disable CFQ I/O scheduler
 	if [ -n "$_CFQ_disable" ]; then
 		msg "Disabling CFQ I/O scheduler..."
 		sed -i -e s'/^CONFIG_IOSCHED_CFQ=y/# CONFIG_IOSCHED_CFQ is not set/' \
 		    -i -e s'/^CONFIG_CFQ_GROUP_IOSCHED=y/# CONFIG_CFQ_GROUP_IOSCHED is not set/' ./.config	
-	fi
-	
-	### Disable Kyber I/O scheduler
-	if [ -n "$_kyber_disable" ]; then
-		msg "Disabling Kyber I/O scheduler..."
-		sed -i -e s'/^CONFIG_MQ_IOSCHED_KYBER=y/# CONFIG_MQ_IOSCHED_KYBER is not set/' ./.config
-	fi
+	fi 
 
 	if [ "${_kernelname}" != "" ]; then
 		sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
 		sed -i "s|CONFIG_LOCALVERSION_AUTO=.*|CONFIG_LOCALVERSION_AUTO=n|" ./.config
 	fi
-	
+
 	### Optionally disable NUMA since >99% of users have mono-socket systems.
 	# For more, see: https://bugs.archlinux.org/task/31187
 	if [ -n "$_NUMAdisable" ]; then
@@ -546,20 +483,10 @@ for _p in ${pkgname[@]}; do
 done
 
 sha512sums=('SKIP'
-            '61d99d738020e4bdee20d028fc22b9f875dee464b685fe2d7a013d00a18231b127df673d7ed7ff7f98d41555eb9c18cc3b483eb672fdbba3d4643b6d84043fdf'
-            '71d6715da2ab93e7d4109a72d73826dba7ec172d1a9cab634826097190be1073d6e222679235820b8bb9f774e952d432f221adf8f7399a8fe38ca4c8545c2938'
-            '8b5d1375c7b7889163ea29a3e3fedd6ad8e1a13b500c4acde222d9211b1d0968fb81c244fa731de23a6590089902332930d2dca02774ad4bb8a5aec1ea8d86d8'
-            'd77d8143321ce495e5bddc8ba52113f01b1d6ff9c89b6e020ad1f6c51d13b0f5269bb1a6292a5ef7ff8faec3b91ea1e3b4c7e91aae8d8a90fe8c1259f12de2f5'
-            '5ba61c8e43f24545a15d9e9509ba9910917b9bb44faa0a13ae0c3ea40fcc6e0eb18d04adc76d696a4b4e6f5daaa47b8a47bd88bb7369828e3f9e02a85da62f7b'
-            'f0422a3bdbc2eba65388fe0b2be25c42b5703cbe1d742b771f31405093436ee9a8ed26d4923387dcf96dc5920f4df9ef689dc0f89349488456df716bd10f2798'
-            'c59de40a25929c17fb97defaf69c5fb524d406c42c68aa6bc4c6e792c0a78088e7751d3e1560d93c5ce0e3420ff9bff2aa3328b664ed3d5643d802e865ea304e'
-            '4197ef98bd45b3c0bd2b22cba4851ef6749690c2f9e733d59fe0865cad7334a4320871498b5bea8c54929a4bb172550cbaf8e9bb46638b6034370ad22fca3f61'
-            '6a1b52e8c788006e6c32fd055aacfd38445ad681625ab6bbeb929244c7ec0004909090e7acaeaa53538fdeee8a6faa639a5a4c7784d69567a5c68a2ab87ab368'
-            '4e8f04be8dff49f44462b44cce89dd62a115f7f2a3f8f2f859ac7e3094fe70f5434670d0e104881e70530b9ae52f7295d28f81fe595aa7c2b28bdd4586816799'
-            '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
-            '2db36ad12d673a9a7a2a973bdb7695526606e98698377d0db6e90b6ae9e89c2f94cd7df0987ef5baf1dd906b0e3dc86f3eb2a85135a86465ec1794158eef4039'
-            '862918504ae7f05af830582492f387918d6be0be4036fa0b65765c97cbacfe637edf44a3e510fd042e077a226e447169cc28129f59c7175eacd82019eab45aa4'
+            'c8ec576b112e928547c8e72bd057bc31e957d30614509032e7920dc3f06fc6897304fbe185e1527b3600f395096ff67967de57f0d6d678afd31125c92d023442'
             '77d80d50d8c4323ed36fd2097ba9f6b49bb8d7cae59d32ffa76b309758a7e9f972d26fedd77046d88ce2691bb01a07909f8bdc34ba214414be3bc030ee31994d'
-            'ee6cde934954aae456fa1f81fd4a2adf313d60345072a2a22bb80640ace6f03306192652970dadc8413f9f4cb69f41c4bbf2ddb80ee7ae70f07cb284c4620534'
+            '48e138bd0aa3c08afacdc409a73b7ffdec0305bb4e567db5e481bdd1b39f957cefbd44d163b03c2e933cf6e464afd5c0d80a08f6eefa9e30c5a462ecfb5d50b1'
             'd6faa67f3ef40052152254ae43fee031365d0b1524aa0718b659eb75afc21a3f79ea8d62d66ea311a800109bed545bc8f79e8752319cd378eef2cbd3a09aba22'
-            '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf')
+            '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf'
+            '30c44c4b603f6ca15e0c58d98160a40a44c8212b94cd7a3457dbf0303d88962a960800f269334f55b4070a6d872d8d9dcccdbfea3ca2aaa389bef7051132495a')
+            

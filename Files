@@ -57,20 +57,16 @@
 │       └── linux.preset
 ├── lucjan-kernels-trunk
 │   ├── linux-bfq-mq-haswell
-│   │   ├── 0010-Check-presence-on-tree-of-every-entity-after-every-a.patch
-│   │   ├── 0020-BFQ-MQ-bugfix-from-pfkernel-1.patch
-│   │   ├── 0020-BFQ-MQ-bugfix-from-pfkernel-2.patch
-│   │   ├── 4.12-bfq-mq-git-20170804.patch
+│   │   ├── 0006-BFQ-bugfix-for-v8r12.patch
+│   │   ├── 4.11-bfq-mq-git-20170704.patch
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
 │   │   ├── config.x86_64
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   └── linux-bfq-mq-haswell-git
-│       ├── 0010-Check-presence-on-tree-of-every-entity-after-every-a.patch
-│       ├── 0020-BFQ-MQ-bugfix-from-pfkernel-1.patch
-│       ├── 0020-BFQ-MQ-bugfix-from-pfkernel-2.patch
-│       ├── 4.12-bfq-mq-git-20170804.patch
+│       ├── 0006-BFQ-bugfix-for-v8r12.patch
+│       ├── 4.11-bfq-mq-git-20170704.patch
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
 │       ├── config.x86_64
@@ -110,4 +106,4 @@
         ├── linux.install
         └── linux.preset
 
-16 directories, 94 files
+16 directories, 90 files
