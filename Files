@@ -3,9 +3,9 @@
 ├── README.md
 ├── lucjan-kernels-experimental
 │   ├── linux-bfq-mq-haswell
-│   │   ├── 0001-Check-presence-on-tree-of-every-entity-after-every-a.patch
-│   │   ├── 0002-BFQ-MQ-bugfix-from-pfkernel-1.patch
-│   │   ├── 0002-BFQ-MQ-bugfix-from-pfkernel-2.patch
+│   │   ├── 0010-Check-presence-on-tree-of-every-entity-after-every-a.patch
+│   │   ├── 0020-BFQ-MQ-bugfix-from-pfkernel-1.patch
+│   │   ├── 0020-BFQ-MQ-bugfix-from-pfkernel-2.patch
 │   │   ├── 4.12-bfq-mq-git-20170804.patch
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
@@ -13,9 +13,9 @@
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   └── linux-bfq-mq-haswell-git
-│       ├── 0001-Check-presence-on-tree-of-every-entity-after-every-a.patch
-│       ├── 0002-BFQ-MQ-bugfix-from-pfkernel-1.patch
-│       ├── 0002-BFQ-MQ-bugfix-from-pfkernel-2.patch
+│       ├── 0010-Check-presence-on-tree-of-every-entity-after-every-a.patch
+│       ├── 0020-BFQ-MQ-bugfix-from-pfkernel-1.patch
+│       ├── 0020-BFQ-MQ-bugfix-from-pfkernel-2.patch
 │       ├── 4.12-bfq-mq-git-20170804.patch
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
@@ -57,27 +57,21 @@
 │       └── linux.preset
 ├── lucjan-kernels-trunk
 │   ├── linux-bfq-mq-haswell
-│   │   ├── 0001-Check-presence-on-tree-of-every-entity-after-every-a.patch
-│   │   ├── 0002-BFQ-MQ-bugfix-from-pfkernel-1.patch
-│   │   ├── 0002-BFQ-MQ-bugfix-from-pfkernel-2.patch
+│   │   ├── 0010-Check-presence-on-tree-of-every-entity-after-every-a.patch
+│   │   ├── 0020-BFQ-MQ-bugfix-from-pfkernel-1.patch
+│   │   ├── 0020-BFQ-MQ-bugfix-from-pfkernel-2.patch
 │   │   ├── 4.12-bfq-mq-git-20170804.patch
 │   │   ├── 90-linux.hook
-│   │   ├── Merge-branch-for-4.13-block-of-linux-block_1.patch
-│   │   ├── Merge-branch-for-4.13-block-of-linux-block_4.patch
-│   │   ├── Merge-branch-irq-core-for-linus.patch
 │   │   ├── PKGBUILD
 │   │   ├── config.x86_64
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   └── linux-bfq-mq-haswell-git
-│       ├── 0001-Check-presence-on-tree-of-every-entity-after-every-a.patch
-│       ├── 0002-BFQ-MQ-bugfix-from-pfkernel-1.patch
-│       ├── 0002-BFQ-MQ-bugfix-from-pfkernel-2.patch
+│       ├── 0010-Check-presence-on-tree-of-every-entity-after-every-a.patch
+│       ├── 0020-BFQ-MQ-bugfix-from-pfkernel-1.patch
+│       ├── 0020-BFQ-MQ-bugfix-from-pfkernel-2.patch
 │       ├── 4.12-bfq-mq-git-20170804.patch
 │       ├── 90-linux.hook
-│       ├── Merge-branch-for-4.13-block-of-linux-block_1.patch
-│       ├── Merge-branch-for-4.13-block-of-linux-block_4.patch
-│       ├── Merge-branch-irq-core-for-linus.patch
 │       ├── PKGBUILD
 │       ├── config.x86_64
 │       ├── linux.install
@@ -116,4 +110,4 @@
         ├── linux.install
         └── linux.preset
 
-16 directories, 100 files
+16 directories, 94 files
