@@ -76,10 +76,10 @@ _kyber_disable=y
 pkgbase=linux-bfq-mq-haswell
 # pkgname=('linux-bfq-mq-haswell-kernel' 'linux-bfq-mq-haswell-headers' 'linux-bfq-mq-haswell-docs')
 _srcname=linux-4.12
-pkgver=4.12.5
-_pkgver=4.12.4
-__pkgver=4.12.5-rc1
-pkgrel=0.4
+pkgver=4.12.6
+_pkgver=4.12.5
+__pkgver=4.12.6-rc1
+pkgrel=0.1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -99,13 +99,16 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
          #${_bfqpath}/${_bfq_mq_patch}"
         "${_bfq_mq_patch}"
         "${_bfqpath}/merges/Merge-tag-uuid-for-4.13-of-uuid.patch"
-        "${_bfqpath}/merges/Merge-branch-for-4.13-block-of-linux-block_1.patch"
-        "${_bfqpath}/merges/Merge-branch-irq-core-for-linus.patch"
+         #"${_bfqpath}/merges/Merge-branch-for-4.13-block-of-linux-block_1.patch"
+        "Merge-branch-for-4.13-block-of-linux-block_1.patch" 
+         #"${_bfqpath}/merges/Merge-branch-irq-core-for-linus.patch"
+        "Merge-branch-irq-core-for-linus.patch"
         "${_bfqpath}/merges/Merge-branch-for-linus-s390.patch"
         "${_bfqpath}/merges/Merge-tag-for-linus-v4.13-2-jlayton.patch"
         "${_bfqpath}/merges/Merge-branch-for-4.13-block-of-linux-block_2.patch"
         "${_bfqpath}/merges/Merge-branch-for-4.13-block-of-linux-block_3.patch"
-        "${_bfqpath}/merges/Merge-branch-for-4.13-block-of-linux-block_4.patch"
+         #"${_bfqpath}/merges/Merge-branch-for-4.13-block-of-linux-block_4.patch"
+        "Merge-branch-for-4.13-block-of-linux-block_4.patch"
         "0001-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "0002-BFQ-MQ-bugfix-from-pfkernel-1.patch"
         "0002-BFQ-MQ-bugfix-from-pfkernel-2.patch"
@@ -137,7 +140,7 @@ prepare() {
     ### Patch source with BFQ-MQ
         msg "Fix naming schema in BFQ-MQ patch"
         sed -i -e "s|PATCHLEVEL = 13|PATCHLEVEL = 12|g" \
-            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 5|g" \
+            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 6|g" \
             -i -e "s|EXTRAVERSION = -rc3|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION = -bfq-rc3|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-bfq-mq|EXTRAVERSION =|g" "${srcdir}/${_bfq_mq_patch}"
@@ -551,19 +554,19 @@ done
 
 sha512sums=('8e81b41b253e63233e92948941f44c6482acb52aa3a3fd172f03a38a86f2c35b2ad4fd407acd1bc3964673eba344fe104d3a03e3ff4bf9cd1f22bd44263bd728'
             'SKIP'
-            '8a6b72524050733c166524230d85f808275a65c28f06444350ebb8c64dd4cab666f8629ef1d1d2b6c25c1f36820a1fd114510af5a38509df55f9c3071543e647'
+            'b9e74f148a0bd76df8c52e6384933b9eddd8477c713b14389a34655538abab70ffa70e99b504a60d0adf1937c771d9bb3879511e6c3666c345d490848eb4f113'
             'SKIP'
-            'b3b09207a466463fb675ed821b1cf9f8ddc8254b0f3cced28fef7cc9d885a30a6ad35e05578e4220c633b4d4af5725f6924019a93e655d932aecfd20d5b017d3'
+            '62180fd5223f4b6cd3c3a58330bec64e98c5608c25521959d5a6ca05a628917a6d13db2ee3399ec7f5bcbb1b89947e4fbd42f021ea78ab4e2901fd3c8be2d72c'
             'SKIP'
             '61d99d738020e4bdee20d028fc22b9f875dee464b685fe2d7a013d00a18231b127df673d7ed7ff7f98d41555eb9c18cc3b483eb672fdbba3d4643b6d84043fdf'
             '84b61ac33a620763ed5197cec3d0559bab4666dc90cb04771d8b4a227dd389a9588d67a3e2c4adea4c62d6740a68d78d7b1f40b1a5b243dd3855fa08b50578c8'
-            '55388d75971b55c8bbf0ebbbb1c18e802bde60a8a4558b101f362609a81147ef0c3a07ad54a49212c87a2bf81bb73e73631f46d824b656a02d30cb96b7f9ac26'
-            '1d0e16f42491044fd36c6922ff894fefc398c7c44b7d74c1641e52ae3f2e8a14ff56fce99c7eed4f072ba17a9a395d5ff91217f93b38c434afee61c3400c3b34'
+            '0c2682ae0f1725a22a8cafaf4deaedea15b5e1b5f353bc22a0f18d8f50e4ac2f6d86b38cea2d5c56e3230f1fa1306ab1f2be028f8d2aa70c748aae4e4b01cde1'
+            '82e7830d8015fbcc7252a2731a674793d757cfbd08e443404efcf6ddcc283c1f6520f2354854c6589f8397ac5400e896d4821279d8065fe5afa03c66df5ec257'
             '0924f8aa7bf528715735d7a8457f64f1f5a7526fa903c20bb8b0d76741eeb8f7b68199d4693320980aaf2e56df88988c6bb80cd564703f76883ec206493c932d'
             '85159958742e5d90b8348ea5b8fecc387a6851ffacbd0e20cf43d71b814a206e7fa3bfa9226a4437c431ba61a3fe4287926d9c46fff103d95436e0cb74c442a4'
             '6d8c41043660321dfa5f78935e2331db808ceaea8ef6970222434468445f15ef2b277d47d9ca6a83fabd2e36b5defc95661012af624957229488c1f844cfe246'
             'b434bec13049184869a8b67834cb1d22e549c1be1b97a63482015f13b0a9a8ae0604aa829712e46fa08b76dcfc8cd34daa937a06e0b0e6ec91c750209e143852'
-            '545c823e78bf5ce62aa57b90e6e7d984c2f82616289ad77e5e148e052607c124bc17286f5530b8ea3dea2a6afc462fcd06d3184b461c05c6e3efc00bc4083858'
+            'c44ae4f98eca39d8ebc68a34616432605d3c9eb788d089639a2dc16b8a7f0080837ae4fbcd87328cb57a9d1bf8c9c04afd027c9d19ee956cdbb86511db17ede2'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '2db36ad12d673a9a7a2a973bdb7695526606e98698377d0db6e90b6ae9e89c2f94cd7df0987ef5baf1dd906b0e3dc86f3eb2a85135a86465ec1794158eef4039'
             '862918504ae7f05af830582492f387918d6be0be4036fa0b65765c97cbacfe637edf44a3e510fd042e077a226e447169cc28129f59c7175eacd82019eab45aa4'
