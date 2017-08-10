@@ -1,0 +1,718 @@
+From 43bea7f14540a2f2ab90c77f9170b48811e3834e Mon Sep 17 00:00:00 2001
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Fri, 28 Jul 2017 12:13:34 -0700
+Subject: [PATCH 10/10] Merge branch 'for-linus' of
+ git://git.kernel.dk/linux-block
+
+Pull block fixes from Jens Axboe:
+ "A small collection of fixes that should go into this series. This
+  contains:
+
+   - NVMe pull request from Christoph, with various fixes for nvme
+     proper and nvme-fc.
+
+   - disable runtime PM for blk-mq for now.
+
+     With scsi now defaulting to using blk-mq, this reared its head as
+     an issue. Longer term we'll fix up runtime PM for blk-mq, for now
+     just disable it to prevent a hang on laptop resume for some folks.
+
+   - blk-mq CPU <-> hw queue map fix from Christoph.
+
+   - xen/blkfront pull request from Konrad, with two small fixes for the
+     blkfront driver.
+
+   - a few fixups for nbd from Joseph.
+
+   - a stable fix for pblk from Javier"
+
+* 'for-linus' of git://git.kernel.dk/linux-block:
+  lightnvm: pblk: advance bio according to lba index
+  nvme: validate admin queue before unquiesce
+  nbd: clear disconnected on reconnect
+  nvme-pci: fix HMB size calculation
+  nvme-fc: revise TRADDR parsing
+  nvme-fc: address target disconnect race conditions in fcp io submit
+  nvme: fabrics commands should use the fctype field for data direction
+  nvme: also provide a UUID in the WWID sysfs attribute
+  xen/blkfront: always allocate grants first from per-queue persistent grants
+  xen-blkfront: fix mq start/stop race
+  blk-mq: map queues to all present CPUs
+  block: disable runtime-pm for blk-mq
+  xen-blkfront: Fix handling of non-supported operations
+  nbd: only set sndtimeo if we have a timeout set
+  nbd: take tx_lock before disconnecting
+  nbd: allow multiple disconnects to be sent
+---
+ drivers/block/nbd.c          |  18 +++++--
+ drivers/block/xen-blkfront.c |  25 +++++----
+ drivers/lightnvm/pblk-rb.c   |   4 +-
+ drivers/lightnvm/pblk-read.c |  23 +++++---
+ drivers/lightnvm/pblk.h      |   2 +-
+ drivers/nvme/host/core.c     |   6 ++-
+ drivers/nvme/host/fc.c       | 121 +++++++++++++++++++++++--------------------
+ drivers/nvme/host/pci.c      |   6 +--
+ drivers/nvme/target/fc.c     | 101 +++++++++++++++++++-----------------
+ include/linux/nvme-fc.h      |  19 +++++++
+ include/linux/nvme.h         |   2 +-
+ 11 files changed, 191 insertions(+), 136 deletions(-)
+
+diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
+index 87a0a29f6e7e..5bdf923294a5 100644
+--- a/drivers/block/nbd.c
++++ b/drivers/block/nbd.c
+@@ -908,7 +908,8 @@ static int nbd_reconnect_socket(struct nbd_device *nbd, unsigned long arg)
+ 			continue;
+ 		}
+ 		sk_set_memalloc(sock->sk);
+-		sock->sk->sk_sndtimeo = nbd->tag_set.timeout;
++		if (nbd->tag_set.timeout)
++			sock->sk->sk_sndtimeo = nbd->tag_set.timeout;
+ 		atomic_inc(&config->recv_threads);
+ 		refcount_inc(&nbd->config_refs);
+ 		old = nsock->sock;
+@@ -922,6 +923,8 @@ static int nbd_reconnect_socket(struct nbd_device *nbd, unsigned long arg)
+ 		mutex_unlock(&nsock->tx_lock);
+ 		sockfd_put(old);
+ 
++		clear_bit(NBD_DISCONNECTED, &config->runtime_flags);
++
+ 		/* We take the tx_mutex in an error path in the recv_work, so we
+ 		 * need to queue_work outside of the tx_mutex.
+ 		 */
+@@ -978,11 +981,15 @@ static void send_disconnects(struct nbd_device *nbd)
+ 	int i, ret;
+ 
+ 	for (i = 0; i < config->num_connections; i++) {
++		struct nbd_sock *nsock = config->socks[i];
++
+ 		iov_iter_kvec(&from, WRITE | ITER_KVEC, &iov, 1, sizeof(request));
++		mutex_lock(&nsock->tx_lock);
+ 		ret = sock_xmit(nbd, i, 1, &from, 0, NULL);
+ 		if (ret <= 0)
+ 			dev_err(disk_to_dev(nbd->disk),
+ 				"Send disconnect failed %d\n", ret);
++		mutex_unlock(&nsock->tx_lock);
+ 	}
+ }
+ 
+@@ -991,9 +998,8 @@ static int nbd_disconnect(struct nbd_device *nbd)
+ 	struct nbd_config *config = nbd->config;
+ 
+ 	dev_info(disk_to_dev(nbd->disk), "NBD_DISCONNECT\n");
+-	if (!test_and_set_bit(NBD_DISCONNECT_REQUESTED,
+-			      &config->runtime_flags))
+-		send_disconnects(nbd);
++	set_bit(NBD_DISCONNECT_REQUESTED, &config->runtime_flags);
++	send_disconnects(nbd);
+ 	return 0;
+ }
+ 
+@@ -1074,7 +1080,9 @@ static int nbd_start_device(struct nbd_device *nbd)
+ 			return -ENOMEM;
+ 		}
+ 		sk_set_memalloc(config->socks[i]->sock->sk);
+-		config->socks[i]->sock->sk->sk_sndtimeo = nbd->tag_set.timeout;
++		if (nbd->tag_set.timeout)
++			config->socks[i]->sock->sk->sk_sndtimeo =
++				nbd->tag_set.timeout;
+ 		atomic_inc(&config->recv_threads);
+ 		refcount_inc(&nbd->config_refs);
+ 		INIT_WORK(&args->work, recv_work);
+diff --git a/drivers/block/xen-blkfront.c b/drivers/block/xen-blkfront.c
+index c852ed3c01d5..98e34e4c62b8 100644
+--- a/drivers/block/xen-blkfront.c
++++ b/drivers/block/xen-blkfront.c
+@@ -111,7 +111,7 @@ struct blk_shadow {
+ };
+ 
+ struct blkif_req {
+-	int	error;
++	blk_status_t	error;
+ };
+ 
+ static inline struct blkif_req *blkif_req(struct request *rq)
+@@ -708,6 +708,7 @@ static int blkif_queue_rw_req(struct request *req, struct blkfront_ring_info *ri
+ 	 * existing persistent grants, or if we have to get new grants,
+ 	 * as there are not sufficiently many free.
+ 	 */
++	bool new_persistent_gnts = false;
+ 	struct scatterlist *sg;
+ 	int num_sg, max_grefs, num_grant;
+ 
+@@ -719,19 +720,21 @@ static int blkif_queue_rw_req(struct request *req, struct blkfront_ring_info *ri
+ 		 */
+ 		max_grefs += INDIRECT_GREFS(max_grefs);
+ 
+-	/*
+-	 * We have to reserve 'max_grefs' grants because persistent
+-	 * grants are shared by all rings.
+-	 */
+-	if (max_grefs > 0)
+-		if (gnttab_alloc_grant_references(max_grefs, &setup.gref_head) < 0) {
++	/* Check if we have enough persistent grants to allocate a requests */
++	if (rinfo->persistent_gnts_c < max_grefs) {
++		new_persistent_gnts = true;
++
++		if (gnttab_alloc_grant_references(
++		    max_grefs - rinfo->persistent_gnts_c,
++		    &setup.gref_head) < 0) {
+ 			gnttab_request_free_callback(
+ 				&rinfo->callback,
+ 				blkif_restart_queue_callback,
+ 				rinfo,
+-				max_grefs);
++				max_grefs - rinfo->persistent_gnts_c);
+ 			return 1;
+ 		}
++	}
+ 
+ 	/* Fill out a communications ring structure. */
+ 	id = blkif_ring_get_request(rinfo, req, &ring_req);
+@@ -832,7 +835,7 @@ static int blkif_queue_rw_req(struct request *req, struct blkfront_ring_info *ri
+ 	if (unlikely(require_extra_req))
+ 		rinfo->shadow[extra_id].req = *extra_ring_req;
+ 
+-	if (max_grefs > 0)
++	if (new_persistent_gnts)
+ 		gnttab_free_grant_references(setup.gref_head);
+ 
+ 	return 0;
+@@ -906,8 +909,8 @@ static blk_status_t blkif_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 	return BLK_STS_IOERR;
+ 
+ out_busy:
+-	spin_unlock_irqrestore(&rinfo->ring_lock, flags);
+ 	blk_mq_stop_hw_queue(hctx);
++	spin_unlock_irqrestore(&rinfo->ring_lock, flags);
+ 	return BLK_STS_RESOURCE;
+ }
+ 
+@@ -1616,7 +1619,7 @@ static irqreturn_t blkif_interrupt(int irq, void *dev_id)
+ 			if (unlikely(bret->status == BLKIF_RSP_EOPNOTSUPP)) {
+ 				printk(KERN_WARNING "blkfront: %s: %s op failed\n",
+ 				       info->gd->disk_name, op_name(bret->operation));
+-				blkif_req(req)->error = -EOPNOTSUPP;
++				blkif_req(req)->error = BLK_STS_NOTSUPP;
+ 			}
+ 			if (unlikely(bret->status == BLKIF_RSP_ERROR &&
+ 				     rinfo->shadow[id].req.u.rw.nr_segments == 0)) {
+diff --git a/drivers/lightnvm/pblk-rb.c b/drivers/lightnvm/pblk-rb.c
+index 5ecc154f6831..9bc32578a766 100644
+--- a/drivers/lightnvm/pblk-rb.c
++++ b/drivers/lightnvm/pblk-rb.c
+@@ -657,7 +657,7 @@ unsigned int pblk_rb_read_to_bio(struct pblk_rb *rb, struct nvm_rq *rqd,
+  * be directed to disk.
+  */
+ int pblk_rb_copy_to_bio(struct pblk_rb *rb, struct bio *bio, sector_t lba,
+-			struct ppa_addr ppa, int bio_iter)
++			struct ppa_addr ppa, int bio_iter, bool advanced_bio)
+ {
+ 	struct pblk *pblk = container_of(rb, struct pblk, rwb);
+ 	struct pblk_rb_entry *entry;
+@@ -694,7 +694,7 @@ int pblk_rb_copy_to_bio(struct pblk_rb *rb, struct bio *bio, sector_t lba,
+ 	 * filled with data from the cache). If part of the data resides on the
+ 	 * media, we will read later on
+ 	 */
+-	if (unlikely(!bio->bi_iter.bi_idx))
++	if (unlikely(!advanced_bio))
+ 		bio_advance(bio, bio_iter * PBLK_EXPOSED_PAGE_SIZE);
+ 
+ 	data = bio_data(bio);
+diff --git a/drivers/lightnvm/pblk-read.c b/drivers/lightnvm/pblk-read.c
+index 4e5c48f3de62..d682e89e6493 100644
+--- a/drivers/lightnvm/pblk-read.c
++++ b/drivers/lightnvm/pblk-read.c
+@@ -26,7 +26,7 @@
+  */
+ static int pblk_read_from_cache(struct pblk *pblk, struct bio *bio,
+ 				sector_t lba, struct ppa_addr ppa,
+-				int bio_iter)
++				int bio_iter, bool advanced_bio)
+ {
+ #ifdef CONFIG_NVM_DEBUG
+ 	/* Callers must ensure that the ppa points to a cache address */
+@@ -34,7 +34,8 @@ static int pblk_read_from_cache(struct pblk *pblk, struct bio *bio,
+ 	BUG_ON(!pblk_addr_in_cache(ppa));
+ #endif
+ 
+-	return pblk_rb_copy_to_bio(&pblk->rwb, bio, lba, ppa, bio_iter);
++	return pblk_rb_copy_to_bio(&pblk->rwb, bio, lba, ppa,
++						bio_iter, advanced_bio);
+ }
+ 
+ static void pblk_read_ppalist_rq(struct pblk *pblk, struct nvm_rq *rqd,
+@@ -44,7 +45,7 @@ static void pblk_read_ppalist_rq(struct pblk *pblk, struct nvm_rq *rqd,
+ 	struct ppa_addr ppas[PBLK_MAX_REQ_ADDRS];
+ 	sector_t blba = pblk_get_lba(bio);
+ 	int nr_secs = rqd->nr_ppas;
+-	int advanced_bio = 0;
++	bool advanced_bio = false;
+ 	int i, j = 0;
+ 
+ 	/* logic error: lba out-of-bounds. Ignore read request */
+@@ -62,19 +63,26 @@ static void pblk_read_ppalist_rq(struct pblk *pblk, struct nvm_rq *rqd,
+ retry:
+ 		if (pblk_ppa_empty(p)) {
+ 			WARN_ON(test_and_set_bit(i, read_bitmap));
+-			continue;
++
++			if (unlikely(!advanced_bio)) {
++				bio_advance(bio, (i) * PBLK_EXPOSED_PAGE_SIZE);
++				advanced_bio = true;
++			}
++
++			goto next;
+ 		}
+ 
+ 		/* Try to read from write buffer. The address is later checked
+ 		 * on the write buffer to prevent retrieving overwritten data.
+ 		 */
+ 		if (pblk_addr_in_cache(p)) {
+-			if (!pblk_read_from_cache(pblk, bio, lba, p, i)) {
++			if (!pblk_read_from_cache(pblk, bio, lba, p, i,
++								advanced_bio)) {
+ 				pblk_lookup_l2p_seq(pblk, &p, lba, 1);
+ 				goto retry;
+ 			}
+ 			WARN_ON(test_and_set_bit(i, read_bitmap));
+-			advanced_bio = 1;
++			advanced_bio = true;
+ #ifdef CONFIG_NVM_DEBUG
+ 			atomic_long_inc(&pblk->cache_reads);
+ #endif
+@@ -83,6 +91,7 @@ static void pblk_read_ppalist_rq(struct pblk *pblk, struct nvm_rq *rqd,
+ 			rqd->ppa_list[j++] = p;
+ 		}
+ 
++next:
+ 		if (advanced_bio)
+ 			bio_advance(bio, PBLK_EXPOSED_PAGE_SIZE);
+ 	}
+@@ -282,7 +291,7 @@ static void pblk_read_rq(struct pblk *pblk, struct nvm_rq *rqd,
+ 	 * write buffer to prevent retrieving overwritten data.
+ 	 */
+ 	if (pblk_addr_in_cache(ppa)) {
+-		if (!pblk_read_from_cache(pblk, bio, lba, ppa, 0)) {
++		if (!pblk_read_from_cache(pblk, bio, lba, ppa, 0, 1)) {
+ 			pblk_lookup_l2p_seq(pblk, &ppa, lba, 1);
+ 			goto retry;
+ 		}
+diff --git a/drivers/lightnvm/pblk.h b/drivers/lightnvm/pblk.h
+index 0c5692cc2f60..67e623bd5c2d 100644
+--- a/drivers/lightnvm/pblk.h
++++ b/drivers/lightnvm/pblk.h
+@@ -670,7 +670,7 @@ unsigned int pblk_rb_read_to_bio_list(struct pblk_rb *rb, struct bio *bio,
+ 				      struct list_head *list,
+ 				      unsigned int max);
+ int pblk_rb_copy_to_bio(struct pblk_rb *rb, struct bio *bio, sector_t lba,
+-			struct ppa_addr ppa, int bio_iter);
++			struct ppa_addr ppa, int bio_iter, bool advanced_bio);
+ unsigned int pblk_rb_read_commit(struct pblk_rb *rb, unsigned int entries);
+ 
+ unsigned int pblk_rb_sync_init(struct pblk_rb *rb, unsigned long *flags);
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 3b77cfe5aa1e..c49f1f8b2e57 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -1995,6 +1995,9 @@ static ssize_t wwid_show(struct device *dev, struct device_attribute *attr,
+ 	int serial_len = sizeof(ctrl->serial);
+ 	int model_len = sizeof(ctrl->model);
+ 
++	if (!uuid_is_null(&ns->uuid))
++		return sprintf(buf, "uuid.%pU\n", &ns->uuid);
++
+ 	if (memchr_inv(ns->nguid, 0, sizeof(ns->nguid)))
+ 		return sprintf(buf, "eui.%16phN\n", ns->nguid);
+ 
+@@ -2709,7 +2712,8 @@ void nvme_kill_queues(struct nvme_ctrl *ctrl)
+ 	mutex_lock(&ctrl->namespaces_mutex);
+ 
+ 	/* Forcibly unquiesce queues to avoid blocking dispatch */
+-	blk_mq_unquiesce_queue(ctrl->admin_q);
++	if (ctrl->admin_q)
++		blk_mq_unquiesce_queue(ctrl->admin_q);
+ 
+ 	list_for_each_entry(ns, &ctrl->namespaces, list) {
+ 		/*
+diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
+index d666ada39a9b..5c2a08ef08ba 100644
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -1888,7 +1888,7 @@ nvme_fc_start_fcp_op(struct nvme_fc_ctrl *ctrl, struct nvme_fc_queue *queue,
+ 	 * the target device is present
+ 	 */
+ 	if (ctrl->rport->remoteport.port_state != FC_OBJSTATE_ONLINE)
+-		return BLK_STS_IOERR;
++		goto busy;
+ 
+ 	if (!nvme_fc_ctrl_get(ctrl))
+ 		return BLK_STS_IOERR;
+@@ -1958,22 +1958,25 @@ nvme_fc_start_fcp_op(struct nvme_fc_ctrl *ctrl, struct nvme_fc_queue *queue,
+ 					queue->lldd_handle, &op->fcp_req);
+ 
+ 	if (ret) {
+-		if (op->rq)			/* normal request */
++		if (!(op->flags & FCOP_FLAGS_AEN))
+ 			nvme_fc_unmap_data(ctrl, op->rq, op);
+-		/* else - aen. no cleanup needed */
+ 
+ 		nvme_fc_ctrl_put(ctrl);
+ 
+-		if (ret != -EBUSY)
++		if (ctrl->rport->remoteport.port_state == FC_OBJSTATE_ONLINE &&
++				ret != -EBUSY)
+ 			return BLK_STS_IOERR;
+ 
+-		if (op->rq)
+-			blk_mq_delay_run_hw_queue(queue->hctx, NVMEFC_QUEUE_DELAY);
+-
+-		return BLK_STS_RESOURCE;
++		goto busy;
+ 	}
+ 
+ 	return BLK_STS_OK;
++
++busy:
++	if (!(op->flags & FCOP_FLAGS_AEN) && queue->hctx)
++		blk_mq_delay_run_hw_queue(queue->hctx, NVMEFC_QUEUE_DELAY);
++
++	return BLK_STS_RESOURCE;
+ }
+ 
+ static blk_status_t
+@@ -2802,66 +2805,70 @@ nvme_fc_init_ctrl(struct device *dev, struct nvmf_ctrl_options *opts,
+ 	return ERR_PTR(ret);
+ }
+ 
+-enum {
+-	FCT_TRADDR_ERR		= 0,
+-	FCT_TRADDR_WWNN		= 1 << 0,
+-	FCT_TRADDR_WWPN		= 1 << 1,
+-};
+ 
+ struct nvmet_fc_traddr {
+ 	u64	nn;
+ 	u64	pn;
+ };
+ 
+-static const match_table_t traddr_opt_tokens = {
+-	{ FCT_TRADDR_WWNN,	"nn-%s"		},
+-	{ FCT_TRADDR_WWPN,	"pn-%s"		},
+-	{ FCT_TRADDR_ERR,	NULL		}
+-};
+-
+ static int
+-nvme_fc_parse_address(struct nvmet_fc_traddr *traddr, char *buf)
++__nvme_fc_parse_u64(substring_t *sstr, u64 *val)
+ {
+-	substring_t args[MAX_OPT_ARGS];
+-	char *options, *o, *p;
+-	int token, ret = 0;
+ 	u64 token64;
+ 
+-	options = o = kstrdup(buf, GFP_KERNEL);
+-	if (!options)
+-		return -ENOMEM;
++	if (match_u64(sstr, &token64))
++		return -EINVAL;
++	*val = token64;
+ 
+-	while ((p = strsep(&o, ":\n")) != NULL) {
+-		if (!*p)
+-			continue;
++	return 0;
++}
+ 
+-		token = match_token(p, traddr_opt_tokens, args);
+-		switch (token) {
+-		case FCT_TRADDR_WWNN:
+-			if (match_u64(args, &token64)) {
+-				ret = -EINVAL;
+-				goto out;
+-			}
+-			traddr->nn = token64;
+-			break;
+-		case FCT_TRADDR_WWPN:
+-			if (match_u64(args, &token64)) {
+-				ret = -EINVAL;
+-				goto out;
+-			}
+-			traddr->pn = token64;
+-			break;
+-		default:
+-			pr_warn("unknown traddr token or missing value '%s'\n",
+-					p);
+-			ret = -EINVAL;
+-			goto out;
+-		}
+-	}
++/*
++ * This routine validates and extracts the WWN's from the TRADDR string.
++ * As kernel parsers need the 0x to determine number base, universally
++ * build string to parse with 0x prefix before parsing name strings.
++ */
++static int
++nvme_fc_parse_traddr(struct nvmet_fc_traddr *traddr, char *buf, size_t blen)
++{
++	char name[2 + NVME_FC_TRADDR_HEXNAMELEN + 1];
++	substring_t wwn = { name, &name[sizeof(name)-1] };
++	int nnoffset, pnoffset;
++
++	/* validate it string one of the 2 allowed formats */
++	if (strnlen(buf, blen) == NVME_FC_TRADDR_MAXLENGTH &&
++			!strncmp(buf, "nn-0x", NVME_FC_TRADDR_OXNNLEN) &&
++			!strncmp(&buf[NVME_FC_TRADDR_MAX_PN_OFFSET],
++				"pn-0x", NVME_FC_TRADDR_OXNNLEN)) {
++		nnoffset = NVME_FC_TRADDR_OXNNLEN;
++		pnoffset = NVME_FC_TRADDR_MAX_PN_OFFSET +
++						NVME_FC_TRADDR_OXNNLEN;
++	} else if ((strnlen(buf, blen) == NVME_FC_TRADDR_MINLENGTH &&
++			!strncmp(buf, "nn-", NVME_FC_TRADDR_NNLEN) &&
++			!strncmp(&buf[NVME_FC_TRADDR_MIN_PN_OFFSET],
++				"pn-", NVME_FC_TRADDR_NNLEN))) {
++		nnoffset = NVME_FC_TRADDR_NNLEN;
++		pnoffset = NVME_FC_TRADDR_MIN_PN_OFFSET + NVME_FC_TRADDR_NNLEN;
++	} else
++		goto out_einval;
+ 
+-out:
+-	kfree(options);
+-	return ret;
++	name[0] = '0';
++	name[1] = 'x';
++	name[2 + NVME_FC_TRADDR_HEXNAMELEN] = 0;
++
++	memcpy(&name[2], &buf[nnoffset], NVME_FC_TRADDR_HEXNAMELEN);
++	if (__nvme_fc_parse_u64(&wwn, &traddr->nn))
++		goto out_einval;
++
++	memcpy(&name[2], &buf[pnoffset], NVME_FC_TRADDR_HEXNAMELEN);
++	if (__nvme_fc_parse_u64(&wwn, &traddr->pn))
++		goto out_einval;
++
++	return 0;
++
++out_einval:
++	pr_warn("%s: bad traddr string\n", __func__);
++	return -EINVAL;
+ }
+ 
+ static struct nvme_ctrl *
+@@ -2875,11 +2882,11 @@ nvme_fc_create_ctrl(struct device *dev, struct nvmf_ctrl_options *opts)
+ 	unsigned long flags;
+ 	int ret;
+ 
+-	ret = nvme_fc_parse_address(&raddr, opts->traddr);
++	ret = nvme_fc_parse_traddr(&raddr, opts->traddr, NVMF_TRADDR_SIZE);
+ 	if (ret || !raddr.nn || !raddr.pn)
+ 		return ERR_PTR(-EINVAL);
+ 
+-	ret = nvme_fc_parse_address(&laddr, opts->host_traddr);
++	ret = nvme_fc_parse_traddr(&laddr, opts->host_traddr, NVMF_TRADDR_SIZE);
+ 	if (ret || !laddr.nn || !laddr.pn)
+ 		return ERR_PTR(-EINVAL);
+ 
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 9d41ed1de2db..7dbb09c6c8fa 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -1619,7 +1619,7 @@ static void nvme_free_host_mem(struct nvme_dev *dev)
+ static int nvme_alloc_host_mem(struct nvme_dev *dev, u64 min, u64 preferred)
+ {
+ 	struct nvme_host_mem_buf_desc *descs;
+-	u32 chunk_size, max_entries;
++	u32 chunk_size, max_entries, len;
+ 	int i = 0;
+ 	void **bufs;
+ 	u64 size = 0, tmp;
+@@ -1638,10 +1638,10 @@ static int nvme_alloc_host_mem(struct nvme_dev *dev, u64 min, u64 preferred)
+ 	if (!bufs)
+ 		goto out_free_descs;
+ 
+-	for (size = 0; size < preferred; size += chunk_size) {
+-		u32 len = min_t(u64, chunk_size, preferred - size);
++	for (size = 0; size < preferred; size += len) {
+ 		dma_addr_t dma_addr;
+ 
++		len = min_t(u64, chunk_size, preferred - size);
+ 		bufs[i] = dma_alloc_attrs(dev->dev, len, &dma_addr, GFP_KERNEL,
+ 				DMA_ATTR_NO_KERNEL_MAPPING | DMA_ATTR_NO_WARN);
+ 		if (!bufs[i])
+diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
+index d5801c150b1c..31ca55dfcb1d 100644
+--- a/drivers/nvme/target/fc.c
++++ b/drivers/nvme/target/fc.c
+@@ -2293,66 +2293,70 @@ nvmet_fc_rcv_fcp_abort(struct nvmet_fc_target_port *target_port,
+ }
+ EXPORT_SYMBOL_GPL(nvmet_fc_rcv_fcp_abort);
+ 
+-enum {
+-	FCT_TRADDR_ERR		= 0,
+-	FCT_TRADDR_WWNN		= 1 << 0,
+-	FCT_TRADDR_WWPN		= 1 << 1,
+-};
+ 
+ struct nvmet_fc_traddr {
+ 	u64	nn;
+ 	u64	pn;
+ };
+ 
+-static const match_table_t traddr_opt_tokens = {
+-	{ FCT_TRADDR_WWNN,	"nn-%s"		},
+-	{ FCT_TRADDR_WWPN,	"pn-%s"		},
+-	{ FCT_TRADDR_ERR,	NULL		}
+-};
+-
+ static int
+-nvmet_fc_parse_traddr(struct nvmet_fc_traddr *traddr, char *buf)
++__nvme_fc_parse_u64(substring_t *sstr, u64 *val)
+ {
+-	substring_t args[MAX_OPT_ARGS];
+-	char *options, *o, *p;
+-	int token, ret = 0;
+ 	u64 token64;
+ 
+-	options = o = kstrdup(buf, GFP_KERNEL);
+-	if (!options)
+-		return -ENOMEM;
++	if (match_u64(sstr, &token64))
++		return -EINVAL;
++	*val = token64;
+ 
+-	while ((p = strsep(&o, ":\n")) != NULL) {
+-		if (!*p)
+-			continue;
++	return 0;
++}
+ 
+-		token = match_token(p, traddr_opt_tokens, args);
+-		switch (token) {
+-		case FCT_TRADDR_WWNN:
+-			if (match_u64(args, &token64)) {
+-				ret = -EINVAL;
+-				goto out;
+-			}
+-			traddr->nn = token64;
+-			break;
+-		case FCT_TRADDR_WWPN:
+-			if (match_u64(args, &token64)) {
+-				ret = -EINVAL;
+-				goto out;
+-			}
+-			traddr->pn = token64;
+-			break;
+-		default:
+-			pr_warn("unknown traddr token or missing value '%s'\n",
+-					p);
+-			ret = -EINVAL;
+-			goto out;
+-		}
+-	}
++/*
++ * This routine validates and extracts the WWN's from the TRADDR string.
++ * As kernel parsers need the 0x to determine number base, universally
++ * build string to parse with 0x prefix before parsing name strings.
++ */
++static int
++nvme_fc_parse_traddr(struct nvmet_fc_traddr *traddr, char *buf, size_t blen)
++{
++	char name[2 + NVME_FC_TRADDR_HEXNAMELEN + 1];
++	substring_t wwn = { name, &name[sizeof(name)-1] };
++	int nnoffset, pnoffset;
++
++	/* validate it string one of the 2 allowed formats */
++	if (strnlen(buf, blen) == NVME_FC_TRADDR_MAXLENGTH &&
++			!strncmp(buf, "nn-0x", NVME_FC_TRADDR_OXNNLEN) &&
++			!strncmp(&buf[NVME_FC_TRADDR_MAX_PN_OFFSET],
++				"pn-0x", NVME_FC_TRADDR_OXNNLEN)) {
++		nnoffset = NVME_FC_TRADDR_OXNNLEN;
++		pnoffset = NVME_FC_TRADDR_MAX_PN_OFFSET +
++						NVME_FC_TRADDR_OXNNLEN;
++	} else if ((strnlen(buf, blen) == NVME_FC_TRADDR_MINLENGTH &&
++			!strncmp(buf, "nn-", NVME_FC_TRADDR_NNLEN) &&
++			!strncmp(&buf[NVME_FC_TRADDR_MIN_PN_OFFSET],
++				"pn-", NVME_FC_TRADDR_NNLEN))) {
++		nnoffset = NVME_FC_TRADDR_NNLEN;
++		pnoffset = NVME_FC_TRADDR_MIN_PN_OFFSET + NVME_FC_TRADDR_NNLEN;
++	} else
++		goto out_einval;
++
++	name[0] = '0';
++	name[1] = 'x';
++	name[2 + NVME_FC_TRADDR_HEXNAMELEN] = 0;
++
++	memcpy(&name[2], &buf[nnoffset], NVME_FC_TRADDR_HEXNAMELEN);
++	if (__nvme_fc_parse_u64(&wwn, &traddr->nn))
++		goto out_einval;
++
++	memcpy(&name[2], &buf[pnoffset], NVME_FC_TRADDR_HEXNAMELEN);
++	if (__nvme_fc_parse_u64(&wwn, &traddr->pn))
++		goto out_einval;
+ 
+-out:
+-	kfree(options);
+-	return ret;
++	return 0;
++
++out_einval:
++	pr_warn("%s: bad traddr string\n", __func__);
++	return -EINVAL;
+ }
+ 
+ static int
+@@ -2370,7 +2374,8 @@ nvmet_fc_add_port(struct nvmet_port *port)
+ 
+ 	/* map the traddr address info to a target port */
+ 
+-	ret = nvmet_fc_parse_traddr(&traddr, port->disc_addr.traddr);
++	ret = nvme_fc_parse_traddr(&traddr, port->disc_addr.traddr,
++			sizeof(port->disc_addr.traddr));
+ 	if (ret)
+ 		return ret;
+ 
+diff --git a/include/linux/nvme-fc.h b/include/linux/nvme-fc.h
+index 21c37e39e41a..36cca93a5ff2 100644
+--- a/include/linux/nvme-fc.h
++++ b/include/linux/nvme-fc.h
+@@ -334,5 +334,24 @@ struct fcnvme_ls_disconnect_acc {
+ #define NVME_FC_LS_TIMEOUT_SEC		2		/* 2 seconds */
+ #define NVME_FC_TGTOP_TIMEOUT_SEC	2		/* 2 seconds */
+ 
++/*
++ * TRADDR string must be of form "nn-<16hexdigits>:pn-<16hexdigits>"
++ * the string is allowed to be specified with or without a "0x" prefix
++ * infront of the <16hexdigits>.  Without is considered the "min" string
++ * and with is considered the "max" string. The hexdigits may be upper
++ * or lower case.
++ */
++#define NVME_FC_TRADDR_NNLEN		3	/* "?n-" */
++#define NVME_FC_TRADDR_OXNNLEN		5	/* "?n-0x" */
++#define NVME_FC_TRADDR_HEXNAMELEN	16
++#define NVME_FC_TRADDR_MINLENGTH	\
++		(2 * (NVME_FC_TRADDR_NNLEN + NVME_FC_TRADDR_HEXNAMELEN) + 1)
++#define NVME_FC_TRADDR_MAXLENGTH	\
++		(2 * (NVME_FC_TRADDR_OXNNLEN + NVME_FC_TRADDR_HEXNAMELEN) + 1)
++#define NVME_FC_TRADDR_MIN_PN_OFFSET	\
++		(NVME_FC_TRADDR_NNLEN + NVME_FC_TRADDR_HEXNAMELEN + 1)
++#define NVME_FC_TRADDR_MAX_PN_OFFSET	\
++		(NVME_FC_TRADDR_OXNNLEN + NVME_FC_TRADDR_HEXNAMELEN + 1)
++
+ 
+ #endif /* _NVME_FC_H */
+diff --git a/include/linux/nvme.h b/include/linux/nvme.h
+index bc74da018bdc..25d8225dbd04 100644
+--- a/include/linux/nvme.h
++++ b/include/linux/nvme.h
+@@ -1006,7 +1006,7 @@ static inline bool nvme_is_write(struct nvme_command *cmd)
+ 	 * Why can't we simply have a Fabrics In and Fabrics out command?
+ 	 */
+ 	if (unlikely(cmd->common.opcode == nvme_fabrics_command))
+-		return cmd->fabrics.opcode & 1;
++		return cmd->fabrics.fctype & 1;
+ 	return cmd->common.opcode & 1;
+ }
+ 
+-- 
+2.14.0
+

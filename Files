@@ -57,6 +57,9 @@
 │       └── linux.preset
 ├── lucjan-kernels-trunk
 │   ├── linux-bfq-mq-haswell
+│   │   ├── 0002-Merge-branch-for-4.13-block-of-git-git.kernel.dk-lin.patch
+│   │   ├── 0003-Merge-branch-irq-core-for-linus-of-git-git.kernel.or.patch
+│   │   ├── 0010-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch
 │   │   ├── 0100-Check-presence-on-tree-of-every-entity-after-every-a.patch
 │   │   ├── 0200-BFQ-MQ-bugfix-from-pfkernel-1.patch
 │   │   ├── 0200-BFQ-MQ-bugfix-from-pfkernel-2.patch
@@ -67,6 +70,9 @@
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   └── linux-bfq-mq-haswell-git
+│       ├── 0002-Merge-branch-for-4.13-block-of-git-git.kernel.dk-lin.patch
+│       ├── 0003-Merge-branch-irq-core-for-linus-of-git-git.kernel.or.patch
+│       ├── 0010-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch
 │       ├── 0100-Check-presence-on-tree-of-every-entity-after-every-a.patch
 │       ├── 0200-BFQ-MQ-bugfix-from-pfkernel-1.patch
 │       ├── 0200-BFQ-MQ-bugfix-from-pfkernel-2.patch
@@ -110,4 +116,4 @@
         ├── linux.install
         └── linux.preset
 
-16 directories, 94 files
+16 directories, 100 files
