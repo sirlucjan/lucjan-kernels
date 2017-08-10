@@ -77,7 +77,7 @@ pkgbase=linux-bfq-mq-haswell-git
 # pkgname=('linux-bfq-mq-haswell-git-kernel' 'linux-bfq-mq-haswell-git-headers' 'linux-bfq-mq-haswell-git-docs')
 _srcname=linux-stable
 pkgver=4.12.5.r0.g45100eec5f68
-pkgrel=3
+pkgrel=4
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -86,23 +86,25 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf')
 _bfq_mq_ver='20170804'
 _bfq_mq_patch="4.12-bfq-mq-git-${_bfq_mq_ver}.patch"
 _bfqpath="https://gitlab.com/tom81094/custom-patches/raw/master/bfq-mq/"
+_mergepath="${_bfqpath}/merges/4.12.5"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v3.15+.patch"
 
 source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#branch=linux-4.12.y'
          #${_bfqpath}/${_bfq_mq_patch}"
         "${_bfq_mq_patch}"
-        "${_bfqpath}/merges/4.12.5/0001-Merge-tag-uuid-for-4.13-of-git-git.infradead.org-use.patch"
-        "${_bfqpath}/merges/4.12.5/0002-Merge-branch-for-4.13-block-of-git-git.kernel.dk-lin.patch"
-        "${_bfqpath}/merges/4.12.5/0003-Merge-branch-irq-core-for-linus-of-git-git.kernel.or.patch"
-        "${_bfqpath}/merges/4.12.5/0004-Merge-branch-for-linus-of-git-git.kernel.org-pub-scm.patch"
-        "${_bfqpath}/merges/4.12.5/0005-Merge-tag-for-linus-v4.13-2-of-git-git.kernel.org-pu.patch"
-        "${_bfqpath}/merges/4.12.5/0006-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
-        "${_bfqpath}/merges/4.12.5/0007-Merge-tag-mmc-v4.13-2-of-git-git.kernel.org-pub-scm-.patch"
-        "${_bfqpath}/merges/4.12.5/0008-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
-        "${_bfqpath}/merges/4.12.5/0009-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
-        "0010-Check-presence-on-tree-of-every-entity-after-every-a.patch"
-        "0020-BFQ-MQ-bugfix-from-pfkernel-1.patch"
-        "0020-BFQ-MQ-bugfix-from-pfkernel-2.patch"
+        "${_mergepath}/0001-Merge-tag-uuid-for-4.13-of-git-git.infradead.org-use.patch"
+        "${_mergepath}/0002-Merge-branch-for-4.13-block-of-git-git.kernel.dk-lin.patch"
+        "${_mergepath}/0003-Merge-branch-irq-core-for-linus-of-git-git.kernel.or.patch"
+        "${_mergepath}/0004-Merge-branch-for-linus-of-git-git.kernel.org-pub-scm.patch"
+        "${_mergepath}/0005-Merge-tag-for-linus-v4.13-2-of-git-git.kernel.org-pu.patch"
+        "${_mergepath}/0006-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
+        "${_mergepath}/0007-Merge-tag-mmc-v4.13-2-of-git-git.kernel.org-pub-scm-.patch"
+        "${_mergepath}/0008-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
+        "${_mergepath}/0009-Merge-tag-uuid-for-4.13-2-of-git-git.infradead.org-u.patch"
+        "${_mergepath}/0010-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
+        "0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
+        "0200-BFQ-MQ-bugfix-from-pfkernel-1.patch"
+        "0200-BFQ-MQ-bugfix-from-pfkernel-2.patch"
         "http://repo-ck.com/source/gcc_patch/${_gcc_patch}.gz"
          # the main kernel config files
         'config.x86_64'
@@ -134,7 +136,7 @@ prepare() {
         msg "Patching source with BFQ-MQ patches"
         patch -Np1 -i "${srcdir}/${_bfq_mq_patch}"
         msg "Patching source with merged patches"
-        for p in "${srcdir}"/000{1,2,3,4,5,6,8,9}-*Merge*.patch; do
+        for p in "${srcdir}"/*-Merge*.patch; do
         msg " $p"
         patch -Np1 -i "$p"
         done
@@ -142,7 +144,7 @@ prepare() {
     ### Patches related to BUG_ON(entity->tree && entity->tree != &st->active) in __bfq_requeue_entity();
         if [ -n "$_use_tentative_patches" ]; then
         msg "Apply tentative patches"
-        for p in "${srcdir}"/0010*.patch*; do 
+        for p in "${srcdir}"/0100*.patch*; do 
         msg " $p"
         patch -Np1 -i "$p"; done
         fi
@@ -150,7 +152,7 @@ prepare() {
     ### Patches from https://github.com/pfactum/pf-kernel/
         if [ -n "$_use_pfkernel_patches" ]; then
         msg "Apply pfkernel patches"
-        for p in "${srcdir}"/0020*.patch*; do 
+        for p in "${srcdir}"/0200*.patch*; do 
         msg " $p" 
         patch -Np1 -i "$p"; done
         fi   
@@ -530,15 +532,16 @@ done
 
 sha512sums=('SKIP'
             '61d99d738020e4bdee20d028fc22b9f875dee464b685fe2d7a013d00a18231b127df673d7ed7ff7f98d41555eb9c18cc3b483eb672fdbba3d4643b6d84043fdf'
-            'e72bd5acd6d6d97d983a2a7710e77409f6b667a30130d5bc153c37e6e7d97adf605e4600b31dd4df66c1209e5e6a00c4bb2d92eb383b6fb01f33700d321e5bb0'
-            'f1a7a93572fd074a7799a1db80dfd58286311ddf56e95d9acca6e8d9c2d1686bfff85e14f974dba9a8594f426c7e45e41ab736770b733c2900ba9a1ea0815fe3'
-            'fa26e934bd596f0929caa301c28a19e850de4bd3c90f21b1ee1ac906b9b6f85dcca7151460472f4aa6a3a034b9e99336798cc60b344549b2c8d503453fd7fafa'
-            '2e61d6cbc73550e2a0ba83e36b99ac4781975c20ddc5f8033ec55bd754b0a40059d67b9155aaddaff0ae7c09f1b82250c214cee5253b367fa3d61d029fa3b5d9'
-            '204288fa1f4fcc7e21269156a6334de024e9d36fd5179e9254a32a7265c513aa0ffc5b3e329180c17186ecf4fc7a69e25752a489b37531061d289ece5f1bc83e'
-            'f8cac5d2f75d35537b1bf74521a696f0315a2536ad53b173ed3deaf5ae0e12106b54c9b0b5d21426a468ddd7b564071ba4ff7a9b1bd8bd9d57d4e6000c6fadb6'
-            '6fdc12d3e9ebb57a175526c319f357b11a9f5efa0411cf156f084e151f6484862ecbb774d99854a12bb3b3a4e8d82a2b4c7bad7d7628a5ab8a1a073c55694fba'
-            'cf47ab81e01c2ec82e5e6e357f547e3f9037001e3b18526dc37f2d527ddbcfd4a275dff59306bc1f033532fc7ebea8e58d4d347040e788a4c755679a9677ed29'
-            '061bae66bfbb09cd02b2488ea3cc4b95cb0f3eaa9145307bb0ffc970c18175f8fdfda97af7f1245e07836c2c3213920e90e91d434677de707245e837f267082d'
+            '236c8625bd5061796768e8fcf41a3d40c3b400c9e541f56bcf5410841f1c242678c1416a80f5c56b1fc8cf75148a00962760d1930c0b7924057f64d879baeef3'
+            'd5b350e12ee80e9997b32cd7d6ab9877301d754097554eaf38a5005292bbc15ed696908db1cc380c3510ad6018ba1e25ff4811ff2795b54fe61ff520bc7c5191'
+            '3d799ce014d60b4b6dc4ccce7ed42af8fdaa56f60b5534a899dc6132777147f05b6908e1d94e4a88b9ea860670e84509e1f4ce6a4f4c53717f33be85e72372df'
+            '9894308148e5e297e6bb5a1525ac497e9a7e3b4e83a7504b498fe002b66b02d1cd72fb6a23950c3d0b918325ff6d3a6f5c84e51be5d64fc0688b420392b075e8'
+            '8ab460e90a5b5dd6c5c5bb0dc5c6eb604448156430864b705b9b5bded59cd712d65891b175856376a85b7761d3eca8830e44de45989fcfe5d04d8b8a7f2d5fd2'
+            '06431a242c04d23f95a1193350ea9fc2aee55e45e51349dead81704ff11343dac2329a8c7b037bf2d82b2248a229d13eb0a9f4de5d7d926d2e16190ce10cc977'
+            'cb6c0a4cc3ed5935c0f06c75207f76c59b5df3f1b260ce7551eac2137afa9d9b04cb551b7a640862c48248ed6358bb8d1fc07b10858ac97c95afe9ff82a55a3f'
+            '902b93573d00e17e76d69afd973258c74b99e3c141cfd8b57e3e9fc6fdc0d75b7580fae1289c4b70a3b19804cb31645c6fb044f77fb56552a1bdad1af3085a6d'
+            'bc1e0a684567d3aae778edd57c4870c2357dc17604c38215443f879e77618d3f16651c08f282f0ebbefde38c71d36e8765133b8cb253b278a5eeef7cb955c839'
+            '0d3c1a13c74657e8e10ea41a8a2fdda32e11d4a39fe9e22909774ceb5e9a16ffab66e5eda65eb879c8389255111cdd2161361f0d923bb1205faa929b835af19d'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '2db36ad12d673a9a7a2a973bdb7695526606e98698377d0db6e90b6ae9e89c2f94cd7df0987ef5baf1dd906b0e3dc86f3eb2a85135a86465ec1794158eef4039'
             '862918504ae7f05af830582492f387918d6be0be4036fa0b65765c97cbacfe637edf44a3e510fd042e077a226e447169cc28129f59c7175eacd82019eab45aa4'
