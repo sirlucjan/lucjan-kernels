@@ -79,7 +79,7 @@ _srcname=linux-4.12
 pkgver=4.12.6
 _pkgver=4.12.5
 __pkgver=4.12.6-rc1
-pkgrel=0.5
+pkgrel=0.6
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -100,18 +100,16 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
          #${_bfqpath}/${_bfq_mq_patch}"
         "${_bfq_mq_patch}"
         "${_mergepath}/0001-Merge-tag-uuid-for-4.13-of-git-git.infradead.org-use.patch"
-         #"${_mergepath}/0002-Merge-branch-for-4.13-block-of-git-git.kernel.dk-lin.patch"
-         #"${_mergepath}/0003-Merge-branch-irq-core-for-linus-of-git-git.kernel.or.patch"
-        "0002-Merge-branch-for-4.13-block-of-git-git.kernel.dk-lin.patch"
-        "0003-Merge-branch-irq-core-for-linus-of-git-git.kernel.or.patch"
-        "${_mergepath}/0004-Merge-branch-for-linus-of-git-git.kernel.org-pub-scm.patch"
-        "${_mergepath}/0005-Merge-tag-for-linus-v4.13-2-of-git-git.kernel.org-pu.patch"
-        "${_mergepath}/0006-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
-        "${_mergepath}/0007-Merge-tag-mmc-v4.13-2-of-git-git.kernel.org-pub-scm-.patch"
-        "${_mergepath}/0008-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
-        "${_mergepath}/0009-Merge-tag-uuid-for-4.13-2-of-git-git.infradead.org-u.patch"
-         #"${_mergepath}/0010-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
-        "0010-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
+        "${_mergepath}/0002-Merge-branch-for-4.13-block-of-git-git.kernel.dk-lin.patch"
+        "${_mergepath}/0003-Merge-branch-irq-core-for-linus-of-git-git.kernel.or.patch"
+        "${_mergepath}/0004-Merge-tag-uuid-for-4.13-of-git-git.infradead.org-use.patch"
+        "${_mergepath}/0005-Merge-branch-for-linus-of-git-git.kernel.org-pub-scm.patch"
+        "${_mergepath}/0006-Merge-tag-for-linus-v4.13-2-of-git-git.kernel.org-pu.patch"
+        "${_mergepath}/0007-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
+        "${_mergepath}/0008-Merge-tag-mmc-v4.13-2-of-git-git.kernel.org-pub-scm-.patch"
+        "${_mergepath}/0009-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
+        "${_mergepath}/0010-Merge-tag-uuid-for-4.13-2-of-git-git.infradead.org-u.patch"
+        "${_mergepath}/0011-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
         "0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "0200-BFQ-MQ-bugfix-from-pfkernel-1.patch"
         "0200-BFQ-MQ-bugfix-from-pfkernel-2.patch"
@@ -551,16 +549,17 @@ sha512sums=('8e81b41b253e63233e92948941f44c6482acb52aa3a3fd172f03a38a86f2c35b2ad
             '62180fd5223f4b6cd3c3a58330bec64e98c5608c25521959d5a6ca05a628917a6d13db2ee3399ec7f5bcbb1b89947e4fbd42f021ea78ab4e2901fd3c8be2d72c'
             'SKIP'
             'cf7af096d9b7e2ff771020eca825d1df0279741a7b8b2b79b39cfca4b0abef16b09c1f04365bc24337193110d297af9271a502e11dc84b113efcc686fa2d47c0'
-            'e6a3671e55064437a0df12fab59772b5a7e0be813db0f627295ebbec25fd1eda2c26ca0663e150293886a2baa061a63c70d7e546b21a237c5b118e33b58bdb39'
-            '33748dc8ff49527e0955094d6d4330b250dc9a085b627588d0c05a847e41123982011b1e2d1d6febc44cea9f4aee857091a4e4a8900cc480b0cdd4d01615301e'
-            'a9aecb00248d947d6ddb4a6da89ec42ef3e82ccaef7bb6d8d3026cc7c9726fed9b4827cec7dc8ac1741462ccdbadd443744e1c40783b029e0226780c82fbcdac'
-            'afe5bf6b2849801fdc6b4a38d516cb4b85867fe3eacb92c56b372fbed0b6f3e1fa1bbd1238303493eeb9dccde9680f66e7b90c52da142f4d42a9fa2b1c3395ba'
-            '95939e3abf191f6b917014f821dafd17bf9432cff1fc57dea75354626fe1450c5a67bd077c5b7d3b6339659fa30c5a22779d6a78baa83290f425ea2fcb1cfbde'
-            '67f6ddc56ebafe0beed8a3bd4f6d7423dcce6c10807239ec71348533937475ef3b050c1f053e715f343ea95d61a25f7dc10622636e7d1606fd68c750d45ff8f3'
-            '71d0eb832d837e756fa56da8f47d4860a2394b30fb1bae7274d449698c7c4dbab9b2bfff321d37d460acfbf2beecba43cf1622a3f4da466792c0303bc7b77132'
-            'becabb32e9c5e73badb11e4fc5e0a07471fe6e788e6f3977c212827693057cb0c17cea597b699f48a1bca0abbe97a4c672d7a5b0ce8498f837167e99e6428fc8'
-            'b5572f711f9c076f3f689cbcebd4409b194fcf367189e66fcabdabbf76f82dc085e5bb3211b85bd1d4b24efdc04fd450162a116a575e376b1231113bcbd52c24'
-            'b09d51e72a18a2cfde0617360bef215d9235597520afc4808e72e57c467b1a504a45c3140487f3988f65d64e144553dd905452d7b564ae48192209d810638f45'
+            'f85edab61467d3381771c334a7d690b0f474b94da50dfd04ad6520d9455d1b9285405b427e6b3aba56e1e483cb8e1d50fd2f8248b1e1d5b05698b7db9a0cc4c2'
+            '17a68c36c6ffd1fc26220aaa77cd0b18f1b65e3a9b3f8b9f421d2bf9a29893f3b6cb79d861b318620d74132fe05c0e8db256b5fdc1264b9cbbd3ac63a53c5a59'
+            '5adebdf21fb7744910bf93e5edfca69047e68aa866fae940bcbecbf2acb05b7d160f86767df69c77afe68335bb0b75e4359fb7a9d93b54f2db8da50e770f5fac'
+            '0113ae96106acdd75169b864cdc0e657c1a902434f981710999bf84d32aaae21f43804c002986d8c1d57e3955f71b6427f919156b2d9e2acc5837770eef234d5'
+            'cb99c811103c3be13f6a8fa97ade4fbdfdccb76c35fba0abb0312f91f400e60b58161a75ef4cfef69c097ef2eb3e560cb7e36edd88362cc4958c0ce35c8a0c15'
+            '424425bbd285d2f9cb2b87e6e60ab67ce12fde899f3c14641c69d1366d8ed1380a3452ccc1bdbb7e7b6c353d6d5ff8bb103be20ea90802f7fdd3a235f74abff9'
+            '9b3c72b81553c9ada36ad747026ef3eb964a6a85161a5a94857d7027e2f6fdb366b26f4d0674376ad5a639972568b1abec9bd825458516bc42a99ba0cf538c22'
+            'c41ee3268793ea95a395e8f0abce6ea50a4a614457909305659991fff4c251401bccddc2f0dfbcc90117bcd7564bcde8922f285e76902e36cdd25a482a1a2c24'
+            '133ef272a9bc11ec05f00b2d7ad29bfab042ecfa158d42435afed92c1313ffa9531cd885e18fecf1c1c3cdd8cb45fcf041187e55858e945e5bcd9d129834618c'
+            '1c74fcfd920c0b07b01643d970c5ed34e5f8b203a0d5afdb48e41fbd46f4fe3aa0e1b0d5bf63353a7dd7a372dabb25e62b4d8b135819d8bbe6658f785c16e265'
+            'd6e3de14691cf3a601da5306449ba5ccbd9f0ab2d0f5ed4ec6de39426ee59dd2694141f578385f701a447d9ccb9601196fdae4b4ea8ad13b5c86c6b7a02adfa5'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '2db36ad12d673a9a7a2a973bdb7695526606e98698377d0db6e90b6ae9e89c2f94cd7df0987ef5baf1dd906b0e3dc86f3eb2a85135a86465ec1794158eef4039'
             '862918504ae7f05af830582492f387918d6be0be4036fa0b65765c97cbacfe637edf44a3e510fd042e077a226e447169cc28129f59c7175eacd82019eab45aa4'
