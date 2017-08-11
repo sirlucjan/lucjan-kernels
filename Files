@@ -57,6 +57,7 @@
 │       └── linux.preset
 ├── lucjan-kernels-trunk
 │   ├── linux-bfq-mq-haswell
+│   │   ├── 0001-Merge-4.13-uuid-block-merge.patch
 │   │   ├── 0100-Check-presence-on-tree-of-every-entity-after-every-a.patch
 │   │   ├── 0200-BFQ-MQ-bugfix-from-pfkernel-1.patch
 │   │   ├── 0200-BFQ-MQ-bugfix-from-pfkernel-2.patch
@@ -67,6 +68,7 @@
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   └── linux-bfq-mq-haswell-git
+│       ├── 0001-Merge-4.13-uuid-block-merge.patch
 │       ├── 0100-Check-presence-on-tree-of-every-entity-after-every-a.patch
 │       ├── 0200-BFQ-MQ-bugfix-from-pfkernel-1.patch
 │       ├── 0200-BFQ-MQ-bugfix-from-pfkernel-2.patch
@@ -110,4 +112,4 @@
         ├── linux.install
         └── linux.preset
 
-16 directories, 94 files
+16 directories, 96 files
