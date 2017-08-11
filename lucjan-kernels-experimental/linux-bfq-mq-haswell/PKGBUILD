@@ -86,7 +86,7 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf')
 _bfq_mq_ver='20170810'
 _bfq_mq_patch="4.12-bfq-mq-git-${_bfq_mq_ver}.patch"
 _bfqpath="https://gitlab.com/tom81094/custom-patches/raw/master/bfq-mq/"
-_mergepath="${_bfqpath}/merges/4.12.5"
+#_mergepath="${_bfqpath}/merges/4.12.5"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v3.15+.patch"
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
@@ -95,17 +95,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.sign"
          #${_bfqpath}/${_bfq_mq_patch}"
         "${_bfq_mq_patch}"
-        "${_mergepath}/0001-Merge-tag-uuid-for-4.13-of-git-git.infradead.org-use.patch"
-        "${_mergepath}/0002-Merge-branch-for-4.13-block-of-git-git.kernel.dk-lin.patch"
-        "${_mergepath}/0003-Merge-branch-irq-core-for-linus-of-git-git.kernel.or.patch"
-        "${_mergepath}/0004-Merge-tag-uuid-for-4.13-of-git-git.infradead.org-use.patch"
-        "${_mergepath}/0005-Merge-branch-for-linus-of-git-git.kernel.org-pub-scm.patch"
-        "${_mergepath}/0006-Merge-tag-for-linus-v4.13-2-of-git-git.kernel.org-pu.patch"
-        "${_mergepath}/0007-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
-        "${_mergepath}/0008-Merge-tag-mmc-v4.13-2-of-git-git.kernel.org-pub-scm-.patch"
-        "${_mergepath}/0009-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
-        "${_mergepath}/0010-Merge-tag-uuid-for-4.13-2-of-git-git.infradead.org-u.patch"
-        "${_mergepath}/0011-Merge-branch-for-linus-of-git-git.kernel.dk-linux-bl.patch"
+        "0001-Merge-4.13-uuid-block-merge.patch"
         "0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "0200-BFQ-MQ-bugfix-from-pfkernel-1.patch"
         "0200-BFQ-MQ-bugfix-from-pfkernel-2.patch"
@@ -537,17 +527,7 @@ sha512sums=('8e81b41b253e63233e92948941f44c6482acb52aa3a3fd172f03a38a86f2c35b2ad
             'b9e74f148a0bd76df8c52e6384933b9eddd8477c713b14389a34655538abab70ffa70e99b504a60d0adf1937c771d9bb3879511e6c3666c345d490848eb4f113'
             'SKIP'
             'cf7af096d9b7e2ff771020eca825d1df0279741a7b8b2b79b39cfca4b0abef16b09c1f04365bc24337193110d297af9271a502e11dc84b113efcc686fa2d47c0'
-            '37be4f5627b6f949f7a9e0321d57ed8a063e549b5cbe921aa772fe022c7e2ed80fb69537584cdae416e532522b9e3d736a0e566b1f5a86a2ebb26fb9456c2d0a'
-            '0e50d190c6fb8eee8f96a698938a2668fd19cdd92e9b55746ad73b4a380d6345b4c6b8a2b8bc417b221439c6ef5453362eecb524d612e988ec176b8f2f8a1084'
-            'cf835c52e6fa761d372e4a0f3dcf19afa15c2f99e2125caeed502dad7240c57f00ee41e78de28a03b35fac6d51f9b6adf73bef06a98a31c65b7daae8071a0476'
-            'd434a195eb23cd1013665f1ad62c1e65e1d420ad0a687766cd2cc43268f6076bb684609a50c19c91434bc36ab35ba368aafce2dbc8e73db8ab90682663d2c4d4'
-            '95b10184cab0aa282ae5869330a559f0018e3c12ac8d235c283388ffe72ac7d5601046789a60c4cc78e8e2fb13b1e7810411f88e44e41852a43c4b0a8cc44d55'
-            '89879e3676a59baf295b9d238fd47ef98f561a09e3e2801248c1b1ef112fb10f4b72945955dd3fd3b1b3b9e2fc6838f5d609f8b6b0a0d899816af13d2177543b'
-            '8559dda8928d67b71de9845f751a112f4571c6d73bb53ca506df81d304e7353693b324beefeefa76986e9e59c591816c56312ea886a47b3842d8aeca6c1bf399'
-            '3218e4fac2d817d7ba55b0abc60cb80a8d76d7286bfd76017f12a54e6502f2e0db9b17d7cff01462f5f5fffe869e70112f525ccc7a5dc069a6a3af157c3834ba'
-            'b2a1b5db64be776ba189ea6765bcc8cc6a01ecba6bf142cd7567f0030f75c1249c791e94b5f445c9ced5f4f58c8607f0dc5bbc42333d3a0b87ce864654178a1f'
-            'd65cb2e0d2154ba5ffec38b9fb0a6b376f8b6758657de3194722c8536e6a5e8cb84c6e6df159483e3d15a4e323b88152a898a3603ba97cd1650b26bbfcf0d468'
-            'fef4d3735475fecc5adb7d7df5e8b4d3f8789328c22997f83dbab3f5697b970fa1fbaaf8cb0d86fe7b0ef80ad81692acfe976cb5d6e2407bf413cfd2facc1e1b'
+            '1807e06e88b18916d1d3c9ef59593ddb33ccbabef386343c63954ec7e57a83a9fd2af1af8e696f0cec8eb2bf6eddadae826783ce26f53514bfdbe38e742418e2'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '2db36ad12d673a9a7a2a973bdb7695526606e98698377d0db6e90b6ae9e89c2f94cd7df0987ef5baf1dd906b0e3dc86f3eb2a85135a86465ec1794158eef4039'
             '862918504ae7f05af830582492f387918d6be0be4036fa0b65765c97cbacfe637edf44a3e510fd042e077a226e447169cc28129f59c7175eacd82019eab45aa4'
