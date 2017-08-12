@@ -77,7 +77,7 @@ pkgbase=linux-bfq-mq-haswell-git
 # pkgname=('linux-bfq-mq-haswell-git-kernel' 'linux-bfq-mq-haswell-git-headers' 'linux-bfq-mq-haswell-git-docs')
 _srcname=linux-stable
 pkgver=4.12.6.r0.g311d0c831457
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -86,13 +86,21 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf')
 _bfq_mq_ver='20170810'
 _bfq_mq_patch="4.12-bfq-mq-git-${_bfq_mq_ver}.patch"
 _bfqpath="https://gitlab.com/tom81094/custom-patches/raw/master/bfq-mq/"
-_mergepath="${_bfqpath}/merges/4.12.5"
+_mergepath="${_bfqpath}/merges/4.12.6"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v3.15+.patch"
 
 source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#branch=linux-4.12.y'
          #${_bfqpath}/${_bfq_mq_patch}"
         "${_bfq_mq_patch}"
-        "0001-Merge-4.13-uuid-block-merge.patch"
+        "${_mergepath}/0001-Merge-tag-uuid-for-4.13-of-uuid.patch"
+        "${_mergepath}/0002-Merge-branch-for-4.13-block-of-linux-block.patch"
+        "${_mergepath}/0003-Merge-branch-irq-core-for-linus.patch"
+        "${_mergepath}/0004-Merge-branch-for-linus-of-s390.patch"
+        "${_mergepath}/0005-Merge-tag-for-linus-v4.13-2-of-linux-block.patch"
+        "${_mergepath}/0006-Merge-branch-for-linus-of-linux-block_1.patch"
+        "${_mergepath}/0007-Merge-branch-for-linus-of-linux-block_2.patch"
+        "${_mergepath}/0008-Merge-tag-uuid-for-4.13-2-of-uuid.patch"
+        "${_mergepath}/0009-Merge-branch-for-linus-of-linux-block_3.patch"
         "0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "0200-BFQ-MQ-bugfix-from-pfkernel-1.patch"
         "0200-BFQ-MQ-bugfix-from-pfkernel-2.patch"
@@ -523,7 +531,15 @@ done
 
 sha512sums=('SKIP'
             'cf7af096d9b7e2ff771020eca825d1df0279741a7b8b2b79b39cfca4b0abef16b09c1f04365bc24337193110d297af9271a502e11dc84b113efcc686fa2d47c0'
-            '1807e06e88b18916d1d3c9ef59593ddb33ccbabef386343c63954ec7e57a83a9fd2af1af8e696f0cec8eb2bf6eddadae826783ce26f53514bfdbe38e742418e2'
+            '84b61ac33a620763ed5197cec3d0559bab4666dc90cb04771d8b4a227dd389a9588d67a3e2c4adea4c62d6740a68d78d7b1f40b1a5b243dd3855fa08b50578c8'
+            '2a5670cc43acbc630fc0fa3e81c8bb8b338317a8cc834ce64cffe798f6fc73e4afd676a34e4e3610b63e00fa1a7b6ccb5ea165779de193a3b2a8bdf4fefe1b3f'
+            '019b07c76a4370b7f0783bcb1824c7aca89ea8434215f28ee1fd1f5d8679a56dcf8579f29b0412f9960d26a62dd9e838c7ca26679764060e13536020cc8ca42b'
+            '0924f8aa7bf528715735d7a8457f64f1f5a7526fa903c20bb8b0d76741eeb8f7b68199d4693320980aaf2e56df88988c6bb80cd564703f76883ec206493c932d'
+            '85159958742e5d90b8348ea5b8fecc387a6851ffacbd0e20cf43d71b814a206e7fa3bfa9226a4437c431ba61a3fe4287926d9c46fff103d95436e0cb74c442a4'
+            '6d8c41043660321dfa5f78935e2331db808ceaea8ef6970222434468445f15ef2b277d47d9ca6a83fabd2e36b5defc95661012af624957229488c1f844cfe246'
+            'b434bec13049184869a8b67834cb1d22e549c1be1b97a63482015f13b0a9a8ae0604aa829712e46fa08b76dcfc8cd34daa937a06e0b0e6ec91c750209e143852'
+            '12b22ccd3615c4858dec403f7fbfffbe422f3a03969fe3f28b7c2404bdb806f8ae9e6e73ba8ebad960e02735720e3d5ee470cc4c9ae65c8fbab133dadda6834e'
+            'c44ae4f98eca39d8ebc68a34616432605d3c9eb788d089639a2dc16b8a7f0080837ae4fbcd87328cb57a9d1bf8c9c04afd027c9d19ee956cdbb86511db17ede2'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '2db36ad12d673a9a7a2a973bdb7695526606e98698377d0db6e90b6ae9e89c2f94cd7df0987ef5baf1dd906b0e3dc86f3eb2a85135a86465ec1794158eef4039'
             '862918504ae7f05af830582492f387918d6be0be4036fa0b65765c97cbacfe637edf44a3e510fd042e077a226e447169cc28129f59c7175eacd82019eab45aa4'
