@@ -12,6 +12,9 @@ _use_tentative_patches=y
 ### Use patches from https://github.com/pfactum/pf-kernel/
 _use_pfkernel_patches=y
 
+### Use patches from http://marc.info/?l=linux-block&m=150151989915776&w=2
+_use_blk_mq_patches=y
+
 ### Tweak kernel options prior to a build via nconfig
 _makenconfig=
 
@@ -77,7 +80,7 @@ pkgbase=linux-bfq-mq-haswell-git
 # pkgname=('linux-bfq-mq-haswell-git-kernel' 'linux-bfq-mq-haswell-git-headers' 'linux-bfq-mq-haswell-git-docs')
 _srcname=linux-stable
 pkgver=4.12.7.r0.g1ea1c41db983
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -101,6 +104,20 @@ source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#b
         "${_mergepath}/0007-Merge-branch-for-linus-of-linux-block_2.patch"
         "${_mergepath}/0008-Merge-tag-uuid-for-4.13-2-of-uuid.patch"
         "${_mergepath}/0009-Merge-branch-for-linus-of-linux-block_3.patch"
+        "0050-blk-mq-sched-fix-scheduler-bad-performance.patch"
+        "0051-blk-mq-rename-flush_busy_ctx_data-as-ctx_iter_data.patch"
+        "0052-blk-mq-introduce-blk_mq_dispatch_rq_from_ctxs().patch"
+        "0053-blk-mq-sched-improve-dispatching-from-sw-queue.patch"
+        "0054-blk-mq-sched-don't-dequeue-request-until-all-in->dispatch-are-flushed.patch"
+        "0055-blk-mq-sched-introduce-blk_mq_sched_queue_depth().patch"
+        "0056-blk-mq-sched-use-q->queue_depth-as-hint for q->nr_requests.patch"
+        "0057-blk-mq-introduce-BLK_MQ_F_SHARED_DEPTH.patch"
+        "0058-blk-mq-sched-cleanup-blk_mq_sched_dispatch_requests().patch"
+        "0059-blk-mq-sched-introduce-helpers-for-query-change-busy-state.patch"
+        "0060-blk-mq-introduce-helpers-for-operating->dispatch-list.patch"
+        "0061-blk-mq-introduce-pointers-to-dispatchlock-list.patch"
+        "0062-blk-mq-pass-request_queue-to-several-helpers-of-operating-BUSY.patch"
+        "0063-blk-mq-sched-improve-IO-scheduling-on-SCSI-devcie.patch"
         "0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "0200-BFQ-MQ-bugfix-from-pfkernel-1.patch"
         "0200-BFQ-MQ-bugfix-from-pfkernel-2.patch"
@@ -154,7 +171,15 @@ prepare() {
         for p in "${srcdir}"/0200*.patch*; do 
         msg " $p" 
         patch -Np1 -i "$p"; done
-        fi   
+        fi
+    
+    ### Patches from http://marc.info/?l=linux-block&m=150151989915776&w=2
+        if [ -n "$_use_blk_mq_patches" ]; then
+        msg "Apply blk-mq patches"
+        for p in "${srcdir}"/*-blk-mq*.patch*; do 
+        msg " $p" 
+        patch -Np1 -i "$p"; done
+        fi
         
     ### Patch source to enable more gcc CPU optimizatons via the make nconfig
         msg "Patching source with gcc patch to enable more cpus types"
@@ -540,6 +565,20 @@ sha512sums=('SKIP'
             'b434bec13049184869a8b67834cb1d22e549c1be1b97a63482015f13b0a9a8ae0604aa829712e46fa08b76dcfc8cd34daa937a06e0b0e6ec91c750209e143852'
             '12b22ccd3615c4858dec403f7fbfffbe422f3a03969fe3f28b7c2404bdb806f8ae9e6e73ba8ebad960e02735720e3d5ee470cc4c9ae65c8fbab133dadda6834e'
             'c44ae4f98eca39d8ebc68a34616432605d3c9eb788d089639a2dc16b8a7f0080837ae4fbcd87328cb57a9d1bf8c9c04afd027c9d19ee956cdbb86511db17ede2'
+            '37f424dc2c6adca0dadf8e39101e4ad0ebfc9a76ef91fecf98d03884aa1a6139ce3088526e9c680b7645cf4d1e252fdf88d769c506cf6b4f6a291f5e02717537'
+            'bcc97a0c07dff4f28f7f9b01218e9d2447e799015b2249f6df6ea5b8f51b389871dac8fb3e9d25c7c4b463b409b18596f0e9681e9a4f8678b2b916c842692d3b'
+            '8ded93893d6c7e816151c350b28321403cccd1ccc90b33ac9f0e1ff74b29d18bfd220844cfd5a5a0c0451d6d950aa293335427a2c966f54d9aed7a20d2a774ee'
+            '42739553c9961ef5b0ea96b285b5761c6a575afb925dd21aa553132e5b53e57290ec526cd4c65d56950061435de6708cd5a732c490f536a689b92180b96bc78e'
+            '91f806ce0743983281c44f5648e56b14a8704277a31010f89c24936fc750856de7d05c860f1b8156c67cdcca8a845ed1c47bba01e2f5adf1ce85923daa1a9d46'
+            '2c8cf300447deeea6fb7e403ac9263c95ee9cabf32f0be162e9c742de18cab6fe6f737f41232613de668253e5a1f897770be03dbdad21b3e4ee351da2f3e0efb'
+            'c39f30a69c58d5ab52c89dd99e813b0f550c2c722b464913f15a4b289a8e0f95687c87e3cf02ca35de8bac33ae70454b3873eac155099d9c1b583b222546a160'
+            'ebb836c47e2a59b413efdc4a53749653464c81c708f94931afb98d26b9c56b4d2e930466d5960f0043d7fc54cc2db2f9f62298dcbba152c9ae16cae6175e28db'
+            '7802eef8125e609546624e48db28222b804e3f1706439ac16fad6d9821fe9f3c9bd98e1d8a999a136f556dbb5c05c1fa57815ff674f9377ce62c716d33b950a0'
+            'cc9c80fcb39a3675fc20d31a4eab6d7982f2a188662b230ab60fc4975c3e6e7214268cbaa5eb84bd3d63487e371a1af5bb09f65835de6173f878ea9f028cbc14'
+            'e455a4cc68ecaafa51e12cf4e92df8cf62848541910e3b0b3b37226d0882a207fdb983fc6a6894f0b47da8be967c66b6dec09aa80713db2c6c41f22f2646b8db'
+            '62870c43bf8fe81ac2c75a94d53f248a6a5b0c050a0ddd240074e29eb1dc2fb4e26a298d9bc2d64da9ededed4202d4eed74c76b587aa173f90394c61f4d4f8ca'
+            'cc4de1ad20a93c9919bdf016b9accae5891a23ba66e9e26cbe882e274cdf7984ad86afe0c2536cd40f8869d63585cf634b345748d5b2cc8600f923fa66c8c44a'
+            '0d0e81cc9b6dca662a0485e1654df9054b4ffad4e30dbee350ef65622b2d3d4c3d90c1c950da6e2dac9b42ac8aaa6cf8208011c514103a19d956c2f9888426ce'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '2db36ad12d673a9a7a2a973bdb7695526606e98698377d0db6e90b6ae9e89c2f94cd7df0987ef5baf1dd906b0e3dc86f3eb2a85135a86465ec1794158eef4039'
             '862918504ae7f05af830582492f387918d6be0be4036fa0b65765c97cbacfe637edf44a3e510fd042e077a226e447169cc28129f59c7175eacd82019eab45aa4'
