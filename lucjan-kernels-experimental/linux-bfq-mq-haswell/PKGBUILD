@@ -86,7 +86,7 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf')
 _bfq_mq_ver='20170810'
 _bfq_mq_patch="4.12-bfq-mq-git-${_bfq_mq_ver}.patch"
 _bfqpath="https://gitlab.com/tom81094/custom-patches/raw/master/bfq-mq/"
-_mergepath="${_bfqpath}/merges/4.12.7-rc1"
+_mergepath="${_bfqpath}/merges/4.12.7"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v3.15+.patch"
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
