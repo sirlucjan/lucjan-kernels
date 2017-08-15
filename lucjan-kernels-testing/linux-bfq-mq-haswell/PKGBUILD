@@ -76,14 +76,14 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf')
 _bfq_mq_ver='20170704'
 _bfq_mq_patch="4.11-bfq-mq-git-${_bfq_mq_ver}.patch"
 _bfqpath="https://gitlab.com/tom81094/custom-patches/raw/master/bfq-mq/"
+_lucjanpath="https://raw.githubusercontent.com/sirlucjan/lucjan-kernels/master/patches/4.11"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v3.15+.patch"
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.sign"
-        #"${_bfqpath}/${_bfq_mq_patch}"
-        "${_bfq_mq_patch}"
+         #"${_bfqpath}/${_bfq_mq_patch}"
         "http://repo-ck.com/source/gcc_patch/${_gcc_patch}.gz"
          # the main kernel config files
         'config.x86_64'
@@ -93,7 +93,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'linux.preset'
          # patches from https://github.com/linusw/linux-bfq/commits/bfq-mq-v4.11
          # patches from https://github.com/linusw/linux-bfq/commits/bfq-v8-v4.11
-        '0006-BFQ-bugfix-for-v8r12.patch')
+        "${_lucjanpath}/${_bfq_mq_patch}"
+        "${_lucjanpath}/0006-BFQ-bugfix-for-v8r12.patch")
         
 _kernelname=${pkgbase#linux} 
 
@@ -487,11 +488,11 @@ sha512sums=('6610eed97ffb7207c71771198c36179b8244ace7222bebb109507720e26c5f17d91
             'SKIP'
             'ee9c5ac45896d84739c679834fcd15dfc46f9e939dcefd54ba049ac47168d71f0af680153615de002a2073ba79e44a9214f74af17ed16aa97d85e6df157fc6e8'
             'SKIP'
-            'c8ec576b112e928547c8e72bd057bc31e957d30614509032e7920dc3f06fc6897304fbe185e1527b3600f395096ff67967de57f0d6d678afd31125c92d023442'
             '77d80d50d8c4323ed36fd2097ba9f6b49bb8d7cae59d32ffa76b309758a7e9f972d26fedd77046d88ce2691bb01a07909f8bdc34ba214414be3bc030ee31994d'
             '1e0039648a1ef0ef89e671011a61d0989d0684b97a1c0f59a5a0c07bf9ec64465d9182e0d4d71475ae7699c6f3f09f2ad0a51c6a2be2f2a4773fe2053c0939e0'
             'd6faa67f3ef40052152254ae43fee031365d0b1524aa0718b659eb75afc21a3f79ea8d62d66ea311a800109bed545bc8f79e8752319cd378eef2cbd3a09aba22'
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf'
+            'c8ec576b112e928547c8e72bd057bc31e957d30614509032e7920dc3f06fc6897304fbe185e1527b3600f395096ff67967de57f0d6d678afd31125c92d023442'
             '30c44c4b603f6ca15e0c58d98160a40a44c8212b94cd7a3457dbf0303d88962a960800f269334f55b4070a6d872d8d9dcccdbfea3ca2aaa389bef7051132495a')
             
 validpgpkeys=(
