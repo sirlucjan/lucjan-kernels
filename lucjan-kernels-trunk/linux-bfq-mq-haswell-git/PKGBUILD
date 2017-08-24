@@ -80,7 +80,7 @@ pkgbase=linux-bfq-mq-haswell-git
 # pkgname=('linux-bfq-mq-haswell-git-kernel' 'linux-bfq-mq-haswell-git-headers' 'linux-bfq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
 pkgver=4.12.8.r42.gb16a1a813b31
-pkgrel=0.1
+pkgrel=0.2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -95,6 +95,8 @@ _lucjanpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/4.12"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v3.15+.patch"
 
 source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git#branch=linux-4.12.y'
+        'bonding-require-speed-duplex-only-for-802.3ad-alb-an.patch'
+        'bonding-ratelimit-failed-speed-duplex-update-warning.patch'
          #${_bfqpath}/${_bfq_mq_patch}"
         "${_lucjanpath}/${_bfq_mq_patch}"
         "${_mergepath}/0001-Merge-tag-uuid-for-4.13-of-uuid.patch"
@@ -154,6 +156,11 @@ prepare() {
     ### Fix naming schema in EXTRAVERSION
         msg "Fix naming schema in EXTRAVERSION"
         sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" "${srcdir}/${_srcname}/Makefile"
+        
+    ### https://bugzilla.kernel.org/show_bug.cgi?id=196547
+        msg "Fix some bugs"
+        patch -Np1 -i ../bonding-ratelimit-failed-speed-duplex-update-warning.patch
+        patch -Np1 -i ../bonding-require-speed-duplex-only-for-802.3ad-alb-an.patch    
     
     ### Patch source with BFQ-MQ
         msg "Fix naming schema in BFQ-MQ patch"
@@ -568,6 +575,8 @@ for _p in ${pkgname[@]}; do
 done
 
 sha512sums=('SKIP'
+            '10622e73ab1c69ba6f36bd73097e21890f9fec9411f1c15df7c379a8800f7f3f2d701a116dc38f2cea1bb58c6305ee57890fe6ff115929d35a578660487fdc6f'
+            '9899c8fea07611324fbf96b6af86362986b4e780f7816d1d82a136cae2341283a4b19013ea0e7b562798604d04559e5abd59b6d695b957d1100e4de179059baa'
             'cf7af096d9b7e2ff771020eca825d1df0279741a7b8b2b79b39cfca4b0abef16b09c1f04365bc24337193110d297af9271a502e11dc84b113efcc686fa2d47c0'
             '84b61ac33a620763ed5197cec3d0559bab4666dc90cb04771d8b4a227dd389a9588d67a3e2c4adea4c62d6740a68d78d7b1f40b1a5b243dd3855fa08b50578c8'
             '2a5670cc43acbc630fc0fa3e81c8bb8b338317a8cc834ce64cffe798f6fc73e4afd676a34e4e3610b63e00fa1a7b6ccb5ea165779de193a3b2a8bdf4fefe1b3f'

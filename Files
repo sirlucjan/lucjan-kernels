@@ -5,15 +5,21 @@
 │   ├── linux-bfq-mq-haswell
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
+│   │   ├── bonding-ratelimit-failed-speed-duplex-update-warning.patch
+│   │   ├── bonding-require-speed-duplex-only-for-802.3ad-alb-an.patch
 │   │   ├── config.x86_64
 │   │   ├── linux.install
-│   │   └── linux.preset
+│   │   ├── linux.preset
+│   │   └── mm-Revert-x86_64-and-arm64-ELF_ET_DYN_BASE-base.patch
 │   └── linux-bfq-mq-haswell-git
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
+│       ├── bonding-ratelimit-failed-speed-duplex-update-warning.patch
+│       ├── bonding-require-speed-duplex-only-for-802.3ad-alb-an.patch
 │       ├── config.x86_64
 │       ├── linux.install
-│       └── linux.preset
+│       ├── linux.preset
+│       └── mm-Revert-x86_64-and-arm64-ELF_ET_DYN_BASE-base.patch
 ├── lucjan-kernels-testing
 │   ├── linux-bfq-haswell
 │   │   ├── 90-linux.hook
@@ -43,12 +49,16 @@
 │   ├── linux-bfq-mq-haswell
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
+│   │   ├── bonding-ratelimit-failed-speed-duplex-update-warning.patch
+│   │   ├── bonding-require-speed-duplex-only-for-802.3ad-alb-an.patch
 │   │   ├── config.x86_64
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   └── linux-bfq-mq-haswell-git
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
+│       ├── bonding-ratelimit-failed-speed-duplex-update-warning.patch
+│       ├── bonding-require-speed-duplex-only-for-802.3ad-alb-an.patch
 │       ├── config.x86_64
 │       ├── linux.install
 │       └── linux.preset
@@ -127,4 +137,4 @@
     └── 4.9
         └── 0005-BFQ-update-to-v8r12.patch
 
-22 directories, 105 files
+22 directories, 115 files

@@ -82,7 +82,7 @@ _srcname=linux-4.12
 pkgver=4.12.9
 _pkgver=4.12.8
 __pkgver=4.12.9-rc1
-pkgrel=0.1
+pkgrel=0.2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -102,6 +102,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_pkgver}.sign"
         "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.sign"
+        'bonding-require-speed-duplex-only-for-802.3ad-alb-an.patch'
+        'bonding-ratelimit-failed-speed-duplex-update-warning.patch'
          #${_bfqpath}/${_bfq_mq_patch}"
         "${_lucjanpath}/${_bfq_mq_patch}"
         "${_mergepath}/0001-Merge-tag-uuid-for-4.13-of-uuid.patch"
@@ -155,6 +157,11 @@ prepare() {
     ### Add upstream patch
         msg "Add upstream patch"
         patch -Np1 -i "${srcdir}/patch-${_pkgver}"
+        
+    ### https://bugzilla.kernel.org/show_bug.cgi?id=196547
+        msg "Fix some bugs"
+        patch -Np1 -i ../bonding-ratelimit-failed-speed-duplex-update-warning.patch
+        patch -Np1 -i ../bonding-require-speed-duplex-only-for-802.3ad-alb-an.patch    
         
     ### Add patch from stable-review
         msg "Fix naming schema in EXTRAVERSION"
@@ -580,6 +587,8 @@ sha512sums=('8e81b41b253e63233e92948941f44c6482acb52aa3a3fd172f03a38a86f2c35b2ad
             'SKIP'
             '9944c41883a86e285d3ac10debf2df8ff4d3a2cca01086258842728734c455a497989bfcb4e8aa409e2594549b1b8199259ff3718784af2b96f9f1ec4760d524'
             'SKIP'
+            '10622e73ab1c69ba6f36bd73097e21890f9fec9411f1c15df7c379a8800f7f3f2d701a116dc38f2cea1bb58c6305ee57890fe6ff115929d35a578660487fdc6f'
+            '9899c8fea07611324fbf96b6af86362986b4e780f7816d1d82a136cae2341283a4b19013ea0e7b562798604d04559e5abd59b6d695b957d1100e4de179059baa'
             'cf7af096d9b7e2ff771020eca825d1df0279741a7b8b2b79b39cfca4b0abef16b09c1f04365bc24337193110d297af9271a502e11dc84b113efcc686fa2d47c0'
             '84b61ac33a620763ed5197cec3d0559bab4666dc90cb04771d8b4a227dd389a9588d67a3e2c4adea4c62d6740a68d78d7b1f40b1a5b243dd3855fa08b50578c8'
             '2a5670cc43acbc630fc0fa3e81c8bb8b338317a8cc834ce64cffe798f6fc73e4afd676a34e4e3610b63e00fa1a7b6ccb5ea165779de193a3b2a8bdf4fefe1b3f'
