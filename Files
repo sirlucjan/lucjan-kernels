@@ -9,8 +9,7 @@
 │   │   ├── bonding-require-speed-duplex-only-for-802.3ad-alb-an.patch
 │   │   ├── config.x86_64
 │   │   ├── linux.install
-│   │   ├── linux.preset
-│   │   └── mm-Revert-x86_64-and-arm64-ELF_ET_DYN_BASE-base.patch
+│   │   └── linux.preset
 │   └── linux-bfq-mq-haswell-git
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
@@ -18,8 +17,7 @@
 │       ├── bonding-require-speed-duplex-only-for-802.3ad-alb-an.patch
 │       ├── config.x86_64
 │       ├── linux.install
-│       ├── linux.preset
-│       └── mm-Revert-x86_64-and-arm64-ELF_ET_DYN_BASE-base.patch
+│       └── linux.preset
 ├── lucjan-kernels-testing
 │   ├── linux-bfq-haswell
 │   │   ├── 90-linux.hook
@@ -137,4 +135,4 @@
     └── 4.9
         └── 0005-BFQ-update-to-v8r12.patch
 
-22 directories, 115 files
+22 directories, 113 files
