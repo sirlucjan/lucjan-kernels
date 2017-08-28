@@ -47,16 +47,12 @@
 │   ├── linux-bfq-mq-haswell
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
-│   │   ├── bonding-ratelimit-failed-speed-duplex-update-warning.patch
-│   │   ├── bonding-require-speed-duplex-only-for-802.3ad-alb-an.patch
 │   │   ├── config.x86_64
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   └── linux-bfq-mq-haswell-git
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
-│       ├── bonding-ratelimit-failed-speed-duplex-update-warning.patch
-│       ├── bonding-require-speed-duplex-only-for-802.3ad-alb-an.patch
 │       ├── config.x86_64
 │       ├── linux.install
 │       └── linux.preset
@@ -150,4 +146,4 @@
     └── 4.9
         └── 0005-BFQ-update-to-v8r12.patch
 
-23 directories, 127 files
+23 directories, 123 files
