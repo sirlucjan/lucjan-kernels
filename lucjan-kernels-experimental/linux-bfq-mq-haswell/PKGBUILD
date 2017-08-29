@@ -80,13 +80,13 @@ pkgbase=linux-bfq-mq-haswell
 # pkgname=('linux-bfq-mq-haswell-kernel' 'linux-bfq-mq-haswell-headers' 'linux-bfq-mq-haswell-docs')
 _srcname=linux-4.12
 pkgver=4.12.9
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf')
-_bfq_mq_ver='20170810'
+_bfq_mq_ver='20170829'
 _bfq_mq_patch="4.12-bfq-mq-git-${_bfq_mq_ver}.patch"
 _bfqpath="https://gitlab.com/tom81094/custom-patches/raw/master/bfq-mq"
 _mergepath="${_bfqpath}/merges/4.12.9"
@@ -157,9 +157,9 @@ prepare() {
         msg "Fix naming schema in BFQ-MQ patch"
         sed -i -e "s|PATCHLEVEL = 13|PATCHLEVEL = 12|g" \
             -i -e "s|SUBLEVEL = 0|SUBLEVEL = 9|g" \
-            -i -e "s|EXTRAVERSION = -rc3|EXTRAVERSION =|g" \
-            -i -e "s|EXTRAVERSION = -bfq-rc3|EXTRAVERSION =|g" \
-            -i -e "s|EXTRAVERSION =-bfq-mq|EXTRAVERSION =|g" "${srcdir}/${_bfq_mq_patch}"
+            -i -e "s|EXTRAVERSION = -rc7|EXTRAVERSION =|g" \
+            -i -e "s|EXTRAVERSION =-bfq|EXTRAVERSION =|g" \
+            -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" "${srcdir}/${_bfq_mq_patch}"
         msg "Patching source with BFQ-MQ patches"
         patch -Np1 -i "${srcdir}/${_bfq_mq_patch}"
         msg "Patching source with merged patches"
@@ -571,7 +571,7 @@ sha512sums=('8e81b41b253e63233e92948941f44c6482acb52aa3a3fd172f03a38a86f2c35b2ad
             'SKIP'
             '10622e73ab1c69ba6f36bd73097e21890f9fec9411f1c15df7c379a8800f7f3f2d701a116dc38f2cea1bb58c6305ee57890fe6ff115929d35a578660487fdc6f'
             '9899c8fea07611324fbf96b6af86362986b4e780f7816d1d82a136cae2341283a4b19013ea0e7b562798604d04559e5abd59b6d695b957d1100e4de179059baa'
-            'cf7af096d9b7e2ff771020eca825d1df0279741a7b8b2b79b39cfca4b0abef16b09c1f04365bc24337193110d297af9271a502e11dc84b113efcc686fa2d47c0'
+            '83afdca8f9217dbf6072f858850ba1d890b347b161b2dd9266bb270b0c83e35e7fb6391adb833a1d27e660b689463525ddabfaecfb57d80b2dfb1168b3d2adae'
             '84b61ac33a620763ed5197cec3d0559bab4666dc90cb04771d8b4a227dd389a9588d67a3e2c4adea4c62d6740a68d78d7b1f40b1a5b243dd3855fa08b50578c8'
             '2a5670cc43acbc630fc0fa3e81c8bb8b338317a8cc834ce64cffe798f6fc73e4afd676a34e4e3610b63e00fa1a7b6ccb5ea165779de193a3b2a8bdf4fefe1b3f'
             '019b07c76a4370b7f0783bcb1824c7aca89ea8434215f28ee1fd1f5d8679a56dcf8579f29b0412f9960d26a62dd9e838c7ca26679764060e13536020cc8ca42b'
