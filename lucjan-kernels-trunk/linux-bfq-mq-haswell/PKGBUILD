@@ -82,7 +82,7 @@ _srcname=linux-4.12
 pkgver=4.12.10
 _pkgver=4.12.9
 __pkgver=4.12.10-rc1
-pkgrel=0.1
+pkgrel=0.2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -91,7 +91,7 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf')
 _bfq_mq_ver='20170829'
 _bfq_mq_patch="4.12-bfq-mq-git-${_bfq_mq_ver}.patch"
 _bfqpath="https://gitlab.com/tom81094/custom-patches/raw/master/bfq-mq"
-_mergepath="${_bfqpath}/merges/4.12.9"
+_mergepath="${_bfqpath}/merges/4.12.10"
 #_lucjanpath="https://raw.githubusercontent.com/sirlucjan/lucjan-kernels/master/patches/4.12"
 _lucjanpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/4.12"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v3.15+.patch"
@@ -113,6 +113,11 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "${_mergepath}/0007-Merge-branch-for-linus-of-linux-block_2.patch"
         "${_mergepath}/0008-Merge-tag-uuid-for-4.13-2-of-uuid.patch"
         "${_mergepath}/0009-Merge-branch-for-linus-of-linux-block_3.patch"
+        "${_mergepath}/0010-Merge-branch-for-linus-of-linux-block_4.patch"
+        "${_mergepath}/0011-Merge-tag-mmc-v4.13-rc4-of-mmc.patch"
+        "${_mergepath}/0012-Merge-branch-for-linus-of-linux-block_5.patch"
+        "${_mergepath}/0013-Merge-branch-for-linus-of-linux-block_6.patch"
+        "${_mergepath}/0014-Merge-branch-for-linus-of-linux-block_7.patch"
         "${_lucjanpath}/blk-mq-v3/0050-blk-mq-sched-fix-scheduler-bad-performance.patch"
         "${_lucjanpath}/blk-mq-v3/0051-blk-mq-sbitmap-introduce__sbitmap_for_each_set().patch"
         "${_lucjanpath}/blk-mq-v3/0052-blk-mq-introduce-blk_mq_dispatch_rq_from_ctx().patch"
@@ -128,7 +133,6 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "${_lucjanpath}/blk-mq-v3/0062-blk-mq-sched-refactor-blk_mq_sched_try_merge().patch"
         "${_lucjanpath}/blk-mq-v3/0063-blk-mq-improve-bio-merge-from-blk-mq-sw-queue.patch"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
-        "${_lucjanpath}/0200-BFQ-MQ-bugfix-from-pfkernel-1.patch"
         "${_lucjanpath}/0200-BFQ-MQ-bugfix-from-pfkernel-2.patch"
         "${_lucjanpath}/0200-BFQ-MQ-bugfix-from-pfkernel-3.patch"
         "http://repo-ck.com/source/gcc_patch/${_gcc_patch}.gz"
@@ -584,6 +588,11 @@ sha512sums=('8e81b41b253e63233e92948941f44c6482acb52aa3a3fd172f03a38a86f2c35b2ad
             'b434bec13049184869a8b67834cb1d22e549c1be1b97a63482015f13b0a9a8ae0604aa829712e46fa08b76dcfc8cd34daa937a06e0b0e6ec91c750209e143852'
             '12b22ccd3615c4858dec403f7fbfffbe422f3a03969fe3f28b7c2404bdb806f8ae9e6e73ba8ebad960e02735720e3d5ee470cc4c9ae65c8fbab133dadda6834e'
             'c44ae4f98eca39d8ebc68a34616432605d3c9eb788d089639a2dc16b8a7f0080837ae4fbcd87328cb57a9d1bf8c9c04afd027c9d19ee956cdbb86511db17ede2'
+            '7ebc4765657faac9b12442487d2c2e9dcf24c550bdaa49fca23623186d8352e67ee93b361afb6ca0e527e603b0cc57427fd3944dee733a0996eca448c52f5543'
+            '824f07f41b39e53d9c020b3215123bb0c681aae032938df1c5235a7250295c2df1df41feaf9491514750030d4904cbfbb1847749d69fecba4e282b26023ed180'
+            'b3e68bf5c28fc5a6015615f7e73c4bc55ec7e8ed96edcf65ee10bdf9c10d53cb43e8913cf0efe4b51962848bd7e0e919546d3b1cabc34ffbaea4be17eebd2a36'
+            '91c10156764d328f1cb82d0289a4c4b91d45e156a1bd5679f6cb15ea4afd4c147ee3d9fea036a9cdf1ace7e4c2b1998395f2d5dc80506621e9ff85622cdeaae8'
+            '55e678cc8ea513d1379706ff9be27c1bfb1222864c1cd00404cb2b02f939f8d3bac8123156ce11c7a16ecfaed0a06648774cce08145264f93127e27b0db15ee9'
             '53979d160ddb1a99e50119f91e18f51968de609f27f61a6ca65b9940e444435bf7825e88a9ddcaa92a3c41207c197f88ba3f59de4d8f9cefc03a3e1d914ac7f7'
             '331acf6761f1cf78056b522ac96f26f19329bfd5464ff059f8dc1edcc9af317d63feb4853edb8931972ccc3aea7d5ccc0ac99d31b516d73fedf95ba58946fca4'
             '58f4309f916ca836198dd4d62854cb9e98ef28c03bab6d5270a0f9faf6628b6fc709f514793632a25ccb94e01e59c770ac60e27b4eb54f26721b54f9e0eee1ff'
@@ -599,7 +608,6 @@ sha512sums=('8e81b41b253e63233e92948941f44c6482acb52aa3a3fd172f03a38a86f2c35b2ad
             '74cb4c2d8d5b83e88785260a99cb0c3562bbb9406a683cb895e79dcfabbbf61a206a3255364267176ce420893c24052b706142cb181430053b650fcdb7e9371a'
             '1a488ee537a6b6e8d8c4192244692e43c8ab349f92b84f0b5020254bbd4372c626cdd27c74320489d51f642efa356dcd9971f93d0fb3d829c7f1b79f33036da3'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
-            '2db36ad12d673a9a7a2a973bdb7695526606e98698377d0db6e90b6ae9e89c2f94cd7df0987ef5baf1dd906b0e3dc86f3eb2a85135a86465ec1794158eef4039'
             '862918504ae7f05af830582492f387918d6be0be4036fa0b65765c97cbacfe637edf44a3e510fd042e077a226e447169cc28129f59c7175eacd82019eab45aa4'
             'e607eb2a937f6055ff1216377091f6e23858f94fbfe532089849f1558d8539700220500262f501bb9a4d4d61cfe32372aa2a4745a5cb630a49b23482eab36d4c'
             '77d80d50d8c4323ed36fd2097ba9f6b49bb8d7cae59d32ffa76b309758a7e9f972d26fedd77046d88ce2691bb01a07909f8bdc34ba214414be3bc030ee31994d'
