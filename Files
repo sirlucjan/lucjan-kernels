@@ -41,7 +41,6 @@
 │       └── linux.preset
 ├── lucjan-kernels-trunk
 │   ├── linux-bfq-mq-haswell
-│   │   ├── 0200-BFQ-MQ-bugfix-from-pfkernel-4.patch
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
 │   │   ├── config.x86_64
@@ -145,4 +144,4 @@
     └── 4.9
         └── 0005-BFQ-update-to-v8r12.patch
 
-23 directories, 122 files
+23 directories, 121 files
