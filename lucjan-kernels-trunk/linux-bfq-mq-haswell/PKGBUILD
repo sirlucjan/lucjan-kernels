@@ -78,46 +78,30 @@ _kyber_disable=y
 
 pkgbase=linux-bfq-mq-haswell
 # pkgname=('linux-bfq-mq-haswell-kernel' 'linux-bfq-mq-haswell-headers' 'linux-bfq-mq-haswell-docs')
-_srcname=linux-4.12
-pkgver=4.12.10
-_pkgver=4.12.9
-__pkgver=4.12.10-rc1
-pkgrel=0.6
+_srcname=linux-4.13
+pkgver=4.13
+#_pkgver=4.12.9
+#__pkgver=4.12.10-rc1
+pkgrel=1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf')
 _bfq_mq_ver='20170904'
-_bfq_mq_patch="4.12-bfq-mq-git-${_bfq_mq_ver}.patch"
-_bfqpath="https://gitlab.com/tom81094/custom-patches/raw/master/bfq-mq"
-_mergepath="${_bfqpath}/merges/4.12.10"
-#_lucjanpath="https://raw.githubusercontent.com/sirlucjan/lucjan-kernels/master/patches/4.12"
-_lucjanpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/4.12"
-_gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v3.15+.patch"
+_bfq_mq_patch="4.13-bfq-mq-git-${_bfq_mq_ver}.patch"
+#_lucjanpath="https://raw.githubusercontent.com/sirlucjan/lucjan-kernels/master/patches/4.13"
+_lucjanpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/4.13"
+_gcc_path="https://raw.githubusercontent.com/sirlucjan/kernel_gcc_patch/master"
+_gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v4.13+.patch"
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_pkgver}.xz"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_pkgver}.sign"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.xz"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.sign"
-         #${_bfqpath}/${_bfq_mq_patch}"
+        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_pkgver}.xz"
+        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_pkgver}.sign"
+        #"https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.xz"
+        #"https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.sign"
         "${_lucjanpath}/${_bfq_mq_patch}"
-        "${_mergepath}/0001-Merge-tag-uuid-for-4.13-of-uuid.patch"
-        "${_mergepath}/0002-Merge-branch-for-4.13-block-of-linux-block.patch"
-        "${_mergepath}/0003-Merge-branch-irq-core-for-linus.patch"
-        "${_mergepath}/0004-Merge-branch-for-linus-of-s390.patch"
-        "${_mergepath}/0005-Merge-tag-for-linus-v4.13-2-of-linux-block.patch"
-        "${_mergepath}/0006-Merge-branch-for-linus-of-linux-block_1.patch"
-        "${_mergepath}/0007-Merge-branch-for-linus-of-linux-block_2.patch"
-        "${_mergepath}/0008-Merge-tag-uuid-for-4.13-2-of-uuid.patch"
-        "${_mergepath}/0009-Merge-branch-for-linus-of-linux-block_3.patch"
-        "${_mergepath}/0010-Merge-branch-for-linus-of-linux-block_4.patch"
-        "${_mergepath}/0011-Merge-tag-mmc-v4.13-rc4-of-mmc.patch"
-        "${_mergepath}/0012-Merge-branch-for-linus-of-linux-block_5.patch"
-        "${_mergepath}/0013-Merge-branch-for-linus-of-linux-block_6.patch"
-        "${_mergepath}/0014-Merge-branch-for-linus-of-linux-block_7.patch"
         "${_lucjanpath}/blk-mq-v4/0050-blk-mq-sched-fix-scheduler-bad-performance.patch"
         "${_lucjanpath}/blk-mq-v4/0051-blk-mq-sbitmap-introduce-__sbitmap_for_each_set.patch"
         "${_lucjanpath}/blk-mq-v4/0052-blk-mq-introduce-blk_mq_dispatch_rq_from_ctx.patch"
@@ -136,7 +120,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "${_lucjanpath}/0200-BFQ-MQ-bugfix-from-pfkernel-2.patch"
         "${_lucjanpath}/0200-BFQ-MQ-bugfix-from-pfkernel-3.patch"
         "${_lucjanpath}/0200-BFQ-MQ-bugfix-from-pfkernel-4.patch"
-        "http://repo-ck.com/source/gcc_patch/${_gcc_patch}.gz"
+        "${_gcc_path}/${_gcc_patch}"
          # the main kernel config files
         'config.x86_64'
          # pacman hook for initramfs regeneration
@@ -152,28 +136,18 @@ prepare() {
     cd "${srcdir}/${_srcname}"
 
     ### Add upstream patch
-        msg "Add upstream patch"
-        patch -Np1 -i "${srcdir}/patch-${_pkgver}"
+        #msg "Add upstream patch"
+        #patch -Np1 -i "${srcdir}/patch-${_pkgver}"
         
     ### Add patch from stable-review
-        msg "Fix naming schema in EXTRAVERSION"
-        sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" "${srcdir}/patch-${__pkgver}"
-	msg "Add patch from stable-review"  
-        patch -Np1 -i "${srcdir}/patch-${__pkgver}"
+        #msg "Fix naming schema in EXTRAVERSION"
+        #sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" "${srcdir}/patch-${__pkgver}"
+	#msg "Add patch from stable-review"  
+        #patch -Np1 -i "${srcdir}/patch-${__pkgver}"
             
     ### Patch source with BFQ-MQ
-        msg "Fix naming schema in BFQ-MQ patch"
-        sed -i -e "s|PATCHLEVEL = 13|PATCHLEVEL = 12|g" \
-            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 10|g" \
-            -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
-            -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" "${srcdir}/${_bfq_mq_patch}"
         msg "Patching source with BFQ-MQ patches"
         patch -Np1 -i "${srcdir}/${_bfq_mq_patch}"
-        msg "Patching source with merged patches"
-        for p in "${srcdir}"/*-Merge*.patch; do
-        msg " $p"
-        patch -Np1 -i "$p"
-        done
         
     ### Patches related to BUG_ON(entity->tree && entity->tree != &st->active) in __bfq_requeue_entity();
         if [ -n "$_use_tentative_patches" ]; then
@@ -456,8 +430,8 @@ _package-headers() {
 	cp arch/${KARCH}/kernel/asm-offsets.s "${pkgdir}/usr/lib/modules/${_kernver}/build/arch/${KARCH}/kernel/"
 
 	# add docbook makefile
-	install -D -m644 Documentation/DocBook/Makefile \
-	"${pkgdir}/usr/lib/modules/${_kernver}/build/Documentation/DocBook/Makefile"
+	#install -D -m644 Documentation/DocBook/Makefile \
+	#"${pkgdir}/usr/lib/modules/${_kernver}/build/Documentation/DocBook/Makefile"
 
 	# add dm headers
 	mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/md"
@@ -572,27 +546,9 @@ for _p in ${pkgname[@]}; do
   }"
 done
 
-sha512sums=('8e81b41b253e63233e92948941f44c6482acb52aa3a3fd172f03a38a86f2c35b2ad4fd407acd1bc3964673eba344fe104d3a03e3ff4bf9cd1f22bd44263bd728'
-            'SKIP'
-            '8f4f9e270e8d00008b505be53aa0132aefbde21ae797e9daede19d6c81b26f255773b8e91396b75bbc78153d641a2479afbc22a7dc0d95b9c24534327fb95e38'
-            'SKIP'
-            '9f8fef29e70e48afce2ba4ca9380b96880ad8148f86e21b50417c1c614ffde8500673992731d77e1814644b313a6e52e57481f3e8cde709527b917a2a26ca041'
+sha512sums=('a557c2f0303ae618910b7106ff63d9978afddf470f03cb72aa748213e099a0ecd5f3119aea6cbd7b61df30ca6ef3ec57044d524b7babbaabddf8b08b8bafa7d2'
             'SKIP'
             '50859624376c47a646731f1082e98434024cb7216b1a46c4c462e1834ac4b6ccbd7d47d79039082a3cd4d99ab85fbf1cfe0ed4a89eb3786ed7a568a2d53d7273'
-            '84b61ac33a620763ed5197cec3d0559bab4666dc90cb04771d8b4a227dd389a9588d67a3e2c4adea4c62d6740a68d78d7b1f40b1a5b243dd3855fa08b50578c8'
-            '2a5670cc43acbc630fc0fa3e81c8bb8b338317a8cc834ce64cffe798f6fc73e4afd676a34e4e3610b63e00fa1a7b6ccb5ea165779de193a3b2a8bdf4fefe1b3f'
-            '019b07c76a4370b7f0783bcb1824c7aca89ea8434215f28ee1fd1f5d8679a56dcf8579f29b0412f9960d26a62dd9e838c7ca26679764060e13536020cc8ca42b'
-            '0924f8aa7bf528715735d7a8457f64f1f5a7526fa903c20bb8b0d76741eeb8f7b68199d4693320980aaf2e56df88988c6bb80cd564703f76883ec206493c932d'
-            '85159958742e5d90b8348ea5b8fecc387a6851ffacbd0e20cf43d71b814a206e7fa3bfa9226a4437c431ba61a3fe4287926d9c46fff103d95436e0cb74c442a4'
-            '6d8c41043660321dfa5f78935e2331db808ceaea8ef6970222434468445f15ef2b277d47d9ca6a83fabd2e36b5defc95661012af624957229488c1f844cfe246'
-            'b434bec13049184869a8b67834cb1d22e549c1be1b97a63482015f13b0a9a8ae0604aa829712e46fa08b76dcfc8cd34daa937a06e0b0e6ec91c750209e143852'
-            '12b22ccd3615c4858dec403f7fbfffbe422f3a03969fe3f28b7c2404bdb806f8ae9e6e73ba8ebad960e02735720e3d5ee470cc4c9ae65c8fbab133dadda6834e'
-            'c44ae4f98eca39d8ebc68a34616432605d3c9eb788d089639a2dc16b8a7f0080837ae4fbcd87328cb57a9d1bf8c9c04afd027c9d19ee956cdbb86511db17ede2'
-            '7ebc4765657faac9b12442487d2c2e9dcf24c550bdaa49fca23623186d8352e67ee93b361afb6ca0e527e603b0cc57427fd3944dee733a0996eca448c52f5543'
-            '824f07f41b39e53d9c020b3215123bb0c681aae032938df1c5235a7250295c2df1df41feaf9491514750030d4904cbfbb1847749d69fecba4e282b26023ed180'
-            'b3e68bf5c28fc5a6015615f7e73c4bc55ec7e8ed96edcf65ee10bdf9c10d53cb43e8913cf0efe4b51962848bd7e0e919546d3b1cabc34ffbaea4be17eebd2a36'
-            '91c10156764d328f1cb82d0289a4c4b91d45e156a1bd5679f6cb15ea4afd4c147ee3d9fea036a9cdf1ace7e4c2b1998395f2d5dc80506621e9ff85622cdeaae8'
-            '55e678cc8ea513d1379706ff9be27c1bfb1222864c1cd00404cb2b02f939f8d3bac8123156ce11c7a16ecfaed0a06648774cce08145264f93127e27b0db15ee9'
             '929352d0c389afb6d4faa07fed08ee172413f11b88b221228dafd913452a36da3c034ea58c9d109d48f17bccf3d9bc64d4665a4f37538878ee19259396c1a17a'
             'efadb073d983eac82cf89fa23068472ee6d54e87df427834312da340a3c05cd5393ed81a76e735504abb39eac3061f7d60435ea4bb8f2bb7a088a1e2121dda8a'
             '705882cf02f765a7cf63b89c1cf596cf7b54af104645526fa84982d775982c927ecf818af519f6a1f7244363f74035373f1b4b828161789266ff2dae4c9f7a49'
@@ -611,8 +567,8 @@ sha512sums=('8e81b41b253e63233e92948941f44c6482acb52aa3a3fd172f03a38a86f2c35b2ad
             '862918504ae7f05af830582492f387918d6be0be4036fa0b65765c97cbacfe637edf44a3e510fd042e077a226e447169cc28129f59c7175eacd82019eab45aa4'
             'e607eb2a937f6055ff1216377091f6e23858f94fbfe532089849f1558d8539700220500262f501bb9a4d4d61cfe32372aa2a4745a5cb630a49b23482eab36d4c'
             'c1f1584feabd894551d8ca083f233b1c3d850ae295b2034360635986bc7850a654f8dc2af16e342b98c10c8927d5d3fd99d5d0f48cccc1f363dd377f0dd6f85b'
-            '77d80d50d8c4323ed36fd2097ba9f6b49bb8d7cae59d32ffa76b309758a7e9f972d26fedd77046d88ce2691bb01a07909f8bdc34ba214414be3bc030ee31994d'
-            '4b27ad6dffb9ebcb2096bb009053ee210f68db2b3089d3c2a9d838166eba5835e1bf867cb50ba09f4de06a5d0a80446de74a1d7420c92e8cb7815468f656211d'
+            '5ca7ae20245a54caa71fb570d971d6872d4e888f35c6123b93fbca16baf9a0e2500d6ec931f3906e4faecaaca9cad0d593694d9cab617efd0cb7b5fc09c0fa48'
+            'eb8e769e851c747bf67d94cb378643fe23f459170c0c308391ac076a320a3cd9059a41ba76767be9f61e4a5df7aaa79c3c5b6c2a0b562e006b65c70f30cad507'
             'd6faa67f3ef40052152254ae43fee031365d0b1524aa0718b659eb75afc21a3f79ea8d62d66ea311a800109bed545bc8f79e8752319cd378eef2cbd3a09aba22'
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf')
             
