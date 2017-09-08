@@ -15,6 +15,9 @@ _use_pfkernel_patches=y
 ### Use patches from https://marc.info/?l=linux-block&m=150436546704854&w=2
 _use_blk_mq_patches=y
 
+### Use disable writeback throttling: https://marc.info/?l=linux-block&m=150486424501778&w=2
+_use_lucamiccio_patch=y
+
 ### Tweak kernel options prior to a build via nconfig
 _makenconfig=
 
@@ -82,7 +85,7 @@ _srcname=linux-4.13
 pkgver=4.13
 #_pkgver=4.12.9
 #__pkgver=4.12.10-rc1
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -120,6 +123,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "${_lucjanpath}/0200-BFQ-MQ-bugfix-from-pfkernel-2.patch"
         "${_lucjanpath}/0200-BFQ-MQ-bugfix-from-pfkernel-3.patch"
         "${_lucjanpath}/0200-BFQ-MQ-bugfix-from-pfkernel-4.patch"
+        "${_lucjanpath}/0300-Disable-writeback-throttling.patch"
         "${_gcc_path}/${_gcc_patch}"
          # the main kernel config files
         'config.x86_64'
@@ -165,13 +169,21 @@ prepare() {
         patch -Np1 -i "$p"; done
         fi
         
-     ### Patches from https://marc.info/?l=linux-block&m=150436546704854&w=2
+    ### Patches from https://marc.info/?l=linux-block&m=150436546704854&w=2
         if [ -n "$_use_blk_mq_patches" ]; then
         msg "Apply blk-mq patches"
         for p in "${srcdir}"/*-blk-mq*.patch*; do 
         msg " $p" 
         patch -Np1 -i "$p"; done
-        fi    
+        fi
+        
+    ### Patch from https://marc.info/?l=linux-block&m=150486424501778&w=2
+        if [ -n "$_use_lucamiccio_patch" ]; then
+        msg "Apply Luca Miccio patch"
+        for p in "${srcdir}"/0300*.patch*; do 
+        msg " $p" 
+        patch -Np1 -i "$p"; done
+        fi   
         
     ### Patch source to enable more gcc CPU optimizatons via the make nconfig
         msg "Patching source with gcc patch to enable more cpus types"
@@ -567,6 +579,7 @@ sha512sums=('a557c2f0303ae618910b7106ff63d9978afddf470f03cb72aa748213e099a0ecd5f
             '862918504ae7f05af830582492f387918d6be0be4036fa0b65765c97cbacfe637edf44a3e510fd042e077a226e447169cc28129f59c7175eacd82019eab45aa4'
             'e607eb2a937f6055ff1216377091f6e23858f94fbfe532089849f1558d8539700220500262f501bb9a4d4d61cfe32372aa2a4745a5cb630a49b23482eab36d4c'
             'c1f1584feabd894551d8ca083f233b1c3d850ae295b2034360635986bc7850a654f8dc2af16e342b98c10c8927d5d3fd99d5d0f48cccc1f363dd377f0dd6f85b'
+            'a1ccc22354a420467fb912f822585ed4573e68f4694f02ab83d7c8e352da88be495acb3cb4c451c27ca0cf0befe5925b8734d37205bb3dfdaf86d2dedef0798f'
             '5ca7ae20245a54caa71fb570d971d6872d4e888f35c6123b93fbca16baf9a0e2500d6ec931f3906e4faecaaca9cad0d593694d9cab617efd0cb7b5fc09c0fa48'
             '894068fb838fc28225006abce1d0d51fc48c97da98201ae1ac0c6feeddb60338dbcf5c9fb7beebc38bd5e9a68c976c83df12b50ca56e56e7ac248cee9bb631ce'
             'd6faa67f3ef40052152254ae43fee031365d0b1524aa0718b659eb75afc21a3f79ea8d62d66ea311a800109bed545bc8f79e8752319cd378eef2cbd3a09aba22'
