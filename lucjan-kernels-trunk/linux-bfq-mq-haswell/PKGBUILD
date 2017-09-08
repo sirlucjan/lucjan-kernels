@@ -82,10 +82,10 @@ _kyber_disable=y
 pkgbase=linux-bfq-mq-haswell
 # pkgname=('linux-bfq-mq-haswell-kernel' 'linux-bfq-mq-haswell-headers' 'linux-bfq-mq-haswell-docs')
 _srcname=linux-4.13
-pkgver=4.13
-#_pkgver=4.12.9
-#__pkgver=4.12.10-rc1
-pkgrel=3
+pkgver=4.13.1
+#_pkgver=4.13
+__pkgver=4.13.1-rc1
+pkgrel=0
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -102,8 +102,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
         #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_pkgver}.xz"
         #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_pkgver}.sign"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.xz"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.sign"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.sign"
         "${_lucjanpath}/${_bfq_mq_patch}"
         "${_lucjanpath}/blk-mq-v4/0050-blk-mq-sched-fix-scheduler-bad-performance.patch"
         "${_lucjanpath}/blk-mq-v4/0051-blk-mq-sbitmap-introduce-__sbitmap_for_each_set.patch"
@@ -144,12 +144,16 @@ prepare() {
         #patch -Np1 -i "${srcdir}/patch-${_pkgver}"
         
     ### Add patch from stable-review
-        #msg "Fix naming schema in EXTRAVERSION"
-        #sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" "${srcdir}/patch-${__pkgver}"
-	#msg "Add patch from stable-review"  
-        #patch -Np1 -i "${srcdir}/patch-${__pkgver}"
+        msg "Fix naming schema in EXTRAVERSION"
+        sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" "${srcdir}/patch-${__pkgver}"
+	msg "Add patch from stable-review"  
+        patch -Np1 -i "${srcdir}/patch-${__pkgver}"
             
     ### Patch source with BFQ-MQ
+        msg "Fix naming schema in BFQ-MQ patch"
+        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 1|g" \
+            -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
+            -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" "${srcdir}/${_bfq_mq_patch}"
         msg "Patching source with BFQ-MQ patches"
         patch -Np1 -i "${srcdir}/${_bfq_mq_patch}"
         
@@ -559,6 +563,8 @@ for _p in ${pkgname[@]}; do
 done
 
 sha512sums=('a557c2f0303ae618910b7106ff63d9978afddf470f03cb72aa748213e099a0ecd5f3119aea6cbd7b61df30ca6ef3ec57044d524b7babbaabddf8b08b8bafa7d2'
+            'SKIP'
+            '50f452a4b4c2b941efae48d78b95f07a219c99211add270759d2d36745a3958a1ea0a38334cb12adc116d350821885b2b69eb4e17a29690ca4c2b288d35e721c'
             'SKIP'
             '50859624376c47a646731f1082e98434024cb7216b1a46c4c462e1834ac4b6ccbd7d47d79039082a3cd4d99ab85fbf1cfe0ed4a89eb3786ed7a568a2d53d7273'
             '929352d0c389afb6d4faa07fed08ee172413f11b88b221228dafd913452a36da3c034ea58c9d109d48f17bccf3d9bc64d4665a4f37538878ee19259396c1a17a'
