@@ -82,8 +82,8 @@ _kyber_disable=y
 pkgbase=linux-bfq-mq-haswell-git
 # pkgname=('linux-bfq-mq-haswell-git-kernel' 'linux-bfq-mq-haswell-git-headers' 'linux-bfq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
-pkgver=4.13.r48.gb2de54bef207
-pkgrel=0
+pkgver=4.13.1.r0.g94cd0e9dcdc1
+pkgrel=1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -136,19 +136,19 @@ pkgver() {
 } 
 
 prepare() {
-    cd "${srcdir}/${_srcname}"
+    cd "${_srcname}"
     
     ### Fix naming schema in EXTRAVERSION
         msg "Fix naming schema in EXTRAVERSION"
-        sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" "${srcdir}/${_srcname}/Makefile"
+        sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" ./Makefile
    
     ### Patch source with BFQ-MQ
         msg "Fix naming schema in BFQ-MQ patch"
         sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 1|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
-            -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" "${srcdir}/${_bfq_mq_patch}"
+            -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" ../${_bfq_mq_patch}
         msg "Patching source with BFQ-MQ patches"
-        patch -Np1 -i "${srcdir}/${_bfq_mq_patch}"
+        patch -Np1 -i ../${_bfq_mq_patch}
         
     ### Patches related to BUG_ON(entity->tree && entity->tree != &st->active) in __bfq_requeue_entity();
         if [ -n "$_use_tentative_patches" ]; then
@@ -184,13 +184,13 @@ prepare() {
         
     ### Patch source to enable more gcc CPU optimizatons via the make nconfig
         msg "Patching source with gcc patch to enable more cpus types"
-	patch -Np1 -i "${srcdir}/${_gcc_patch}"
+	patch -Np1 -i ../${_gcc_patch}
 
     ### Clean tree and copy ARCH config over
 	msg "Running make mrproper to clean source tree"
 	make mrproper
 
-	cat "${srcdir}/config.${CARCH}" > ./.config
+	cp -Tf ../config.${CARCH} .config
         
     ### Optionally use running kernel's config
 	# code originally by nous; http://aur.archlinux.org/packages.php?ID=40191
@@ -332,7 +332,7 @@ prepare() {
 }
 
 build() {
-  cd "${srcdir}/${_srcname}"
+  cd ${_srcname}
 
   make ${MAKEFLAGS} LOCALVERSION= bzImage modules
 }
@@ -345,7 +345,7 @@ _package-kernel() {
     backup=("etc/mkinitcpio.d/${pkgbase}.preset")
     install=linux.install
 
-    cd "${srcdir}/${_srcname}"
+    cd ${_srcname}
 
     KARCH=x86
 
@@ -354,42 +354,44 @@ _package-kernel() {
    _basekernel=${_kernver%%-*}
    _basekernel=${_basekernel%.*}
 
-    mkdir -p "${pkgdir}"/{lib/modules,lib/firmware,boot}
-    make LOCALVERSION= INSTALL_MOD_PATH="${pkgdir}" modules_install
-    cp arch/$KARCH/boot/bzImage "${pkgdir}/boot/vmlinuz-${pkgbase}"
+   mkdir -p "${pkgdir}"/{lib/modules,lib/firmware,boot}
+   make LOCALVERSION= INSTALL_MOD_PATH="${pkgdir}" modules_install
+   cp arch/$KARCH/boot/bzImage "${pkgdir}/boot/vmlinuz-${pkgbase}"
 
-    # set correct depmod command for install
-    sed -e "s|%PKGBASE%|${pkgbase}|g;s|%KERNVER%|${_kernver}|g" \
+   # set correct depmod command for install
+   sed -e "s|%PKGBASE%|${pkgbase}|g;s|%KERNVER%|${_kernver}|g" \
     "${startdir}/${install}" > "${startdir}/${install}.pkg"
-    true && install=${install}.pkg
+   true && install=${install}.pkg
 
-    # install mkinitcpio preset file for kernel
-    sed "s|%PKGBASE%|${pkgbase}|g" "${srcdir}/linux.preset" |
-    install -D -m644 /dev/stdin "${pkgdir}/etc/mkinitcpio.d/${pkgbase}.preset"
+   # install mkinitcpio preset file for kernel
+   sed "s|%PKGBASE%|${pkgbase}|g" ../linux.preset |
+    install -Dm644 /dev/stdin "${pkgdir}/etc/mkinitcpio.d/${pkgbase}.preset"
 
-    # install pacman hook for initramfs regeneration
-    sed "s|%PKGBASE%|${pkgbase}|g" "${srcdir}/90-linux.hook" |
-    install -D -m644 /dev/stdin "${pkgdir}/usr/share/libalpm/hooks/90-${pkgbase}.hook"
+   # install pacman hook for initramfs regeneration
+   sed "s|%PKGBASE%|${pkgbase}|g" ../90-linux.hook |
+    install -Dm644 /dev/stdin "${pkgdir}/usr/share/libalpm/hooks/90-${pkgbase}.hook"
 
-    # remove build and source links
-    rm -f "${pkgdir}"/lib/modules/${_kernver}/{source,build}
-    # remove the firmware
-    rm -rf "${pkgdir}/lib/firmware"
-    # make room for external modules
-    ln -s "../extramodules-${_basekernel}${_kernelname:--ARCH}" "${pkgdir}/lib/modules/${_kernver}/extramodules"
-    # add real version for building modules and running depmod from post_install/upgrade
-    mkdir -p "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--ARCH}"
-    echo "${_kernver}" > "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--ARCH}/version"
+   # remove build and source links
+   rm "${pkgdir}"/lib/modules/${_kernver}/{source,build}
 
-    # Now we call depmod...
-    depmod -b "${pkgdir}" -F System.map "${_kernver}"
+   # remove the firmware
+   rm -r "${pkgdir}/lib/firmware"
 
-    # move module tree /lib -> /usr/lib
-    mkdir -p "${pkgdir}/usr"
-    mv "${pkgdir}/lib" "${pkgdir}/usr/"
+   # make room for external modules
+   ln -s "../extramodules-${_basekernel}${_kernelname:--ARCH}" "${pkgdir}/lib/modules/${_kernver}/extramodules"
 
-    # add vmlinux
-    install -D -m644 vmlinux "${pkgdir}/usr/lib/modules/${_kernver}/build/vmlinux"
+   # add real version for building modules and running depmod from post_install/upgrade
+   echo "${_kernver}" |
+    install -Dm644 /dev/stdin "${pkgdir}/lib/modules/extramodules-${_basekernel}${_kernelname:--ARCH}/version"
+
+   # Now we call depmod...
+   depmod -b "${pkgdir}" -F System.map "${_kernver}"
+
+   # move module tree /lib -> /usr/lib
+   mv -t "${pkgdir}/usr" "${pkgdir}/lib"
+
+  # add vmlinux
+  install -Dm644 vmlinux "${pkgdir}/usr/lib/modules/${_kernver}/build/vmlinux"
 }
 
 _package-headers() {
@@ -399,136 +401,76 @@ _package-headers() {
 
     install -dm755 "${pkgdir}/usr/lib/modules/${_kernver}"
 
-    cd "${srcdir}/${_srcname}"
+    cd ${_srcname}
+    local _builddir="${pkgdir}/usr/lib/modules/${_kernver}/build"
 
-    
-        install -D -m644 Makefile \
-		"${pkgdir}/usr/lib/modules/${_kernver}/build/Makefile"
-	install -D -m644 kernel/Makefile \
-		"${pkgdir}/usr/lib/modules/${_kernver}/build/kernel/Makefile"
-	install -D -m644 .config \
-		"${pkgdir}/usr/lib/modules/${_kernver}/build/.config"
+    install -Dt "${_builddir}" -m644 Makefile .config Module.symvers
+    install -Dt "${_builddir}/kernel" -m644 kernel/Makefile
 
-	mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/include"
+    mkdir "${_builddir}/.tmp_versions"
 
-	for i in acpi asm-generic config crypto drm generated keys linux math-emu \
-		media net pcmcia rdma scsi soc sound trace uapi video xen; do
-	cp -a include/${i} "${pkgdir}/usr/lib/modules/${_kernver}/build/include/"
-	done
+    cp -t "${_builddir}" -a include scripts
 
-	# copy arch includes for external modules
-	mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/arch/x86"
-	cp -a arch/x86/include "${pkgdir}/usr/lib/modules/${_kernver}/build/arch/x86/"
+    install -Dt "${_builddir}/arch/${KARCH}" -m644 arch/${KARCH}/Makefile
+    install -Dt "${_builddir}/arch/${KARCH}/kernel" -m644 arch/${KARCH}/kernel/asm-offsets.s
 
-	# copy files necessary for later builds, like nvidia and vmware
-	cp Module.symvers "${pkgdir}/usr/lib/modules/${_kernver}/build"
-	cp -a scripts "${pkgdir}/usr/lib/modules/${_kernver}/build"
+    if [[ ${CARCH} = i686 ]]; then
+    install -t "${_builddir}/arch/${KARCH}" -m644 arch/${KARCH}/Makefile_32.cpu
+    fi
 
-	# fix permissions on scripts dir
-	chmod og-w -R "${pkgdir}/usr/lib/modules/${_kernver}/build/scripts"
-	mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/.tmp_versions"
+    cp -t "${_builddir}/arch/${KARCH}" -a arch/${KARCH}/include
 
-	mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/arch/${KARCH}/kernel"
+    install -Dt "${_builddir}/drivers/md" -m644 drivers/md/*.h
+    install -Dt "${_builddir}/net/mac80211" -m644 net/mac80211/*.h
 
-	cp arch/${KARCH}/Makefile "${pkgdir}/usr/lib/modules/${_kernver}/build/arch/${KARCH}/"
+    # http://bugs.archlinux.org/task/9912
+    install -Dt "${_builddir}/drivers/media/dvb-core" -m644 drivers/media/dvb-core/*.h
 
-	if [ "${CARCH}" = "i686" ]; then
-		cp arch/${KARCH}/Makefile_32.cpu "${pkgdir}/usr/lib/modules/${_kernver}/build/arch/${KARCH}/"
-	fi
+    # http://bugs.archlinux.org/task/13146
+    install -Dt "${_builddir}/drivers/media/dvb-frontends" -m644 drivers/media/dvb-frontends/lgdt330x.h
+    install -Dt "${_builddir}/drivers/media/i2c" -m644 drivers/media/i2c/msp3400-driver.h
 
-	cp arch/${KARCH}/kernel/asm-offsets.s "${pkgdir}/usr/lib/modules/${_kernver}/build/arch/${KARCH}/kernel/"
+    # http://bugs.archlinux.org/task/20402
+    install -Dt "${_builddir}/drivers/media/usb/dvb-usb" -m644 drivers/media/usb/dvb-usb/*.h
+    install -Dt "${_builddir}/drivers/media/dvb-frontends" -m644 drivers/media/dvb-frontends/*.h
+    install -Dt "${_builddir}/drivers/media/tuners" -m644 drivers/media/tuners/*.h
 
-	# add docbook makefile
-	#install -D -m644 Documentation/DocBook/Makefile \
-	#"${pkgdir}/usr/lib/modules/${_kernver}/build/Documentation/DocBook/Makefile"
+    # add xfs and shmem for aufs building
+    mkdir -p "${_builddir}"/{fs/xfs,mm}
 
-	# add dm headers
-	mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/md"
-	cp drivers/md/*.h "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/md"
+    # copy in Kconfig files
+    find . -name Kconfig\* -exec install -Dm644 {} "${_builddir}/{}" \;
 
-	# add inotify.h
-	mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/include/linux"
-	cp include/linux/inotify.h "${pkgdir}/usr/lib/modules/${_kernver}/build/include/linux/"
-
-	# add wireless headers
-	mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/net/mac80211/"
-	cp net/mac80211/*.h "${pkgdir}/usr/lib/modules/${_kernver}/build/net/mac80211/"
-
-	# add dvb headers for external modules
-	# in reference to:
-	# http://bugs.archlinux.org/task/9912
-	mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/dvb-core"
-	cp drivers/media/dvb-core/*.h "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/dvb-core/"
-	# and...
-	# http://bugs.archlinux.org/task/11194
-	###
-	### DO NOT MERGE OUT THIS IF STATEMENT
-	### IT AFFECTS USERS WHO STRIP OUT THE DVB STUFF SO THE OFFICIAL ARCH CODE HAS A CP
-	### LINE THAT CAUSES MAKEPKG TO END IN AN ERROR
-	###
-	if [ -d include/config/dvb/ ]; then
-		mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/include/config/dvb/"
-		cp include/config/dvb/*.h "${pkgdir}/usr/lib/modules/${_kernver}/build/include/config/dvb/"
-	fi
-
-	# add dvb headers for http://mcentral.de/hg/~mrec/em28xx-new
-	# in reference to:
-	# http://bugs.archlinux.org/task/13146
-	mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/dvb-frontends/"
-	cp drivers/media/dvb-frontends/lgdt330x.h "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/dvb-frontends/"
-	mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/i2c/"
-	cp drivers/media/i2c/msp3400-driver.h "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/i2c/"
-
-	# add dvb headers
-	# in reference to:
-	# http://bugs.archlinux.org/task/20402
-	mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/usb/dvb-usb"
-	cp drivers/media/usb/dvb-usb/*.h "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/usb/dvb-usb/"
-	mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/dvb-frontends"
-	cp drivers/media/dvb-frontends/*.h "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/dvb-frontends/"
-	mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/tuners"
-	cp drivers/media/tuners/*.h "${pkgdir}/usr/lib/modules/${_kernver}/build/drivers/media/tuners/"
-
-	# add xfs and shmem for aufs building
-	mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/fs/xfs"
-	mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/mm"
-	# removed in 3.17 series
-	#cp fs/xfs/xfs_sb.h "${pkgdir}/usr/lib/modules/${_kernver}/build/fs/xfs/xfs_sb.h"
-
-	# copy in Kconfig files
-	for i in $(find . -name "Kconfig*"); do
-		mkdir -p "${pkgdir}"/usr/lib/modules/${_kernver}/build/`echo ${i} | sed 's|/Kconfig.*||'`
-		cp ${i} "${pkgdir}/usr/lib/modules/${_kernver}/build/${i}"
-	done
-	
-	# add objtool for external module building and enabled VALIDATION_STACK option
-        if [ -f tools/objtool/objtool ];  then
-        mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build/tools/objtool"
-        cp -a tools/objtool/objtool ${pkgdir}/usr/lib/modules/${_kernver}/build/tools/objtool/ 
-        fi
-
-	chown -R root.root "${pkgdir}/usr/lib/modules/${_kernver}/build"
-	find "${pkgdir}/usr/lib/modules/${_kernver}/build" -type d -exec chmod 755 {} \;
-
-	# strip scripts directory
-	find "${pkgdir}/usr/lib/modules/${_kernver}/build/scripts" -type f -perm -u+w 2>/dev/null | while read binary ; do
-	case "$(file -bi "${binary}")" in
-	*application/x-sharedlib*) # Libraries (.so)
-		/usr/bin/strip ${STRIP_SHARED} "${binary}";;
-	*application/x-archive*) # Libraries (.a)
-		/usr/bin/strip ${STRIP_STATIC} "${binary}";;
-	*application/x-executable*) # Binaries
-		/usr/bin/strip ${STRIP_BINARIES} "${binary}";;
-	esac
-	done
-	
-	# remove a files already in linux-bfq-haswell-git-docs package
-        rm -f "${pkgdir}/usr/lib/modules/${_kernver}/build/Documentation/kbuild/Kconfig.recursion-issue-01"
-        rm -f "${pkgdir}/usr/lib/modules/${_kernver}/build/Documentation/kbuild/Kconfig.recursion-issue-02"
-        rm -f "${pkgdir}/usr/lib/modules/${_kernver}/build/Documentation/kbuild/Kconfig.select-break"
+    # add objtool for external module building and enabled VALIDATION_STACK option
+    if [[ -e tools/objtool/objtool ]]; then
+    install -Dt "${_builddir}/tools/objtool" tools/objtool/objtool
+    fi
 
     # remove unneeded architectures
-    rm -rf "${pkgdir}"/usr/lib/modules/${_kernver}/build/arch/{alpha,arm,arm26,arm64,avr32,blackfin,c6x,cris,frv,h8300,hexagon,ia64,m32r,m68k,m68knommu,mips,microblaze,mn10300,openrisc,parisc,powerpc,ppc,s390,score,sh,sh64,sparc,sparc64,tile,unicore32,um,v850,xtensa}
+    local _arch
+    for _arch in "${_builddir}"/arch/*/; do
+    if [[ ${_arch} != */${KARCH}/ ]]; then
+      rm -r "${_arch}"
+    fi
+    done
+
+    # remove files already in linux-bfq-mq-haswell-git-docs package
+    rm -r "${_builddir}/Documentation"
+
+    # Fix permissions
+    chmod -R u=rwX,go=rX "${_builddir}"
+
+    # strip scripts directory
+    local _binary _strip
+    while read -rd '' _binary; do
+    case "$(file -bi "${_binary}")" in
+      *application/x-sharedlib*)  _strip="${STRIP_SHARED}"   ;; # Libraries (.so)
+      *application/x-archive*)    _strip="${STRIP_STATIC}"   ;; # Libraries (.a)
+      *application/x-executable*) _strip="${STRIP_BINARIES}" ;; # Binaries
+      *) continue ;;
+    esac
+    /usr/bin/strip ${_strip} "${_binary}"
+   done < <(find "${_builddir}/scripts" -type f -perm -u+w -print0 2>/dev/null)
 }
 
 _package-docs() {
@@ -536,15 +478,14 @@ _package-docs() {
     depends=('linux-bfq-mq-haswell-git-kernel')
     groups=('linux-bfq-mq-haswell-git')
   
-    cd "${srcdir}/${_srcname}"
+    cd ${_srcname}
+    local _builddir="${pkgdir}/usr/lib/modules/${_kernver}/build"
 
-    mkdir -p "${pkgdir}/usr/lib/modules/${_kernver}/build"
-    cp -al Documentation "${pkgdir}/usr/lib/modules/${_kernver}/build"
-    find "${pkgdir}" -type f -exec chmod 444 {} \;
-    find "${pkgdir}" -type d -exec chmod 755 {} \;
+    mkdir -p "${_builddir}"
+    cp -t "${_builddir}" -a Documentation
 
-    # remove a file already in linux-bfq-mq-haswell-git package
-    rm -f "${pkgdir}/usr/lib/modules/${_kernver}/build/Documentation/DocBook/Makefile"
+    # Fix permissions
+    chmod -R u=rwX,go=rX "${_builddir}"
 }
 
 pkgname=("${pkgbase}-kernel" "${pkgbase}-headers" "${pkgbase}-docs")
