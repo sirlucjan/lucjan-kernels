@@ -82,8 +82,8 @@ _kyber_disable=y
 pkgbase=linux-bfq-mq-haswell-git
 # pkgname=('linux-bfq-mq-haswell-git-kernel' 'linux-bfq-mq-haswell-git-headers' 'linux-bfq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
-pkgver=4.13.1.r0.g94cd0e9dcdc1
-pkgrel=2
+pkgver=4.13.1.r28.g0a9a7505477b
+pkgrel=0
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -144,7 +144,7 @@ prepare() {
    
     ### Patch source with BFQ-MQ
         msg "Fix naming schema in BFQ-MQ patch"
-        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 1|g" \
+        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 2|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" ../${_bfq_mq_patch}
         msg "Patching source with BFQ-MQ patches"
