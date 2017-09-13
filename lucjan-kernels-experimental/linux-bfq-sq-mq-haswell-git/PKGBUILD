@@ -79,8 +79,8 @@ _kyber_disable=y
 
 ### Do not edit below this line unless you know what you're doing
 
-pkgbase=linux-bfq-mq-haswell-git
-# pkgname=('linux-bfq-mq-haswell-git-kernel' 'linux-bfq-mq-haswell-git-headers' 'linux-bfq-mq-haswell-git-docs')
+pkgbase=linux-bfq-sq-mq-haswell-git
+# pkgname=('linux-bfq-sq-mq-haswell-git-kernel' 'linux-bfq-sq-mq-haswell-git-headers' 'linux-bfq-sq-mq-haswell-git-docs')
 _srcname=linux-stable
 pkgver=4.13.1.r0.g94cd0e9dcdc1
 pkgrel=3
@@ -89,15 +89,15 @@ url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf')
-_bfq_mq_ver='20170913'
-_bfq_mq_patch="4.13-bfq-mq-git-${_bfq_mq_ver}.patch"
+_bfq_sq_mq_ver='20170913'
+_bfq_sq_mq_patch="4.13-bfq-sq-mq-git-${_bfq_sq_mq_ver}.patch"
 #_lucjanpath="https://raw.githubusercontent.com/sirlucjan/lucjan-kernels/master/patches/4.13"
 _lucjanpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/4.13"
 _gcc_path="https://raw.githubusercontent.com/sirlucjan/kernel_gcc_patch/master"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v4.13+.patch"
 
 source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#branch=linux-4.13.y'
-        "${_lucjanpath}/${_bfq_mq_patch}"
+        "${_lucjanpath}/${_bfq_sq_mq_patch}"
         "${_lucjanpath}/blk-mq-v4/0050-blk-mq-sched-fix-scheduler-bad-performance.patch"
         "${_lucjanpath}/blk-mq-v4/0051-blk-mq-sbitmap-introduce-__sbitmap_for_each_set.patch"
         "${_lucjanpath}/blk-mq-v4/0052-blk-mq-introduce-blk_mq_dispatch_rq_from_ctx.patch"
@@ -123,9 +123,7 @@ source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#b
          # pacman hook for initramfs regeneration
         '90-linux.hook'
          # standard config files for mkinitcpio ramdisk
-        'linux.preset'
-        # patches from https://github.com/Algodev-github/bfq-mq/commits/bfq-mq
-        )
+        'linux.preset')
 
 _kernelname=${pkgbase#linux}
         
@@ -138,13 +136,13 @@ pkgver() {
 prepare() {
     cd "${_srcname}"
    
-    ### Patch source with BFQ-MQ
-        msg "Fix naming schema in BFQ-MQ patch"
+    ### Patch source with BFQ-SQ-MQ
+        msg "Fix naming schema in BFQ-SQ-MQ patch"
         sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 1|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
-            -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" ../${_bfq_mq_patch}
-        msg "Patching source with BFQ-MQ patches"
-        patch -Np1 -i ../${_bfq_mq_patch}
+            -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" ../${_bfq_sq_mq_patch}
+        msg "Patching source with BFQ-SQ-MQ patches"
+        patch -Np1 -i ../${_bfq_sq_mq_patch}
         
     ### Patches related to BUG_ON(entity->tree && entity->tree != &st->active) in __bfq_requeue_entity();
         if [ -n "$_use_tentative_patches" ]; then
@@ -161,7 +159,7 @@ prepare() {
         msg " $p" 
         patch -Np1 -i "$p"; done
         fi
-    
+        
     ### Patches from https://marc.info/?l=linux-block&m=150436546704854&w=2
         if [ -n "$_use_blk_mq_patches" ]; then
         msg "Apply blk-mq patches"
@@ -334,10 +332,10 @@ build() {
 }
 
 _package-kernel() {
-    pkgdesc='Linux Kernel and modules with the  BFQ-MQ scheduler. Fourth Gen Intel Core i3/i5/i7 optimized.'
+    pkgdesc='Linux Kernel and modules with the  BFQ-SQ-MQ scheduler. Fourth Gen Intel Core i3/i5/i7 optimized.'
     depends=('coreutils' 'linux-firmware' 'mkinitcpio>=0.7')
     optdepends=('crda: to set the correct wireless channels of your country' 'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
-    groups=('linux-bfq-mq-haswell-git')
+    groups=('linux-bfq-sq-mq-haswell-git')
     backup=("etc/mkinitcpio.d/${pkgbase}.preset")
     install=linux.install
 
@@ -391,9 +389,9 @@ _package-kernel() {
 }
 
 _package-headers() {
-    pkgdesc='Header files and scripts to build modules for linux-bfq-mq-haswell-git. Fourth Gen Intel Core i3/i5/i7 optimized.'
-    depends=('linux-bfq-mq-haswell-git-kernel')
-    groups=('linux-bfq-mq-haswell-git')
+    pkgdesc='Header files and scripts to build modules for linux-bfq-sq-mq-haswell-git. Fourth Gen Intel Core i3/i5/i7 optimized.'
+    depends=('linux-bfq-sq-mq-haswell-git-kernel')
+    groups=('linux-bfq-sq-mq-haswell-git')
 
     install -dm755 "${pkgdir}/usr/lib/modules/${_kernver}"
 
@@ -450,7 +448,7 @@ _package-headers() {
     fi
     done
 
-    # remove files already in linux-bfq-mq-haswell-git-docs package
+    # remove files already in linux-bfq-sq-mq-haswell-git-docs package
     rm -r "${_builddir}/Documentation"
 
     # Fix permissions
@@ -470,9 +468,9 @@ _package-headers() {
 }
 
 _package-docs() {
-    pkgdesc='Kernel hackers manual - HTML documentation that comes with the linux-bfq-mq-haswell-git kernel. Fourth Gen Intel Core i3/i5/i7 optimized.'
-    depends=('linux-bfq-mq-haswell-git-kernel')
-    groups=('linux-bfq-mq-haswell-git')
+    pkgdesc='Kernel hackers manual - HTML documentation that comes with the linux-bfq-sq-mq-haswell-git kernel. Fourth Gen Intel Core i3/i5/i7 optimized.'
+    depends=('linux-bfq-sq-mq-haswell-git-kernel')
+    groups=('linux-bfq-sq-mq-haswell-git')
   
     cd ${_srcname}
     local _builddir="${pkgdir}/usr/lib/modules/${_kernver}/build"
@@ -514,6 +512,6 @@ sha512sums=('SKIP'
             'c1f1584feabd894551d8ca083f233b1c3d850ae295b2034360635986bc7850a654f8dc2af16e342b98c10c8927d5d3fd99d5d0f48cccc1f363dd377f0dd6f85b'
             'a1ccc22354a420467fb912f822585ed4573e68f4694f02ab83d7c8e352da88be495acb3cb4c451c27ca0cf0befe5925b8734d37205bb3dfdaf86d2dedef0798f'
             '5ca7ae20245a54caa71fb570d971d6872d4e888f35c6123b93fbca16baf9a0e2500d6ec931f3906e4faecaaca9cad0d593694d9cab617efd0cb7b5fc09c0fa48'
-            '45dd45a952d2c07baad2a5d14602ff2742207339810abdd9dbc517fa61e85b10efceca18fdaded3176f09d3b370296acaab479e7791c99f19b060cb6d2c79ca4'
+            'cc222277150e56781b846e250c57e3b561dec1f4cfa185a4f01ffc971186698778e8eeaccdd89ea60e0dfcaf9697d236b89cbc09723f73b10bf19d922edcb8d3'
             'd6faa67f3ef40052152254ae43fee031365d0b1524aa0718b659eb75afc21a3f79ea8d62d66ea311a800109bed545bc8f79e8752319cd378eef2cbd3a09aba22'
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf')

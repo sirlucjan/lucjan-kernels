@@ -2,13 +2,13 @@
 ├── Files
 ├── README.md
 ├── lucjan-kernels-experimental
-│   ├── linux-bfq-mq-haswell
+│   ├── linux-bfq-sq-mq-haswell
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
 │   │   ├── config.x86_64
 │   │   ├── linux.install
 │   │   └── linux.preset
-│   └── linux-bfq-mq-haswell-git
+│   └── linux-bfq-sq-mq-haswell-git
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
 │       ├── config.x86_64
@@ -40,13 +40,13 @@
 │       ├── linux.install
 │       └── linux.preset
 ├── lucjan-kernels-trunk
-│   ├── linux-bfq-mq-haswell
+│   ├── linux-bfq-sq-mq-haswell
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
 │   │   ├── config.x86_64
 │   │   ├── linux.install
 │   │   └── linux.preset
-│   └── linux-bfq-mq-haswell-git
+│   └── linux-bfq-sq-mq-haswell-git
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
 │       ├── config.x86_64
