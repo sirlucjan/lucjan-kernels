@@ -12,7 +12,8 @@ _use_tentative_patches=y
 ### Use patches from https://github.com/pfactum/pf-kernel/
 _use_pfkernel_patches=y
 
-### Use patches from https://marc.info/?l=linux-block&m=150436546704854&w=2
+### Use patches from https://marc.info/?l=linux-block&m=150676726920843&w=1 and
+# https://marc.info/?l=linux-block&m=150677084721414&w=1
 _use_blk_mq_patches=y
 
 ### Use disable writeback throttling: https://marc.info/?l=linux-block&m=150486424501778&w=2
@@ -83,7 +84,7 @@ pkgbase=linux-bfq-sq-mq-haswell
 # pkgname=('linux-bfq-sq-mq-haswell-kernel' 'linux-bfq-sq-mq-haswell-headers' 'linux-bfq-sq-mq-haswell-docs')
 _srcname=linux-4.13
 pkgver=4.13.4
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -101,20 +102,21 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.sign"
         "${_lucjanpath}/${_bfq_sq_mq_patch}"
-        "${_lucjanpath}/blk-mq-v4/0050-blk-mq-sched-fix-scheduler-bad-performance.patch"
-        "${_lucjanpath}/blk-mq-v4/0051-blk-mq-sbitmap-introduce-__sbitmap_for_each_set.patch"
-        "${_lucjanpath}/blk-mq-v4/0052-blk-mq-introduce-blk_mq_dispatch_rq_from_ctx.patch"
-        "${_lucjanpath}/blk-mq-v4/0053-blk-mq-sched-move-actual-dispatching-into-one-helper.patch"
-        "${_lucjanpath}/blk-mq-v4/0054-blk-mq-sched-improve-dispatching-from-sw-queue.patch"
-        "${_lucjanpath}/blk-mq-v4/0055-blk-mq-sched-don-t-dequeue-request-until-all-in-disp.patch"
-        "${_lucjanpath}/blk-mq-v4/0056-blk-mq-sched-introduce-blk_mq_sched_queue_depth.patch"
-        "${_lucjanpath}/blk-mq-v4/0057-blk-mq-sched-use-q-queue_depth-as-hint-for-q-nr_requ.patch"
-        "${_lucjanpath}/blk-mq-v4/0058-blk-mq-block-introduce-rqhash-helpers.patch"
-        "${_lucjanpath}/blk-mq-v4/0059-blk-mq-block-move-actual-bio-merge-code-into-__elv_merge.patch"
-        "${_lucjanpath}/blk-mq-v4/0060-blk-mq-block-add-check-on-elevator-for-supporting-bio-merge.patch"
-        "${_lucjanpath}/blk-mq-v4/0061-blk-mq-block-introduce-.last_merge-and-.hash-to-blk_mq_ctx.patch"
-        "${_lucjanpath}/blk-mq-v4/0062-blk-mq-sched-refactor-blk_mq_sched_try_merge.patch"
-        "${_lucjanpath}/blk-mq-v4/0063-blk-mq-improve-bio-merge-from-blk-mq-sw-queue.patch"
+        "${_lucjanpath}/blk-mq-v5/0050-blk-mq-issue-rq-directly-in-blk_mq_request_bypass_insert().patch"
+        "${_lucjanpath}/blk-mq-v5/0051-blk-mq-sched-fix-scheduler-bad-performance.patch"
+        "${_lucjanpath}/blk-mq-v5/0052-blk-mq-sbitmap-introduce__sbitmap_for_each_set().patch"
+        "${_lucjanpath}/blk-mq-v5/0053-blk-mq-introduc-blk_mq_dequeue_from_ctx().patch"
+        "${_lucjanpath}/blk-mq-v5/0054-blk-mq-sched-move-actual-dispatching-into-one-helper.patch"
+        "${_lucjanpath}/blk-mq-v5/0055-blk-mq-sched-improve-dispatching-from-sw-queue.patch"
+        "${_lucjanpath}/blk-mq-v5/0056-blk-mq-sched-don't-dequeue-request-until-all-in->dispatch-are-flushed.patch"
+        "${_lucjanpath}/blk-mq-v5/0057-blk-mq-sched-introduce-blk_mq_sched_queue_depth().patch"
+        "${_lucjanpath}/blk-mq-v5/0058-blk-mq-sched-use-q->queue_depth-as-hint-for-q->nr_requests.patch"
+        "${_lucjanpath}/blk-mq-v5/0059-blk-mq-block-introduce-rqhash-helpers.patch"
+        "${_lucjanpath}/blk-mq-v5/0060-blk-mq-block-move-actual-bio-merge-code-into__elv_merge.patch"
+        "${_lucjanpath}/blk-mq-v5/0061-blk-mq-block-add-check-on-elevator-for-supporting-bio-merge-via-hashtable-from-blk-mq-sw-qu.patch"
+        "${_lucjanpath}/blk-mq-v5/0062-blk-mq-block-introduce-last_merge-and-hash-to-blk_mq_ctx.patch"
+        "${_lucjanpath}/blk-mq-v5/0063-blk-mq-sched-refactor-blk_mq_sched_try_merge().patch"
+        "${_lucjanpath}/blk-mq-v5/0064-blk-mq-improve-bio-merge-from-blk-mq-sw-queue.patch"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "${_lucjanpath}/0200-BFQ-MQ-bugfix-from-pfkernel-2.patch"
         "${_lucjanpath}/0200-BFQ-MQ-bugfix-from-pfkernel-3.patch"
@@ -163,7 +165,8 @@ prepare() {
         patch -Np1 -i "$p"; done
         fi
         
-    ### Patches from https://marc.info/?l=linux-block&m=150436546704854&w=2
+    ### Use patches from https://marc.info/?l=linux-block&m=150676726920843&w=1 and
+    # https://marc.info/?l=linux-block&m=150677084721414&w=1
         if [ -n "$_use_blk_mq_patches" ]; then
         msg "Apply blk-mq patches"
         for p in "${srcdir}"/*-blk-mq*.patch*; do 
@@ -498,20 +501,21 @@ sha512sums=('a557c2f0303ae618910b7106ff63d9978afddf470f03cb72aa748213e099a0ecd5f
             '37aa8add92ae23b627c166b878b6d8191b75c2aca3a2eb2d7ae4f55262644731ab51a3ee171186fc0b011c6c8e537686377c3e73e8928797323b0a958eeb4b6b'
             'SKIP'
             'f4f5c63fc1acc86ece0c9fad87b757183481b6340c810cfd686ca943bba3ef9a3af6a97071b7fb066da4ce1fdf15f74caeac1fe89d359ffc97f3f16edaff9051'
-            '929352d0c389afb6d4faa07fed08ee172413f11b88b221228dafd913452a36da3c034ea58c9d109d48f17bccf3d9bc64d4665a4f37538878ee19259396c1a17a'
-            'efadb073d983eac82cf89fa23068472ee6d54e87df427834312da340a3c05cd5393ed81a76e735504abb39eac3061f7d60435ea4bb8f2bb7a088a1e2121dda8a'
-            '705882cf02f765a7cf63b89c1cf596cf7b54af104645526fa84982d775982c927ecf818af519f6a1f7244363f74035373f1b4b828161789266ff2dae4c9f7a49'
-            'cb55f2a11dd164f3b3eb6d166dd92b1ece5ac324d4590c089ef5bc59d679b915223f0faa53008ca90d8d8a81ffae040a2aa24e6a357ac2a729c8e8b65e8e44ae'
-            '409bbdd8b47e764df758fdba59770c084c89f9927e38e24576d79df8aa705f20fd7b807c465e58cc29e0483f53158cf8f43a0183c79332165e71c16b1b12f68d'
-            'ca1dfb92457741f78dcd15604990d19443b924a1ae382374aa890517e624a82bf35de363b3c0d9ce4f077514172a2a8ee3da05e22af8bb5d93c05cde3bd8b3d6'
-            'ac98a7be992df310822cc67c8abf72440dbc2f246d75acccb97a4bc5524e3043be97a8daab5e15d3878efcf5848ff6cf5395aa6ba6ac1f86f3cd499ef87d625c'
-            '33b9c0c23b062d569ec9d94ebeb9d99952f92b9ccc7501d22747b726dd17afc49c2d9d64a4786182d15706b608394c1e786e30724129f310e874026689787802'
-            'b7985d48da23d7f6559d8a1151f9aeb04ffdd7049f93e9d0bcf1587172d0707f63d73c4194bc72b00ac06d3daaf988146ae21ee76b0c3b3036d68754c80058d2'
-            'a444f3e38af26eb52f43d4bbb4029433faf3b2517e47d9d80c027f4e3380c0ab0087aa974fe24fa57535ca8c667ad56334e2cb2f0b19cb2e5accc815f2dcb54a'
-            '10e3128eb3b3df2b9f75695a6c771f0aba9380229a4820c96cadbc1e03cecfd9c8dcc8fcd58ed597722829d5cc707234973cecc91d3bb6288ba3cd43e4c17c22'
-            '79c7f38a9da647ec132dbd4379306aae6c4d67abbea3d9602082af5f344b89a56f3c684629dd5fe9698111254ed8166aeb8fe6d5ba29553b7f801d5f10c8e1c8'
-            'aaeebf75ddf09cfcc57e344ba9d18e4e44eb56667a2e52c12b7e596a1db410fff79aa3a8162f3ca85232f248596957de02031f1129185b37caaff66023731e86'
-            'e5f333a59f0d573c615d4fee80a0ba7736a7b1ba1668364f54f328d4a49141a4fd9e3396e3be81f1a280c6ba410e132149c050edb121c314e8dfee3b038cc34b'
+            '5eac105afaa3360671920631bb63469778120fd61fe57d761fcfae011986e246a476a9eea6788ad9a62a4d679da6832a18e89b871e45c673d13c2e9935b56322'
+            '1fe1a75d1724dfccd7af40c91648a28758c59259fd7531a07aafc4b56fe8e18a8b64349364de2c690245568023e0c1ed8226c1b5e364ff91a2bcb16868550a9f'
+            'c2073154ae08b5186198428b0cff5000ae53567f93b85c7ea1c7f10ceeac7ed78021d16924102740cafe02920d0dea60af3bd0c61b877b43f10a416e239b9c04'
+            '7342e3b7d7eb95be59809942df7def0d72c36c5be95d2ac1a18897e5f54e306d39972347e342dbc212edd2e11adbb2d060f6487a805efec8f59639a05eea2e31'
+            '65c6f14ce1cebfe892993cd729dbbe4ce9fcb7bebbe1a150e72ddd866435bf07867aad096ff043e73a6bac70cebe5e51609b313c12e9474e6deecb261858f850'
+            'cb8045eee5ffb8548b4e70750824093cc6afeda0f22ed7d65df8173d0e5b111bea3d4405ebe14a02c0ffe661e2e1f068d78e05fbe79a016ad64920303d542fda'
+            '29a5f58f2d074e0a50faa2b553facedf49a464771773ed3a153e77f1230441514ffaaba62033e1c944c9be236d510e9a7bafe5ff47d0f60ad2d9f3275abdb549'
+            '8edc1c1c81ebc3d657d7c1e6d7d21e0a54fcf4dd823e4db928b5b845ada30f1e5b59c3d6fd699c62f2ccb08019564e895427a6eeec9122d23e53591a8f3abc1f'
+            '2ad12a5af3fe1e52eac0183b7c217e87efec4b2c7d04b665d29c6e6269f3382df178f80fc2ea6827dd1856b876004cf5f5b2da2228aadc8abaad27878c90554e'
+            '44b22e0fc3616410a3ff76c73c561d193dbf5de9ead42dbabcd2c501ff3185bef6a3f1a254645c0efa02b1b0ea9359f7adcd3e863dd1c105228c2145150f1f8a'
+            'e7a708432ab3cc032cb8582f8be6334379759753bbc80938f9048322d4583ee5de3737546a3fe6f7883a153f8ba82fefda566fab7bf27561403303c0c9fdee2a'
+            '4d444e4ddbe1f6b252d6acfbbc32f2adfca1c64e8b50ff5795cec79fb2d09b4c7d0f8a34c5552650de1010ab91e387913c7d8c56fd8835b9c982a48c82322cf2'
+            'efbf73cfc05b04d7ca14a106ab41bd194787a2a2d8467b87fe8c0f3d674df276809abffecbb6612697767e868ad1465d9eef8039906016a7ca76b029eac177a6'
+            '4a6ef6780aa400cd5b3b2794d36e2060334bfbf3e20970e2ecfdba83529af11f48acd97d89eac556b765dc389f5b928339ee3b19e0353b94eb1b60aeb76bbfeb'
+            'e9995d705728bca1d9617c9e9a574d69c1e6b11e8d69f4e0266bf5e6a75a6787938cd84056797056b2e0ad5d68da45485906e21ce0a51c343a9cd40b21b2d5cf'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '862918504ae7f05af830582492f387918d6be0be4036fa0b65765c97cbacfe637edf44a3e510fd042e077a226e447169cc28129f59c7175eacd82019eab45aa4'
             'e607eb2a937f6055ff1216377091f6e23858f94fbfe532089849f1558d8539700220500262f501bb9a4d4d61cfe32372aa2a4745a5cb630a49b23482eab36d4c'
