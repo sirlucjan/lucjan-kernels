@@ -66,7 +66,7 @@ _CFQ_disable=y
 pkgbase=linux-bfq-haswell-git
 # pkgname=('linux-bfq-haswell-git-kernel' 'linux-bfq-haswell-git-headers' 'linux-bfq-haswell-git-docs')
 _srcname=linux-stable-rc
-pkgver=4.11.12.r0.gbd1a9eb6a755
+pkgver=4.11.12.0.gbd1a9eb6a755
 pkgrel=3
 arch=('x86_64')
 url="http://algo.ing.unimo.it"
@@ -75,9 +75,9 @@ options=('!strip')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf')
 _bfqrel=v7r11
 _bfqver=v8r11
-_bfqpath="http://algogroup.unimore.it/people/paolo/disk_sched/patches/4.11.0-${_bfqver}"
+#_bfqpath="http://algogroup.unimore.it/people/paolo/disk_sched/patches/4.11.0-${_bfqver}"
 #_bfqpath="http://algo.ing.unimo.it/people/paolo/disk_sched/patches/4.11.0-${_bfqver}"
-#_bfqpath="https://pf.natalenko.name/mirrors/bfq/4.11.0-${_bfqver}"
+_bfqpath="https://pf.natalenko.name/mirrors/bfq/4.11.0-${_bfqver}"
 #_lucjanpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/4.11"
 _lucjanpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/4.11"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v3.15+.patch"
@@ -103,7 +103,7 @@ _kernelname=${pkgbase#linux}
 pkgver() {
   cd "${_srcname}"
 
-  git describe --long | sed -E 's/^v//;s/([^-]*-g)/r\1/;s/-/./g;s/\.rc/rc/'
+  git describe --long | sed -E 's/^v//;s/([^-]*-g)/\1/;s/-/./g;s/\.rc/rc/'
 } 
 
 prepare() {

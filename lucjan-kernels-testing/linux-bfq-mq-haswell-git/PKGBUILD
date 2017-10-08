@@ -66,7 +66,7 @@ _CFQ_disable=y
 pkgbase=linux-bfq-mq-haswell-git
 # pkgname=('linux-bfq-mq-haswell-git-kernel' 'linux-bfq-mq-haswell-git-headers' 'linux-bfq-mq-haswell-git-docs')
 _srcname=linux-stable
-pkgver=4.11.12.r0.gbd1a9eb6a755
+pkgver=4.11.12.0.gbd1a9eb6a755
 pkgrel=4
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
@@ -99,7 +99,7 @@ _kernelname=${pkgbase#linux}
 pkgver() {
   cd "${_srcname}"
 
-  git describe --long | sed -E 's/^v//;s/([^-]*-g)/r\1/;s/-/./g;s/\.rc/rc/'
+  git describe --long | sed -E 's/^v//;s/([^-]*-g)/\1/;s/-/./g;s/\.rc/rc/'
 } 
 
 prepare() {
