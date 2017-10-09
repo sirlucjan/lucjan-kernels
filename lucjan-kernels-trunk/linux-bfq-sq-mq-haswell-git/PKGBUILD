@@ -146,7 +146,7 @@ prepare() {
         msg "Fix naming schema in BFQ-SQ-MQ patch"
         sed -i -e "s|PATCHLEVEL = 14|PATCHLEVEL = 13|g" \
             -i -e "s|SUBLEVEL = 0|SUBLEVEL = 6|g" \
-            -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" \
+            -i -e "s|EXTRAVERSION = -rc3|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" ../${_bfq_sq_mq_patch}
         msg "Patching source with BFQ-SQ-MQ patches"
