@@ -7,6 +7,14 @@
 git clone https://github.com/sirlucjan/lucjan-kernels.git
 
 ```
+
+or
+
+```
+git clone https://gitlab.com/sirlucjan/lucjan-kernels.git
+
+```
+
 # Install:
 
 
