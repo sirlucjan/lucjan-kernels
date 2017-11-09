@@ -18,25 +18,25 @@
 │   ├── linux-bfq-haswell
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
-│   │   ├── config.x86_64
+│   │   ├── config
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   ├── linux-bfq-haswell-git
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
-│   │   ├── config.x86_64
+│   │   ├── config
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   ├── linux-bfq-mq-haswell
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
-│   │   ├── config.x86_64
+│   │   ├── config
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   └── linux-bfq-mq-haswell-git
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
-│       ├── config.x86_64
+│       ├── config
 │       ├── linux.install
 │       └── linux.preset
 ├── lucjan-kernels-trunk
@@ -56,25 +56,25 @@
     ├── linux-bfq-haswell
     │   ├── 90-linux.hook
     │   ├── PKGBUILD
-    │   ├── config.x86_64
+    │   ├── config
     │   ├── linux.install
     │   └── linux.preset
     ├── linux-bfq-haswell-git
     │   ├── 90-linux.hook
     │   ├── PKGBUILD
-    │   ├── config.x86_64
+    │   ├── config
     │   ├── linux.install
     │   └── linux.preset
     ├── linux-bfq-mq-haswell
     │   ├── 90-linux.hook
     │   ├── PKGBUILD
-    │   ├── config.x86_64
+    │   ├── config
     │   ├── linux.install
     │   └── linux.preset
     └── linux-bfq-mq-haswell-git
         ├── 90-linux.hook
         ├── PKGBUILD
-        ├── config.x86_64
+        ├── config
         ├── linux.install
         └── linux.preset
 
