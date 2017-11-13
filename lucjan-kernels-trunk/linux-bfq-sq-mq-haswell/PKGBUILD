@@ -149,8 +149,9 @@ prepare() {
             -i -e "s|EXTRAVERSION = -rc8|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" ../${_bfq_sq_mq_patch}
-        msg "Patching source with BFQ-SQ-MQ patches"
+        msg "Fix patching error with 20171109 and newer"
         patch -Np1 -i ../0001-bfq-sq-mq-fix-patching-error-with-20171109.patch
+        msg "Patching source with BFQ-SQ-MQ patches"
         patch -Np1 -i ../${_bfq_sq_mq_patch}
         
     ### Patches related to BUG_ON(entity->tree && entity->tree != &st->active) in __bfq_requeue_entity();
