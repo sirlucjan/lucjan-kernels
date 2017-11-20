@@ -3,12 +3,16 @@
 ├── README.md
 ├── lucjan-kernels-experimental
 │   ├── linux-bfq-sq-mq-haswell
+│   │   ├── 0001-platform-x86-hp-wmi-Fix-tablet-mode-detection-for-co.patch
+│   │   ├── 60-linux.hook
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
 │   │   ├── config
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   └── linux-bfq-sq-mq-haswell-git
+│       ├── 0001-platform-x86-hp-wmi-Fix-tablet-mode-detection-for-co.patch
+│       ├── 60-linux.hook
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
 │       ├── config
@@ -41,12 +45,16 @@
 │       └── linux.preset
 ├── lucjan-kernels-trunk
 │   ├── linux-bfq-sq-mq-haswell
+│   │   ├── 0001-platform-x86-hp-wmi-Fix-tablet-mode-detection-for-co.patch
+│   │   ├── 60-linux.hook
 │   │   ├── 90-linux.hook
 │   │   ├── PKGBUILD
 │   │   ├── config
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   └── linux-bfq-sq-mq-haswell-git
+│       ├── 0001-platform-x86-hp-wmi-Fix-tablet-mode-detection-for-co.patch
+│       ├── 60-linux.hook
 │       ├── 90-linux.hook
 │       ├── PKGBUILD
 │       ├── config
@@ -78,4 +86,4 @@
         ├── linux.install
         └── linux.preset
 
-16 directories, 62 files
+16 directories, 70 files
