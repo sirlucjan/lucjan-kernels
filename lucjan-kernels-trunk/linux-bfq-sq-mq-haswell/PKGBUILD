@@ -82,7 +82,7 @@ _srcname=linux-4.14
 pkgver=4.14.1
 #_pkgver=4.14
 __pkgver=4.14.1-rc1
-pkgrel=0
+pkgrel=0.1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -119,6 +119,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         '60-linux.hook'
          # pacman hook for initramfs regeneration
         '90-linux.hook'
+         # pacman hook for remove initramfs
+        '99-linux.hook'
          # standard config files for mkinitcpio ramdisk
         'linux.preset'
         '0001-platform-x86-hp-wmi-Fix-tablet-mode-detection-for-co.patch')
@@ -383,6 +385,8 @@ _package-kernel() {
         install -Dm644 /dev/stdin "${pkgdir}/usr/share/libalpm/hooks/60-${pkgbase}.hook"
     sed "${_subst}" ../90-linux.hook |
         install -Dm644 /dev/stdin "${pkgdir}/usr/share/libalpm/hooks/90-${pkgbase}.hook"
+    sed "${_subst}" ../99-linux.hook |
+        install -Dm644 /dev/stdin "${pkgdir}/usr/share/libalpm/hooks/99-${pkgbase}.hook"    
 }
 
 _package-headers() {
@@ -496,6 +500,7 @@ sha512sums=('77e43a02d766c3d73b7e25c4aafb2e931d6b16e870510c22cef0cdb05c3acb7952b
             'cacf0c4f0548ac2779ae64d216ed87d93a92e9b4fbcaf8ddbdcf934594650a200f28770824eb7a3fce886a614dacb38f3eda5d2e8ac47f695ed9bdc030651274'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
+            'dc2b69f1463756ce0a7906e9ebedfb227eb4386f889a78932924ef1f576c9e02ad19e2d2510db0b864310e1d92fc3be9c137a39319f8fb0a417d5438540b9bae'
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf'
             'd1eb35e93c317a5d0b764cf3a6c183f17f9fadd9a9295dc36f0b9482b89fa6f2aba2b3011b2f3166282a7e3b2ed10f68ec824cb647f2e119ce014d31ba987d8d')
             

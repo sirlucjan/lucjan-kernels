@@ -6,6 +6,7 @@
 │   │   ├── 0001-platform-x86-hp-wmi-Fix-tablet-mode-detection-for-co.patch
 │   │   ├── 60-linux.hook
 │   │   ├── 90-linux.hook
+│   │   ├── 99-linux.hook
 │   │   ├── PKGBUILD
 │   │   ├── config
 │   │   ├── linux.install
@@ -14,6 +15,7 @@
 │       ├── 0001-platform-x86-hp-wmi-Fix-tablet-mode-detection-for-co.patch
 │       ├── 60-linux.hook
 │       ├── 90-linux.hook
+│       ├── 99-linux.hook
 │       ├── PKGBUILD
 │       ├── config
 │       ├── linux.install
@@ -48,6 +50,7 @@
 │   │   ├── 0001-platform-x86-hp-wmi-Fix-tablet-mode-detection-for-co.patch
 │   │   ├── 60-linux.hook
 │   │   ├── 90-linux.hook
+│   │   ├── 99-linux.hook
 │   │   ├── PKGBUILD
 │   │   ├── config
 │   │   ├── linux.install
@@ -56,6 +59,7 @@
 │       ├── 0001-platform-x86-hp-wmi-Fix-tablet-mode-detection-for-co.patch
 │       ├── 60-linux.hook
 │       ├── 90-linux.hook
+│       ├── 99-linux.hook
 │       ├── PKGBUILD
 │       ├── config
 │       ├── linux.install
@@ -86,4 +90,4 @@
         ├── linux.install
         └── linux.preset
 
-16 directories, 70 files
+16 directories, 74 files
