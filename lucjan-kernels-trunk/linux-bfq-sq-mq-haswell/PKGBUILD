@@ -435,7 +435,7 @@ _package-headers() {
         rm -r "${_arch}"
     done
 
-    # remove files already in linux-docs package
+    # remove files already in linux-bfq-sq-mq-haswell-docs package
     rm -r "${_builddir}/Documentation"
 
     # Fix permissions
