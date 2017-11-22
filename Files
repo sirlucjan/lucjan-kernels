@@ -3,6 +3,7 @@
 ├── README.md
 ├── lucjan-kernels-experimental
 │   ├── linux-bfq-sq-mq-haswell
+│   │   ├── 0001-bio-ensure-__bio_clone_fast-copies-bi_partno.patch
 │   │   ├── 0001-platform-x86-hp-wmi-Fix-tablet-mode-detection-for-co.patch
 │   │   ├── 60-linux.hook
 │   │   ├── 90-linux.hook
@@ -12,6 +13,7 @@
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   └── linux-bfq-sq-mq-haswell-git
+│       ├── 0001-bio-ensure-__bio_clone_fast-copies-bi_partno.patch
 │       ├── 0001-platform-x86-hp-wmi-Fix-tablet-mode-detection-for-co.patch
 │       ├── 60-linux.hook
 │       ├── 90-linux.hook
@@ -90,4 +92,4 @@
         ├── linux.install
         └── linux.preset
 
-16 directories, 74 files
+16 directories, 76 files

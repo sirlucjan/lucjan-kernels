@@ -80,7 +80,7 @@ pkgbase=linux-bfq-sq-mq-haswell-git
 # pkgname=('linux-bfq-sq-mq-haswell-git-kernel' 'linux-bfq-sq-mq-haswell-git-headers' 'linux-bfq-sq-mq-haswell-git-docs')
 _srcname=linux-stable
 pkgver=4.14.1.0.g780a781dd6f1
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -116,7 +116,8 @@ source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#b
         '99-linux.hook'
          # standard config files for mkinitcpio ramdisk
         'linux.preset'
-        '0001-platform-x86-hp-wmi-Fix-tablet-mode-detection-for-co.patch')
+        '0001-platform-x86-hp-wmi-Fix-tablet-mode-detection-for-co.patch'
+        '0001-bio-ensure-__bio_clone_fast-copies-bi_partno.patch')
 
 _kernelname=${pkgbase#linux}
         
@@ -133,6 +134,10 @@ prepare() {
         msg "Fix bug #56207"
         patch -Np1 -i ../0001-platform-x86-hp-wmi-Fix-tablet-mode-detection-for-co.patch
    
+    ### Fix https://bugs.archlinux.org/task/56404
+        msg "Fix bug #56404"
+        patch -Np1 -i ../0001-bio-ensure-__bio_clone_fast-copies-bi_partno.patch
+    
     ### Patch source with BFQ-SQ-MQ
         msg "Fix naming schema in BFQ-SQ-MQ patch"
         sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 1|g" \
@@ -489,4 +494,5 @@ sha512sums=('SKIP'
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
             'dc2b69f1463756ce0a7906e9ebedfb227eb4386f889a78932924ef1f576c9e02ad19e2d2510db0b864310e1d92fc3be9c137a39319f8fb0a417d5438540b9bae'
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf'
-            'd1eb35e93c317a5d0b764cf3a6c183f17f9fadd9a9295dc36f0b9482b89fa6f2aba2b3011b2f3166282a7e3b2ed10f68ec824cb647f2e119ce014d31ba987d8d')
+            'd1eb35e93c317a5d0b764cf3a6c183f17f9fadd9a9295dc36f0b9482b89fa6f2aba2b3011b2f3166282a7e3b2ed10f68ec824cb647f2e119ce014d31ba987d8d'
+            'ca19baa5299ef35997473a6dcd3f89c9b2693afabf32b5f9dce2b6527bf9d9b9060c4b59a747a49631c81a117257fd2376eb3bb33f90bb56e9db0577abe5d4bd')
