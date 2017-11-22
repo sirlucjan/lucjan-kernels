@@ -79,9 +79,9 @@ _kyber_disable=y
 pkgbase=linux-bfq-sq-mq-haswell
 # pkgname=('linux-bfq-sq-mq-haswell-kernel' 'linux-bfq-sq-mq-haswell-headers' 'linux-bfq-sq-mq-haswell-docs')
 _srcname=linux-4.14
-pkgver=4.14.1
-#_pkgver=4.14
-__pkgver=4.14.1-rc1
+pkgver=4.14.2
+_pkgver=4.14.1
+__pkgver=4.14.2-rc1
 pkgrel=0.1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
@@ -97,8 +97,8 @@ _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v4.13+.patc
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_pkgver}.xz"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_pkgver}.sign"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_pkgver}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_pkgver}.sign"
         "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.sign"
         "${_lucjanpath}/${_bfq_sq_mq_patch}"
@@ -131,8 +131,8 @@ prepare() {
     cd ${_srcname}
 
     ### Add upstream patch
-        #msg "Add upstream patch"
-        #patch -p1 -i ../patch-${_pkgver}
+        msg "Add upstream patch"
+        patch -p1 -i ../patch-${_pkgver}
         
     ### Add patch from stable-review
         msg "Fix naming schema in EXTRAVERSION"
@@ -146,7 +146,7 @@ prepare() {
             
     ### Patch source with BFQ-SQ-MQ
         msg "Fix naming schema in BFQ-SQ-MQ patch"
-        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 1|g" \
+        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 2|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" ../${_bfq_sq_mq_patch}
         msg "Patching source with BFQ-SQ-MQ patches"
@@ -483,7 +483,9 @@ done
 
 sha512sums=('77e43a02d766c3d73b7e25c4aafb2e931d6b16e870510c22cef0cdb05c3acb7952b8908ebad12b10ef982c6efbe286364b1544586e715cf38390e483927904d8'
             'SKIP'
-            '3b1ce8d56dc48dad09583c7d8e7885d8b334e5161b8dac3b5304b1b8b364a9c79f072b2132c435bd3f578d70f49ca654f21b544ff7713e832e99182878315a26'
+            '2566d2151cb0e0ad706dda3cb815e293d84ecc804cf2891e511a0f28e359b7714a1732add599a268c98108a63ee40200cf76cbda8181d67d0a64511e815202df'
+            'SKIP'
+            '9c187268d662ecd0b96814568b39630a27528e3f9a4b6511f91a310012f7934bbeac46c3014106a3c6a8af15e25cfbe93e1760cdf2c9202c86abacba0228d683'
             'SKIP'
             '264efe19f7cfc27bc2fd2c59b361821ac89e5505e1a55ab23e8a1f93e7095c509cfb8cf6eb2079b8113b7bc3283b2bec5d6d3776a8afd2b258f3688edb1f0615'
             '11dd363137d680d1bde1e332c3829246773e49d5fd0d2ef4ab77723ca0d2ecb3ad80a77a08dca8c4ce817ff0f966709673453e754f15e3e1527f943725d547ff'
