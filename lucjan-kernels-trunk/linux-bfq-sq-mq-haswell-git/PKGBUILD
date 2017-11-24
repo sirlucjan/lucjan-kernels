@@ -79,8 +79,8 @@ _kyber_disable=y
 pkgbase=linux-bfq-sq-mq-haswell-git
 # pkgname=('linux-bfq-sq-mq-haswell-git-kernel' 'linux-bfq-sq-mq-haswell-git-headers' 'linux-bfq-sq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
-pkgver=4.14.1.20.g2fd86a373754
-pkgrel=0.2
+pkgver=4.14.2.0.gf9f0b03dedc1
+pkgrel=1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -324,7 +324,7 @@ build() {
 }
 
 _package-kernel() {
-    pkgdesc='Linux Kernel and modules with the  BFQ-MQ scheduler. Fourth Gen Intel Core i3/i5/i7 optimized.'
+    pkgdesc='Linux Kernel and modules with the  BFQ-SQ-MQ scheduler. Fourth Gen Intel Core i3/i5/i7 optimized.'
     depends=('coreutils' 'linux-firmware' 'mkinitcpio>=0.7')
     optdepends=('crda: to set the correct wireless channels of your country' 'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
     groups=('linux-bfq-sq-mq-haswell-git')
