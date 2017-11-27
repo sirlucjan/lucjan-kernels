@@ -74,6 +74,9 @@ _CFQ_disable=y
 ### Disable Kyber I/O scheduler
 _kyber_disable=y
 
+### Enable MQ scheduling 
+_mq_enable=y
+
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-bfq-sq-mq-haswell
@@ -82,7 +85,7 @@ _srcname=linux-4.14
 pkgver=4.14.2
 _pkgver=4.14.1
 __pkgver=4.14.2-rc1
-pkgrel=0.2
+pkgrel=0.3
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -255,6 +258,13 @@ prepare() {
 		msg "Disabling Kyber I/O scheduler..."
 		sed -i -e s'/^CONFIG_MQ_IOSCHED_KYBER=y/# CONFIG_MQ_IOSCHED_KYBER is not set/' ./.config
 	fi
+	
+	### Enable MQ scheduling
+	if [ -n "$_mq_enable" ]; then
+		msg "Enable MQ scheduling..."
+		sed -i -e s'/^# CONFIG_SCSI_MQ_DEFAULT is not set/CONFIG_SCSI_MQ_DEFAULT=y/' \
+		    -i -e s'/^# CONFIG_DM_MQ_DEFAULT is not set/CONFIG_DM_MQ_DEFAULT=y/' ./.config
+        fi
    
 	if [ "${_kernelname}" != "" ]; then
 		sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
@@ -500,7 +510,7 @@ sha512sums=('77e43a02d766c3d73b7e25c4aafb2e931d6b16e870510c22cef0cdb05c3acb7952b
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             'a1ccc22354a420467fb912f822585ed4573e68f4694f02ab83d7c8e352da88be495acb3cb4c451c27ca0cf0befe5925b8734d37205bb3dfdaf86d2dedef0798f'
             '5ca7ae20245a54caa71fb570d971d6872d4e888f35c6123b93fbca16baf9a0e2500d6ec931f3906e4faecaaca9cad0d593694d9cab617efd0cb7b5fc09c0fa48'
-            'cacf0c4f0548ac2779ae64d216ed87d93a92e9b4fbcaf8ddbdcf934594650a200f28770824eb7a3fce886a614dacb38f3eda5d2e8ac47f695ed9bdc030651274'
+            'bbf738c5a442d102e967dd8bb9c9c6e1e39ec70560e52f9b2b6eba26ceebf54a74eac700f3a9b732e7090749eb6397b8afd33fdfaa1961a2d2be65465b633e85'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
             '6346b66f54652256571ef65da8e46db49a95ac5978ecd57a507c6b2a28aee70bb3ff87045ac493f54257c9965da1046a28b72cb5abb0087204d257f14b91fd74'
