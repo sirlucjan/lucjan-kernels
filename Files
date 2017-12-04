@@ -47,7 +47,6 @@
 │       └── linux.preset
 ├── lucjan-kernels-trunk
 │   ├── linux-bfq-sq-mq-haswell
-│   │   ├── 0001-platform-x86-hp-wmi-Fix-tablet-mode-detection-for-co.patch
 │   │   ├── 60-linux.hook
 │   │   ├── 90-linux.hook
 │   │   ├── 99-linux.hook
@@ -89,4 +88,4 @@
         ├── linux.install
         └── linux.preset
 
-16 directories, 73 files
+16 directories, 72 files
