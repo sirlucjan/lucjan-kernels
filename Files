@@ -52,6 +52,8 @@
 ├── lucjan-kernels-trunk
 │   ├── linux-bfq-sq-mq-haswell
 │   │   ├── 0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
+│   │   ├── 0001-e1000e-Fix-e1000_check_for_copper_link_ich8lan-retur.patch
+│   │   ├── 0002-dccp-CVE-2017-8824-use-after-free-in-DCCP-code.patch
 │   │   ├── 60-linux.hook
 │   │   ├── 90-linux.hook
 │   │   ├── 99-linux.hook
@@ -61,6 +63,8 @@
 │   │   └── linux.preset
 │   └── linux-bfq-sq-mq-haswell-git
 │       ├── 0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
+│       ├── 0001-e1000e-Fix-e1000_check_for_copper_link_ich8lan-retur.patch
+│       ├── 0002-dccp-CVE-2017-8824-use-after-free-in-DCCP-code.patch
 │       ├── 60-linux.hook
 │       ├── 90-linux.hook
 │       ├── 99-linux.hook
@@ -94,4 +98,4 @@
         ├── linux.install
         └── linux.preset
 
-16 directories, 78 files
+16 directories, 82 files
