@@ -82,10 +82,10 @@ _mq_enable=y
 pkgbase=linux-bfq-sq-mq-haswell
 # pkgname=('linux-bfq-sq-mq-haswell-kernel' 'linux-bfq-sq-mq-haswell-headers' 'linux-bfq-sq-mq-haswell-docs')
 _srcname=linux-4.14
-pkgver=4.14.7
-_pkgver=4.14.6
-__pkgver=4.14.7-rc1
-pkgrel=0.1
+pkgver=4.14.8
+_pkgver=4.14.7
+__pkgver=4.14.8-rc1
+pkgrel=0
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -105,7 +105,6 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.sign"
         "${_lucjanpath}/${_bfq_sq_mq_patch}"
-        "${_lucjanpath}/blk-mq-v10/0050-blk-mq-sched-dispatch-from-scheduler-only-after-progress-is-made-on->dispatch.patch"
         "${_lucjanpath}/blk-mq-v10/0051-blk-mq-sched-move-actual-dispatching-into-one-helper.patch"
         "${_lucjanpath}/blk-mq-v10/0052-blk-mq-sbitmap-introduce__sbitmap_for_each_set().patch"
         "${_lucjanpath}/blk-mq-v10/0053-blk-mq-block-kyber-check-if-there-is-request-in-ctx-in-kyber_has_work().patch"
@@ -159,7 +158,7 @@ prepare() {
     
     ### Patch source with BFQ-SQ-MQ
         msg "Fix naming schema in BFQ-SQ-MQ patch"
-        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 7|g" \
+        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 8|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" \
             -i -e "s|NAME = Fearless Coyote|NAME = Petit Gorille|g" ../${_bfq_sq_mq_patch}
@@ -504,12 +503,11 @@ done
 
 sha512sums=('77e43a02d766c3d73b7e25c4aafb2e931d6b16e870510c22cef0cdb05c3acb7952b8908ebad12b10ef982c6efbe286364b1544586e715cf38390e483927904d8'
             'SKIP'
-            'c37b437f740fbb480766149ca1c6ddb5ee763b88b034b9b4eaf3ce000f299545ee19a93638d1a4161ab0c76ec73e1a53b2264b94213d53d6ad7dcda6bee45b8c'
+            '7a0aa00af73fbac34a0f96ebbd977688275538f8f2f3e0ba32ac3f9eb0d02498dd75d4d6481cfdd1236d45616231dd376a453ce8c04663ceaeb5ccc553996251'
             'SKIP'
-            '9d81ee1d0b55b48014da0d1e689ba392e7a27da241bf4d4d0dccc9add2795302693ea63294115ecd862d8a9805758f0215d9210fe0d1a8a8e6b07ba81a8d82ce'
+            'e8efb3eb7e18a778e1839b86140605237d082f50fa578841ab8c91eab0efb6118ba38a404391c3b2897811c1a90236660fcca43cfea9fe0f9bfe7b05cfaba3ee'
             'SKIP'
             '2ae7dbddb05decc17731751bfd1c37308fa88d1acac6080561a3aec27fbe383d79ca91f611e81d8fadcde7507b1d4ed2ab1fbc5cad123a41806bbf2d43d13c52'
-            '11dd363137d680d1bde1e332c3829246773e49d5fd0d2ef4ab77723ca0d2ecb3ad80a77a08dca8c4ce817ff0f966709673453e754f15e3e1527f943725d547ff'
             'ca6a40800668c0fcf478bd1bc555e5a496f5259739594bf83cc4963756b7a9a0a5b406e91f760d35f1bce1268c01d779fe2a7e749eccf9412e826152a5f013ef'
             '1434cc3957ef77fb83c9385a348f36ca43a73459b8995d3061143d1d15b307f944c39abc0eb109d20869c1749348d608c58cf5b92fd81ad65cad2d362e346549'
             '49c8619a96d7145e8fe77fad4394db7b24a73d94c1e01866e4a3bc5b044dbbb59c8aa2db62d72ef8460ec777d88959b545ad6373073fe3fd21016e5fc08c9f3c'
