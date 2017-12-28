@@ -59,7 +59,6 @@
 │       └── linux.preset
 ├── lucjan-kernels-trunk
 │   ├── linux-bfq-sq-mq-haswell
-│   │   ├── 0001-ALSA-usb-audio-Fix-the-missing-ctl-name-suffix-at-pa.patch
 │   │   ├── 0001-Revert-xfrm-Fix-stack-out-of-bounds-read-in-xfrm_sta.patch
 │   │   ├── 0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
 │   │   ├── 0001-e1000e-Fix-e1000_check_for_copper_link_ich8lan-retur.patch
@@ -74,7 +73,6 @@
 │   │   ├── linux.install
 │   │   └── linux.preset
 │   └── linux-bfq-sq-mq-haswell-git
-│       ├── 0001-ALSA-usb-audio-Fix-the-missing-ctl-name-suffix-at-pa.patch
 │       ├── 0001-Revert-xfrm-Fix-stack-out-of-bounds-read-in-xfrm_sta.patch
 │       ├── 0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
 │       ├── 0001-e1000e-Fix-e1000_check_for_copper_link_ich8lan-retur.patch
@@ -114,4 +112,4 @@
         ├── linux.install
         └── linux.preset
 
-16 directories, 98 files
+16 directories, 96 files

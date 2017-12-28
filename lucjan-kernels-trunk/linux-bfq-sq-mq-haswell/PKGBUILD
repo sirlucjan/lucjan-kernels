@@ -79,16 +79,16 @@ _mq_enable=y
 pkgbase=linux-bfq-sq-mq-haswell
 # pkgname=('linux-bfq-sq-mq-haswell-kernel' 'linux-bfq-sq-mq-haswell-headers' 'linux-bfq-sq-mq-haswell-docs')
 _srcname=linux-4.14
-pkgver=4.14.9
-_pkgver=4.14.8
-__pkgver=4.14.9-rc3
-pkgrel=0.7
+pkgver=4.14.10
+_pkgver=4.14.9
+__pkgver=4.14.10-rc1
+pkgrel=0
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf')
-_bfq_sq_mq_ver='20171227'
+_bfq_sq_mq_ver='20171228'
 _bfq_sq_mq_patch="4.14-bfq-sq-mq-git-${_bfq_sq_mq_ver}.patch"
 #_lucjanpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/4.14"
 _lucjanpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/4.14"
@@ -127,8 +127,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         '0002-dccp-CVE-2017-8824-use-after-free-in-DCCP-code.patch'
         '0001-Revert-xfrm-Fix-stack-out-of-bounds-read-in-xfrm_sta.patch'
         '0002-xfrm-Fix-stack-out-of-bounds-read-on-socket-policy-l.patch'
-        '0003-cgroup-fix-css_task_iter-crash-on-CSS_TASK_ITER_PROC.patch'
-        '0001-ALSA-usb-audio-Fix-the-missing-ctl-name-suffix-at-pa.patch')
+        '0003-cgroup-fix-css_task_iter-crash-on-CSS_TASK_ITER_PROC.patch')
         
 _kernelname=${pkgbase#linux} 
 
@@ -141,7 +140,7 @@ prepare() {
         
     ### Add patch from stable-review
         msg "Fix naming schema in EXTRAVERSION"
-        sed -i -e "s|EXTRAVERSION = -rc3|EXTRAVERSION =|g" ../patch-${__pkgver}
+        sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" ../patch-${__pkgver}
 	msg "Add patch from stable-review"  
         patch -p1 -i ../patch-${__pkgver}
     
@@ -165,14 +164,10 @@ prepare() {
     ### Fix https://bugs.archlinux.org/task/56846
         msg "Fix #56846"
         patch -Np1 -i ../0003-cgroup-fix-css_task_iter-crash-on-CSS_TASK_ITER_PROC.patch
-
-    ### Fix https://bugs.archlinux.org/task/56830
-        msg "Fix #56830"
-        patch -Np1 -i ../0001-ALSA-usb-audio-Fix-the-missing-ctl-name-suffix-at-pa.patch
     
     ### Patch source with BFQ-SQ-MQ
         msg "Fix naming schema in BFQ-SQ-MQ patch"
-        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 9|g" \
+        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 10|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" \
             -i -e "s|NAME = Fearless Coyote|NAME = Petit Gorille|g" ../${_bfq_sq_mq_patch}
@@ -202,6 +197,10 @@ prepare() {
     ### Clean tree and copy ARCH config over
 	msg "Running make mrproper to clean source tree"
 	make mrproper
+    
+    ### Fix https://www.spinics.net/lists/stable/msg207374.html
+        msg "Fix execvp: ./sync-check.sh error"
+        chmod +x tools/objtool/sync-check.sh
 
 	cp -Tf ../config .config
         
@@ -509,11 +508,11 @@ done
 
 sha512sums=('77e43a02d766c3d73b7e25c4aafb2e931d6b16e870510c22cef0cdb05c3acb7952b8908ebad12b10ef982c6efbe286364b1544586e715cf38390e483927904d8'
             'SKIP'
-            '62aa92e671cfc9265cf1690e0d64058dfa779400074cd909161d4e49f5313f58c1303ad301cecdbb64ee85d653f0bcb42fa609f25827289aad3bc94561d94390'
+            '8085944e5b8d49b07075776a1604a25ba87efe8b5a8a1a276a75dc47a87de4e487e72d9ace605166be977340b81a10a3cbc25c84b857509da8bba6d9184513fa'
             'SKIP'
-            'a9041d82673ee8dec91d2a123fa0c6295ecc6bd765bb2bcec2d3503bb24ea364e2310b2e3c4ed925525e6c679f5f5478508ce5469f0f0c8fb684735bd797d423'
+            'cd956b56417f8a11973a6fb14816cd0529d7f994739feb2b3c6b858e903340f336a09b72d4656d66c1b69b19d84b44a90dfc1fea1304a460d7f0d43119aaf42f'
             'SKIP'
-            '39ae91b3136d2d0c5440f2096000c5ebae69b8c4bbdc5b0d5947f04d6d1b03d2ab7d41b83d4393e74ece63ccd46c18a07c757eef073281bb058f3fb6fdfb54ae'
+            '8dcabef7d6463eec6a2ac8e19f46a0a10bf90baecb346cd9ad20f1114ab41a95c2457b4fae3aa08cf55a21aad4655797a53392d5f8a94747f3aa88139b074c89'
             'ca6a40800668c0fcf478bd1bc555e5a496f5259739594bf83cc4963756b7a9a0a5b406e91f760d35f1bce1268c01d779fe2a7e749eccf9412e826152a5f013ef'
             '1434cc3957ef77fb83c9385a348f36ca43a73459b8995d3061143d1d15b307f944c39abc0eb109d20869c1749348d608c58cf5b92fd81ad65cad2d362e346549'
             '49c8619a96d7145e8fe77fad4394db7b24a73d94c1e01866e4a3bc5b044dbbb59c8aa2db62d72ef8460ec777d88959b545ad6373073fe3fd21016e5fc08c9f3c'
@@ -534,8 +533,7 @@ sha512sums=('77e43a02d766c3d73b7e25c4aafb2e931d6b16e870510c22cef0cdb05c3acb7952b
             '93131d8ad8b118a1c1bcabce357ba7e61233c99188f2d0123977c436e2932555bde4e19de4ca63ac27c6e9b26d8373fb99b52db18b7518122433616d7060082d'
             '973bf63857968e76d15286aea5add9589e3248b7b70da25629b91618cfdbbd5784cd0d97daccb3168fd369adb41ebd5768788ad25dc54b7a5c0b9f16e07a9d38'
             '39bf2a3eeca5efce6c8214c49fba001a767fa3c94157255451a8c4739a3adeef74f2644a2ab6a7a423a65e76466c02d7c1f124cdddcfce37145fc3be92d8fa6c'
-            '5ad03cf5b0acfa1ca554a0462d83c0be8ddf9974d7248b9ff9a516e68dad0425a205b224ca4cf680428feedcc4e7a1153d5aa12a12abfa96a503e9a0d65c712a'
-            '6f01527ed7a25bf78d7c0515c8726a47bef0e99cf1c90f07d0f6a59e70f12e04260eed2c4ca831fb339d3a027085bcd73f8ab3b1968582f75b688823b18716cb')
+            '5ad03cf5b0acfa1ca554a0462d83c0be8ddf9974d7248b9ff9a516e68dad0425a205b224ca4cf680428feedcc4e7a1153d5aa12a12abfa96a503e9a0d65c712a')
             
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
