@@ -79,8 +79,8 @@ _mq_enable=y
 pkgbase=linux-bfq-sq-mq-haswell-git
 # pkgname=('linux-bfq-sq-mq-haswell-git-kernel' 'linux-bfq-sq-mq-haswell-git-headers' 'linux-bfq-sq-mq-haswell-git-docs')
 _srcname=linux-stable
-pkgver=4.14.9.0.gdad5c1402c57
-pkgrel=4
+pkgver=4.14.10.0.gb8ce8232fcc3
+pkgrel=1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -119,8 +119,7 @@ source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#b
         '0002-dccp-CVE-2017-8824-use-after-free-in-DCCP-code.patch'
         '0001-Revert-xfrm-Fix-stack-out-of-bounds-read-in-xfrm_sta.patch'
         '0002-xfrm-Fix-stack-out-of-bounds-read-on-socket-policy-l.patch'
-        '0003-cgroup-fix-css_task_iter-crash-on-CSS_TASK_ITER_PROC.patch'
-        '0001-ALSA-usb-audio-Fix-the-missing-ctl-name-suffix-at-pa.patch')
+        '0003-cgroup-fix-css_task_iter-crash-on-CSS_TASK_ITER_PROC.patch')
 
 _kernelname=${pkgbase#linux}
         
@@ -153,14 +152,10 @@ prepare() {
     ### Fix https://bugs.archlinux.org/task/56846
         msg "Fix #56846"
         patch -Np1 -i ../0003-cgroup-fix-css_task_iter-crash-on-CSS_TASK_ITER_PROC.patch
-
-    ### Fix https://bugs.archlinux.org/task/56830
-        msg "Fix #56830"
-        patch -Np1 -i ../0001-ALSA-usb-audio-Fix-the-missing-ctl-name-suffix-at-pa.patch
     
     ### Patch source with BFQ-SQ-MQ
         msg "Fix naming schema in BFQ-SQ-MQ patch"
-        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 9|g" \
+        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 10|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" \
             -i -e "s|NAME = Fearless Coyote|NAME = Petit Gorille|g" ../${_bfq_sq_mq_patch}
@@ -516,5 +511,4 @@ sha512sums=('SKIP'
             '93131d8ad8b118a1c1bcabce357ba7e61233c99188f2d0123977c436e2932555bde4e19de4ca63ac27c6e9b26d8373fb99b52db18b7518122433616d7060082d'
             '973bf63857968e76d15286aea5add9589e3248b7b70da25629b91618cfdbbd5784cd0d97daccb3168fd369adb41ebd5768788ad25dc54b7a5c0b9f16e07a9d38'
             '39bf2a3eeca5efce6c8214c49fba001a767fa3c94157255451a8c4739a3adeef74f2644a2ab6a7a423a65e76466c02d7c1f124cdddcfce37145fc3be92d8fa6c'
-            '5ad03cf5b0acfa1ca554a0462d83c0be8ddf9974d7248b9ff9a516e68dad0425a205b224ca4cf680428feedcc4e7a1153d5aa12a12abfa96a503e9a0d65c712a'
-            '6f01527ed7a25bf78d7c0515c8726a47bef0e99cf1c90f07d0f6a59e70f12e04260eed2c4ca831fb339d3a027085bcd73f8ab3b1968582f75b688823b18716cb')
+            '5ad03cf5b0acfa1ca554a0462d83c0be8ddf9974d7248b9ff9a516e68dad0425a205b224ca4cf680428feedcc4e7a1153d5aa12a12abfa96a503e9a0d65c712a')
