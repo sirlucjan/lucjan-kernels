@@ -79,10 +79,10 @@ _mq_enable=y
 pkgbase=linux-bfq-sq-mq-haswell
 # pkgname=('linux-bfq-sq-mq-haswell-kernel' 'linux-bfq-sq-mq-haswell-headers' 'linux-bfq-sq-mq-haswell-docs')
 _srcname=linux-4.14
-pkgver=4.14.10
-_pkgver=4.14.9
-__pkgver=4.14.10-rc1
-pkgrel=0
+pkgver=4.14.11
+_pkgver=4.14.10
+__pkgver=4.14.11-rc1
+pkgrel=0.2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -167,7 +167,7 @@ prepare() {
     
     ### Patch source with BFQ-SQ-MQ
         msg "Fix naming schema in BFQ-SQ-MQ patch"
-        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 10|g" \
+        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 11|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" \
             -i -e "s|NAME = Fearless Coyote|NAME = Petit Gorille|g" ../${_bfq_sq_mq_patch}
@@ -508,9 +508,9 @@ done
 
 sha512sums=('77e43a02d766c3d73b7e25c4aafb2e931d6b16e870510c22cef0cdb05c3acb7952b8908ebad12b10ef982c6efbe286364b1544586e715cf38390e483927904d8'
             'SKIP'
-            '8085944e5b8d49b07075776a1604a25ba87efe8b5a8a1a276a75dc47a87de4e487e72d9ace605166be977340b81a10a3cbc25c84b857509da8bba6d9184513fa'
+            '93b642201235c78ef6c8253ef6338a82f6c38e5b6741c7ec06c3dde84433683809c56fe30aab0117607ab09d3367d1dafbbc81af3353f267676357bf72cd7280'
             'SKIP'
-            'cd956b56417f8a11973a6fb14816cd0529d7f994739feb2b3c6b858e903340f336a09b72d4656d66c1b69b19d84b44a90dfc1fea1304a460d7f0d43119aaf42f'
+            '72582a90d24a003dc7e37c765d2d7a0900cef3ba105f9bbd339d7e87800b39834346e96ca3b31b93d69b8084d336ea07afcb9925840b1fe7f34b7894313f2e64'
             'SKIP'
             '8dcabef7d6463eec6a2ac8e19f46a0a10bf90baecb346cd9ad20f1114ab41a95c2457b4fae3aa08cf55a21aad4655797a53392d5f8a94747f3aa88139b074c89'
             'ca6a40800668c0fcf478bd1bc555e5a496f5259739594bf83cc4963756b7a9a0a5b406e91f760d35f1bce1268c01d779fe2a7e749eccf9412e826152a5f013ef'
@@ -523,7 +523,7 @@ sha512sums=('77e43a02d766c3d73b7e25c4aafb2e931d6b16e870510c22cef0cdb05c3acb7952b
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             'a1ccc22354a420467fb912f822585ed4573e68f4694f02ab83d7c8e352da88be495acb3cb4c451c27ca0cf0befe5925b8734d37205bb3dfdaf86d2dedef0798f'
             '5ca7ae20245a54caa71fb570d971d6872d4e888f35c6123b93fbca16baf9a0e2500d6ec931f3906e4faecaaca9cad0d593694d9cab617efd0cb7b5fc09c0fa48'
-            'f7fece96b096b066b4a8fe42a29419994b5b4c2ec39b0d100a0f092240749141e3d6afd0cfbbdb8e65745faa350d87e8f545b4f285ad39a20e5d03a6e1517750'
+            '099a4f8a02d4bf04aab7a4a80e87de46e99c05f789b0df1a1a5941ea6f651ad2d679e06e5bd34a5f876f75a7238d7b7b9a84064709bf06186cfbbb08e74c2985'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
             '6346b66f54652256571ef65da8e46db49a95ac5978ecd57a507c6b2a28aee70bb3ff87045ac493f54257c9965da1046a28b72cb5abb0087204d257f14b91fd74'
