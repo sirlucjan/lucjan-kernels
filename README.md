@@ -54,9 +54,7 @@ makepkg -srci
 
 # Enable bfq-mq
 
-For now, you can use `sudo tee /sys/block/sda/queue/scheduler <<< bfq-mq` 
-
-to enable "bfq-mq".
+For now, you can use `sudo tee /sys/block/sda/queue/scheduler <<< bfq-mq` to enable "bfq-mq".
 
 You can also add this to your udev rules:
 ```
@@ -65,9 +63,7 @@ ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue
 # Rotational disks
 ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq-mq"
 ```
-and
-
-`sudo udevadm control --reload && sudo udevadm trigger`
+and run a command `sudo udevadm control --reload && sudo udevadm trigger`
 
 
 
