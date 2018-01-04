@@ -79,8 +79,8 @@ _mq_enable=y
 pkgbase=linux-bfq-sq-mq-haswell-git
 # pkgname=('linux-bfq-sq-mq-haswell-git-kernel' 'linux-bfq-sq-mq-haswell-git-headers' 'linux-bfq-sq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
-pkgver=4.14.11.0.g0d59679df5b5
-pkgrel=1
+pkgver=4.14.11.15.g732141e47ee6
+pkgrel=0
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -117,7 +117,6 @@ source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.gi
         '0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch'
         '0002-e1000e-Fix-e1000_check_for_copper_link_ich8lan-retur.patch'
         '0003-dccp-CVE-2017-8824-use-after-free-in-DCCP-code.patch'
-        '0004-Revert-xfrm-Fix-stack-out-of-bounds-read-in-xfrm_sta.patch'
         '0005-xfrm-Fix-stack-out-of-bounds-read-on-socket-policy-l.patch'
         '0006-cgroup-fix-css_task_iter-crash-on-CSS_TASK_ITER_PROC.patch')
 
@@ -150,7 +149,6 @@ prepare() {
   
     ### Fix https://bugs.archlinux.org/task/56605
         msg "Fix #56605"
-        patch -Np1 -i ../0004-Revert-xfrm-Fix-stack-out-of-bounds-read-in-xfrm_sta.patch
         patch -Np1 -i ../0005-xfrm-Fix-stack-out-of-bounds-read-on-socket-policy-l.patch
   
     ### Fix https://bugs.archlinux.org/task/56846
@@ -159,7 +157,7 @@ prepare() {
     
     ### Patch source with BFQ-SQ-MQ
         msg "Fix naming schema in BFQ-SQ-MQ patch"
-        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 11|g" \
+        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 12|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" \
             -i -e "s|NAME = Fearless Coyote|NAME = Petit Gorille|g" ../${_bfq_sq_mq_patch}
@@ -513,6 +511,5 @@ sha512sums=('SKIP'
             '05f2c577450cfeae4b66a7d022a9dd0dab0dbf36e9738423efa8f45aaf0755b48a89f1f88b042946205e681458f76c5c5177c16869094839b7b234e0e2b27511'
             'fd9bdc818326fa36c9f1813d0d1821de5e325b646e1c307c197ad38bada7f298d35b4bc1bbf1c2854689f3ba71144879e799a1123037caccd6e3f64edfc22d54'
             '814517d08c35cc886fe3382619d41107d6139a703c27186d0ce58e187eaf4e84891572e58246750ac8602555794ed6f74d946565b98860787a0aa617fb946dda'
-            '7a5a6edf0879e59437b03166882e5afdc2dea9087819b1ada3aee22861a041896e305f136c61f0b8365cddff34852620fe2b3c51b5408d4c243a840b3dfe3059'
             'e6605e923c967b5f8db619868b15ea5b0d4254c62cf12bb920f38659933d6ca25a643d3e044c4915a8309071461f5f14c55d0aa0329c113bce4780d4fa3afbb7'
             '0dec1482efe6e5d762a3061f365e43191484f055b738112452b8ca39e162b935d99cf16b25c0b253d6b532fabc54bde2f5c09be91887156ed6ae06d1558f94b9')
