@@ -80,7 +80,7 @@ pkgbase=linux-bfq-sq-mq-haswell-git
 # pkgname=('linux-bfq-sq-mq-haswell-git-kernel' 'linux-bfq-sq-mq-haswell-git-headers' 'linux-bfq-sq-mq-haswell-git-docs')
 _srcname=linux-stable
 pkgver=4.14.13.0.gb8447222eb20
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -458,6 +458,9 @@ _package-headers() {
 
     # remove files already in linux-bfq-sq-mq-haswell-git-docs package
     rm -r "${_builddir}/Documentation"
+    
+    # remove now broken symlinks
+    find -L "${_builddir}" -type l -printf 'Removing %P\n' -delete
 
     # Fix permissions
     chmod -R u=rwX,go=rX "${_builddir}"

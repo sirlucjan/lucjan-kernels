@@ -82,7 +82,7 @@ _srcname=linux-4.14
 pkgver=4.14.13
 _pkgver=4.14.12
 __pkgver=4.14.13-rc1
-pkgrel=0.2
+pkgrel=0.3
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -474,6 +474,9 @@ _package-headers() {
 
     # remove files already in linux-bfq-sq-mq-haswell-docs package
     rm -r "${_builddir}/Documentation"
+    
+    # remove now broken symlinks
+    find -L "${_builddir}" -type l -printf 'Removing %P\n' -delete
 
     # Fix permissions
     chmod -R u=rwX,go=rX "${_builddir}"
