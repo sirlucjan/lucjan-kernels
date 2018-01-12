@@ -4,7 +4,7 @@ In-Reply-To: <0b716bdb952b678d9bb5eb32198dbc82ec492df2.1515173964.git.jan.steffe
 References: <0b716bdb952b678d9bb5eb32198dbc82ec492df2.1515173964.git.jan.steffens@gmail.com>
 From: Benjamin Poirier <bpoirier@suse.com>
 Date: Mon, 11 Dec 2017 16:26:40 +0900
-Subject: [PATCH 2/6] e1000e: Fix e1000_check_for_copper_link_ich8lan return
+Subject: [PATCH 2/5] e1000e: Fix e1000_check_for_copper_link_ich8lan return
  value.
 
 e1000e_check_for_copper_link() and e1000_check_for_copper_link_ich8lan()
