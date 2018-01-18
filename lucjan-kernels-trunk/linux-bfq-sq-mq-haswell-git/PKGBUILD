@@ -79,8 +79,8 @@ _mq_enable=y
 pkgbase=linux-bfq-sq-mq-haswell-git
 # pkgname=('linux-bfq-sq-mq-haswell-git-kernel' 'linux-bfq-sq-mq-haswell-git-headers' 'linux-bfq-sq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
-pkgver=4.14.14.0.g9c0bf9847171
-pkgrel=1
+pkgver=4.14.14.16.gf323bae54d0f
+pkgrel=0
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -156,7 +156,7 @@ prepare() {
         patch -Np1 -i ../0009-bfq-sq-mq-fix-patching-error-with-20180109.patch
         msg "Fix naming schema in BFQ-SQ-MQ patch"
         sed -i -e "s|PATCHLEVEL = 15|PATCHLEVEL = 14|g" \
-            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 14|g" \
+            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 15|g" \
             -i -e "s|EXTRAVERSION = -rc7|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION = -bfq-rc7|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION = -bfq-mq-rc7|EXTRAVERSION =|g" \
