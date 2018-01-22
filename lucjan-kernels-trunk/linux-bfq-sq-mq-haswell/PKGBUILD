@@ -79,10 +79,10 @@ _mq_enable=y
 pkgbase=linux-bfq-sq-mq-haswell
 # pkgname=('linux-bfq-sq-mq-haswell-kernel' 'linux-bfq-sq-mq-haswell-headers' 'linux-bfq-sq-mq-haswell-docs')
 _srcname=linux-4.14
-pkgver=4.14.14
-_pkgver=4.14.13
-__pkgver=4.14.14-rc1
-pkgrel=0.5
+pkgver=4.14.15
+_pkgver=4.14.14
+__pkgver=4.14.15-rc1
+pkgrel=0.3
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -126,8 +126,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         '0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch'
         '0002-dccp-CVE-2017-8824-use-after-free-in-DCCP-code.patch'
         '0003-xfrm-Fix-stack-out-of-bounds-read-on-socket-policy-l.patch'
-        '0004-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch'
-        '0005-tools-objtool-makefile-don-t-assume-sync-check.sh-is-executable.patch')
+        '0004-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch')
         
 _kernelname=${pkgbase#linux} 
 
@@ -160,16 +159,12 @@ prepare() {
         msg "Fix #56711"
         patch -Np1 -i ../0004-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch
     
-    ### Fix https://www.spinics.net/lists/stable/msg207374.html
-        msg "Fix execvp: ./sync-check.sh error"
-        patch -Np1 -i ../0005-tools-objtool-makefile-don-t-assume-sync-check.sh-is-executable.patch
-    
     ### Patch source with BFQ-SQ-MQ
         msg "Fix patching with 20180109"
         patch -Np1 -i ../0009-bfq-sq-mq-fix-patching-error-with-20180109.patch
         msg "Fix naming schema in BFQ-SQ-MQ patch"
         sed -i -e "s|PATCHLEVEL = 15|PATCHLEVEL = 14|g" \
-            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 14|g" \
+            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 15|g" \
             -i -e "s|EXTRAVERSION = -rc7|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION = -bfq-rc7|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION = -bfq-mq-rc7|EXTRAVERSION =|g" \
@@ -510,9 +505,9 @@ done
 
 sha512sums=('77e43a02d766c3d73b7e25c4aafb2e931d6b16e870510c22cef0cdb05c3acb7952b8908ebad12b10ef982c6efbe286364b1544586e715cf38390e483927904d8'
             'SKIP'
-            '6ae473fbed193a2997e9d3f02ef9c1b5a1bc6f2464ef32a4bc22306659f5d978ab64e531b3488bf8266732043868f1b14183e463c17020d1dc95c8cf70343415'
+            'abc13c99eb85b2bd25f3ac07fccdad52a801118a86d3cd153a8ca6254730e5604e34261e98945352b23cf0e0a0317074a5008701d1240cc958ef4199bffd1ab6'
             'SKIP'
-            '0ab3c78f8fe9f005ed1bb29fb3b5a063a2539fb3acb90af8ab17078310bc545873de5c9cace9ed2f58f4176f3e966c9c3f13a8791bd176e458d841791dcf6eea'
+            'f43025886311c296b18cbe84d2007d6c9b74742d94e1f9559fab832733fb7ac4dd41d6f3d1ec23354284bc88f9c1b726a6f4c0f78fbfaa512427281167da77d1'
             'SKIP'
             'b19f4c6c843820822242a6da7d183f84fcab2268bc4db8c55ea3d54a49228118bfb11cba83b7639ff7a74ba22b94ad34585cebdee653f84687c98939630fc5d9'
             'e1819903787241db1fc7cf4fb7682936185c73ef7ba842f59b94f2d56ef2ceab3df42344df3cb226060c09257d98e9a861bc8f7a7debc0a9f0936022022fc3ba'
@@ -534,8 +529,7 @@ sha512sums=('77e43a02d766c3d73b7e25c4aafb2e931d6b16e870510c22cef0cdb05c3acb7952b
             'f665daaec89b15d3a4cf2cabaf2b423dcda5e005860275753575f6bbed6815c3f17558b24da01ce6f6f0aeba900c506c32efa50754592625f3b513c7f14aea62'
             '2ab17dfa1d37a73441f2e42883358763db648c5b863e76a8d7b3b344c1b293ffee5f72c8ed1f8219cec8c8419898fac59b21e0b6bf47daee17e426b18d907df9'
             '24dccb21b187f331955d6f4d992b2ccd9cbf27acd83e4ff417921e200a1ebc4f52ec9732180a6d3922f86d2422ab0047558c62b76253e6f81983f26d0ae10f76'
-            'bd0a758c7cc185cf5f29ea1d0a8964d12592c45cd9560d1f0508ad0dc102920e4f45aaa6921e58f145daea211340e8884f530a07c8da76f12af817c812b021dc'
-            '04a80e7018ba3d4f2d69f642c82673b2364c7096fa0f3dd7c086e55e21944cbd77153469ad3c1bc277b174e8087c69540710135f8e6d5b5775e43c73f0aae059')
+            'bd0a758c7cc185cf5f29ea1d0a8964d12592c45cd9560d1f0508ad0dc102920e4f45aaa6921e58f145daea211340e8884f530a07c8da76f12af817c812b021dc')
             
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds

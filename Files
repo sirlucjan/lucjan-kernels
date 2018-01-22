@@ -57,7 +57,6 @@
 │   │   ├── 0002-dccp-CVE-2017-8824-use-after-free-in-DCCP-code.patch
 │   │   ├── 0003-xfrm-Fix-stack-out-of-bounds-read-on-socket-policy-l.patch
 │   │   ├── 0004-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch
-│   │   ├── 0005-tools-objtool-makefile-don-t-assume-sync-check.sh-is-executable.patch
 │   │   ├── 60-linux.hook
 │   │   ├── 90-linux.hook
 │   │   ├── 99-linux.hook
@@ -104,4 +103,4 @@
 │       └── PKGBUILD
 └── README.md
 
-16 directories, 88 files
+16 directories, 87 files
