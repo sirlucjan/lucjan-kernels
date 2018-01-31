@@ -153,7 +153,7 @@ prepare() {
         patch -Np1 -i ../0009-bfq-sq-mq-fix-patching-error-with-20180109.patch
         msg "Fix naming schema in BFQ-SQ-MQ patch"
         sed -i -e "s|PATCHLEVEL = 15|PATCHLEVEL = 14|g" \
-            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 15|g" \
+            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 16|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" \
             -i -e "s|NAME = Fearless Coyote|NAME = Petit Gorille|g" ../${_bfq_sq_mq_patch}
