@@ -73,7 +73,7 @@ _mq_enable=y
 pkgbase=linux-bfq-sq-mq-haswell
 # pkgname=('linux-bfq-sq-mq-haswell-kernel' 'linux-bfq-sq-mq-haswell-headers' 'linux-bfq-sq-mq-haswell-docs')
 _srcname=linux-4.15
-pkgver=4.15
+pkgver=4.15.1
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
@@ -89,8 +89,8 @@ _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v4.13+.patc
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.sign"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.sign"
         "${_lucjanpath}/${_bfq_sq_mq_patch}"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "${_gcc_path}/${_gcc_patch}"
@@ -113,8 +113,8 @@ prepare() {
     cd ${_srcname}
 
     ### Add upstream patch
-        #msg "Add upstream patch"
-        #patch -p1 -i ../patch-${pkgver}
+        msg "Add upstream patch"
+        patch -p1 -i ../patch-${pkgver}
     
     ### Disable USER_NS for non-root users by default
         msg "Disable USER_NS for non-root users by default"
@@ -126,7 +126,8 @@ prepare() {
 
     ### Patch source with BFQ-SQ-MQ
         msg "Fix naming schema in BFQ-SQ-MQ patch"
-        sed -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
+        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 1|g" \
+            -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" ../${_bfq_sq_mq_patch}
         msg "Patching source with BFQ-SQ-MQ patches"
         patch -Np1 -i ../${_bfq_sq_mq_patch}
@@ -447,6 +448,8 @@ for _p in ${pkgname[@]}; do
 done
 
 sha512sums=('c00d92659df815a53dcac7dde145b742b1f20867d380c07cb09ddb3295d6ff10f8931b21ef0b09d7156923a3957b39d74d87c883300173b2e20690d2b4ec35ea'
+            'SKIP'
+            'd0ffcf6f8311a9b4cfa42cd07c24429af4e2e735c9a841de2baa206873652a42aa4853f19fecc82a2fcf464a39b7a62249c940287a040c4a310e4d024ae5d55f'
             'SKIP'
             'd289249de5da102ecd690fa47a5a5b8be1cc2ba1b08e6846488dad61e5ea3e8c166fa569a795edfa1a8ef0d80ae01afeef9c94785a4efeab17ec959bdcc44ac3'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
