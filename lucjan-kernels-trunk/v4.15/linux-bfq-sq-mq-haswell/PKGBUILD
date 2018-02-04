@@ -296,7 +296,7 @@ END
 }
 
 build() {
-cd ${_srcname}
+  cd ${_srcname}
 
   make ${MAKEFLAGS} LOCALVERSION= bzImage modules
 }

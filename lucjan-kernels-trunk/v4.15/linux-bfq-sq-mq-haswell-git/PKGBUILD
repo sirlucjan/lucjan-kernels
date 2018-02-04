@@ -153,10 +153,6 @@ prepare() {
 	msg "Running make mrproper to clean source tree"
 	make mrproper
 	
-	### Clean tree and copy ARCH config over
-	msg "Running make mrproper to clean source tree"
-	make mrproper
-	
 	cat ../config - >.config <<END
 CONFIG_LOCALVERSION="${_kernelname}"
 CONFIG_LOCALVERSION_AUTO=n
