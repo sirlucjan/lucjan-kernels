@@ -79,10 +79,10 @@ _mq_enable=y
 pkgbase=linux-bfq-sq-mq-haswell
 # pkgname=('linux-bfq-sq-mq-haswell-kernel' 'linux-bfq-sq-mq-haswell-headers' 'linux-bfq-sq-mq-haswell-docs')
 _srcname=linux-4.14
-pkgver=4.14.17
-_pkgver=4.14.16
-__pkgver=4.14.17-rc1
-pkgrel=0.1
+pkgver=4.14.18
+_pkgver=4.14.17
+__pkgver=4.14.18-rc1
+pkgrel=0
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -163,7 +163,7 @@ prepare() {
         patch -Np1 -i ../0009-bfq-sq-mq-fix-patching-error-with-20180109.patch
         msg "Fix naming schema in BFQ-SQ-MQ patch"
         sed -i -e "s|PATCHLEVEL = 15|PATCHLEVEL = 14|g" \
-            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 17|g" \
+            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 18|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" \
             -i -e "s|NAME = Fearless Coyote|NAME = Petit Gorille|g" ../${_bfq_sq_mq_patch}
@@ -503,9 +503,9 @@ done
 
 sha512sums=('77e43a02d766c3d73b7e25c4aafb2e931d6b16e870510c22cef0cdb05c3acb7952b8908ebad12b10ef982c6efbe286364b1544586e715cf38390e483927904d8'
             'SKIP'
-            '7ba492011915a356ea696a6ae2269ff85725f726f6dd382973ceb417ac3289c7b4384bdffbde8ddea04b386126e07a3ea3aacf18253db4fcbc461e7c7e75d371'
+            'fd785f0ab864ef4d2b18041183d867fb3a00e6d8718cb016d61a5c6de9f29f6653678ae6cc72593224da3e1bc44cc061d285a2f426ca1d62b4eb571549c440e3'
             'SKIP'
-            '6c7d9376f62fca5f856063fe10b3323e78e346bd684029f3c615be9d25f634c9fbcd7ecdd5a03ffb58169a94545ade0dbdc9c95347e382cb6f8221b12aef0fae'
+            '56e0cad72ed91e436e4adf43eed9df7e441f8a7f9885a0d33662b3180bf6b99a12e415fa89796b0680521b92a44ab664bd67424da8707786163aa0bd0b52aec5'
             'SKIP'
             'd289249de5da102ecd690fa47a5a5b8be1cc2ba1b08e6846488dad61e5ea3e8c166fa569a795edfa1a8ef0d80ae01afeef9c94785a4efeab17ec959bdcc44ac3'
             'e1819903787241db1fc7cf4fb7682936185c73ef7ba842f59b94f2d56ef2ceab3df42344df3cb226060c09257d98e9a861bc8f7a7debc0a9f0936022022fc3ba'
