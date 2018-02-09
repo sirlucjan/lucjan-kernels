@@ -76,7 +76,7 @@ _srcname=linux-4.15
 pkgver=4.15.3
 _pkgver=4.15.2
 __pkgver=4.15.3-rc1
-pkgrel=0.3
+pkgrel=0.4
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -97,6 +97,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.sign"
         "${_lucjanpath}/${_bfq_sq_mq_patch}"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
+        "${_lucjanpath}/0700-block-bfq-fixes.patch"
+        "${_lucjanpath}/bfq-paolo-v4/0800-block-bfq-add-requeue-request-hook.patch"
         "${_gcc_path}/${_gcc_patch}"
          # the main kernel config files
         'config'
@@ -139,6 +141,11 @@ prepare() {
     ### Fix https://bugs.archlinux.org/task/57327
         msg "Fix #57327"
         patch -Np1 -i ../0003-ssb-Do-not-disable-PCI-host-on-non-Mips.patch
+    
+    ### Add block-bfq fixes
+        msg "Add block-bfq fixes"
+        patch -Np1 -i ../0700-block-bfq-fixes.patch
+        patch -Np1 -i ../0800-block-bfq-add-requeue-request-hook.patch
     
     ### Patch source with BFQ-SQ-MQ
         msg "Fix naming schema in BFQ-SQ-MQ patch"
@@ -469,6 +476,8 @@ sha512sums=('c00d92659df815a53dcac7dde145b742b1f20867d380c07cb09ddb3295d6ff10f89
             'SKIP'
             '21ecaca7cd389d0806d5f1c28f0f29ec820af30d8f33c578f502c6136e19e079592b3f018e27be3f5476367250f10936872261791e1c2316453fe42236882340'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
+            '042a7b630b6001cd86801565084458fe689db499d4520a5f8c5a302fe120e4345e83743e0d3a3ef8095b35c5640805306a3ba58d2e9e06835e677ece5402f4b0'
+            '3db3c8278fc3ea1ffa9f734df76ba38a3dd993a5eef46cbe26c155ea8e457d688dbde757dfac7915e621b5e81667053ca26ba6f3ca85c45fdac00445ab890b0e'
             '5ca7ae20245a54caa71fb570d971d6872d4e888f35c6123b93fbca16baf9a0e2500d6ec931f3906e4faecaaca9cad0d593694d9cab617efd0cb7b5fc09c0fa48'
             'c8ca43b930e23d85603f1f82957bd24764dc918278bf543cc6022737c8f4ed8d7e8aed1a32023853f84be534acf94844c99a0ed7de4ea17d4275c645dfd74d5a'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
