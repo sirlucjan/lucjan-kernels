@@ -76,7 +76,7 @@ _srcname=linux-4.15
 pkgver=4.15.2
 _pkgver=4.15.1
 __pkgver=4.15.2-rc1
-pkgrel=0.5
+pkgrel=0.6
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -109,7 +109,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
          # standard config files for mkinitcpio ramdisk
         'linux.preset'
         '0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch'
-        '0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch')
+        '0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch'
+        '0003-ssb-Do-not-disable-PCI-host-on-non-Mips.patch')
         
 _kernelname=${pkgbase#linux}
 : ${_kernelname:=-linux-bfq-sq-mq-haswell}
@@ -134,6 +135,10 @@ prepare() {
     ### Fix https://bugs.archlinux.org/task/56711
         msg "Fix #56711"
         patch -Np1 -i ../0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch
+    
+    ### Fix https://bugs.archlinux.org/task/57327
+        msg "Fix #57327"
+        patch -Np1 -i ../0003-ssb-Do-not-disable-PCI-host-on-non-Mips.patch
     
     ### Patch source with BFQ-SQ-MQ
         msg "Fix naming schema in BFQ-SQ-MQ patch"
@@ -465,13 +470,14 @@ sha512sums=('c00d92659df815a53dcac7dde145b742b1f20867d380c07cb09ddb3295d6ff10f89
             '21ecaca7cd389d0806d5f1c28f0f29ec820af30d8f33c578f502c6136e19e079592b3f018e27be3f5476367250f10936872261791e1c2316453fe42236882340'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '5ca7ae20245a54caa71fb570d971d6872d4e888f35c6123b93fbca16baf9a0e2500d6ec931f3906e4faecaaca9cad0d593694d9cab617efd0cb7b5fc09c0fa48'
-            'eaa5b315670ea4883fc72654ec019ed48aab90d2279d98f602ad08aa4bb33088191f65d71901686f8f0f00d348521f0bc208e64394ebf852ceca64098a5e7f54'
+            'c8ca43b930e23d85603f1f82957bd24764dc918278bf543cc6022737c8f4ed8d7e8aed1a32023853f84be534acf94844c99a0ed7de4ea17d4275c645dfd74d5a'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
             '6346b66f54652256571ef65da8e46db49a95ac5978ecd57a507c6b2a28aee70bb3ff87045ac493f54257c9965da1046a28b72cb5abb0087204d257f14b91fd74'
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf'
-            'c257820d21cbdbc763386cd02d7b15175a7ee7c40b89e646dcffc5b392e818d594ab4989db56ef97a8773ce402ec44f110c509af8a1d823356ae046b6521c2ef'
-            '56ce6b6edb1889343b6b8e7940bb31fac20b74da6b6e2bf170b9acf9723af54323f1f350262fe6c1c8ddcc0dee845ca2b78519083da5934c888ec472ede5dd10')
+            'b436cab8166c03a5988d63a921dcac490510707f936d91f1ee0456cac9d7b5ee90c5d24bdb404f9e8f56d3822af494d3b7598f012a72dc65c3e8371f7710bc28'
+            '55a75798d9b4c649d39e13cf9e518d1b02bafe0a5021371f1825d2f18e2e2b4693f532532c40e2078f6b0a3dcb2455bc8a0578ee29f57c596d08b9a08e3cba73'
+            'e20a14eae49cb9f4a0f2abca056f954a6ce4a05a09f6dc5fa52ad5d7792b72e51aeec854d262a65652418f38610a5ccc73f59e2a46b7357a3c22bbf8ceb2aa9d')
             
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
