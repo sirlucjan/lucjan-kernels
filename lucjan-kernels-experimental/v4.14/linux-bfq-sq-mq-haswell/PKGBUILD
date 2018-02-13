@@ -79,8 +79,8 @@ _mq_enable=y
 pkgbase=linux-bfq-sq-mq-haswell
 # pkgname=('linux-bfq-sq-mq-haswell-kernel' 'linux-bfq-sq-mq-haswell-headers' 'linux-bfq-sq-mq-haswell-docs')
 _srcname=linux-4.14
-pkgver=4.14.18
-pkgrel=2
+pkgver=4.14.19
+pkgrel=1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -147,13 +147,13 @@ prepare() {
     ### Fix https://bugs.archlinux.org/task/56711
         msg "Fix #56711"
         patch -Np1 -i ../0004-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch
-
+    
     ### Patch source with BFQ-SQ-MQ
         msg "Fix patching with 20180109"
         patch -Np1 -i ../0009-bfq-sq-mq-fix-patching-error-with-20180109.patch
         msg "Fix naming schema in BFQ-SQ-MQ patch"
         sed -i -e "s|PATCHLEVEL = 15|PATCHLEVEL = 14|g" \
-            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 18|g" \
+            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 19|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" \
             -i -e "s|NAME = Fearless Coyote|NAME = Petit Gorille|g" ../${_bfq_sq_mq_patch}
@@ -174,8 +174,8 @@ prepare() {
         for p in "${srcdir}"/*-blk-mq*.patch*; do 
         msg " $p" 
         patch -Np1 -i "$p"; done
-        fi     
-    
+        fi    
+   
     ### Patch source to enable more gcc CPU optimizatons via the make nconfig
         msg "Patching source with gcc patch to enable more cpus types"
 	patch -Np1 -i ../${_gcc_patch}
@@ -493,7 +493,7 @@ done
 
 sha512sums=('77e43a02d766c3d73b7e25c4aafb2e931d6b16e870510c22cef0cdb05c3acb7952b8908ebad12b10ef982c6efbe286364b1544586e715cf38390e483927904d8'
             'SKIP'
-            '3582494199ecb65e5c7a908a87e69c97005640f857c54487ff4a0cbd749c505d8d114fb9d4a01e081ab6e7982fc39b8c7077e6b4cc7e52bcdb904cffea637e62'
+            'e36c1571872965e419a46102ba17d0ed6a7dc004b6355e29d2154ce9653bceb949c92b7eed527bede7085c6acc3c0829ff2935cc038aa90ea17f44a50b6954b0'
             'SKIP'
             '21ecaca7cd389d0806d5f1c28f0f29ec820af30d8f33c578f502c6136e19e079592b3f018e27be3f5476367250f10936872261791e1c2316453fe42236882340'
             'e1819903787241db1fc7cf4fb7682936185c73ef7ba842f59b94f2d56ef2ceab3df42344df3cb226060c09257d98e9a861bc8f7a7debc0a9f0936022022fc3ba'
