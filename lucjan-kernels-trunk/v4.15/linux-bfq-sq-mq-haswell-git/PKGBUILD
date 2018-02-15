@@ -74,7 +74,7 @@ pkgbase=linux-bfq-sq-mq-haswell-git
 # pkgname=('linux-bfq-sq-mq-haswell-git-kernel' 'linux-bfq-sq-mq-haswell-git-headers' 'linux-bfq-sq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
 pkgver=4.15.3.88.gcc4b654d33e8
-pkgrel=0.2
+pkgrel=0.3
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -104,7 +104,8 @@ source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.gi
          # standard config files for mkinitcpio ramdisk
         'linux.preset'
         '0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch'
-        '0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch')
+        '0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch'
+        '0003-x86-xen-init-gs-very-early-to-avoid-page-faults-with.patch')
 
 _kernelname=${pkgbase#linux}
 : ${_kernelname:=-linux-bfq-sq-mq-haswell-git}
@@ -129,6 +130,10 @@ prepare() {
     ### Fix https://bugs.archlinux.org/task/56711
         msg "Fix #56711"
         patch -Np1 -i ../0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch
+    
+    ### Fix https://bugs.archlinux.org/task/57500
+        msg "Fix #57500"       
+        patch -Np1 -i ../0003-x86-xen-init-gs-very-early-to-avoid-page-faults-with.patch
     
     ### Add block-bfq fixes
         msg "Add block-bfq fixes"
@@ -467,5 +472,6 @@ sha512sums=('SKIP'
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
             '6346b66f54652256571ef65da8e46db49a95ac5978ecd57a507c6b2a28aee70bb3ff87045ac493f54257c9965da1046a28b72cb5abb0087204d257f14b91fd74'
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf'
-            '38f0143734ed56d406d72f58c1112f4cc1caa97a65c2e31882bd0b0d3a3843df51d02b4aa923d361de47eac9e5cd9f469d5fc2b2ec26c965dfd04e0a426d3f89'
-            '0c82b63b0f7982403b68cfa031abdd778dd5d4f23f385e43487a04b0141856f5ae5a9ac381ded4305ef10d7cad1146f4c27cce4c5c2e5cb0777240871bb77363')
+            'dcb84d154724d63ffa21d1110927e155632be0fbae271cafd43e4e18ed2f7065e63d7a1b5ebc8a74cfe4448c13e3fb4918a0fbb5bb73eb514e5cd6422bde0a74'
+            'a281a5addc874d93050473c6125fbd6e3d61b4030c16d38b490627fb12788bcd4ba45ec10bf791accbfa6c42219f9dac2b1410e2b0ada0c094df7e8e0a368c92'
+            '47a0feb68fe8c54cd5b1ede52dc1c42ffa0a5db851af94fb075a557b53a9b7d5a3877d61fb671e6c65941ae38945545754c104163b3b6ca1f8be71550cf3db8e')
