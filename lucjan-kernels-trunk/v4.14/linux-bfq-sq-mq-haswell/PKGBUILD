@@ -82,7 +82,7 @@ _srcname=linux-4.14
 pkgver=4.14.20
 _pkgver=4.14.19
 __pkgver=4.14.20-rc1
-pkgrel=0.3
+pkgrel=0.4
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -102,6 +102,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.sign"
         "${_lucjanpath}/${_bfq_sq_mq_patch}"
+        "${_lucjanpath}/0699-block-bfq-fixes.patch"
         "${_lucjanpath}/0009-bfq-sq-mq-fix-patching-error-with-20180109.patch"
         "${_lucjanpath}/blk-mq-v10/0051-blk-mq-sched-move-actual-dispatching-into-one-helper.patch"
         "${_lucjanpath}/blk-mq-v10/0052-blk-mq-sbitmap-introduce__sbitmap_for_each_set().patch"
@@ -151,6 +152,10 @@ prepare() {
     ### Fix https://bugs.archlinux.org/task/56711
         msg "Fix #56711"
         patch -Np1 -i ../0003-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch
+    
+    ### Add block-bfq fixes
+        msg "Add block-bfq fixes"
+        patch -Np1 -i ../0699-block-bfq-fixes.patch
     
     ### Patch source with BFQ-SQ-MQ
         msg "Fix patching with 20180109"
@@ -502,6 +507,7 @@ sha512sums=('77e43a02d766c3d73b7e25c4aafb2e931d6b16e870510c22cef0cdb05c3acb7952b
             '2a890558082547a1d121efe6d9bff4d3463e848e47df1ffe5f8de84bbad1ee6f7b50ba700aec805f89f17060f22ae2f0cb4cf196c72d2293797fd0f967c1322f'
             'SKIP'
             '21ecaca7cd389d0806d5f1c28f0f29ec820af30d8f33c578f502c6136e19e079592b3f018e27be3f5476367250f10936872261791e1c2316453fe42236882340'
+            '90cf4b5681b9aad4b4f3afceef30de3bd4194ceea5c3a142d0b6ec608c4e12aae1a4918c47eb67e3097b6b771b140f1aa5bcec84546d3f86d552678ee0299fbf'
             'e1819903787241db1fc7cf4fb7682936185c73ef7ba842f59b94f2d56ef2ceab3df42344df3cb226060c09257d98e9a861bc8f7a7debc0a9f0936022022fc3ba'
             'ca6a40800668c0fcf478bd1bc555e5a496f5259739594bf83cc4963756b7a9a0a5b406e91f760d35f1bce1268c01d779fe2a7e749eccf9412e826152a5f013ef'
             '1434cc3957ef77fb83c9385a348f36ca43a73459b8995d3061143d1d15b307f944c39abc0eb109d20869c1749348d608c58cf5b92fd81ad65cad2d362e346549'
