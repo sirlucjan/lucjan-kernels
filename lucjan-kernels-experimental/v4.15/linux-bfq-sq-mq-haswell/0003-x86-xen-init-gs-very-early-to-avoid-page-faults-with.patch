@@ -4,7 +4,7 @@ In-Reply-To: <44c5097b2711429f0d49d138681f67157982e729.1518653356.git.jan.steffe
 References: <44c5097b2711429f0d49d138681f67157982e729.1518653356.git.jan.steffens@gmail.com>
 From: Juergen Gross <jgross@suse.com>
 Date: Thu, 1 Feb 2018 13:40:19 +0100
-Subject: [PATCH 4/4] x86/xen: init %gs very early to avoid page faults with
+Subject: [PATCH 3/3] x86/xen: init %gs very early to avoid page faults with
  stack protector
 
 When running as Xen pv guest %gs is initialized some time after
