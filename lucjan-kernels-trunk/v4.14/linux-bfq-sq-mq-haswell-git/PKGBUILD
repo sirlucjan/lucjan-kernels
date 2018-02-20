@@ -80,7 +80,7 @@ pkgbase=linux-bfq-sq-mq-haswell-git
 # pkgname=('linux-bfq-sq-mq-haswell-git-kernel' 'linux-bfq-sq-mq-haswell-git-headers' 'linux-bfq-sq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
 pkgver=4.14.20.119.g1b1ab1d5c50b
-pkgrel=0
+pkgrel=0.1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -117,7 +117,8 @@ source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.gi
         'linux.preset'
         '0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch'
         '0002-xfrm-Fix-stack-out-of-bounds-read-on-socket-policy-l.patch'
-        '0003-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch')
+        '0003-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch'
+        'acpi-apei-remove-arch_apei_flush_tlb_one.patch')
 
 _kernelname=${pkgbase#linux}
         
@@ -133,6 +134,10 @@ prepare() {
     ### Fix naming schema in EXTRAVERSION
         msg "Fix naming schema in EXTRAVERSION"
         sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" ./Makefile
+    
+    ### Fix error
+        msg "Fix error"
+        patch -Np1 -i ../acpi-apei-remove-arch_apei_flush_tlb_one.patch
     
     ### Disable USER_NS for non-root users by default
         msg "Disable USER_NS for non-root users by default"
@@ -512,4 +517,5 @@ sha512sums=('SKIP'
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf'
             '9268112c46f06ff359c91097ad06a7cff546d0b1251f1133a981479fb6f810854585433e8000f287aeffa1b6c4c7da143c7ae2a6760759aa1d0d438141cd66f9'
             '9bf06ae89a6e55d2dcc27b510bc034d822c308e2d652c4839e3135e5225b1a9cca1b39f90fd3e5f0d480e09257d0cb6d9d4c0cd89f5b56095f6d999dfff24d37'
-            '14a9bdadc26a3bbd35baba8d550b39ac941600de7c0c7553fab94e47431e5a58066a561e04891fbfd911f573be801d357d6a9149e51472136bf05ac9b26ab61a')
+            '14a9bdadc26a3bbd35baba8d550b39ac941600de7c0c7553fab94e47431e5a58066a561e04891fbfd911f573be801d357d6a9149e51472136bf05ac9b26ab61a'
+            'a51aa46e7d859a6c328b51746b8bccc0c007ef8de8f04ca765c4239b68f7c1b1aa36ad62eb65279af0a2bebbf24401034bc55e751005394a7e072e7662a346f0')

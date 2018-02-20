@@ -1,0 +1,45 @@
+From 4a75aeacda3c2455954596593d89187df5420d0a Mon Sep 17 00:00:00 2001
+From: James Morse <james.morse@arm.com>
+Date: Mon, 6 Nov 2017 18:44:27 +0000
+Subject: ACPI / APEI: Remove arch_apei_flush_tlb_one()
+
+From: James Morse <james.morse@arm.com>
+
+commit 4a75aeacda3c2455954596593d89187df5420d0a upstream.
+
+Nothing calls arch_apei_flush_tlb_one() anymore, instead relying on
+__set_pte_vaddr() to do the invalidation when called from clear_fixmap()
+Remove arch_apei_flush_tlb_one().
+
+Signed-off-by: James Morse <james.morse@arm.com>
+Reviewed-by: Borislav Petkov <bp@suse.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+
+---
+ arch/x86/kernel/acpi/apei.c |    5 -----
+ include/acpi/apei.h         |    1 -
+ 2 files changed, 6 deletions(-)
+
+--- a/arch/x86/kernel/acpi/apei.c
++++ b/arch/x86/kernel/acpi/apei.c
+@@ -52,8 +52,3 @@ void arch_apei_report_mem_error(int sev,
+ 	apei_mce_report_mem_error(sev, mem_err);
+ #endif
+ }
+-
+-void arch_apei_flush_tlb_one(unsigned long addr)
+-{
+-	__flush_tlb_one(addr);
+-}
+--- a/include/acpi/apei.h
++++ b/include/acpi/apei.h
+@@ -51,7 +51,6 @@ int erst_clear(u64 record_id);
+ 
+ int arch_apei_enable_cmcff(struct acpi_hest_header *hest_hdr, void *data);
+ void arch_apei_report_mem_error(int sev, struct cper_sec_mem_err *mem_err);
+-void arch_apei_flush_tlb_one(unsigned long addr);
+ 
+ #endif
+ #endif 
