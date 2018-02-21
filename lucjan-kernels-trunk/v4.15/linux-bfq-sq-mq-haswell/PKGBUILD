@@ -73,10 +73,10 @@ _mq_enable=y
 pkgbase=linux-bfq-sq-mq-haswell
 # pkgname=('linux-bfq-sq-mq-haswell-kernel' 'linux-bfq-sq-mq-haswell-headers' 'linux-bfq-sq-mq-haswell-docs')
 _srcname=linux-4.15
-pkgver=4.15.4
-_pkgver=4.15.3
-__pkgver=4.15.4-rc1
-pkgrel=0.5
+pkgver=4.15.5
+_pkgver=4.15.4
+__pkgver=4.15.5-rc1
+pkgrel=0.1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -111,8 +111,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
          # standard config files for mkinitcpio ramdisk
         'linux.preset'
         '0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch'
-        '0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch'
-        '0003-x86-xen-init-gs-very-early-to-avoid-page-faults-with.patch')
+        '0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch')
         
 _kernelname=${pkgbase#linux}
 : ${_kernelname:=-linux-bfq-sq-mq-haswell}
@@ -138,10 +137,6 @@ prepare() {
         msg "Fix #56711"
         patch -Np1 -i ../0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch
     
-    ### Fix https://bugs.archlinux.org/task/57500
-        msg "Fix #57500"       
-        patch -Np1 -i ../0003-x86-xen-init-gs-very-early-to-avoid-page-faults-with.patch
-    
     ### Add block-bfq fixes
         msg "Add block-bfq fixes"
         patch -Np1 -i ../0700-block-bfq-fixes.patch
@@ -149,7 +144,7 @@ prepare() {
     
     ### Patch source with BFQ-SQ-MQ
         msg "Fix naming schema in BFQ-SQ-MQ patch"
-        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 4|g" \
+        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 5|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" ../${_bfq_sq_mq_patch}
         msg "Patching source with BFQ-SQ-MQ patches"
@@ -472,9 +467,9 @@ done
 
 sha512sums=('c00d92659df815a53dcac7dde145b742b1f20867d380c07cb09ddb3295d6ff10f8931b21ef0b09d7156923a3957b39d74d87c883300173b2e20690d2b4ec35ea'
             'SKIP'
-            'e82ccc4829353458b77e6261b7793221ece82430727b5bd38f79fa637cb920648b50fc5abedf0a9690eca926d8adb4454dd41bd64442ccc7573a4c13ce007277'
+            'e903b02631f5fa261db44ea2da69b6edc3afbbbbb4da5eca6abf2972b9f5aeb032d6b4b22c1313eef7763bc91987ec793b05c00c04a0ec592f61cb5a82cea296'
             'SKIP'
-            'd3e4e6999267774dac73fd77555489ca85f1befb14684d851b83f57245430ffc59e5e6242ccf8be2f3c36ec2b3ad4a2dceab289754cd54393ffcf7c15c42b741'
+            'bcd63ce6a7fb8ba9ac6af6579f8e418223e285717ac866942f1de85cc84c602d410f6f27785d14ef3e60ff6d9f73dee18398103bbdc9bb3d42de9d993929e466'
             'SKIP'
             '21ecaca7cd389d0806d5f1c28f0f29ec820af30d8f33c578f502c6136e19e079592b3f018e27be3f5476367250f10936872261791e1c2316453fe42236882340'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
@@ -486,9 +481,8 @@ sha512sums=('c00d92659df815a53dcac7dde145b742b1f20867d380c07cb09ddb3295d6ff10f89
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
             '6346b66f54652256571ef65da8e46db49a95ac5978ecd57a507c6b2a28aee70bb3ff87045ac493f54257c9965da1046a28b72cb5abb0087204d257f14b91fd74'
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf'
-            'dcb84d154724d63ffa21d1110927e155632be0fbae271cafd43e4e18ed2f7065e63d7a1b5ebc8a74cfe4448c13e3fb4918a0fbb5bb73eb514e5cd6422bde0a74'
-            'a281a5addc874d93050473c6125fbd6e3d61b4030c16d38b490627fb12788bcd4ba45ec10bf791accbfa6c42219f9dac2b1410e2b0ada0c094df7e8e0a368c92'
-            '47a0feb68fe8c54cd5b1ede52dc1c42ffa0a5db851af94fb075a557b53a9b7d5a3877d61fb671e6c65941ae38945545754c104163b3b6ca1f8be71550cf3db8e')
+            '99c4b03829317b03839c4bcf8a5ffead5918504b95b4bf2733ca38ec5a153a03781aa4b5e6f4297cc12c1e63a07a74da04b730f107ede212fe247e658933853b'
+            '7621840ad2f9760b30885b46b1b4e5b2b51d726a7ee771ce7649fb217c3af16577edb65c326b0754cf1a87b00fb981f0697ce916b3dcaf80731bc9a373aa685c')
             
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
