@@ -79,10 +79,10 @@ _mq_enable=y
 pkgbase=linux-bfq-sq-mq-haswell
 # pkgname=('linux-bfq-sq-mq-haswell-kernel' 'linux-bfq-sq-mq-haswell-headers' 'linux-bfq-sq-mq-haswell-docs')
 _srcname=linux-4.14
-pkgver=4.14.22
-_pkgver=4.14.21
-__pkgver=4.14.22-rc1
-pkgrel=0.1
+pkgver=4.14.23
+_pkgver=4.14.22
+__pkgver=4.14.23-rc1
+pkgrel=0
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -157,7 +157,7 @@ prepare() {
         patch -Np1 -i ../0009-bfq-sq-mq-fix-patching-error-with-20180109.patch
         msg "Fix naming schema in BFQ-SQ-MQ patch"
         sed -i -e "s|PATCHLEVEL = 15|PATCHLEVEL = 14|g" \
-            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 22|g" \
+            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 23|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" \
             -i -e "s|NAME = Fearless Coyote|NAME = Petit Gorille|g" ../${_bfq_sq_mq_patch}
@@ -497,9 +497,9 @@ done
 
 sha512sums=('77e43a02d766c3d73b7e25c4aafb2e931d6b16e870510c22cef0cdb05c3acb7952b8908ebad12b10ef982c6efbe286364b1544586e715cf38390e483927904d8'
             'SKIP'
-            '90a85a110b8b9ff79e0f7e6e47149bd118e62c479506ef3605c06d688983e5b7da482dc06e0de1133f0cf6860cd66a2340191c827d5809dd3a5f81e271f57e14'
+            '2e0216fe250ab84c7deee6f0f8751d34de3afbc3c5a0287e53cff6f866f15aad3610b5f8dfd9c514f60c766e8fb87df2e5db49777570ac5433a026848f1a21cf'
             'SKIP'
-            '1214c0a87f1eb9e43d37c6abbd590c470f45d290cacf7497dc3fcd5977cb794252b7076f346900460ce9a97ed2088b6fd0ddd35e3de867722cd1791d0f1791b9'
+            '7aa4075cd10134af89e04056477de57a993a42ae6d95a99f5b893e36fde98b7d37c227ef4ffe3bb353976d9998d95bf54307a06d5fc59cd2411358e7f2417ec7'
             'SKIP'
             '21ecaca7cd389d0806d5f1c28f0f29ec820af30d8f33c578f502c6136e19e079592b3f018e27be3f5476367250f10936872261791e1c2316453fe42236882340'
             '90cf4b5681b9aad4b4f3afceef30de3bd4194ceea5c3a142d0b6ec608c4e12aae1a4918c47eb67e3097b6b771b140f1aa5bcec84546d3f86d552678ee0299fbf'
