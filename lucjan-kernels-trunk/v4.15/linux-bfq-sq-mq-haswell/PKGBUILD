@@ -76,7 +76,7 @@ _srcname=linux-4.15
 pkgver=4.15.6
 _pkgver=4.15.5
 __pkgver=4.15.6-rc1
-pkgrel=0.1
+pkgrel=0.2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -99,6 +99,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "${_lucjanpath}/0700-block-bfq-fixes.patch"
         "${_lucjanpath}/bfq-paolo-v4/0800-block-bfq-add-requeue-request-hook.patch"
+        "${_lucjanpath}/blk-pf/0010-blk-mq-dont-call-io-scheds-requeue_request.patch"
         "${_gcc_path}/${_gcc_patch}"
          # the main kernel config files
         'config'
@@ -136,6 +137,10 @@ prepare() {
     ### Fix https://bugs.archlinux.org/task/56711
         msg "Fix #56711"
         patch -Np1 -i ../0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch
+    
+    ### Add blk fixes
+        msg "Add blk fixes"
+        patch -Np1 -i ../0010-blk-mq-dont-call-io-scheds-requeue_request.patch
     
     ### Add block-bfq fixes
         msg "Add block-bfq fixes"
@@ -475,6 +480,7 @@ sha512sums=('c00d92659df815a53dcac7dde145b742b1f20867d380c07cb09ddb3295d6ff10f89
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '042a7b630b6001cd86801565084458fe689db499d4520a5f8c5a302fe120e4345e83743e0d3a3ef8095b35c5640805306a3ba58d2e9e06835e677ece5402f4b0'
             '3db3c8278fc3ea1ffa9f734df76ba38a3dd993a5eef46cbe26c155ea8e457d688dbde757dfac7915e621b5e81667053ca26ba6f3ca85c45fdac00445ab890b0e'
+            '31000f71c6d1edbc8a861143395e1fb17f397f6270b9a130923f265404437a4d56e7b56a14a1db1db60b7b1c1f60d5401f993823e2d6875178b0f9fc67796592'
             '5ca7ae20245a54caa71fb570d971d6872d4e888f35c6123b93fbca16baf9a0e2500d6ec931f3906e4faecaaca9cad0d593694d9cab617efd0cb7b5fc09c0fa48'
             '9d6e7ac0451a4994947e67d063530dd68cf3c9ec7de4b705ebe84e8d902f45a1bc5e893719d9b7a71936e8237ae46e1d2f7fb2c96468081958ad39f8272f1c15'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
