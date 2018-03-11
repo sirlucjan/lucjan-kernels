@@ -74,7 +74,7 @@ pkgbase=linux-bfq-sq-mq-haswell-git
 # pkgname=('linux-bfq-sq-mq-haswell-git-kernel' 'linux-bfq-sq-mq-haswell-git-headers' 'linux-bfq-sq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
 pkgver=4.15.8.12.g212dd4bb587d
-pkgrel=0
+pkgrel=0.1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -84,7 +84,7 @@ _bfq_sq_mq_ver='20180227'
 _bfq_sq_mq_patch="4.15-bfq-sq-mq-git-${_bfq_sq_mq_ver}.patch"
 #_lucjanpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/4.15"
 _lucjanpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/4.15"
-_gcc_path="https://raw.githubusercontent.com/sirlucjan/kernel_gcc_patch/master"
+_gcc_path="https://raw.githubusercontent.com/graysky2/kernel_gcc_patch/master"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v4.13+.patch"
 
 source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git#branch=linux-4.15.y'
@@ -463,8 +463,8 @@ sha512sums=('SKIP'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '042a7b630b6001cd86801565084458fe689db499d4520a5f8c5a302fe120e4345e83743e0d3a3ef8095b35c5640805306a3ba58d2e9e06835e677ece5402f4b0'
             '3db3c8278fc3ea1ffa9f734df76ba38a3dd993a5eef46cbe26c155ea8e457d688dbde757dfac7915e621b5e81667053ca26ba6f3ca85c45fdac00445ab890b0e'
-            '5ca7ae20245a54caa71fb570d971d6872d4e888f35c6123b93fbca16baf9a0e2500d6ec931f3906e4faecaaca9cad0d593694d9cab617efd0cb7b5fc09c0fa48'
-            '7881da6b62dbe22b5e9575ca9c67aff19fba473a7a726212aa8a63ffc81e13431f37c8bc53b751409b72a6270b1f019e10cdec17b2499d4584fbbe6f78d147a8'
+            '01be98361d8e3e84bda6767de63c7893838c73880eb632824b1222326db3603550942daa12bfa11701caeaf1cfe7520a5062540eabcd64d8f8fda74b7e863269'
+            '7d53596384a29edcd51d68783a929ee4927e9c7363879c31d7a5bdd7933f1252024c3843caf674d80d9c4509e46beca6b0c137bcf40380a537b0c4245d81a1bb'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
             '6346b66f54652256571ef65da8e46db49a95ac5978ecd57a507c6b2a28aee70bb3ff87045ac493f54257c9965da1046a28b72cb5abb0087204d257f14b91fd74'
