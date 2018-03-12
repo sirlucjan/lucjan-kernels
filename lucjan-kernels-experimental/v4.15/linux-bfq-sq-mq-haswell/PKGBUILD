@@ -74,7 +74,7 @@ pkgbase=linux-bfq-sq-mq-haswell
 # pkgname=('linux-bfq-sq-mq-haswell-kernel' 'linux-bfq-sq-mq-haswell-headers' 'linux-bfq-sq-mq-haswell-docs')
 _srcname=linux-4.15
 pkgver=4.15.9
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -84,7 +84,9 @@ _bfq_sq_mq_ver='20180227'
 _bfq_sq_mq_patch="4.15-bfq-sq-mq-git-${_bfq_sq_mq_ver}.patch"
 #_lucjanpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/4.15"
 _lucjanpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/4.15"
-_gcc_path="https://raw.githubusercontent.com/graysky2/kernel_gcc_patch/master"
+_gcc_name="kernel_gcc_patch"
+_gcc_rel='20180310'
+_gcc_path="https://github.com/graysky2/kernel_gcc_patch/archive"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v4.13+.patch"
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
@@ -95,7 +97,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "${_lucjanpath}/0700-block-bfq-fixes.patch"
         "${_lucjanpath}/bfq-paolo-v4/0800-block-bfq-add-requeue-request-hook.patch"
-        "${_gcc_path}/${_gcc_patch}"
+        "${_gcc_name}-${_gcc_rel}.tar.gz::${_gcc_path}/${_gcc_rel}.tar.gz"
          # the main kernel config files
         'config'
          # pacman hook for depmod
@@ -150,7 +152,7 @@ prepare() {
     
     ### Patch source to enable more gcc CPU optimizatons via the make nconfig
         msg "Patching source with gcc patch to enable more cpus types"
-	patch -Np1 -i ../${_gcc_patch}
+	patch -Np1 -i ../kernel_gcc_patch-${_gcc_rel}/${_gcc_patch}
 	
     ### Clean tree and copy ARCH config over
 	msg "Running make mrproper to clean source tree"
@@ -463,7 +465,7 @@ sha512sums=('c00d92659df815a53dcac7dde145b742b1f20867d380c07cb09ddb3295d6ff10f89
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '042a7b630b6001cd86801565084458fe689db499d4520a5f8c5a302fe120e4345e83743e0d3a3ef8095b35c5640805306a3ba58d2e9e06835e677ece5402f4b0'
             '3db3c8278fc3ea1ffa9f734df76ba38a3dd993a5eef46cbe26c155ea8e457d688dbde757dfac7915e621b5e81667053ca26ba6f3ca85c45fdac00445ab890b0e'
-            '01be98361d8e3e84bda6767de63c7893838c73880eb632824b1222326db3603550942daa12bfa11701caeaf1cfe7520a5062540eabcd64d8f8fda74b7e863269'
+            '079e34ec7bf3ef36438c648116e24c51e00ea8608a1d8b5776164478522d6a96dcab5fe0431e8e9a6282c11a1edd177e1b68fc971a81717b297e199efc101963'
             'f933dc4e2ba5ceef5e8c54a1f5151596d5ce408df7793ae8d56256e13e4708f06bd886bca93537677780e1ef88878550c3fa616f0fcdf2c772daac1c0a1765ce'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
