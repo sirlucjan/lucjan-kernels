@@ -39,7 +39,7 @@ makepkg -srci
 # Experimental
 
 ```
-cd /some_path/lucjan-kernels/lucjan-kernels-experimental/package_name
+cd /some_path/lucjan-kernels/lucjan-kernels-experimental/version/package_name
 makepkg -srci
 
 ```
@@ -47,7 +47,7 @@ makepkg -srci
 # Trunk
 
 ```
-cd /some_path/lucjan-kernels/lucjan-kernels-trunk/package_name
+cd /some_path/lucjan-kernels/lucjan-kernels-trunk/version/package_name
 makepkg -srci
 
 ```
