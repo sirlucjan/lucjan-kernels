@@ -123,12 +123,12 @@ source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#b
 _kernelname=${pkgbase#linux}
         
 pkgver() {
-  cd "${_srcname}"
-
-  git describe --long --tags | sed 's/^v//;s/-/./g'
+    cd "${_srcname}"
+        
+        git describe --long --tags | sed 's/^v//;s/-/./g'
 } 
 
-prepare() {
+prepare() { 
     cd "${_srcname}"
     
     ### Disable USER_NS for non-root users by default

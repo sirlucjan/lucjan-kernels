@@ -123,10 +123,10 @@ source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.gi
 _kernelname=${pkgbase#linux}
         
 pkgver() {
-  cd "${_srcname}"
-
-  git describe --long --tags | sed 's/^v//;s/-/./g'
-} 
+    cd "${_srcname}"
+        
+        git describe --long --tags | sed 's/^v//;s/-/./g'
+}
 
 prepare() {
     cd "${_srcname}"
