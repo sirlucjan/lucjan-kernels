@@ -112,9 +112,9 @@ _kernelname=${pkgbase#linux}
 : ${_kernelname:=-linux-bfq-sq-mq-haswell-git}
         
 pkgver() {
-  cd "${_srcname}"
-
-  git describe --long --tags | sed 's/^v//;s/-/./g'
+    cd "${_srcname}"
+        
+        git describe --long --tags | sed 's/^v//;s/-/./g'
 } 
 
 prepare() {
