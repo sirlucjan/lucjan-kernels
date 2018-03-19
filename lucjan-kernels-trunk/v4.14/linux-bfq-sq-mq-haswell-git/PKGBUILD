@@ -133,7 +133,7 @@ prepare() {
     
     ### Fix naming schema in EXTRAVERSION
         msg "Fix naming schema in EXTRAVERSION"
-        sed -i -e "s|EXTRAVERSION = -rc2|EXTRAVERSION =|g" ./Makefile
+        sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" ./Makefile
     
     ### Disable USER_NS for non-root users by default
         msg "Disable USER_NS for non-root users by default"
