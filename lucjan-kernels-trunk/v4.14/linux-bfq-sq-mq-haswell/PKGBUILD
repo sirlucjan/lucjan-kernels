@@ -82,13 +82,13 @@ _srcname=linux-4.14
 pkgver=4.14.32
 _pkgver=4.14.31
 __pkgver=4.14.32-rc1
-pkgrel=0.1
+pkgrel=0.2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf')
-_bfq_sq_mq_ver='20180227'
+_bfq_sq_mq_ver='20180404'
 _bfq_sq_mq_patch="4.14-bfq-sq-mq-git-${_bfq_sq_mq_ver}.patch"
 #_lucjanpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/4.14"
 _lucjanpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/4.14"
@@ -503,7 +503,7 @@ sha512sums=('77e43a02d766c3d73b7e25c4aafb2e931d6b16e870510c22cef0cdb05c3acb7952b
             'SKIP'
             '016b1435b706adc903d89d46e75d866744f15d353a0161a860acda902b6220abbb5bb9ca8ac966d3c2f380bdffc72842794e850ef2c1c8bedededd63a7e2b41d'
             'SKIP'
-            '3e9a09015ed05947d4e820979b26b4756b4fcb1fae8a8c9e808cab74da45f5c6b3e25ebc30ff86bf44aff560ed93b8aed0c1c001e213829f198a274cdc24d56f'
+            '46e316f67165d8df1779a6d7d105c249d0ff768fbbdd59baa9f475bd4007c6851a64b41e0a3319186848670b41bd55c845583c9307b5f02df14e73aed1db3f5d'
             '90cf4b5681b9aad4b4f3afceef30de3bd4194ceea5c3a142d0b6ec608c4e12aae1a4918c47eb67e3097b6b771b140f1aa5bcec84546d3f86d552678ee0299fbf'
             'e1819903787241db1fc7cf4fb7682936185c73ef7ba842f59b94f2d56ef2ceab3df42344df3cb226060c09257d98e9a861bc8f7a7debc0a9f0936022022fc3ba'
             'ca6a40800668c0fcf478bd1bc555e5a496f5259739594bf83cc4963756b7a9a0a5b406e91f760d35f1bce1268c01d779fe2a7e749eccf9412e826152a5f013ef'
