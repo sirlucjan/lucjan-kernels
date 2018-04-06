@@ -79,10 +79,10 @@ _mq_enable=y
 pkgbase=linux-bfq-sq-mq-haswell
 # pkgname=('linux-bfq-sq-mq-haswell-kernel' 'linux-bfq-sq-mq-haswell-headers' 'linux-bfq-sq-mq-haswell-docs')
 _srcname=linux-4.14
-pkgver=4.14.32
-_pkgver=4.14.31
-__pkgver=4.14.32-rc1
-pkgrel=0.2
+pkgver=4.14.33
+_pkgver=4.14.32
+__pkgver=4.14.33-rc1
+pkgrel=0.1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -159,7 +159,7 @@ prepare() {
         patch -Np1 -i ../0009-bfq-sq-mq-fix-patching-error-with-20180109.patch
         msg "Fix naming schema in BFQ-SQ-MQ patch"
         sed -i -e "s|PATCHLEVEL = 15|PATCHLEVEL = 14|g" \
-            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 32|g" \
+            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 33|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" \
             -i -e "s|NAME = Fearless Coyote|NAME = Petit Gorille|g" ../${_bfq_sq_mq_patch}
@@ -499,9 +499,9 @@ done
 
 sha512sums=('77e43a02d766c3d73b7e25c4aafb2e931d6b16e870510c22cef0cdb05c3acb7952b8908ebad12b10ef982c6efbe286364b1544586e715cf38390e483927904d8'
             'SKIP'
-            '4e1ee36a0dd058091180f59247903116ce1f0df10645ea8b29fc98b4bbea5431658f4db5a4645874d3b2011851436e1c29a4a44676bdfff43ed65f9dda36dbc6'
+            'ec719bfeb7e4a56e51e6e09ce9a4a55345c5ce7fa6dd2ae68514df42997400d6eba0e060432abfc02e638496b2c018c5a1dfecd0314c9044ca8b33f46598965a'
             'SKIP'
-            '016b1435b706adc903d89d46e75d866744f15d353a0161a860acda902b6220abbb5bb9ca8ac966d3c2f380bdffc72842794e850ef2c1c8bedededd63a7e2b41d'
+            '3de31e06d061f6c050e8d55ed7b3ccd03c86f5642b76563e7145edad4d97d0025e084bdc267866dd048967930bfefccde8301e4c24196fcd8199e9c204389923'
             'SKIP'
             '46e316f67165d8df1779a6d7d105c249d0ff768fbbdd59baa9f475bd4007c6851a64b41e0a3319186848670b41bd55c845583c9307b5f02df14e73aed1db3f5d'
             '90cf4b5681b9aad4b4f3afceef30de3bd4194ceea5c3a142d0b6ec608c4e12aae1a4918c47eb67e3097b6b771b140f1aa5bcec84546d3f86d552678ee0299fbf'
