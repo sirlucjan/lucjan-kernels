@@ -79,8 +79,8 @@ _mq_enable=y
 pkgbase=linux-bfq-sq-mq-haswell-git
 # pkgname=('linux-bfq-sq-mq-haswell-git-kernel' 'linux-bfq-sq-mq-haswell-git-headers' 'linux-bfq-sq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
-pkgver=4.14.33.0.gb867b7a7e590
-pkgrel=1
+pkgver=4.14.33.87.g3f2310a574a9
+pkgrel=0
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -97,7 +97,7 @@ _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v4.13+.patc
 
 source=('git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git#branch=linux-4.14.y'
         "${_lucjanpath}/${_bfq_sq_mq_patch}"
-        "${_lucjanpath}/0699-block-bfq-fixes.patch"
+        "${_lucjanpath}/0799-block-bfq-fixes.patch"
         "${_lucjanpath}/0009-bfq-sq-mq-fix-patching-error-with-20180109.patch"
         "${_lucjanpath}/blk-mq-v10/0051-blk-mq-sched-move-actual-dispatching-into-one-helper.patch"
         "${_lucjanpath}/blk-mq-v10/0052-blk-mq-sbitmap-introduce__sbitmap_for_each_set().patch"
@@ -145,14 +145,14 @@ prepare() {
     
     ### Add block-bfq fixes
         msg "Add block-bfq fixes"
-        patch -Np1 -i ../0699-block-bfq-fixes.patch
+        patch -Np1 -i ../0799-block-bfq-fixes.patch
     
     ### Patch source with BFQ-SQ-MQ
         msg "Fix patching with 20180109"
         patch -Np1 -i ../0009-bfq-sq-mq-fix-patching-error-with-20180109.patch
         msg "Fix naming schema in BFQ-SQ-MQ patch"
         sed -i -e "s|PATCHLEVEL = 15|PATCHLEVEL = 14|g" \
-            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 33|g" \
+            -i -e "s|SUBLEVEL = 0|SUBLEVEL = 34|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" \
             -i -e "s|NAME = Fearless Coyote|NAME = Petit Gorille|g" ../${_bfq_sq_mq_patch}
@@ -492,7 +492,7 @@ done
 
 sha512sums=('SKIP'
             '46e316f67165d8df1779a6d7d105c249d0ff768fbbdd59baa9f475bd4007c6851a64b41e0a3319186848670b41bd55c845583c9307b5f02df14e73aed1db3f5d'
-            '90cf4b5681b9aad4b4f3afceef30de3bd4194ceea5c3a142d0b6ec608c4e12aae1a4918c47eb67e3097b6b771b140f1aa5bcec84546d3f86d552678ee0299fbf'
+            'bb2b2417a04c123e697ff4703d59ed9e65fde14a009e6c11aec658e09107211d43e197a07e20618f69d2c29330ea73c99e015e28f3cc9c39922333630cf12e96'
             'e1819903787241db1fc7cf4fb7682936185c73ef7ba842f59b94f2d56ef2ceab3df42344df3cb226060c09257d98e9a861bc8f7a7debc0a9f0936022022fc3ba'
             'ca6a40800668c0fcf478bd1bc555e5a496f5259739594bf83cc4963756b7a9a0a5b406e91f760d35f1bce1268c01d779fe2a7e749eccf9412e826152a5f013ef'
             '1434cc3957ef77fb83c9385a348f36ca43a73459b8995d3061143d1d15b307f944c39abc0eb109d20869c1749348d608c58cf5b92fd81ad65cad2d362e346549'
