@@ -36,22 +36,6 @@ makepkg -srci
 
 ```
 
-# Experimental
-
-```
-cd /some_path/lucjan-kernels/lucjan-kernels-experimental/version/package_name
-makepkg -srci
-
-```
-
-# Trunk
-
-```
-cd /some_path/lucjan-kernels/lucjan-kernels-trunk/version/package_name
-makepkg -srci
-
-```
-
 # Enable bfq-mq
 
 For now, you can use `sudo tee /sys/block/sda/queue/scheduler <<< bfq-mq` to enable "bfq-mq".
