@@ -76,10 +76,10 @@ _1k_HZ_ticks=y
 pkgbase=linux-bfq-sq-mq-haswell
 # pkgname=('linux-bfq-sq-mq-haswell-kernel' 'linux-bfq-sq-mq-haswell-headers' 'linux-bfq-sq-mq-haswell-docs')
 _srcname=linux-4.16
-pkgver=4.16.4
-_pkgver=4.16.3
-__pkgver=4.16.4-rc3
-pkgrel=0.1
+pkgver=4.16.5
+_pkgver=4.16.4
+__pkgver=4.16.5-rc1
+pkgrel=0
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -129,7 +129,7 @@ prepare() {
         
     ### Add patch from stable-review
         msg "Fix naming schema in EXTRAVERSION"
-        sed -i -e "s|EXTRAVERSION = -rc3|EXTRAVERSION =|g" ../patch-${__pkgver}
+        sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" ../patch-${__pkgver}
 	msg "Add patch from stable-review"  
         patch -p1 -i ../patch-${__pkgver}
     
@@ -147,7 +147,7 @@ prepare() {
     
     ### Patch source with BFQ-SQ-MQ
         msg "Fix naming schema in BFQ-SQ-MQ patch"
-        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 4|g" \
+        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 5|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" ../${_bfq_sq_mq_patch}
         msg "Patching source with BFQ-SQ-MQ patches"
@@ -475,9 +475,9 @@ done
 
 sha512sums=('ab47849314b177d0eec9dbf261f33972b0d89fb92fb0650130ffa7abc2f36c0fab2d06317dc1683c51a472a9a631573a9b1e7258d6281a2ee189897827f14662'
             'SKIP'
-            '7c7c2c090d7375a923524d88f86a714576321094de94bcfd78d467b78c3b933c2cdb4863db24b0091b28f78ae10a5d4e112c3d150998d552d29e737f043e5fa8'
+            'caa9726e0c9ad4da4dbcebb6b47f08e6575d30f050e7d6087018fae932c0c706e9a03d4b703dd49bc46bc21df08b5c7dff37ac5bb6522d6a6ed3d3b10712e9eb'
             'SKIP'
-            '067688442fcd45dc1a444e5e0cba306e479802390a4e4f2fa995e723def4c6eac3a41961d7cf3f49ecc4faa97ea474387c77f93d7b0bc9d5fba0df43ff8aaa8b'
+            'd0b55bf9d99e496f1043b5a5ae7fcf0f34a24c3abf8c822d19a04276e35ffd30960ec21409489f6a1a145dd00c2a677762481c910405b688ee721c8956217e6d'
             'SKIP'
             '5b860dd67312af2327b9c6abc62d08e285cb81b5e64207f879178dac673cfe67249321ab9bf61e07e6fb855b0d7388061e8bbd4cead0e078886b91beb38599c9'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'

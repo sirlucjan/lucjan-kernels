@@ -76,8 +76,8 @@ _1k_HZ_ticks=y
 pkgbase=linux-bfq-sq-mq-haswell-git
 # pkgname=('linux-bfq-sq-mq-haswell-git-kernel' 'linux-bfq-sq-mq-haswell-git-headers' 'linux-bfq-sq-mq-haswell-git-docs')
 _srcname=linux-stable-rc
-pkgver=4.16.4.0.gb42b71cd28f2
-pkgrel=1
+pkgver=4.16.4.27.g9a7eb4ea64f3
+pkgrel=0
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -124,7 +124,7 @@ prepare() {
     
     ### Fix naming schema in EXTRAVERSION
         msg "Fix naming schema in EXTRAVERSION"
-        sed -i -e "s|EXTRAVERSION = -rc3|EXTRAVERSION =|g" ./Makefile
+        sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" ./Makefile
     
     ### Disable USER_NS for non-root users by default
         msg "Disable USER_NS for non-root users by default"
@@ -140,7 +140,7 @@ prepare() {
     
     ### Patch source with BFQ-SQ-MQ
         msg "Fix naming schema in BFQ-SQ-MQ patch"
-        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 4|g" \
+        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 5|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" ../${_bfq_sq_mq_patch}
         msg "Patching source with BFQ-SQ-MQ patches"
