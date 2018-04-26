@@ -79,7 +79,7 @@ _srcname=linux-4.16
 pkgver=4.16.5
 _pkgver=4.16.4
 __pkgver=4.16.5-rc1
-pkgrel=0
+pkgrel=0.1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -146,8 +146,9 @@ prepare() {
         patch -Np1 -i ../0900-block-bfq-lower-bound-the-estimated-peak-rate-to-1.patch
     
     ### Patch source with BFQ-SQ-MQ
+        _ver="$(cat Makefile | grep -m1 -e SUBLEVEL | grep -o "[[:digit:]]*")"
         msg "Fix naming schema in BFQ-SQ-MQ patch"
-        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = 5|g" \
+        sed -i -e "s|SUBLEVEL = 0|SUBLEVEL = ${_ver}|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g" ../${_bfq_sq_mq_patch}
         msg "Patching source with BFQ-SQ-MQ patches"
