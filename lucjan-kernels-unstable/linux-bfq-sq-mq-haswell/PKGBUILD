@@ -127,12 +127,13 @@ prepare() {
     ### Add upstream patch
         msg "Add upstream patch"
         patch -p1 -i ../patch-${_pkgver}
-        
+    
     ### Add patch from stable-review
-        msg "Fix naming schema in EXTRAVERSION"
-        sed -i -e "s|EXTRAVERSION = -rc1|EXTRAVERSION =|g" ../patch-${__pkgver}
-	msg "Add patch from stable-review"  
+        msg "Add patch from stable-review"  
         patch -p1 -i ../patch-${__pkgver}
+	_rc="$(cat Makefile | grep -m1 -e EXTRAVERSION | grep -o "[[:digit:]]*")"
+	msg "Fix naming schema in EXTRAVERSION"
+        sed -i -e "s|EXTRAVERSION = -rc${_rc}|EXTRAVERSION =|g" ./Makefile
     
     ### Disable USER_NS for non-root users by default
         msg "Disable USER_NS for non-root users by default"
