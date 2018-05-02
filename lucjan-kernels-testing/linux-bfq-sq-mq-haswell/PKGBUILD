@@ -76,7 +76,7 @@ _1k_HZ_ticks=y
 pkgbase=linux-bfq-sq-mq-haswell
 # pkgname=('linux-bfq-sq-mq-haswell-kernel' 'linux-bfq-sq-mq-haswell-headers' 'linux-bfq-sq-mq-haswell-docs')
 _srcname=linux-4.16
-pkgver=4.16.6
+pkgver=4.16.7
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
@@ -99,7 +99,6 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "${_lucjanpath}/${_bfq_sq_mq_patch}"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "${_lucjanpath}/bfq-pf/0900-block-bfq-lower-bound-the-estimated-peak-rate-to-1.patch"
-        "${_lucjanpath}/blk-pf/0910-bfq-blk-fixes-from-pfkernel.patch"
         "${_gcc_name}-${_gcc_rel}.tar.gz::${_gcc_path}/${_gcc_rel}.tar.gz"
          # the main kernel config files
         'config'
@@ -135,7 +134,6 @@ prepare() {
     ### Add block-bfq fixes
         msg "Add block-bfq fixes"
         patch -Np1 -i ../0900-block-bfq-lower-bound-the-estimated-peak-rate-to-1.patch
-        patch -Np1 -i ../0910-bfq-blk-fixes-from-pfkernel.patch
     
     ### Patch source with BFQ-SQ-MQ
         _ver="$(cat Makefile | grep -m1 -e SUBLEVEL | grep -o "[[:digit:]]*")"
@@ -468,12 +466,11 @@ done
 
 sha512sums=('ab47849314b177d0eec9dbf261f33972b0d89fb92fb0650130ffa7abc2f36c0fab2d06317dc1683c51a472a9a631573a9b1e7258d6281a2ee189897827f14662'
             'SKIP'
-            '151f3fedfb025f090e0f3d747890366933236b11d1f2bf8794c7d0309f9bb577c01fbfcd6ac073b3c49657543961592c643e896c6a57fe8df6ecde89270d0b36'
+            '576c2b520d444e11a9ca45ed3ed03822007ab6ff778a1759aa0f65c96946fe3e169e71d48d11e6d3b8627a99cdc20abfb0c84d7b6c9b0d2afa4d5fee9ed3aa41'
             'SKIP'
             '5b860dd67312af2327b9c6abc62d08e285cb81b5e64207f879178dac673cfe67249321ab9bf61e07e6fb855b0d7388061e8bbd4cead0e078886b91beb38599c9'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '23cde8ab10fef1552f12869b6bbe11e3c072ea49155746804ccf1c3d550e5d2721cd142559bc2845f11c598435531788f1b876bfa8989bc749e6513bdd95331c'
-            'babffa9b2486507293ce22923b0625957aea35ffef155342276f50c5fd28a6a49f9cc1b99878abf130794ec476bccc843cf8d5e7d2533a0c12fd6a1fbda83dea'
             '079e34ec7bf3ef36438c648116e24c51e00ea8608a1d8b5776164478522d6a96dcab5fe0431e8e9a6282c11a1edd177e1b68fc971a81717b297e199efc101963'
             'ccaee9daa4eb9ab1411410c3d2e6e16b58ff9db614f42c99ce489401c95d28a23a95a22fa33686e23c68586a88e1e24c8f021135128fb931ec319d2d3b94d163'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
