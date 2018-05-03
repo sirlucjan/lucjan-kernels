@@ -75,10 +75,13 @@ _1k_HZ_ticks=y
 
 pkgbase=linux-bfq-sq-mq-haswell
 # pkgname=('linux-bfq-sq-mq-haswell-kernel' 'linux-bfq-sq-mq-haswell-headers' 'linux-bfq-sq-mq-haswell-docs')
-_srcname=linux-4.16
-pkgver=4.16.7
-_stable=4.16.6
+_major=4.16
+_srcname=linux-${_major}
+_minorc=7
+_minor=$((_minorc-1))
 _rcver=rc1
+pkgver=${_major}.${_minorc}
+_stable=${_major}.${_minor}
 _stablerc=${pkgver}-${_rcver}
 pkgrel=0
 arch=('x86_64')
