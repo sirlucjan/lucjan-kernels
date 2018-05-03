@@ -77,8 +77,9 @@ pkgbase=linux-bfq-sq-mq-haswell
 # pkgname=('linux-bfq-sq-mq-haswell-kernel' 'linux-bfq-sq-mq-haswell-headers' 'linux-bfq-sq-mq-haswell-docs')
 _srcname=linux-4.16
 pkgver=4.16.7
-_pkgver=4.16.6
-__pkgver=4.16.7-rc1
+_stable=4.16.6
+_rcver=rc1
+_stablerc=${pkgver}-${_rcver}
 pkgrel=0
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
@@ -96,10 +97,10 @@ _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v4.9+_kernel_v4.13+.patc
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_pkgver}.xz"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_pkgver}.sign"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.xz"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${__pkgver}.sign"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_stable}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_stable}.sign"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${_stablerc}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${_stablerc}.sign"
         "${_lucjanpath}/${_bfq_sq_mq_patch}"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "${_lucjanpath}/bfq-pf/0900-block-bfq-lower-bound-the-estimated-peak-rate-to-1.patch"
@@ -125,11 +126,11 @@ prepare() {
 
     ### Add upstream patch
         msg "Add upstream patch"
-        patch -p1 -i ../patch-${_pkgver}
+        patch -p1 -i ../patch-${_stable}
     
     ### Add patch from stable-review
         msg "Add patch from stable-review"  
-        patch -p1 -i ../patch-${__pkgver}
+        patch -p1 -i ../patch-${_stablerc}
     
     ### Fix naming schema in EXTRAVERSION
         _rc="$(cat Makefile | grep -m1 -e EXTRAVERSION | grep -o "[[:digit:]]*")"
