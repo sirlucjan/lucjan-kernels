@@ -77,8 +77,8 @@ pkgbase=linux-bfq-sq-mq-haswell-git
 # pkgname=('linux-bfq-sq-mq-haswell-git-kernel' 'linux-bfq-sq-mq-haswell-git-headers' 'linux-bfq-sq-mq-haswell-git-docs')
 _major=4.16
 _srcname=linux-stable-rc
-pkgver=4.16.8.0.gdec316ea1828
-pkgrel=2
+pkgver=4.16.8.73.gdaccae8696e8
+pkgrel=0.2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -94,7 +94,7 @@ _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v8.1+_kernel_v4.13+.patc
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git#branch=linux-${_major}.y"
         "${_lucjanpath}/${_bfq_sq_mq_patch}"
-        "${_lucjanpath}/0004-fix-gcc8-bogus-warnings.patch"
+        "${_lucjanpath}/0005-objtool-add-gcc8-support.patch"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "${_lucjanpath}/bfq-pf/0900-block-bfq-lower-bound-the-estimated-peak-rate-to-1.patch"
         "${_gcc_path}"
@@ -138,7 +138,7 @@ prepare() {
     
     ### Fix gcc8 bogus warnings
         msg "Fix gcc8 bogus warnings"
-        patch -Np1 -i ../0004-fix-gcc8-bogus-warnings.patch
+        patch -Np1 -i ../0005-objtool-add-gcc8-support.patch
     
     ### Add block-bfq fixes
         msg "Add block-bfq fixes"
@@ -475,7 +475,7 @@ done
 
 sha512sums=('SKIP'
             '5b860dd67312af2327b9c6abc62d08e285cb81b5e64207f879178dac673cfe67249321ab9bf61e07e6fb855b0d7388061e8bbd4cead0e078886b91beb38599c9'
-            '5a2b2154afa7f10ffd50ad23afd2b25b468d655aa01e04fbc6ca54a90c53ded0c37b4d08658b9787a5f414779f1968040e81ccaee3b9355e1a9b7ad5104ed8aa'
+            'a10a546ecced915ee38075cc6c57eaebb0f8fa58e6af6669d7429ef4880b55bd5782e11dfbda75ce4f805fa5b2399421b4eade8bbbf6766e5aac24a542f1b7a7'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '23cde8ab10fef1552f12869b6bbe11e3c072ea49155746804ccf1c3d550e5d2721cd142559bc2845f11c598435531788f1b876bfa8989bc749e6513bdd95331c'
             'SKIP'
