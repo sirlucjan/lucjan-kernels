@@ -78,7 +78,7 @@ pkgbase=linux-bfq-sq-mq-haswell-git
 _major=4.16
 _srcname=linux-stable
 pkgver=4.16.8.0.gdec316ea1828
-pkgrel=5
+pkgrel=6
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -99,6 +99,7 @@ source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#b
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "${_lucjanpath}/bfq-pf/0900-block-bfq-lower-bound-the-estimated-peak-rate-to-1.patch"
         "${_lucjanpath}/bfq-pf/0901-block-bfq-postpone-rq-preparation-to-insert-or-merge.patch"
+        "${_lucjanpath}/block-pf/0920-block-fixes-from-pfkernel.patch"
         "${_gcc_path}"
          # the main kernel config files
         'config'
@@ -142,6 +143,7 @@ prepare() {
         msg "Add block-bfq fixes"
         patch -Np1 -i ../0900-block-bfq-lower-bound-the-estimated-peak-rate-to-1.patch
         patch -Np1 -i ../0901-block-bfq-postpone-rq-preparation-to-insert-or-merge.patch
+        patch -Np1 -i ../0920-block-fixes-from-pfkernel.patch
     
     ### Patch source with BFQ-SQ-MQ
         _ver="$(cat Makefile | grep -m1 -e SUBLEVEL | grep -o "[[:digit:]]*")"
@@ -479,6 +481,7 @@ sha512sums=('SKIP'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '23cde8ab10fef1552f12869b6bbe11e3c072ea49155746804ccf1c3d550e5d2721cd142559bc2845f11c598435531788f1b876bfa8989bc749e6513bdd95331c'
             'f8dd74ae67bf8c34d1fee2d4ddea52ffeb83f9fb66de0667a97f897f72ed0d00e916561bfa827c8611adbc7198cf2378c5bc4b6bbb19f91921eaef8a911da3a1'
+            '8e0a77a02088c94f5c0ae01006f5b9a6f9921a8ed8c81e7a65b15fa49b6827f7f6b403ccf3c13fd083a71d9aeaa2e12a84b566a7dde526e9f5726813a01aafea'
             'SKIP'
             '77f80b85b69de0118956b2473c2cb7b220566cac155e6db0faf7b49338d8ecdf07ecebd4b0449aa2f56b587ca7981501f7848f650342608c235f0a3f76dbbafc'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
