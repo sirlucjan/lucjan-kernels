@@ -83,7 +83,7 @@ _rcver=rc1
 pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${pkgver}-${_rcver}
-pkgrel=0.5
+pkgrel=0.6
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -122,7 +122,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
          # standard config files for mkinitcpio ramdisk
         'linux.preset'
         '0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch'
-        '0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch')
+        '0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch'
+        '0003-xhci-Fix-USB3-NULL-pointer-dereference-at-logical-di.patch')
         
 _kernelname=${pkgbase#linux}
 : ${_kernelname:=-linux-bfq-sq-mq-haswell}
@@ -150,6 +151,10 @@ prepare() {
     ### Fix https://bugs.archlinux.org/task/56711
         msg "Fix #56711"
         patch -Np1 -i ../0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch
+    
+    ### Fix https://bugs.archlinux.org/task/58237
+        msg "Fix #58237"
+        patch -Np1 -i ../0003-xhci-Fix-USB3-NULL-pointer-dereference-at-logical-di.patch
     
     ### Fix gcc8 bogus warnings
         msg "Fix gcc8 bogus warnings"
@@ -510,8 +515,9 @@ sha512sums=('ab47849314b177d0eec9dbf261f33972b0d89fb92fb0650130ffa7abc2f36c0fab2
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
             '6346b66f54652256571ef65da8e46db49a95ac5978ecd57a507c6b2a28aee70bb3ff87045ac493f54257c9965da1046a28b72cb5abb0087204d257f14b91fd74'
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf'
-            '52006c0b490a3eddbaa67b4afa12cff1e9bb14a1a3619f41b59568af9440b40498eab04c2fc28cbe36824b909df6e5f1197d57a187cc960c3d070f1c1688beeb'
-            '08a9a9546eddd032ff0235441d70e475cc525f8e60931aeb076fa087af3fcecde4d8f70fe5d1fb0612ec641206aa50ab8319dfce635d51a1af96bce5b60205d5')
+            '72064984e86db79d07b4b493752f1b0dc6815e53328cbca47d226f9e06bfccc5398550c510a836a60b2e8a8bf674775af958621314b2e6555ed2c343427a28a7'
+            'a4ecfd93472b2998857160b116a332f68eebb84a03de4749af5a577c9da709b08c7a9460392e19d79ed374f8f441eaa2e6ec3ae93dc4424b59af0d188c2c2e35'
+            '4fddf2613b21ce412402d126aaae42009e0f03a2d16f483e02242bf8e5e232b0c205747f955941061bef2c2b244de5e60921e1bb5e84ae2fc86cd70820bfc2a8')
             
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds

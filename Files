@@ -4,6 +4,7 @@
 │   ├── linux-bfq-sq-mq-haswell
 │   │   ├── 0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
 │   │   ├── 0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch
+│   │   ├── 0003-xhci-Fix-USB3-NULL-pointer-dereference-at-logical-di.patch
 │   │   ├── 60-linux.hook
 │   │   ├── 90-linux.hook
 │   │   ├── 99-linux.hook
@@ -14,6 +15,7 @@
 │   └── linux-bfq-sq-mq-haswell-git
 │       ├── 0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
 │       ├── 0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch
+│       ├── 0003-xhci-Fix-USB3-NULL-pointer-dereference-at-logical-di.patch
 │       ├── 60-linux.hook
 │       ├── 90-linux.hook
 │       ├── 99-linux.hook
@@ -25,6 +27,7 @@
 │   ├── linux-bfq-sq-mq-haswell
 │   │   ├── 0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
 │   │   ├── 0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch
+│   │   ├── 0003-xhci-Fix-USB3-NULL-pointer-dereference-at-logical-di.patch
 │   │   ├── 60-linux.hook
 │   │   ├── 90-linux.hook
 │   │   ├── 99-linux.hook
@@ -35,6 +38,7 @@
 │   └── linux-bfq-sq-mq-haswell-git
 │       ├── 0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
 │       ├── 0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch
+│       ├── 0003-xhci-Fix-USB3-NULL-pointer-dereference-at-logical-di.patch
 │       ├── 60-linux.hook
 │       ├── 90-linux.hook
 │       ├── 99-linux.hook
@@ -44,4 +48,4 @@
 │       └── PKGBUILD
 └── README.md
 
-6 directories, 38 files
+6 directories, 42 files
