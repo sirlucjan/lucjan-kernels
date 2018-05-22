@@ -77,9 +77,9 @@ pkgbase=linux-bfq-sq-mq-haswell
 # pkgname=('linux-bfq-sq-mq-haswell-kernel' 'linux-bfq-sq-mq-haswell-headers' 'linux-bfq-sq-mq-haswell-docs')
 _major=4.16
 _srcname=linux-${_major}
-_minor=10
+_minor=11
 pkgver=${_major}.${_minor}
-pkgrel=2
+pkgrel=1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -116,8 +116,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
          # standard config files for mkinitcpio ramdisk
         'linux.preset'
         '0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch'
-        '0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch'
-        '0003-xhci-Fix-USB3-NULL-pointer-dereference-at-logical-di.patch')
+        '0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch')
         
 _kernelname=${pkgbase#linux}
 : ${_kernelname:=-linux-bfq-sq-mq-haswell}
@@ -136,10 +135,6 @@ prepare() {
     ### Fix https://bugs.archlinux.org/task/56711
         msg "Fix #56711"
         patch -Np1 -i ../0002-drm-i915-edp-Only-use-the-alternate-fixed-mode-if-it.patch
-    
-    ### Fix https://bugs.archlinux.org/task/58237
-        msg "Fix #58237"
-        patch -Np1 -i ../0003-xhci-Fix-USB3-NULL-pointer-dereference-at-logical-di.patch
     
     ### Fix gcc8 bogus warnings
         msg "Fix gcc8 bogus warnings"
@@ -483,7 +478,7 @@ done
 
 sha512sums=('ab47849314b177d0eec9dbf261f33972b0d89fb92fb0650130ffa7abc2f36c0fab2d06317dc1683c51a472a9a631573a9b1e7258d6281a2ee189897827f14662'
             'SKIP'
-            '53d700ca245341cd6493ecd01af069b2015564c9d7514751348e57047838bb1a6379f065dcf21312cf8f861f5569d28e7445846b40d14c225c644a69c09da5d1'
+            '03c2dbd6f5bac48875a08f6ef3603379fd5736d7b4d1abe1d4271d484ac5b08790c8d28177cec4e45421a303eb539fc79e15a9b67383b249b7d999e47652135c'
             'SKIP'
             'd1dcba01d1e905dbc88346466be21845f0138c1ca635e5cc2b5d3225d6d15fe6a345ff11bf900c663c060d00746f8bcf4470121a501d612551a5168da2876ea4'
             'a10a546ecced915ee38075cc6c57eaebb0f8fa58e6af6669d7429ef4880b55bd5782e11dfbda75ce4f805fa5b2399421b4eade8bbbf6766e5aac24a542f1b7a7'
@@ -498,9 +493,8 @@ sha512sums=('ab47849314b177d0eec9dbf261f33972b0d89fb92fb0650130ffa7abc2f36c0fab2
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
             '6346b66f54652256571ef65da8e46db49a95ac5978ecd57a507c6b2a28aee70bb3ff87045ac493f54257c9965da1046a28b72cb5abb0087204d257f14b91fd74'
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf'
-            '72064984e86db79d07b4b493752f1b0dc6815e53328cbca47d226f9e06bfccc5398550c510a836a60b2e8a8bf674775af958621314b2e6555ed2c343427a28a7'
-            'a4ecfd93472b2998857160b116a332f68eebb84a03de4749af5a577c9da709b08c7a9460392e19d79ed374f8f441eaa2e6ec3ae93dc4424b59af0d188c2c2e35'
-            '4fddf2613b21ce412402d126aaae42009e0f03a2d16f483e02242bf8e5e232b0c205747f955941061bef2c2b244de5e60921e1bb5e84ae2fc86cd70820bfc2a8')
+            'c48e9c5d5a1d0b5a940bc28370542f3794c66a7fdb35bac3310e3a8f19446999d2a542a2d01c9f2f6047b4ff6591f3555de7656107c9fa2c535f00374794cee0'
+            '8c3595879a37bcaff69998a09d08e7fd5c0d832fa4327b9b498132e687da9bbc099c83105ff8525ae95bba4d31565b655e75f68add74cab930fa3cc6b161a325')
             
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
