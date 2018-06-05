@@ -77,8 +77,8 @@ pkgbase=linux-bfq-sq-mq-haswell-git
 # pkgname=('linux-bfq-sq-mq-haswell-git-kernel' 'linux-bfq-sq-mq-haswell-git-headers' 'linux-bfq-sq-mq-haswell-git-docs')
 _major=4.16
 _srcname=linux-stable
-pkgver=4.16.13.0.gd19433b3d3b9
-pkgrel=5
+pkgver=4.16.14.0.g03329bc68158
+pkgrel=1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -94,7 +94,6 @@ _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v8.1+_kernel_v4.13+.patc
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#branch=linux-${_major}.y"
         "${_lucjanpath}/${_bfq_sq_mq_patch}"
-        "${_lucjanpath}/0005-objtool-add-gcc8-support.patch"
         "${_lucjanpath}/0006-include-linux-add-gcc8-support.patch"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "${_lucjanpath}/blk-mq-miscellaneous-v4/0022-blk-mq-avoid-to-starve-tag-allocation-after-allocation-process-migrates.patch"
@@ -138,7 +137,6 @@ prepare() {
     
     ### Fix gcc8 bogus warnings
         msg "Fix gcc8 bogus warnings"
-        patch -Np1 -i ../0005-objtool-add-gcc8-support.patch
         patch -Np1 -i ../0006-include-linux-add-gcc8-support.patch
     
     ### Add blk fixes
@@ -483,7 +481,6 @@ done
 
 sha512sums=('SKIP'
             'eac92c83cee6907f155434f8373a0ef2dbff9095d3aa7b8b0bd383d6dda03fe52c8f79cf6933e55e6b668cb762b3babbfc40fe801d2a2440e92d3200ced2b4e0'
-            'a10a546ecced915ee38075cc6c57eaebb0f8fa58e6af6669d7429ef4880b55bd5782e11dfbda75ce4f805fa5b2399421b4eade8bbbf6766e5aac24a542f1b7a7'
             '9737f30e748e043a1b6ab56bd0df6dc9607b4a2749243e599f5563b157aaf339ad43020a526a11a6fc809cc1abe50ac1cb12188bf5b367f6458fa0dbc2c1824d'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '6bf0042cf3fc0549e7bc55aa59c53cf3aaa9e7801aba7a125b405f08d400085170c1802172cbbf5486b621b842f6910b6831ceddda8d545ad1127f22bc9b8a8a'
