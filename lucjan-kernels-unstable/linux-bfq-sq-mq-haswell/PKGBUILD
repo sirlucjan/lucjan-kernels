@@ -136,6 +136,11 @@ prepare() {
         #msg "Add patch from stable-review"  
         #patch -p1 -i ../patch-${_stablerc}
     
+    ### Fix naming schema in EXTRAVERSION
+        _rc="$(cat Makefile | grep -m1 -e EXTRAVERSION | grep -o "[[:digit:]]*")"
+        msg "Fix naming schema in EXTRAVERSION"
+        sed -i -e "s|EXTRAVERSION = -rc${_rc}|EXTRAVERSION =|g" ./Makefile
+    
     ### Disable USER_NS for non-root users by default
         msg "Disable USER_NS for non-root users by default"
         patch -Np1 -i ../0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
