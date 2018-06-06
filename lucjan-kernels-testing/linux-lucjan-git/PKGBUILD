@@ -73,23 +73,17 @@ _1k_HZ_ticks=y
 
 ### Do not edit below this line unless you know what you're doing
 
-pkgbase=linux-bfq-sq-mq-haswell
-# pkgname=('linux-bfq-sq-mq-haswell-kernel' 'linux-bfq-sq-mq-haswell-headers' 'linux-bfq-sq-mq-haswell-docs')
+pkgbase=linux-lucjan-git
+# pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.17
-_srcname=linux-${_major}
-#_minor=0
-#_minorc=$((_minor+1))
-#_rcver=rc1
-#pkgver=${_major}.${_minorc}
-#_stable=${_major}.${_minor}
-#_stablerc=${pkgver}-${_rcver}
-pkgver=${_major}
-pkgrel=5
+_srcname=linux-stable
+pkgver=4.17.0.g29dcea88779c
+pkgrel=1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
 options=('!strip')
-makedepends=('kmod' 'inetutils' 'bc' 'libelf')
+makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git')
 _bfq_sq_mq_ver='20180531-v2'
 _bfq_sq_mq_patch="${_major}-bfq-sq-mq-git-${_bfq_sq_mq_ver}.patch"
 #_lucjanpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}"
@@ -98,18 +92,15 @@ _gcc_name="kernel_gcc_patch"
 _gcc_path="git://github.com/graysky2/${_gcc_name}"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v8.1+_kernel_v4.13+.patch"
 
-source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_stable}.xz"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/patch-${_stable}.sign"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${_stablerc}.xz"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${_stablerc}.sign"
+source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#branch=linux-${_major}.y"
         "${_lucjanpath}/pf-miscellaneous-v2/0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch"
         "${_lucjanpath}/pf-miscellaneous-v2/0002-Revert-drm-i915-edp-Allow-alternate-fixed-mode-for-e.patch"
         "${_lucjanpath}/pf-miscellaneous/0001-fixes-4.17-unmask-CHECKPOINT_RESTORE.patch"
         "${_lucjanpath}/${_bfq_sq_mq_patch}"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "${_lucjanpath}/pf-fixes/0900-fixes-from-pfkernel.patch"
+        "${_lucjanpath}/pf-pds/0001-pds-4.17-merge-PDS-v0.98q.patch"
+        "${_lucjanpath}/pf-uksm/0001-uksm-4.17-initial-submission.patch"
         "${_gcc_path}"
          # the main kernel config files
         'config'
@@ -123,23 +114,16 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'linux.preset')
         
 _kernelname=${pkgbase#linux}
-: ${_kernelname:=-linux-bfq-sq-mq-haswell}
+: ${_kernelname:=-linux-lucjan-git}
+        
+pkgver() {
+    cd "${_srcname}"
+        
+        git describe --long --tags | sed 's/^v//;s/-/./g'
+} 
 
 prepare() {
-    cd ${_srcname}
-
-    ### Add upstream patch
-        #msg "Add upstream patch"
-        #patch -p1 -i ../patch-${_stable}
-    
-    ### Add patch from stable-review
-        #msg "Add patch from stable-review"  
-        #patch -p1 -i ../patch-${_stablerc}
-    
-    ### Fix naming schema in EXTRAVERSION
-        _rc="$(cat Makefile | grep -m1 -e EXTRAVERSION | grep -o "[[:digit:]]*")"
-        msg "Fix naming schema in EXTRAVERSION"
-        sed -i -e "s|EXTRAVERSION = -rc${_rc}|EXTRAVERSION =|g" ./Makefile
+    cd "${_srcname}"
     
     ### Disable USER_NS for non-root users by default
         msg "Disable USER_NS for non-root users by default"
@@ -148,10 +132,10 @@ prepare() {
     ### Fix https://bugs.archlinux.org/task/56711
         msg "Fix #56711"
         patch -Np1 -i ../0002-Revert-drm-i915-edp-Allow-alternate-fixed-mode-for-e.patch
-   
+    
     ### Unmask checkpoint restore
         msg "Unmask checkpoint restore"  
-        patch -Np1 -i ../0001-fixes-4.17-unmask-CHECKPOINT_RESTORE.patch    
+        patch -Np1 -i ../0001-fixes-4.17-unmask-CHECKPOINT_RESTORE.patch
     
     ### Add fixes from pf-kernel
         msg "Add fixes from pf-kernel"
@@ -177,10 +161,18 @@ prepare() {
         patch -Np1 -i "$p"; done
         fi
         
+    ### Add pds pf-kernel
+        msg "Add pds pf-kernel"
+        patch -Np1 -i ../0001-pds-4.17-merge-PDS-v0.98q.patch
+    
+    ### Add uksm from pf-kernel
+        msg "Add uksm from pf-kernel"
+        patch -Np1 -i ../0001-uksm-4.17-initial-submission.patch
+    
     ### Patch source to enable more gcc CPU optimizatons via the make nconfig
         msg "Patching source with gcc patch to enable more cpus types"
 	patch -Np1 -i ../${_gcc_name}/${_gcc_patch}
-    
+
     ### Clean tree and copy ARCH config over
 	msg "Running make mrproper to clean source tree"
 	make mrproper
@@ -257,14 +249,14 @@ END
 		sed -i -e s'/^# CONFIG_SCSI_MQ_DEFAULT is not set/CONFIG_SCSI_MQ_DEFAULT=y/' \
 		    -i -e s'/^# CONFIG_DM_MQ_DEFAULT is not set/CONFIG_DM_MQ_DEFAULT=y/' ./.config
         fi
-    
+        
     ### Optionally set tickrate to 1000 
 	if [ -n "$_1k_HZ_ticks" ]; then
 		msg "Setting tick rate to 1k..."
 		sed -i -e 's/^CONFIG_HZ_300=y/# CONFIG_HZ_300 is not set/' \
                     -i -e 's/^# CONFIG_HZ_1000 is not set/CONFIG_HZ_1000=y/' \
                     -i -e 's/^CONFIG_HZ=300/CONFIG_HZ=1000/' ./.config
-	fi
+	fi   
 
 	### Optionally disable NUMA for 64-bit kernels only
         # (x86 kernels do not support NUMA)
@@ -341,7 +333,7 @@ _package-kernel() {
     pkgdesc='Linux Kernel and modules with the  BFQ-SQ-MQ scheduler. Fourth Gen Intel Core i3/i5/i7 optimized.'
     depends=('coreutils' 'linux-firmware' 'mkinitcpio>=0.7')
     optdepends=('crda: to set the correct wireless channels of your country' 'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
-    groups=('linux-bfq-sq-mq-haswell')
+    groups=('linux-lucjan-git')
     backup=("etc/mkinitcpio.d/${pkgbase}.preset")
     install=linux.install
 
@@ -398,9 +390,9 @@ _package-kernel() {
 }
 
 _package-headers() {
-    pkgdesc='Header files and scripts to build modules for linux-bfq-sq-mq-haswell. Fourth Gen Intel Core i3/i5/i7 optimized.'
-    depends=('linux-bfq-sq-mq-haswell-kernel')
-    groups=('linux-bfq-sq-mq-haswell')
+    pkgdesc='Header files and scripts to build modules for linux-lucjan-git. Fourth Gen Intel Core i3/i5/i7 optimized.'
+    depends=('linux-lucjan-git-kernel')
+    groups=('linux-lucjan-git')
 
     cd ${_srcname}
     local _builddir="${pkgdir}/usr/lib/modules/${_kernver}/build"
@@ -444,7 +436,7 @@ _package-headers() {
         rm -r "${_arch}"
     done
 
-    # remove files already in linux-bfq-sq-mq-haswell-docs package
+    # remove files already in linux-lucjan-git-docs package
     rm -r "${_builddir}/Documentation"
     
     # remove now broken symlinks
@@ -467,9 +459,9 @@ _package-headers() {
 }
 
 _package-docs() {
-    pkgdesc='Kernel hackers manual - HTML documentation that comes with the linux-bfq-sq-mq-haswell kernel. Fourth Gen Intel Core i3/i5/i7 optimized.'
-    depends=('linux-bfq-sq-mq-haswell-kernel')
-    groups=('linux-bfq-sq-mq-haswell')
+    pkgdesc='Kernel hackers manual - HTML documentation that comes with the linux-lucjan-git kernel. Fourth Gen Intel Core i3/i5/i7 optimized.'
+    depends=('linux-lucjan-git-kernel')
+    groups=('linux-lucjan-git')
   
     cd ${_srcname}
     local _builddir="${pkgdir}/usr/lib/modules/${_kernver}/build"
@@ -489,22 +481,18 @@ for _p in ${pkgname[@]}; do
   }"
 done
 
-sha512sums=('4d9de340a26155a89ea8773131c76220cc2057f2b5d031b467b60e8b14c1842518e2d60a863d8c695f0f7640f3f18d43826201984a238dade857b6cef79837db'
-            'SKIP'
+sha512sums=('SKIP'
             '892a0f0fbaa6bc4a632411c5bac2d19ae856d3153deb36fa2c541eef3c8704192bf283bf2af64ea7c394ec1d7957a2f6fdf8cd4400f667bae84bbdbc8aa58731'
             'aea8cd402483417763d7117d7bf1d7833905f9a5b026b7fdaee6d8ebde63ea85ab2373d4f6d29b952ed7d97266f6ae0bc7d8fc8243eaafa0acaba51d11d61b7a'
             '3fff3eaae30e8d5ab64977e3592b2d3994243bcee37157f84a0b9dbbb618239eef65a757801aef52ef123fb495998f8c46a33db5432fb66ddeb3f8801130317e'
             'eac92c83cee6907f155434f8373a0ef2dbff9095d3aa7b8b0bd383d6dda03fe52c8f79cf6933e55e6b668cb762b3babbfc40fe801d2a2440e92d3200ced2b4e0'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '900051674b5c8a4cf11e63c02b1fa882765b8d8cfccc3ea8af41cfd3ac3694a331092516d41a882724ffaa04081ace8c35a2b8d70f0d2f5c698d31d66c6c3158'
+            '7995e302b58a55c6a76ef3ccd288d5656316b7273580b230c8788eb532ada85954fe1eb6422c690b70b6584bb31142aa337283a5520f3c9dac7d7825262c76f8'
+            '09c6e799223520ec21f32f4410c8384e038cb62678cab92aad0aaeb27184c47cc7d0a1cd443a152d0a8f0c8d30a5ddd1def5501321e3b12d6183717d064ddb99'
             'SKIP'
-            '10bd6e23ca221f65b642eed43c7c8dce50b9d77725ba4644b80547b4946f277c40673d8a127b740a3efdbccd1cb92a2bbba7119973452954afa7d5abcea89833'
+            'a5319a6a7c0a486698fc528473f796f73e93acf5acad1ba4f2afb2231f40ebeabf35ea992445c83506db829c23fc7489177bea5807bb378e77c049ad2340f39d'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
             '6346b66f54652256571ef65da8e46db49a95ac5978ecd57a507c6b2a28aee70bb3ff87045ac493f54257c9965da1046a28b72cb5abb0087204d257f14b91fd74'
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf')
-            
-validpgpkeys=(
-              'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
-              '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
-             )

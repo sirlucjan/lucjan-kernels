@@ -73,12 +73,12 @@ _1k_HZ_ticks=y
 
 ### Do not edit below this line unless you know what you're doing
 
-pkgbase=linux-bfq-sq-mq-haswell-git
-# pkgname=('linux-bfq-sq-mq-haswell-git-kernel' 'linux-bfq-sq-mq-haswell-git-headers' 'linux-bfq-sq-mq-haswell-git-docs')
+pkgbase=linux-lucjan-git
+# pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.17
 _srcname=linux-stable-rc
 pkgver=4.17.0.g29dcea88779c
-pkgrel=4
+pkgrel=1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -99,6 +99,8 @@ source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.gi
         "${_lucjanpath}/${_bfq_sq_mq_patch}"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "${_lucjanpath}/pf-fixes/0900-fixes-from-pfkernel.patch"
+        "${_lucjanpath}/pf-pds/0001-pds-4.17-merge-PDS-v0.98q.patch"
+        "${_lucjanpath}/pf-uksm/0001-uksm-4.17-initial-submission.patch"
         "${_gcc_path}"
          # the main kernel config files
         'config'
@@ -112,7 +114,7 @@ source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.gi
         'linux.preset')
         
 _kernelname=${pkgbase#linux}
-: ${_kernelname:=-linux-bfq-sq-mq-haswell-git}
+: ${_kernelname:=-linux-lucjan-git}
         
 pkgver() {
     cd "${_srcname}"
@@ -164,6 +166,14 @@ prepare() {
         patch -Np1 -i "$p"; done
         fi
         
+    ### Add pds pf-kernel
+        msg "Add pds pf-kernel"
+        patch -Np1 -i ../0001-pds-4.17-merge-PDS-v0.98q.patch
+    
+    ### Add uksm from pf-kernel
+        msg "Add uksm from pf-kernel"
+        patch -Np1 -i ../0001-uksm-4.17-initial-submission.patch
+    
     ### Patch source to enable more gcc CPU optimizatons via the make nconfig
         msg "Patching source with gcc patch to enable more cpus types"
 	patch -Np1 -i ../${_gcc_name}/${_gcc_patch}
@@ -328,7 +338,7 @@ _package-kernel() {
     pkgdesc='Linux Kernel and modules with the  BFQ-SQ-MQ scheduler. Fourth Gen Intel Core i3/i5/i7 optimized.'
     depends=('coreutils' 'linux-firmware' 'mkinitcpio>=0.7')
     optdepends=('crda: to set the correct wireless channels of your country' 'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
-    groups=('linux-bfq-sq-mq-haswell-git')
+    groups=('linux-lucjan-git')
     backup=("etc/mkinitcpio.d/${pkgbase}.preset")
     install=linux.install
 
@@ -385,9 +395,9 @@ _package-kernel() {
 }
 
 _package-headers() {
-    pkgdesc='Header files and scripts to build modules for linux-bfq-sq-mq-haswell-git. Fourth Gen Intel Core i3/i5/i7 optimized.'
-    depends=('linux-bfq-sq-mq-haswell-git-kernel')
-    groups=('linux-bfq-sq-mq-haswell-git')
+    pkgdesc='Header files and scripts to build modules for linux-lucjan-git. Fourth Gen Intel Core i3/i5/i7 optimized.'
+    depends=('linux-lucjan-git-kernel')
+    groups=('linux-lucjan-git')
 
     cd ${_srcname}
     local _builddir="${pkgdir}/usr/lib/modules/${_kernver}/build"
@@ -431,7 +441,7 @@ _package-headers() {
         rm -r "${_arch}"
     done
 
-    # remove files already in linux-bfq-sq-mq-haswell-git-docs package
+    # remove files already in linux-lucjan-git-docs package
     rm -r "${_builddir}/Documentation"
     
     # remove now broken symlinks
@@ -454,9 +464,9 @@ _package-headers() {
 }
 
 _package-docs() {
-    pkgdesc='Kernel hackers manual - HTML documentation that comes with the linux-bfq-sq-mq-haswell-git kernel. Fourth Gen Intel Core i3/i5/i7 optimized.'
-    depends=('linux-bfq-sq-mq-haswell-git-kernel')
-    groups=('linux-bfq-sq-mq-haswell-git')
+    pkgdesc='Kernel hackers manual - HTML documentation that comes with the linux-lucjan-git kernel. Fourth Gen Intel Core i3/i5/i7 optimized.'
+    depends=('linux-lucjan-git-kernel')
+    groups=('linux-lucjan-git')
   
     cd ${_srcname}
     local _builddir="${pkgdir}/usr/lib/modules/${_kernver}/build"
@@ -483,8 +493,10 @@ sha512sums=('SKIP'
             'eac92c83cee6907f155434f8373a0ef2dbff9095d3aa7b8b0bd383d6dda03fe52c8f79cf6933e55e6b668cb762b3babbfc40fe801d2a2440e92d3200ced2b4e0'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '900051674b5c8a4cf11e63c02b1fa882765b8d8cfccc3ea8af41cfd3ac3694a331092516d41a882724ffaa04081ace8c35a2b8d70f0d2f5c698d31d66c6c3158'
+            '7995e302b58a55c6a76ef3ccd288d5656316b7273580b230c8788eb532ada85954fe1eb6422c690b70b6584bb31142aa337283a5520f3c9dac7d7825262c76f8'
+            '09c6e799223520ec21f32f4410c8384e038cb62678cab92aad0aaeb27184c47cc7d0a1cd443a152d0a8f0c8d30a5ddd1def5501321e3b12d6183717d064ddb99'
             'SKIP'
-            'c7ae5abe9a5ea4989ac9913b359ad5cff5ef4ee33b671c6046966c7e4e5a9f6410e742c47b6ba138c3d2be6570eb399d410ac42cabea0a58e98070dcbbadc56e'
+            'a5319a6a7c0a486698fc528473f796f73e93acf5acad1ba4f2afb2231f40ebeabf35ea992445c83506db829c23fc7489177bea5807bb378e77c049ad2340f39d'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
             '6346b66f54652256571ef65da8e46db49a95ac5978ecd57a507c6b2a28aee70bb3ff87045ac493f54257c9965da1046a28b72cb5abb0087204d257f14b91fd74'
