@@ -2,8 +2,6 @@
 ├── Files
 ├── lucjan-kernels-testing
 │   ├── linux-bfq-sq-mq-haswell
-│   │   ├── 0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
-│   │   ├── 0002-Revert-drm-i915-edp-Allow-alternate-fixed-mode-for-e.patch
 │   │   ├── 60-linux.hook
 │   │   ├── 90-linux.hook
 │   │   ├── 99-linux.hook
@@ -12,8 +10,6 @@
 │   │   ├── linux.preset
 │   │   └── PKGBUILD
 │   └── linux-bfq-sq-mq-haswell-git
-│       ├── 0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
-│       ├── 0002-Revert-drm-i915-edp-Allow-alternate-fixed-mode-for-e.patch
 │       ├── 60-linux.hook
 │       ├── 90-linux.hook
 │       ├── 99-linux.hook
@@ -23,8 +19,6 @@
 │       └── PKGBUILD
 ├── lucjan-kernels-unstable
 │   ├── linux-bfq-sq-mq-haswell
-│   │   ├── 0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
-│   │   ├── 0002-Revert-drm-i915-edp-Allow-alternate-fixed-mode-for-e.patch
 │   │   ├── 60-linux.hook
 │   │   ├── 90-linux.hook
 │   │   ├── 99-linux.hook
@@ -33,8 +27,6 @@
 │   │   ├── linux.preset
 │   │   └── PKGBUILD
 │   └── linux-bfq-sq-mq-haswell-git
-│       ├── 0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
-│       ├── 0002-Revert-drm-i915-edp-Allow-alternate-fixed-mode-for-e.patch
 │       ├── 60-linux.hook
 │       ├── 90-linux.hook
 │       ├── 99-linux.hook
@@ -44,4 +36,4 @@
 │       └── PKGBUILD
 └── README.md
 
-6 directories, 38 files
+6 directories, 30 files
