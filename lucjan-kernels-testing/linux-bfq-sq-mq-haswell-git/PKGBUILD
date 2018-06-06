@@ -140,9 +140,11 @@ prepare() {
         patch -Np1 -i ../0900-fixes-from-pfkernel.patch
     
     ### Patch source with BFQ-SQ-MQ
-        _ver="$(cat Makefile | grep -m1 -e PATCHLEVEL | grep -o "[[:digit:]]*")"
+        _ver1="$(cat Makefile | grep -m1 -e PATCHLEVEL | grep -o "[[:digit:]]*")"
+        _ver2="$(cat Makefile | grep -m1 -e SUBLEVEL | grep -o "[[:digit:]]*")"
         msg "Fix naming schema in BFQ-SQ-MQ patch"
-        sed -i -e "s|PATCHLEVEL = 16|PATCHLEVEL = ${_ver}|g" \
+        sed -i -e "s|PATCHLEVEL = 16|PATCHLEVEL = ${_ver1}|g" \
+            -i -e "s|SUBLEVEL = 0|SUBLEVEL = ${_ver2}|g" \
             -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
             -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g"  \
             -i -e "s|NAME = Fearless Coyote|NAME = Merciless Moray|g" ../${_bfq_sq_mq_patch}
