@@ -91,16 +91,17 @@ _lucjanpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}"
 _gcc_name="kernel_gcc_patch"
 _gcc_path="git://github.com/graysky2/${_gcc_name}"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v8.1+_kernel_v4.13+.patch"
+_pds_ver="v0.98q"
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#branch=linux-${_major}.y"
         "${_lucjanpath}/pf-miscellaneous-v2/0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch"
         "${_lucjanpath}/pf-miscellaneous-v2/0002-Revert-drm-i915-edp-Allow-alternate-fixed-mode-for-e.patch"
-        "${_lucjanpath}/pf-miscellaneous/0001-fixes-4.17-unmask-CHECKPOINT_RESTORE.patch"
+        "${_lucjanpath}/pf-miscellaneous/0001-fixes-${_major}-unmask-CHECKPOINT_RESTORE.patch"
         "${_lucjanpath}/${_bfq_sq_mq_patch}"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "${_lucjanpath}/pf-fixes/0900-fixes-from-pfkernel.patch"
-        "${_lucjanpath}/pf-pds/0001-pds-4.17-merge-PDS-v0.98q.patch"
-        "${_lucjanpath}/pf-uksm/0001-uksm-4.17-initial-submission.patch"
+        "${_lucjanpath}/pf-pds/0001-pds-${_major}-merge-PDS-${_pds_ver}.patch"
+        "${_lucjanpath}/pf-uksm/0001-uksm-${_major}-initial-submission.patch"
         "${_gcc_path}"
          # the main kernel config files
         'config'
@@ -135,7 +136,7 @@ prepare() {
     
     ### Unmask checkpoint restore
         msg "Unmask checkpoint restore"  
-        patch -Np1 -i ../0001-fixes-4.17-unmask-CHECKPOINT_RESTORE.patch
+        patch -Np1 -i ../0001-fixes-${_major}-unmask-CHECKPOINT_RESTORE.patch    
     
     ### Add fixes from pf-kernel
         msg "Add fixes from pf-kernel"
@@ -161,13 +162,13 @@ prepare() {
         patch -Np1 -i "$p"; done
         fi
         
-    ### Add pds pf-kernel
-        msg "Add pds pf-kernel"
-        patch -Np1 -i ../0001-pds-4.17-merge-PDS-v0.98q.patch
+    ### Add pds from pf-kernel
+        msg "Add pds from pf-kernel"
+        patch -Np1 -i ../0001-pds-${_major}-merge-PDS-${_pds_ver}.patch
     
     ### Add uksm from pf-kernel
         msg "Add uksm from pf-kernel"
-        patch -Np1 -i ../0001-uksm-4.17-initial-submission.patch
+        patch -Np1 -i ../0001-uksm-${_major}-initial-submission.patch
     
     ### Patch source to enable more gcc CPU optimizatons via the make nconfig
         msg "Patching source with gcc patch to enable more cpus types"
