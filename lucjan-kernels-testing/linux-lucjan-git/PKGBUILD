@@ -84,14 +84,18 @@ url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git')
-_bfq_sq_mq_ver='20180531-v2'
-_bfq_sq_mq_patch="${_major}-bfq-sq-mq-git-${_bfq_sq_mq_ver}.patch"
 #_lucjanpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}"
 _lucjanpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}"
+_bfq_sq_mq_ver='20180531-v2'
+_bfq_sq_mq_patch="${_major}-bfq-sq-mq-git-${_bfq_sq_mq_ver}.patch"
+_pds_ver="v0.98q"
+_pds_path="pf-pds"
+_pds_patch="0001-pds-${_major}-merge-PDS-${_pds_ver}.patch"
+_uksm_path="pf-uksm"
+_uksm_patch="0001-uksm-${_major}-initial-submission.patch"
 _gcc_name="kernel_gcc_patch"
 _gcc_path="git://github.com/graysky2/${_gcc_name}"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v8.1+_kernel_v4.13+.patch"
-_pds_ver="v0.98q"
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#branch=linux-${_major}.y"
         "${_lucjanpath}/pf-miscellaneous-v2/0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch"
@@ -100,8 +104,8 @@ source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#b
         "${_lucjanpath}/${_bfq_sq_mq_patch}"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "${_lucjanpath}/pf-fixes/0900-fixes-from-pfkernel.patch"
-        "${_lucjanpath}/pf-pds/0001-pds-${_major}-merge-PDS-${_pds_ver}.patch"
-        "${_lucjanpath}/pf-uksm/0001-uksm-${_major}-initial-submission.patch"
+        "${_lucjanpath}/${_pds_path}/${_pds_patch}"
+        "${_lucjanpath}/${_uksm_path}/${_uksm_patch}"
         "${_gcc_path}"
          # the main kernel config files
         'config'
@@ -164,11 +168,11 @@ prepare() {
         
     ### Add pds from pf-kernel
         msg "Add pds from pf-kernel"
-        patch -Np1 -i ../0001-pds-${_major}-merge-PDS-${_pds_ver}.patch
+        patch -Np1 -i ../${_pds_patch}
     
     ### Add uksm from pf-kernel
         msg "Add uksm from pf-kernel"
-        patch -Np1 -i ../0001-uksm-${_major}-initial-submission.patch
+        patch -Np1 -i ../${_uksm_patch}
     
     ### Patch source to enable more gcc CPU optimizatons via the make nconfig
         msg "Patching source with gcc patch to enable more cpus types"
