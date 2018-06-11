@@ -80,7 +80,7 @@ _srcname=linux-${_major}
 #_minor=1
 #pkgver=${_major}.${_minor}
 pkgver=${_major}
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -90,9 +90,11 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf')
 _lucjanpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}"
 _bfq_sq_mq_ver='20180531-v2'
 _bfq_sq_mq_patch="${_major}-bfq-sq-mq-git-${_bfq_sq_mq_ver}.patch"
-_pds_ver="v0.98q"
 _pds_path="pf-pds"
+_pds_ver="v0.98q"
+_pds_up1="v0.98r"
 _pds_patch="0001-pds-${_major}-merge-PDS-${_pds_ver}.patch"
+_pds_up1_patch="0001-pds-${_major}-merge-PDS-${_pds_up1}.patch"
 _uksm_path="pf-uksm"
 _uksm_patch="0001-uksm-${_major}-initial-submission.patch"
 _gcc_name="kernel_gcc_patch"
@@ -110,6 +112,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "${_lucjanpath}/pf-fixes/0900-fixes-from-pfkernel.patch"
         "${_lucjanpath}/${_pds_path}/${_pds_patch}"
+        "${_lucjanpath}/${_pds_path}/${_pds_up1_patch}"
         "${_lucjanpath}/${_uksm_path}/${_uksm_patch}"
         "${_gcc_path}"
          # the main kernel config files
@@ -172,6 +175,7 @@ prepare() {
     ### Add pds from pf-kernel
         msg "Add pds from pf-kernel"
         patch -Np1 -i ../${_pds_patch}
+        patch -Np1 -i ../${_pds_up1_patch}
     
     ### Add uksm from pf-kernel
         msg "Add uksm from pf-kernel"
@@ -498,6 +502,7 @@ sha512sums=('4d9de340a26155a89ea8773131c76220cc2057f2b5d031b467b60e8b14c1842518e
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '900051674b5c8a4cf11e63c02b1fa882765b8d8cfccc3ea8af41cfd3ac3694a331092516d41a882724ffaa04081ace8c35a2b8d70f0d2f5c698d31d66c6c3158'
             '7995e302b58a55c6a76ef3ccd288d5656316b7273580b230c8788eb532ada85954fe1eb6422c690b70b6584bb31142aa337283a5520f3c9dac7d7825262c76f8'
+            '14d8933b1cbe4c53d372a3b51e88d6016674c52661bfac827a482e9587300e43cfefd5fdc7710e49a2c3ca56f1b3a0c5688be44ae4979f9b21ce39b0142499a2'
             '09c6e799223520ec21f32f4410c8384e038cb62678cab92aad0aaeb27184c47cc7d0a1cd443a152d0a8f0c8d30a5ddd1def5501321e3b12d6183717d064ddb99'
             'SKIP'
             'cbb76d365109352326157238f4da3b38de9cf7791dc9fef05903360f962319e123b74f43b0220b8ae2d28ba74f9bfdedd09c0e2ff7aba13084d48dbfd3ff8159'
