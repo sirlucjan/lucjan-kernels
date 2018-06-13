@@ -77,8 +77,8 @@ pkgbase=linux-lucjan-git
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.17
 _srcname=linux-stable-rc
-pkgver=4.17.16.g9d1e6d8bc071
-pkgrel=0.1
+pkgver=4.17.1.0.gd0c077266ecb
+pkgrel=1
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -344,7 +344,7 @@ build() {
 }
 
 _package-kernel() {
-    pkgdesc='Linux Kernel and modules with the  BFQ-SQ-MQ scheduler. Fourth Gen Intel Core i3/i5/i7 optimized.'
+    pkgdesc='Linux Kernel and modules with the  BFQ-SQ-MQ I/0-scheduler, the PDS-mq CPU Scheduler and the UKSM. Fourth Gen Intel Core i3/i5/i7 optimized.'
     depends=('coreutils' 'linux-firmware' 'mkinitcpio>=0.7')
     optdepends=('crda: to set the correct wireless channels of your country' 'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
     groups=('linux-lucjan-git')
