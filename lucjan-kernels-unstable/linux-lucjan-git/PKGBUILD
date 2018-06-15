@@ -77,8 +77,8 @@ pkgbase=linux-lucjan-git
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.17
 _srcname=linux-stable-rc
-pkgver=4.17.1.0.gd0c077266ecb
-pkgrel=1
+pkgver=4.17.1.46.gf11fc3963077
+pkgrel=0
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -88,13 +88,11 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git')
 _lucjanpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}"
 _bfq_sq_mq_ver='20180531-v2'
 _bfq_sq_mq_patch="${_major}-bfq-sq-mq-git-${_bfq_sq_mq_ver}.patch"
-_pds_path="pf-pds"
-_pds_ver="v0.98q"
-_pds_up1="v0.98r"
-_pds_patch="0001-pds-${_major}-merge-PDS-${_pds_ver}.patch"
-_pds_up1_patch="0001-pds-${_major}-merge-PDS-${_pds_up1}.patch"
-_uksm_path="pf-uksm"
-_uksm_patch="0001-uksm-${_major}-initial-submission.patch"
+_pds_path="https://raw.githubusercontent.com/cchalpha/PDS-mq/master/${_major}"
+_pds_ver="098q"
+_pds_patch="v${_major}_pds${_pds_ver}.patch"
+_uksm_path="https://raw.githubusercontent.com/dolohow/uksm/master"
+_uksm_patch="uksm-${_major}.patch"
 _gcc_name="kernel_gcc_patch"
 _gcc_path="git://github.com/graysky2/${_gcc_name}"
 _gcc_patch="enable_additional_cpu_optimizations_for_gcc_v8.1+_kernel_v4.13+.patch"
@@ -106,9 +104,8 @@ source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.gi
         "${_lucjanpath}/${_bfq_sq_mq_patch}"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "${_lucjanpath}/pf-fixes/0900-fixes-from-pfkernel.patch"
-        "${_lucjanpath}/${_pds_path}/${_pds_patch}"
-        "${_lucjanpath}/${_pds_path}/${_pds_up1_patch}"
-        "${_lucjanpath}/${_uksm_path}/${_uksm_patch}"
+        "${_pds_path}/${_pds_patch}"
+        "${_uksm_path}/${_uksm_patch}"
         "${_gcc_path}"
          # the main kernel config files
         'config'
@@ -151,7 +148,7 @@ prepare() {
         patch -Np1 -i ../0001-fixes-${_major}-unmask-CHECKPOINT_RESTORE.patch    
     
     ### Add fixes from pf-kernel
-        msg "Add fixes from pf-kernel"
+        msg "Adding fixes from pf-kernel"
         patch -Np1 -i ../0900-fixes-from-pfkernel.patch
     
     ### Patch source with BFQ-SQ-MQ
@@ -174,13 +171,12 @@ prepare() {
         patch -Np1 -i "$p"; done
         fi
         
-    ### Add pds from pf-kernel
-        msg "Add pds from pf-kernel"
+    ### Patch source with PDS-mq 
+        msg "Patching source with PDS-mq"
         patch -Np1 -i ../${_pds_patch}
-        patch -Np1 -i ../${_pds_up1_patch}
     
-    ### Add uksm from pf-kernel
-        msg "Add uksm from pf-kernel"
+    ### Patch source with UKSM
+        msg "Patching source with UKSM"
         patch -Np1 -i ../${_uksm_patch}
     
     ### Patch source to enable more gcc CPU optimizatons via the make nconfig
@@ -502,9 +498,8 @@ sha512sums=('SKIP'
             'eac92c83cee6907f155434f8373a0ef2dbff9095d3aa7b8b0bd383d6dda03fe52c8f79cf6933e55e6b668cb762b3babbfc40fe801d2a2440e92d3200ced2b4e0'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '900051674b5c8a4cf11e63c02b1fa882765b8d8cfccc3ea8af41cfd3ac3694a331092516d41a882724ffaa04081ace8c35a2b8d70f0d2f5c698d31d66c6c3158'
-            '7995e302b58a55c6a76ef3ccd288d5656316b7273580b230c8788eb532ada85954fe1eb6422c690b70b6584bb31142aa337283a5520f3c9dac7d7825262c76f8'
-            '14d8933b1cbe4c53d372a3b51e88d6016674c52661bfac827a482e9587300e43cfefd5fdc7710e49a2c3ca56f1b3a0c5688be44ae4979f9b21ce39b0142499a2'
-            '09c6e799223520ec21f32f4410c8384e038cb62678cab92aad0aaeb27184c47cc7d0a1cd443a152d0a8f0c8d30a5ddd1def5501321e3b12d6183717d064ddb99'
+            'c89658af0bde9f2145728c25b49ca4841fbf2609b7dbe2f99f242fedba54dfd70b390421083769ca7e4816b2bb1ca909190bf0b2ed25c98c40bf79fe26d89084'
+            '30fc872a19686bd75b0cfa0614980a41d74f4cd40c9fd2c98f82ab4554ad39ccd7ddace9068f354572c1bdf14eed55c8e6d3390127c1a83ec093cf1487a31a0d'
             'SKIP'
             'e64552e9a808b1810ea182a8893cd2b12137ddade6b36649e3260c232cacc6bbe64580ac3730314fb5c8348ee5040220b1bedb4da30df66716a3458e18447dc8'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
