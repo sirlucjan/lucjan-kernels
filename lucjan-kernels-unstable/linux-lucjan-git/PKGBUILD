@@ -86,8 +86,10 @@ options=('!strip')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git')
 #_lucjanpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}"
 _lucjanpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}"
-_bfq_sq_mq_ver='20180531-v2'
-_bfq_sq_mq_patch="${_major}-bfq-sq-mq-git-${_bfq_sq_mq_ver}.patch"
+_bfq_sq_mq_path="bfq-sq-mq"
+_bfq_sq_mq_ver='v8r12'
+_bfq_sq_mq_rel='2K180531'
+_bfq_sq_mq_patch="${_major}-bfq-sq-mq-${_bfq_sq_mq_ver}-${_bfq_sq_mq_rel}.patch"
 _pds_path="https://raw.githubusercontent.com/cchalpha/PDS-mq/master/${_major}"
 _pds_ver="098q"
 _pds_patch="v${_major}_pds${_pds_ver}.patch"
@@ -101,7 +103,7 @@ source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.gi
         "${_lucjanpath}/pf-miscellaneous-v2/0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch"
         "${_lucjanpath}/pf-miscellaneous-v2/0002-Revert-drm-i915-edp-Allow-alternate-fixed-mode-for-e.patch"
         "${_lucjanpath}/pf-miscellaneous/0001-fixes-${_major}-unmask-CHECKPOINT_RESTORE.patch"
-        "${_lucjanpath}/${_bfq_sq_mq_patch}"
+        "${_lucjanpath}/${_bfq_sq_mq_path}/${_bfq_sq_mq_patch}"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
         "${_lucjanpath}/pf-fixes/0900-fixes-from-pfkernel.patch"
         "${_pds_path}/${_pds_patch}"
@@ -129,12 +131,7 @@ pkgver() {
 
 prepare() {
     cd "${_srcname}"
-    
-    ### Fix naming schema in EXTRAVERSION
-        _rc="$(cat Makefile | grep -m1 -e EXTRAVERSION | grep -o "[[:digit:]]*")"
-        msg "Fix naming schema in EXTRAVERSION"
-        sed -i -e "s|EXTRAVERSION = -rc${_rc}|EXTRAVERSION =|g" ./Makefile
-    
+        
     ### Disable USER_NS for non-root users by default
         msg "Disable USER_NS for non-root users by default"
         patch -Np1 -i ../0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
@@ -152,17 +149,9 @@ prepare() {
         patch -Np1 -i ../0900-fixes-from-pfkernel.patch
     
     ### Patch source with BFQ-SQ-MQ
-        _ver1="$(cat Makefile | grep -m1 -e PATCHLEVEL | grep -o "[[:digit:]]*")"
-        _ver2="$(cat Makefile | grep -m1 -e SUBLEVEL | grep -o "[[:digit:]]*")"
-        msg "Fix naming schema in BFQ-SQ-MQ patch"
-        sed -i -e "s|PATCHLEVEL = 16|PATCHLEVEL = ${_ver1}|g" \
-            -i -e "s|SUBLEVEL = 0|SUBLEVEL = ${_ver2}|g" \
-            -i -e "s|EXTRAVERSION = -bfq|EXTRAVERSION =|g" \
-            -i -e "s|EXTRAVERSION =-mq|EXTRAVERSION =|g"  \
-            -i -e "s|NAME = Fearless Coyote|NAME = Merciless Moray|g" ../${_bfq_sq_mq_patch}
         msg "Patching source with BFQ-SQ-MQ patches"
         patch -Np1 -i ../${_bfq_sq_mq_patch}
-        
+    
     ### Patches related to BUG_ON(entity->tree && entity->tree != &st->active) in __bfq_requeue_entity();
         if [ -n "$_use_tentative_patches" ]; then
         msg "Apply tentative patches"
@@ -495,7 +484,7 @@ sha512sums=('SKIP'
             '892a0f0fbaa6bc4a632411c5bac2d19ae856d3153deb36fa2c541eef3c8704192bf283bf2af64ea7c394ec1d7957a2f6fdf8cd4400f667bae84bbdbc8aa58731'
             'aea8cd402483417763d7117d7bf1d7833905f9a5b026b7fdaee6d8ebde63ea85ab2373d4f6d29b952ed7d97266f6ae0bc7d8fc8243eaafa0acaba51d11d61b7a'
             '3fff3eaae30e8d5ab64977e3592b2d3994243bcee37157f84a0b9dbbb618239eef65a757801aef52ef123fb495998f8c46a33db5432fb66ddeb3f8801130317e'
-            'eac92c83cee6907f155434f8373a0ef2dbff9095d3aa7b8b0bd383d6dda03fe52c8f79cf6933e55e6b668cb762b3babbfc40fe801d2a2440e92d3200ced2b4e0'
+            '83b0a5c04daebfcfcacbd66635e0e7e1f156024b63aea6e46bc63ec4b4c0ba40aec751e775b1fac04b0d631a640709bf57a147739ad9b3581a259d54209f3e1d'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '900051674b5c8a4cf11e63c02b1fa882765b8d8cfccc3ea8af41cfd3ac3694a331092516d41a882724ffaa04081ace8c35a2b8d70f0d2f5c698d31d66c6c3158'
             'c89658af0bde9f2145728c25b49ca4841fbf2609b7dbe2f99f242fedba54dfd70b390421083769ca7e4816b2bb1ca909190bf0b2ed25c98c40bf79fe26d89084'
