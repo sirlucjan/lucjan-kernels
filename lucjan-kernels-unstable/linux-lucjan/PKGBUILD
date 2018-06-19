@@ -83,7 +83,7 @@ _rcver=rc1
 pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${pkgver}-${_rcver}
-pkgrel=0.1
+pkgrel=0.2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -96,7 +96,7 @@ _bfq_sq_mq_ver='v8r12'
 _bfq_sq_mq_rel='2K180531-v2'
 _bfq_sq_mq_patch="${_major}-bfq-sq-mq-${_bfq_sq_mq_ver}-${_bfq_sq_mq_rel}.patch"
 _pds_path="https://raw.githubusercontent.com/cchalpha/PDS-mq/master/${_major}"
-_pds_ver="098q"
+_pds_ver="098r"
 _pds_patch="v${_major}_pds${_pds_ver}.patch"
 _uksm_path="https://raw.githubusercontent.com/dolohow/uksm/master"
 _uksm_patch="uksm-${_major}.patch"
@@ -504,7 +504,7 @@ sha512sums=('4d9de340a26155a89ea8773131c76220cc2057f2b5d031b467b60e8b14c1842518e
             '1f0bc2504e307d37e2a1ecff31b40be2be77e0432e8badce1396934e29529f7d2aa5eecbed752ed57c3a5b2ef6315a2d2a31b46fa1623bdd91566b256b5076f0'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '4263ae4b06fe1b5c0632edb4ba5fcc9aaf5ca0594f49ea1d2221362925b891a48fc35edbfbe5159c8011ef14c48e7d8b20be14702de154022657f6f70302040f'
-            'c89658af0bde9f2145728c25b49ca4841fbf2609b7dbe2f99f242fedba54dfd70b390421083769ca7e4816b2bb1ca909190bf0b2ed25c98c40bf79fe26d89084'
+            '8f6aa507be5c73cad12237f6cac194e48ea67bd32f2c9070da7acb2711ca52aab4f51a8a93f1ac08486aca9712221b0df8a2532e7fef9b42da5176b35d0422ab'
             '30fc872a19686bd75b0cfa0614980a41d74f4cd40c9fd2c98f82ab4554ad39ccd7ddace9068f354572c1bdf14eed55c8e6d3390127c1a83ec093cf1487a31a0d'
             'SKIP'
             'cbb76d365109352326157238f4da3b38de9cf7791dc9fef05903360f962319e123b74f43b0220b8ae2d28ba74f9bfdedd09c0e2ff7aba13084d48dbfd3ff8159'
