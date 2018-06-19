@@ -77,8 +77,8 @@ pkgbase=linux-lucjan-git
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.17
 _srcname=linux-stable
-pkgver=4.17.1.0.gd0c077266ecb
-pkgrel=3
+pkgver=4.17.2.0.g3816828a8cd0
+pkgrel=2
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -88,7 +88,7 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git')
 _lucjanpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}"
 _bfq_sq_mq_path="bfq-sq-mq"
 _bfq_sq_mq_ver='v8r12'
-_bfq_sq_mq_rel='2K180531'
+_bfq_sq_mq_rel='2K180531-v2'
 _bfq_sq_mq_patch="${_major}-bfq-sq-mq-${_bfq_sq_mq_ver}-${_bfq_sq_mq_rel}.patch"
 _pds_path="https://raw.githubusercontent.com/cchalpha/PDS-mq/master/${_major}"
 _pds_ver="098q"
@@ -484,7 +484,7 @@ sha512sums=('SKIP'
             '892a0f0fbaa6bc4a632411c5bac2d19ae856d3153deb36fa2c541eef3c8704192bf283bf2af64ea7c394ec1d7957a2f6fdf8cd4400f667bae84bbdbc8aa58731'
             'aea8cd402483417763d7117d7bf1d7833905f9a5b026b7fdaee6d8ebde63ea85ab2373d4f6d29b952ed7d97266f6ae0bc7d8fc8243eaafa0acaba51d11d61b7a'
             '3fff3eaae30e8d5ab64977e3592b2d3994243bcee37157f84a0b9dbbb618239eef65a757801aef52ef123fb495998f8c46a33db5432fb66ddeb3f8801130317e'
-            '83b0a5c04daebfcfcacbd66635e0e7e1f156024b63aea6e46bc63ec4b4c0ba40aec751e775b1fac04b0d631a640709bf57a147739ad9b3581a259d54209f3e1d'
+            '1f0bc2504e307d37e2a1ecff31b40be2be77e0432e8badce1396934e29529f7d2aa5eecbed752ed57c3a5b2ef6315a2d2a31b46fa1623bdd91566b256b5076f0'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
             '4263ae4b06fe1b5c0632edb4ba5fcc9aaf5ca0594f49ea1d2221362925b891a48fc35edbfbe5159c8011ef14c48e7d8b20be14702de154022657f6f70302040f'
             'c89658af0bde9f2145728c25b49ca4841fbf2609b7dbe2f99f242fedba54dfd70b390421083769ca7e4816b2bb1ca909190bf0b2ed25c98c40bf79fe26d89084'
