@@ -78,7 +78,7 @@ pkgbase=linux-lucjan-git
 _major=4.17
 _srcname=linux-stable
 pkgver=4.17.2.0.g3816828a8cd0
-pkgrel=4
+pkgrel=5
 arch=('x86_64')
 url="https://github.com/Algodev-github/bfq-mq/"
 license=('GPL2')
@@ -105,7 +105,7 @@ source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#b
         "${_lucjanpath}/pf-miscellaneous/0001-fixes-${_major}-unmask-CHECKPOINT_RESTORE.patch"
         "${_lucjanpath}/${_bfq_sq_mq_path}/${_bfq_sq_mq_patch}"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
-        "${_lucjanpath}/pf-fixes/0910-fixes-from-pfkernel-v2.patch"
+        "${_lucjanpath}/pf-fixes/0910-fixes-from-pfkernel-v3.patch"
         "${_pds_path}/${_pds_patch}"
         "${_uksm_path}/${_uksm_patch}"
         "${_gcc_path}"
@@ -146,7 +146,7 @@ prepare() {
     
     ### Add fixes from pf-kernel
         msg "Adding fixes from pf-kernel"
-        patch -Np1 -i ../0910-fixes-from-pfkernel-v2.patch
+        patch -Np1 -i ../0910-fixes-from-pfkernel-v3.patch
     
     ### Patch source with BFQ-SQ-MQ
         msg "Patching source with BFQ-SQ-MQ patches"
@@ -486,7 +486,7 @@ sha512sums=('SKIP'
             '3fff3eaae30e8d5ab64977e3592b2d3994243bcee37157f84a0b9dbbb618239eef65a757801aef52ef123fb495998f8c46a33db5432fb66ddeb3f8801130317e'
             '1f0bc2504e307d37e2a1ecff31b40be2be77e0432e8badce1396934e29529f7d2aa5eecbed752ed57c3a5b2ef6315a2d2a31b46fa1623bdd91566b256b5076f0'
             '0f96fa9ad784709973b32eea82075ceb3e9dc2482df6441a4607612806f069254e63508b1b562279622394e4a1fbebef1b87af8401c0b1210d5d0de9954245c8'
-            'a2a5dd78db4492bb00c85a1add21c0b7c8cf06dc2447d9382101300d14f3e1c9e7be39c9eea75f38a12237fd62912f1dc943279a369704567f5d8afbe117d758'
+            '43fdf96b7b834db5ee95fc741916b9addb8e2a74a0320d361b27d1d48d407b7598756d198740814468e1601d1b661046cd96a992240e6fd31ce5e361d2ce71fe'
             '8f6aa507be5c73cad12237f6cac194e48ea67bd32f2c9070da7acb2711ca52aab4f51a8a93f1ac08486aca9712221b0df8a2532e7fef9b42da5176b35d0422ab'
             '30fc872a19686bd75b0cfa0614980a41d74f4cd40c9fd2c98f82ab4554ad39ccd7ddace9068f354572c1bdf14eed55c8e6d3390127c1a83ec093cf1487a31a0d'
             'SKIP'
