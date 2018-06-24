@@ -151,7 +151,7 @@ prepare() {
         patch -Np1 -i ../0910-fixes-from-pfkernel-v3.patch
     
     ### Patch source with BFQ-SQ-MQ
-        msg "Patching source with BFQ-SQ-MQ patches"
+        msg "Patching source with BFQ-SQ-MQ"
         patch -Np1 -i ../${_bfq_sq_mq_patch}
     
     ### Patches related to BUG_ON(entity->tree && entity->tree != &st->active) in __bfq_requeue_entity();
