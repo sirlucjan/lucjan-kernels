@@ -160,7 +160,7 @@ prepare() {
     
     ### Add block fixes from pf-kernel
         msg "Adding block fixes from pf-kernel"
-        for p in "${srcdir}"/091*.patch*; do 
+        for p in "${srcdir}"/091*-block-fixes-from-pfkernel.patch; do 
         msg " $p"
         patch -Np1 -i "$p"; done
     
