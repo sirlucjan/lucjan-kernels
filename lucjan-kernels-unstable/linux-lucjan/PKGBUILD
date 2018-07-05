@@ -115,8 +115,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "${_lucjanpath}/pf-miscellaneous/0001-fixes-${_major}-unmask-CHECKPOINT_RESTORE.patch"
         "${_lucjanpath}/${_bfq_sq_mq_path}/${_bfq_sq_mq_patch}"
         "${_lucjanpath}/0100-Check-presence-on-tree-of-every-entity-after-every-a.patch"
-        "${_lucjanpath}/pf-fixes/0915-fixes-from-pfkernel.patch"
-        "${_lucjanpath}/pf-fixes/0916-fixes-from-pfkernel.patch"
+        "${_lucjanpath}/pf-block-fixes/0915-block-fixes-from-pfkernel.patch"
+        "${_lucjanpath}/pf-block-fixes/0916-block-fixes-from-pfkernel.patch"
         "${_pds_path}/${_pds_patch}"
         "${_lucjanpath}/pds-fixes/0001-pds-Fix-compilation-issue-on-raspberry-pi.patch"
         "${_uksm_path}/${_uksm_patch}"
@@ -158,8 +158,8 @@ prepare() {
         msg "Unmask checkpoint restore"  
         patch -Np1 -i ../0001-fixes-${_major}-unmask-CHECKPOINT_RESTORE.patch    
     
-    ### Add fixes from pf-kernel
-        msg "Adding fixes from pf-kernel"
+    ### Add block fixes from pf-kernel
+        msg "Adding block fixes from pf-kernel"
         for p in "${srcdir}"/091*.patch*; do 
         msg " $p"
         patch -Np1 -i "$p"; done
