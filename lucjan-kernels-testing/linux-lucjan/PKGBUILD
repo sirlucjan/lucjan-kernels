@@ -77,7 +77,7 @@ pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=4.17
 _srcname=linux-${_major}
-_minor=4
+_minor=5
 pkgver=${_major}.${_minor}
 pkgrel=1
 arch=('x86_64')
@@ -487,7 +487,7 @@ done
 
 sha512sums=('4d9de340a26155a89ea8773131c76220cc2057f2b5d031b467b60e8b14c1842518e2d60a863d8c695f0f7640f3f18d43826201984a238dade857b6cef79837db'
             'SKIP'
-            '0a9f976e7cf2c2cc9ba29b5eb45a6b9722059674efa99153bf449537e022426138a0848cfdb69e1df4a1a3b71ee7c9de92b4086799d0e15f44f8356b2fd63754'
+            '2623f82b4664b5ef6af4f1f9e2758661d7c3b4b7445990fb22b1a93d33006316a7a19c03d7dfccb0c49c7cfc2791c4b0aa6c543730ffc1d095c72402f060dd5c'
             'SKIP'
             '892a0f0fbaa6bc4a632411c5bac2d19ae856d3153deb36fa2c541eef3c8704192bf283bf2af64ea7c394ec1d7957a2f6fdf8cd4400f667bae84bbdbc8aa58731'
             'aea8cd402483417763d7117d7bf1d7833905f9a5b026b7fdaee6d8ebde63ea85ab2373d4f6d29b952ed7d97266f6ae0bc7d8fc8243eaafa0acaba51d11d61b7a'
