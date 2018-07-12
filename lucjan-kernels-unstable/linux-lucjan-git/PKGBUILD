@@ -77,8 +77,8 @@ pkgbase=linux-lucjan-git
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.17
 _srcname=linux-stable-rc
-pkgver=4.17.4.47.gc97bfb7e6e79
-pkgrel=0.3
+pkgver=4.17.6.0.gb36cc73101fa
+pkgrel=2
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -119,7 +119,8 @@ source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.gi
          # pacman hook for remove initramfs
         '99-linux.hook'
          # standard config files for mkinitcpio ramdisk
-        'linux.preset')
+        'linux.preset'
+        '0003-mac80211-disable-BHs-preemption-in-ieee80211_tx_cont.patch')
         
 _kernelname=${pkgbase#linux}
 : ${_kernelname:=-linux-lucjan-git}
@@ -140,6 +141,10 @@ prepare() {
     ### Fix https://bugs.archlinux.org/task/56711
         msg "Fix #56711"
         patch -Np1 -i ../0002-Revert-drm-i915-edp-Allow-alternate-fixed-mode-for-e.patch
+    
+    ### Fix iwd provoking a BUG
+        msg "Fix iwd provoking a BUG"
+        patch -Np1 -i ../0003-mac80211-disable-BHs-preemption-in-ieee80211_tx_cont.patch
     
     ### Unmask checkpoint restore
         msg "Unmask checkpoint restore"  
@@ -492,8 +497,9 @@ sha512sums=('SKIP'
             '88294a7cb7c39d90e4661fa3e4add069b8a46be60c264e55bb1c89a0db5bc7b636e541891433c50a6c29fdae9666576037fb923690af7af0db822abccb37de85'
             '30fc872a19686bd75b0cfa0614980a41d74f4cd40c9fd2c98f82ab4554ad39ccd7ddace9068f354572c1bdf14eed55c8e6d3390127c1a83ec093cf1487a31a0d'
             'SKIP'
-            'e64552e9a808b1810ea182a8893cd2b12137ddade6b36649e3260c232cacc6bbe64580ac3730314fb5c8348ee5040220b1bedb4da30df66716a3458e18447dc8'
+            'c36ffa2c55f6b6453f41402f42bae00036543395f22ac534f11a356ec595f39b4b6135c0af2a1b52402bc9ea9243df4ff936dcdb0283e88fa9fa6cecacbee0cd'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
             '6346b66f54652256571ef65da8e46db49a95ac5978ecd57a507c6b2a28aee70bb3ff87045ac493f54257c9965da1046a28b72cb5abb0087204d257f14b91fd74'
-            '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf')
+            '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf'
+            '38e6eec06fa0cb08ed6295320d24f26c52e8ece291552b94c35c51a86aa07ef9917a43640025af278e7c35554680dc1714e2a3ad766cb5cf9a128624a5a6c9c8')
