@@ -73,8 +73,8 @@ pkgbase=linux-lucjan-git
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.17
 _srcname=linux-stable
-pkgver=4.17.6.0.gb36cc73101fa
-pkgrel=5
+pkgver=4.17.8.0.g5606f577a707
+pkgrel=2
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -91,11 +91,11 @@ source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#b
          # the main kernel config files
         'config'
          # pacman hook for depmod
-        '60-linux.hook'
+        'linux-01-depmod.hook'
          # pacman hook for initramfs regeneration
-        '90-linux.hook'
-         # pacman hook for remove initramfs
-        '99-linux.hook'
+        'linux-02-initcpio.hook'
+         # pacman hook for initramfs remove
+        'linux-03-remove.hook'
          # standard config files for mkinitcpio ramdisk
         'linux.preset')
         
@@ -323,12 +323,12 @@ _package-kernel() {
         install -Dm644 /dev/stdin "${pkgdir}/etc/mkinitcpio.d/${pkgbase}.preset"
 
     # install pacman hooks
-    sed "${_subst}" ../60-linux.hook |
-        install -Dm644 /dev/stdin "${pkgdir}/usr/share/libalpm/hooks/60-${pkgbase}.hook"
-    sed "${_subst}" ../90-linux.hook |
-        install -Dm644 /dev/stdin "${pkgdir}/usr/share/libalpm/hooks/90-${pkgbase}.hook"
-    sed "${_subst}" ../99-linux.hook |
-        install -Dm644 /dev/stdin "${pkgdir}/usr/share/libalpm/hooks/99-${pkgbase}.hook"    
+    sed "${_subst}" ../linux-01-depmod.hook |
+        install -Dm644 /dev/stdin "${pkgdir}/usr/share/libalpm/hooks/${pkgbase}-01-depmod.hook"
+    sed "${_subst}" ../linux-02-initcpio.hook |
+        install -Dm644 /dev/stdin "${pkgdir}/usr/share/libalpm/hooks/${pkgbase}-02-initcpio.hook"
+    sed "${_subst}" ../linux-03-remove.hook |
+        install -Dm644 /dev/stdin "${pkgdir}/usr/share/libalpm/hooks/${pkgbase}-03-remove.hook"    
 }
 
 _package-headers() {
