@@ -73,13 +73,13 @@ pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=4.17
 _srcname=linux-${_major}
-_minor=7
+_minor=8
 _minorc=$((_minor+1))
 _rcver=rc1
 pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${pkgver}-${_rcver}
-pkgrel=0.2
+pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -334,7 +334,7 @@ _package-kernel() {
     sed "${_subst}" ../linux.preset |
         install -Dm644 /dev/stdin "${pkgdir}/etc/mkinitcpio.d/${pkgbase}.preset"
 
-     # install pacman hooks
+    # install pacman hooks
     sed "${_subst}" ../60-linux-01-depmod.hook |
         install -Dm644 /dev/stdin "${pkgdir}/usr/share/libalpm/hooks/60-${pkgbase}-01-depmod.hook"
     sed "${_subst}" ../90-linux-02-initcpio.hook |
@@ -437,9 +437,9 @@ done
 
 sha512sums=('4d9de340a26155a89ea8773131c76220cc2057f2b5d031b467b60e8b14c1842518e2d60a863d8c695f0f7640f3f18d43826201984a238dade857b6cef79837db'
             'SKIP'
-            '955342b78da2977dbd08ff0acb7e681c646b1dfceef71246a08bdd102e0b2ad41f3eb7c353755ed1da2e1a5d9138476adc7bf11fd732a3033b6f8aac457dac75'
+            '54fee6f5e85de8acb59246a4eac4479a3db03e28af23eafdebe55664e49d4c65907b52ec30274ef9055192fefc036a3f9313f1aad4e30f4b42aefb6916d31a43'
             'SKIP'
-            'dcc137cc35bf02f7c45d6a7ca9a003a39c0ee6898af7ad2fa25f94d2de2e2009b45d556705a747e502386a2903abc72391190361e5c5467e798f9ff76d9d0ddc'
+            '1debf78a451f9c42ccf06dbad86657cac55a0f7b2748a76d03e27d81e5e317c5015bd883ba59f29d5439e81e9a3f2de77d4b89f93017fcc39b7ede8abd54f014'
             'SKIP'
             '565556d285e6f80f5049d391e3d7bb02938e916f709263f85cb85d1fc40a05bf12bda5ee11848d15d6e4e5ffc08fef3cecc7161ee910816a0b7c5fe5d7b785a6'
             'fc978a7f722990f0a2e6fa0d792bd9b0b6f10e873f76b270cce308930eae4608ddd3b768fcb77bccacbc9aa48bd3aaf6d003fb1b40f1a6e47aeac08eefd9cdb8'
