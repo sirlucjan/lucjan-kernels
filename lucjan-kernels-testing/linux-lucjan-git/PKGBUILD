@@ -74,20 +74,20 @@ pkgbase=linux-lucjan-git
 _major=4.17
 _srcname=linux-stable
 pkgver=4.17.8.0.g5606f577a707
-pkgrel=3
+pkgrel=4
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git')
-#_lucjanpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}"
-_lucjanpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}"
+#_lucjanpath="https://raw.githubusercontent.com/sirlucjan/linux-lucjan/master/${_major}"
+_lucjanpath="https://gitlab.com/sirlucjan/linux-lucjan/raw/master/${_major}"
 _lucjanver='v20180716'
 _lucjanrel='r2'
 _lucjanpatch="${_major}-linux-lucjan-${_lucjanver}${_lucjanrel}.patch"
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#branch=linux-${_major}.y"
-        "${_lucjanpath}/linux-lucjan/${_lucjanpatch}"
+        "${_lucjanpath}/${_lucjanpatch}"
          # the main kernel config files
         'config'
          # pacman hook for depmod
