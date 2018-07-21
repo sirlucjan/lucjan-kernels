@@ -75,17 +75,17 @@ _pkgbase=linux-lucjan
 _major=4.17
 _srcname=linux-stable
 pkgver=4.17.8.0.g5606f577a707
-pkgrel=4
+pkgrel=5
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git')
-#_lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/${_major}"
-_lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/${_major}"
-_lucjanver='v20180716'
-_lucjanrel='r2'
-_lucjanpatch="${_major}-${_pkgbase}-${_lucjanver}${_lucjanrel}.patch"
+#_lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/${_major}"
+_lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/${_major}"
+_lucjanname='lucjan'
+_lucjanrev='rev8'
+_lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#branch=linux-${_major}.y"
         "${_lucjanpath}/${_lucjanpatch}"

@@ -79,7 +79,7 @@ _rcver=rc1
 pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${pkgver}-${_rcver}
-pkgrel=0.1
+pkgrel=0.2
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -87,9 +87,9 @@ options=('!strip')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf')
 #_lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/${_major}"
 _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/${_major}"
-_lucjanver='v20180716'
-_lucjanrel='r2'
-_lucjanpatch="${_major}-${pkgbase}-${_lucjanver}${_lucjanrel}.patch"
+_lucjanname='lucjan'
+_lucjanrev='rev8'
+_lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
