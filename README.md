@@ -3,17 +3,17 @@
 # linux-lucjan varies considerably from stock kernel. 
 # linux-lucjan incorporates:
 
-* [bfq improvements](https://groups.google.com/forum/#!forum/bfq-iosched)
+* [bfq improvements](https://groups.google.com/forum/#!forum/bfq-iosched) -  - latest fixes authored by Paolo Valente and BFQ Team
+ 
+* [BFQ-SQ and BFQ-MQ Scheduler](https://github.com/Algodev-github/bfq-mq) - bfq-sq and bfq-mq from Algodev-github 
 
-* [bfq-mq from Algodev-github](https://github.com/Algodev-github/bfq-mq)
+* [graysky's GCC patch](https://github.com/graysky2/kernel_gcc_patch) - version for gcc 8.1
 
-* [graysky's GCC patch](https://github.com/graysky2/kernel_gcc_patch)
+* [UKSM](https://github.com/dolohow/uksm) / [UKSM](https://www.usenix.org/sites/default/files/conference/protected-files/fast18_slides_xia.pdf) - resync from dolohow’s github
 
-* [UKSM](https://github.com/dolohow/uksm)
+* [PDS-mq](https://github.com/cchalpha/PDS-mq) / [PDS-mq blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
 
-* [PDS-mq](https://github.com/cchalpha/PDS-mq)
-
-* [random fixes from pfkernel](https://github.com/pfactum/pf-kernel)
+* [random fixes from pfkernel](https://github.com/pfactum/pf-kernel) - for example patches from Arch Linux or specific patches authored by Oleksandr Natalenko
 
 
 # You've been warned.
