@@ -73,9 +73,9 @@ pkgbase=linux-lucjan-git
 _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.17
-_srcname=linux-stable
-pkgver=4.17.8.0.g5606f577a707
-pkgrel=5
+_srcname=linux
+pkgver=4.17.9.0.g339d95b9a7a4
+pkgrel=2
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -87,7 +87,7 @@ _lucjanname='lucjan'
 _lucjanrev='rev8'
 _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
-source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git#branch=linux-${_major}.y"
+source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git#branch=linux-${_major}.y"
         "${_lucjanpath}/${_lucjanpatch}"
          # the main kernel config files
         'config'
