@@ -72,9 +72,9 @@ _1k_HZ_ticks=y
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=4.17
-_srcname=linux-${_major}
-_minor=10
+_minor=11
 pkgver=${_major}.${_minor}
+_srcname=linux-${pkgver}
 pkgrel=1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -89,8 +89,6 @@ _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.sign"
         "${_lucjanpath}/${_lucjanpatch}"
          # the main kernel config files
         'config'
@@ -108,10 +106,6 @@ _kernelname=${pkgbase#linux}
 
 prepare() {
     cd ${_srcname}
-
-    ### Add upstream patch
-        msg "Add upstream patch"
-        patch -p1 -i ../patch-${pkgver}
     
     ### Patch source with linux-lucjan
         msg "Patching source with linux-lucjan"
@@ -425,9 +419,7 @@ for _p in ${pkgname[@]}; do
   }"
 done
 
-sha512sums=('4d9de340a26155a89ea8773131c76220cc2057f2b5d031b467b60e8b14c1842518e2d60a863d8c695f0f7640f3f18d43826201984a238dade857b6cef79837db'
-            'SKIP'
-            '4ed5a6d47de7b4153805d937c44cb5eb03628a590d597c38be299afe67047611a6b37b1c13d0a8503de296779fc4ad6337dd4209f06b375c0111400b454b59c7'
+sha512sums=('7fcdb7029c79b2629c59422c6c150d71e465333d5d8893f4b0ecf926bc425d934b26e0d25de35e9cd077769c17cd1f3ff0c25c33af9e31c44230be24c2c6eef3'
             'SKIP'
             '565556d285e6f80f5049d391e3d7bb02938e916f709263f85cb85d1fc40a05bf12bda5ee11848d15d6e4e5ffc08fef3cecc7161ee910816a0b7c5fe5d7b785a6'
             'fc978a7f722990f0a2e6fa0d792bd9b0b6f10e873f76b270cce308930eae4608ddd3b768fcb77bccacbc9aa48bd3aaf6d003fb1b40f1a6e47aeac08eefd9cdb8'
@@ -437,6 +429,5 @@ sha512sums=('4d9de340a26155a89ea8773131c76220cc2057f2b5d031b467b60e8b14c1842518e
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf')
             
 validpgpkeys=(
-              'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
               '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
              )
