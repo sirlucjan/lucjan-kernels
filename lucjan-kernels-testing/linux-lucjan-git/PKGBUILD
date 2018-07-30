@@ -74,7 +74,7 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.17
 _srcname=linux
-pkgver=4.17.11.0.g84d52eb065f1
+pkgver=4.17.11.0.g84d52eb065f1.rev9
 pkgrel=1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -101,12 +101,13 @@ source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git#branch=l
         'linux.preset')
         
 _kernelname=${pkgbase#linux}
-: ${_kernelname:=-linux-lucjan-git}
+: ${_kernelname:=-lucjan-git}
         
 pkgver() {
     cd "${_srcname}"
         
-        git describe --long --tags | sed 's/^v//;s/-/./g'
+    _ver="$(git describe --long --tags | sed 's/^v//;s/-/./g')"
+    echo ${_ver}.${_lucjanrev}
 } 
 
 prepare() {
@@ -115,15 +116,24 @@ prepare() {
     ### Patch source with linux-lucjan
         msg "Patching source with linux-lucjan"
         patch -Np1 -i ../${_lucjanpatch}
-
+    
     ### Clean tree and copy ARCH config over
 	msg "Running make mrproper to clean source tree"
 	make mrproper
-	
-	cat ../config - >.config <<END
+    
+    ### Load configuration
+        cat ../config - >.config <<END
 CONFIG_LOCALVERSION="${_kernelname}"
 CONFIG_LOCALVERSION_AUTO=n
 END
+
+    ### Set extraversion to pkgrel and empty localversion
+        sed -e "/^EXTRAVERSION =/s/=.*/= .${_lucjanrev}-${pkgrel}/" \
+            -e "/^EXTRAVERSION =/aLOCALVERSION =" \
+            -i Makefile
+    
+    ### Rewrite configuration
+        make olddefconfig
         
     ### Optionally use running kernel's config
 	# code originally by nous; http://aur.archlinux.org/packages.php?ID=40191
@@ -192,16 +202,16 @@ END
 		sed -i -e s'/^# CONFIG_SCSI_MQ_DEFAULT is not set/CONFIG_SCSI_MQ_DEFAULT=y/' \
 		    -i -e s'/^# CONFIG_DM_MQ_DEFAULT is not set/CONFIG_DM_MQ_DEFAULT=y/' ./.config
         fi
-        
+    
     ### Optionally set tickrate to 1000 
 	if [ -n "$_1k_HZ_ticks" ]; then
 		msg "Setting tick rate to 1k..."
 		sed -i -e 's/^CONFIG_HZ_300=y/# CONFIG_HZ_300 is not set/' \
                     -i -e 's/^# CONFIG_HZ_1000 is not set/CONFIG_HZ_1000=y/' \
                     -i -e 's/^CONFIG_HZ=300/CONFIG_HZ=1000/' ./.config
-	fi   
+	fi
 
-	### Optionally disable NUMA for 64-bit kernels only
+    ### Optionally disable NUMA for 64-bit kernels only
         # (x86 kernels do not support NUMA)
         if [ -n "$_NUMAdisable" ]; then
             msg "Disabling NUMA from kernel config..."
@@ -217,19 +227,7 @@ END
                 -i -e '/CONFIG_ACPI_NUMA=y/d' ./.config
         fi
 
-	### Set extraversion to pkgrel and empty localversion
-        sed -e "/^EXTRAVERSION =/s/=.*/= -${pkgrel}/" \
-            -e "/^EXTRAVERSION =/aLOCALVERSION =" \
-            -i Makefile
-
-	### Don't run depmod on 'make install'. We'll do this ourselves in packaging
-	sed -i '2iexit 0' scripts/depmod.sh
-
-	### Get kernel version
-	msg "Running make prepare for you to enable patched options of your choosing"
-	make prepare
-
-	### Optionally load needed modules for the make localmodconfig
+    ### Optionally load needed modules for the make localmodconfig
 	# See https://aur.archlinux.org/packages/modprobed-db
 		if [ -n "$_localmodcfg" ]; then
 		msg "If you have modprobe-db installed, running it in recall mode now"
@@ -243,26 +241,24 @@ END
 		make localmodconfig
 	fi
 
-	### Running make nconfig
+    ### Running make nconfig
 	
 	[[ -z "$_makenconfig" ]] ||  make nconfig
 	
-	### Running make menuconfig
+    ### Running make menuconfig
 	
 	[[ -z "$_makemenuconfig" ]] || make menuconfig
 	
-	### Running make xconfig
+    ### Running make xconfig
 	
 	[[ -z "$_makexconfig" ]] || make xconfig
 	
-	### Running make gconfig
+    ### Running make gconfig
 	
 	[[ -z "$_makegconfig" ]] || make gconfig
-	
-	### Rewrite configuration
-	yes "" | make config >/dev/null
 
-	### Save configuration for later reuse
+    ### Save configuration for later reuse
+	msg "Save configuration for later reuse"
 	cat .config > "${startdir}/config.last"
 }
 
@@ -288,7 +284,7 @@ _package-kernel() {
     _basekernel=${_basekernel%.*}
 
     mkdir -p "${pkgdir}"/{boot,usr/lib/modules}
-    make INSTALL_MOD_PATH="${pkgdir}/usr" modules_install
+    make INSTALL_MOD_PATH="${pkgdir}/usr" DEPMOD=/doesnt/exist modules_install
     cp arch/x86/boot/bzImage "${pkgdir}/boot/vmlinuz-${pkgbase}"
 
     # make room for external modules

@@ -73,9 +73,10 @@ pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=4.17
 _minor=11
-pkgver=${_major}.${_minor}
-_srcname=linux-${pkgver}
-pkgrel=2
+pkgver=4.17.11.rev9
+_pkgver=${_major}.${_minor}
+_srcname=linux-${_pkgver}
+pkgrel=1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -102,10 +103,16 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         'linux.preset')
         
 _kernelname=${pkgbase#linux}
-: ${_kernelname:=-linux-lucjan}
+: ${_kernelname:=-lucjan}
+
+pkgver() {
+    
+        echo ${_pkgver}.${_lucjanrev}
+
+}
 
 prepare() {
-    cd ${_srcname}
+    cd "${_srcname}"
     
     ### Patch source with linux-lucjan
         msg "Patching source with linux-lucjan"
@@ -114,11 +121,20 @@ prepare() {
     ### Clean tree and copy ARCH config over
 	msg "Running make mrproper to clean source tree"
 	make mrproper
-	
-	cat ../config - >.config <<END
+    
+    ### Load configuration
+        cat ../config - >.config <<END
 CONFIG_LOCALVERSION="${_kernelname}"
 CONFIG_LOCALVERSION_AUTO=n
 END
+
+    ### Set extraversion to pkgrel and empty localversion
+        sed -e "/^EXTRAVERSION =/s/=.*/= .${_lucjanrev}-${pkgrel}/" \
+            -e "/^EXTRAVERSION =/aLOCALVERSION =" \
+            -i Makefile
+    
+    ### Rewrite configuration
+        make olddefconfig
         
     ### Optionally use running kernel's config
 	# code originally by nous; http://aur.archlinux.org/packages.php?ID=40191
@@ -196,7 +212,7 @@ END
                     -i -e 's/^CONFIG_HZ=300/CONFIG_HZ=1000/' ./.config
 	fi
 
-	### Optionally disable NUMA for 64-bit kernels only
+    ### Optionally disable NUMA for 64-bit kernels only
         # (x86 kernels do not support NUMA)
         if [ -n "$_NUMAdisable" ]; then
             msg "Disabling NUMA from kernel config..."
@@ -212,19 +228,7 @@ END
                 -i -e '/CONFIG_ACPI_NUMA=y/d' ./.config
         fi
 
-	### Set extraversion to pkgrel and empty localversion
-        sed -e "/^EXTRAVERSION =/s/=.*/= -${pkgrel}/" \
-            -e "/^EXTRAVERSION =/aLOCALVERSION =" \
-            -i Makefile
-
-	### Don't run depmod on 'make install'. We'll do this ourselves in packaging
-	sed -i '2iexit 0' scripts/depmod.sh
-
-	### Get kernel version
-	msg "Running make prepare for you to enable patched options of your choosing"
-	make prepare
-
-	### Optionally load needed modules for the make localmodconfig
+    ### Optionally load needed modules for the make localmodconfig
 	# See https://aur.archlinux.org/packages/modprobed-db
 		if [ -n "$_localmodcfg" ]; then
 		msg "If you have modprobe-db installed, running it in recall mode now"
@@ -238,26 +242,24 @@ END
 		make localmodconfig
 	fi
 
-	### Running make nconfig
+    ### Running make nconfig
 	
 	[[ -z "$_makenconfig" ]] ||  make nconfig
 	
-	### Running make menuconfig
+    ### Running make menuconfig
 	
 	[[ -z "$_makemenuconfig" ]] || make menuconfig
 	
-	### Running make xconfig
+    ### Running make xconfig
 	
 	[[ -z "$_makexconfig" ]] || make xconfig
 	
-	### Running make gconfig
+    ### Running make gconfig
 	
 	[[ -z "$_makegconfig" ]] || make gconfig
-	
-	### Rewrite configuration
-	yes "" | make config >/dev/null
 
-	### Save configuration for later reuse
+    ### Save configuration for later reuse
+	msg "Save configuration for later reuse"
 	cat .config > "${startdir}/config.last"
 }
 
@@ -283,7 +285,7 @@ _package-kernel() {
     _basekernel=${_basekernel%.*}
 
     mkdir -p "${pkgdir}"/{boot,usr/lib/modules}
-    make INSTALL_MOD_PATH="${pkgdir}/usr" modules_install
+    make INSTALL_MOD_PATH="${pkgdir}/usr" DEPMOD=/doesnt/exist modules_install
     cp arch/x86/boot/bzImage "${pkgdir}/boot/vmlinuz-${pkgbase}"
 
     # make room for external modules
