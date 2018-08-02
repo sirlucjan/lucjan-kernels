@@ -76,7 +76,7 @@ _minor=11
 pkgver=4.17.11.rev10
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -103,6 +103,9 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
          # standard config files for mkinitcpio ramdisk
         'linux.preset')
         
+_kernelname=${pkgbase#linux}
+: ${_kernelname:=-lucjan}
+        
 pkgver() {
     
         echo ${_pkgver}.${_lucjanrev}
@@ -119,8 +122,8 @@ prepare() {
     ### Setting version
         msg2 "Setting version..."
         scripts/setlocalversion --save-scmversion
-        # echo "${pkgbase#linux}" > localversion.10-pkgname
-        echo ".$_pkgrel" > localversion.20-pkgrel
+        echo ".$_pkgrel" > localversion.10-pkgrel
+        echo "$_kernelname" > localversion.20-pkgname
     
     ### Setting config   
         msg2 "Setting config..."
@@ -266,14 +269,13 @@ build() {
 
 _package-kernel() {
   pkgdesc='Linux Kernel and modules with the  BFQ-SQ-MQ I/0-scheduler, the PDS-mq CPU Scheduler and the UKSM. Fourth Gen Intel Core i3/i5/i7 optimized.'
-  depends=('coreutils' 'linux-firmware' 'mkinitcpio>=0.7')
+  depends=('coreutils' 'linux-firmware' 'mkinitcpio')
   optdepends=('crda: to set the correct wireless channels of your country' 'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
   groups=('linux-lucjan')
-  backup=("etc/mkinitcpio.d/${pkgbase}.preset")
+  backup=("etc/mkinitcpio.d/$pkgbase.preset")
   install=linux.install
 
   local kernver="$(<version)"
-  local basever="$(<version cut -d. -f1-2)"
 
   cd $_srcname
 
@@ -287,7 +289,8 @@ _package-kernel() {
 
   # a place for external modules,
   # with version file for building modules and running depmod from hook
-  local extradir="$pkgdir/usr/lib/modules/extramodules-${basever}${pkgbase#linux}"
+  local extramodules="extramodules$_kernelname"
+  local extradir="$pkgdir/usr/lib/modules/$extramodules"
   install -Dt "$extradir" -m644 ../version
   ln -sr "$extradir" "$modulesdir/extramodules"
 
@@ -431,7 +434,7 @@ done
 sha512sums=('7fcdb7029c79b2629c59422c6c150d71e465333d5d8893f4b0ecf926bc425d934b26e0d25de35e9cd077769c17cd1f3ff0c25c33af9e31c44230be24c2c6eef3'
             'SKIP'
             'f5e4185dbaf10fb48ae7ece04cf6de4f31bea0452d00b7efcf79ac6e45ae9486baeb9bbe21478721633758dd8d8f66059bd28eaa2ee434211b4b58e89ec57717'
-            'fc978a7f722990f0a2e6fa0d792bd9b0b6f10e873f76b270cce308930eae4608ddd3b768fcb77bccacbc9aa48bd3aaf6d003fb1b40f1a6e47aeac08eefd9cdb8'
+            '20b1df5b43c30c6d0c96efb60e3748476f1b73e54f8bf446e4961be406eb97ff84d50805c547080920c0afad8be123d08ecd549aa99f88b4f11f048713d73751'
             '3a6b1c49da50f5324b78d87bcc7084e34f8e79d9c15a82e4cc93d9f2a6e3f032dbe6eb349e4d56d75bfb8598818fbd34998963e8d4ca53d2a4a4b2e17584c221'
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
             '6346b66f54652256571ef65da8e46db49a95ac5978ecd57a507c6b2a28aee70bb3ff87045ac493f54257c9965da1046a28b72cb5abb0087204d257f14b91fd74'
