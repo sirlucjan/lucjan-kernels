@@ -72,11 +72,11 @@ _1k_HZ_ticks=y
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=4.17
-_minor=11
-pkgver=4.17.11.rev10
+_minor=12
+pkgver=4.17.12.rev10
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
-pkgrel=3
+pkgrel=1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -113,7 +113,7 @@ pkgver() {
 }
 
 prepare() {
-    cd "${_srcname}"
+    cd $_srcname
     
     ### Patch source with linux-lucjan
         msg2 "Patching source with linux-lucjan"
@@ -262,7 +262,7 @@ prepare() {
 }
 
 build() {
-  cd ${_srcname}
+  cd $_srcname
 
   make bzImage modules
 }
@@ -431,7 +431,7 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('7fcdb7029c79b2629c59422c6c150d71e465333d5d8893f4b0ecf926bc425d934b26e0d25de35e9cd077769c17cd1f3ff0c25c33af9e31c44230be24c2c6eef3'
+sha512sums=('19f14b0e6314fd492a42430fc2aaac32c658156c612cbee8e2c8ef0c49db67b2eb55498f424e576163cdd7fe642680980ea163a6c28770875b3e7d8d98b8e11b'
             'SKIP'
             'f5e4185dbaf10fb48ae7ece04cf6de4f31bea0452d00b7efcf79ac6e45ae9486baeb9bbe21478721633758dd8d8f66059bd28eaa2ee434211b4b58e89ec57717'
             '20b1df5b43c30c6d0c96efb60e3748476f1b73e54f8bf446e4961be406eb97ff84d50805c547080920c0afad8be123d08ecd549aa99f88b4f11f048713d73751'
