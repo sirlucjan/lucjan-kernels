@@ -74,8 +74,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.17
 _srcname=linux-stable-rc
-pkgver=4.17.12.0.g506f6fba2696.rev11
-pkgrel=2
+pkgver=4.17.12.32.g53a78f536196.rev11
+pkgrel=0.1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -113,6 +113,11 @@ pkgver() {
 
 prepare() {
     cd $_srcname
+    
+    ### Fix naming schema in EXTRAVERSION
+        _rc="$(cat Makefile | grep -m1 -e EXTRAVERSION | grep -o "[[:digit:]]*")"
+        msg2 "Fix naming schema in EXTRAVERSION"
+        sed -i -e "s|EXTRAVERSION = -rc${_rc}|EXTRAVERSION =|g" ./Makefile
     
     ### Patch source with linux-lucjan
         msg2 "Patching source with linux-lucjan"
@@ -323,8 +328,8 @@ _package-kernel() {
     "$pkgdir/usr/share/libalpm/hooks/99-${pkgbase}-03-remove.hook"  
 
   msg2 "Fixing permissions..."
-  chmod
-}  
+  chmod -Rc u=rwX,go=rX "$pkgdir"
+  }  
 
 _package-headers() {
   pkgdesc='Header files and scripts to build modules for linux-lucjan-git. Fourth Gen Intel Core i3/i5/i7 optimized.'
