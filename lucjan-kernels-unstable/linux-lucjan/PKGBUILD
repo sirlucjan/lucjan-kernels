@@ -72,15 +72,15 @@ _1k_HZ_ticks=y
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=4.17
-_minor=11
+_minor=12
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=4.17.12.rev11
+pkgver=4.17.13.rev11
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -441,9 +441,9 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('7fcdb7029c79b2629c59422c6c150d71e465333d5d8893f4b0ecf926bc425d934b26e0d25de35e9cd077769c17cd1f3ff0c25c33af9e31c44230be24c2c6eef3'
+sha512sums=('19f14b0e6314fd492a42430fc2aaac32c658156c612cbee8e2c8ef0c49db67b2eb55498f424e576163cdd7fe642680980ea163a6c28770875b3e7d8d98b8e11b'
             'SKIP'
-            'e15abbaaeb62ba74d0b99c53ef81c70b3c2fdba425cb270ed619b0a421d62d04ee0eb14c38294533e5d51dd718b726dbaee9faf8e0f12ca57a847bf44940f4b3'
+            '7e1f395810cd53f345a61940bafdcedb8aceed68c317a296c2d9815992c6da98e6707871733e689ce9ab54c382d9effbe93bc32a5277a804d0c8674cb2b6b252'
             'SKIP'
             '4825ded6d58dc88c3cb2fda2671129857097bccf8c56ce09cfabf3f065de208ccf42dafb8a87b5b91e84e741d82a7e52fc6f34a28102cf35671198b3a9c2b8f6'
             '20b1df5b43c30c6d0c96efb60e3748476f1b73e54f8bf446e4961be406eb97ff84d50805c547080920c0afad8be123d08ecd549aa99f88b4f11f048713d73751'
