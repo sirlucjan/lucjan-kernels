@@ -80,7 +80,7 @@ _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0.2
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -91,7 +91,6 @@ _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
 _lucjanname='lucjan'
 _lucjanrev='rev11'
 _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
-_pkgrel=${_lucjanrev}-${pkgrel}
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/linux-${_stable}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/linux-${_stable}.tar.sign"
@@ -121,24 +120,31 @@ pkgver() {
 prepare() {
     cd $_srcname
 
-    ### Add patch from stable-review
-        msg2 "Add patch from stable-review"  
+    ### Applying patch from stable-review
+        msg2 "Applying patch from stable-review"  
         patch -p1 -i ../patch-${_stablerc}
-    
+     
     ### Fix naming schema in EXTRAVERSION
         _rc="$(cat Makefile | grep -m1 -e EXTRAVERSION | grep -o "[[:digit:]]*")"
         msg2 "Fix naming schema in EXTRAVERSION"
-        sed -i -e "s|EXTRAVERSION = -rc${_rc}|EXTRAVERSION =|g" ./Makefile
-    
-    ### Patch source with linux-lucjan
-        msg2 "Patching source with linux-lucjan"
-        patch -Np1 -i ../${_lucjanpatch}
-    
+        sed -i -e "s|EXTRAVERSION = -rc${_rc}|EXTRAVERSION =|g" Makefile
+     
     ### Setting version
         msg2 "Setting version..."
+        sed -e "/^EXTRAVERSION =/s/=.*/= .${_lucjanrev}/" -i Makefile
         scripts/setlocalversion --save-scmversion
-        echo ".$_pkgrel" > localversion.10-pkgrel
+        echo "-$pkgrel" > localversion.10-pkgrel
         echo "$_kernelname" > localversion.20-pkgname
+    
+    ### Patching sources
+        local src
+        for src in "${source[@]}"; do
+          src="${src%%::*}"
+          src="${src##*/}"
+          [[ $src = *.patch ]] || continue
+          msg2 "Applying patch $src..."
+          patch -Np1 < "../$src"
+        done
     
     ### Setting config   
         msg2 "Setting config..."

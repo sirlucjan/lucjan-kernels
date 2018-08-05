@@ -76,7 +76,7 @@ _minor=12
 pkgver=4.17.12.rev11
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -87,7 +87,6 @@ _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
 _lucjanname='lucjan'
 _lucjanrev='rev11'
 _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
-_pkgrel=${_lucjanrev}-${pkgrel}
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
@@ -115,15 +114,22 @@ pkgver() {
 prepare() {
     cd $_srcname
     
-    ### Patch source with linux-lucjan
-        msg2 "Patching source with linux-lucjan"
-        patch -Np1 -i ../${_lucjanpatch}
-    
     ### Setting version
         msg2 "Setting version..."
+        sed -e "/^EXTRAVERSION =/s/=.*/= .${_lucjanrev}/" -i Makefile
         scripts/setlocalversion --save-scmversion
-        echo ".$_pkgrel" > localversion.10-pkgrel
+        echo "-$pkgrel" > localversion.10-pkgrel
         echo "$_kernelname" > localversion.20-pkgname
+    
+    ### Patching sources
+        local src
+        for src in "${source[@]}"; do
+          src="${src%%::*}"
+          src="${src##*/}"
+          [[ $src = *.patch ]] || continue
+          msg2 "Applying patch $src..."
+          patch -Np1 < "../$src"
+        done
     
     ### Setting config   
         msg2 "Setting config..."
