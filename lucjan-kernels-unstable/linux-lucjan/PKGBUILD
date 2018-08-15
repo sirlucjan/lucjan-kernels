@@ -74,13 +74,13 @@ pkgbase=linux-lucjan
 _major=4.17
 _minor=14
 _minorc=$((_minor+1))
-_rcver=rc2
+_rcver=rc3
 pkgver=4.17.15.rev12
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0.2
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -454,7 +454,7 @@ done
 
 sha512sums=('55e7a4bce17c6142c5bd9830df61f0a1810c92cad4668cff8a7053e8b0f866a4bc490491df6954231c7b632ef4b5bbf793903b966075063fa8ac3aedee3347cf'
             'SKIP'
-            'ba95bc405d71929b0d28bfea2db6d05a8c8f37f0c77bf301756b22a96508310e1c8c45a8974fe6dc4763cba4179f682e328a20a5099db37c26157a33827ed9e0'
+            '69265aea0a796c32009c04863eaad3fe87d70e84041c963ebfb4efa1f9799ac85f8007b6c245378e2fd4983d5eb2c0c7b0d8ae5a5c9028390be017e32b82721c'
             'SKIP'
             'f8c99c50020fac28e137a3710668bd67e2a2e246870748d28e809fd9b6dfdc08b015565d2a45ad1a2eb427f631838c711ed78ebf88e2266bc3e165ffe05a8520'
             '20b1df5b43c30c6d0c96efb60e3748476f1b73e54f8bf446e4961be406eb97ff84d50805c547080920c0afad8be123d08ecd549aa99f88b4f11f048713d73751'
