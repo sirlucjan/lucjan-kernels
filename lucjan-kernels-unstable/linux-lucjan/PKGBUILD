@@ -306,8 +306,9 @@ _package-kernel() {
   msg2 "Installing modules..."
   local modulesdir="$pkgdir/usr/lib/modules/$kernver"
   mkdir -p "$modulesdir"
-  make INSTALL_MOD_PATH="$pkgdir/usr" DEPMOD=/doesnt/exist modules_install
-
+  # make INSTALL_MOD_PATH="$pkgdir/usr" DEPMOD=/doesnt/exist modules_install
+  make INSTALL_MOD_PATH="${pkgdir}/usr" modules_install
+  
   # a place for external modules,
   # with version file for building modules and running depmod from hook
   local extramodules="extramodules$_kernelname"
