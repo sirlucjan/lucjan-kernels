@@ -72,8 +72,8 @@ _1k_HZ_ticks=y
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=4.18
-_minor=1
-pkgver=4.18.1.rev3
+_minor=2
+pkgver=4.18.2.rev3
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -291,7 +291,8 @@ _package-kernel() {
   msg2 "Installing modules..."
   local modulesdir="$pkgdir/usr/lib/modules/$kernver"
   mkdir -p "$modulesdir"
-  make INSTALL_MOD_PATH="$pkgdir/usr" DEPMOD=/doesnt/exist modules_install
+  # make INSTALL_MOD_PATH="$pkgdir/usr" DEPMOD=/doesnt/exist modules_install
+  make INSTALL_MOD_PATH="${pkgdir}/usr" modules_install
 
   # a place for external modules,
   # with version file for building modules and running depmod from hook
@@ -437,7 +438,7 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('3c1646a49b3cc2d94e572549e75b111b6e580c507e6acd7e31fbb3126c61c0c3b36a158971714b1b0013ff7cf8410a84dce761c832f00644860e34e3700b729b'
+sha512sums=('9b96541ffba6c8fc79dc5847dddeab904bd719400dc82f1b41d38df442d3cefc08ec64177067c4b34d5dddef88c6aa58586bd0e0d4822ef81c04c4f3a1bc7e0f'
             'SKIP'
             '708e75e2b76c8c6b8ef18a9d7950278da573bf640b64b5daee4b861ce81c5d5c91a16928327a3ae60cbb3d4bde584c39d1d11c9b57cbdf31f8558c1b40356f45'
             'cae7dcbae7500b810095c255d9143400aade62ed4ebaf111a0dfdde60af30b70892522a62e6ee95e97098368921bf9ba7a0bfb1eb54baa372d591154967a9c94'
