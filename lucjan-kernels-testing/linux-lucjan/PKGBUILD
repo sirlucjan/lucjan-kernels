@@ -72,8 +72,8 @@ _1k_HZ_ticks=y
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=4.18
-_minor=2
-pkgver=4.18.2.rev4
+_minor=3
+pkgver=4.18.3.rev4
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -434,7 +434,7 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('9b96541ffba6c8fc79dc5847dddeab904bd719400dc82f1b41d38df442d3cefc08ec64177067c4b34d5dddef88c6aa58586bd0e0d4822ef81c04c4f3a1bc7e0f'
+sha512sums=('fe7f3f328deca5fc90e5b8f77b1204ca0412a2ba3e7c14259bbdb872af0e678d7d080b357f5ef301ca7c9db1a342d14d645c46b6ce681f7d241b963b18b97197'
             'SKIP'
             '3f5bac5fc45e209ef90238d57c294fac3fb6cf4f71926693a5bc3914d36678d7355a876300fc5db2d1876a41836109d3a6a114ea2a57b6aa16bb96d40d704690'
             'cae7dcbae7500b810095c255d9143400aade62ed4ebaf111a0dfdde60af30b70892522a62e6ee95e97098368921bf9ba7a0bfb1eb54baa372d591154967a9c94'
