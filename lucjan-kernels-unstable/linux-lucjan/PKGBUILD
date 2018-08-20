@@ -75,7 +75,7 @@ _major=4.18
 _minor=1
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=4.18.2.rev5
+pkgver=4.18.2.ll5
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -89,7 +89,7 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf')
 #_lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
 _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
 _lucjanname='lucjan'
-_lucjanrev='rev5'
+_lucjanrev='ll5'
 _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/linux-${_stable}.tar.xz"
