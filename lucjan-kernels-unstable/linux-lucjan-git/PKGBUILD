@@ -74,13 +74,13 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.18
 _srcname=linux-stable-rc
-pkgver=4.18.3.36.g1b2dc862d5f3.ll5
-pkgrel=0.1
+pkgver=4.18.4.0.g28b2837b7236.ll5
+pkgrel=2
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
 options=('!strip')
-makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git')
+makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git' 'python-sphinx' 'graphviz')
 #_lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
 _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
 _lucjanname='lucjan'
@@ -274,7 +274,7 @@ prepare() {
 build() {
   cd $_srcname
 
-  make bzImage modules
+  make bzImage modules htmldocs
 }
 
 _package-kernel() {
@@ -429,7 +429,19 @@ _package-docs() {
   msg2 "Installing documentation..."
   mkdir -p "$builddir"
   cp -t "$builddir" -a Documentation
-  
+
+  msg2 "Removing doctrees..."
+  rm -r "$builddir/Documentation/output/.doctrees"
+
+  msg2 "Moving HTML docs..."
+  local src dst
+  while read -rd '' src; do
+    dst="$builddir/Documentation/${src#$builddir/Documentation/output/}"
+    mkdir -p "${dst%/*}"
+    mv "$src" "$dst"
+    rmdir -p --ignore-fail-on-non-empty "${src%/*}"
+  done < <(find "$builddir/Documentation/output" -type f -print0)
+
   msg2 "Adding symlink..."
   mkdir -p "$pkgdir/usr/share/doc"
   ln -sr "$builddir/Documentation" "$pkgdir/usr/share/doc/$pkgbase"
