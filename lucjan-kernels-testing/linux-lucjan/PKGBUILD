@@ -73,7 +73,7 @@ pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=4.18
 _minor=4
-pkgver=4.18.4.ll6
+pkgver=4.18.4.ll7
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -85,18 +85,18 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'python-sphinx' 'graphviz')
 
 ### linux-lucjan stable
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
-# _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
-# _lucjanname='lucjan'
-# _lucjanrev='ll5'
-# _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
+_lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
+_lucjanname='lucjan'
+_lucjanrev='ll7'
+_lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 ### linux-lucjan rc
-#_lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
-_lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
-_lucjanname='lucjan'
-_lucjanrev='ll6'
-_lucjanrc='rc2'
-_lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
+# _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
+# _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
+# _lucjanname='lucjan'
+# _lucjanrev='ll6'
+# _lucjanrc='rc2'
+# _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.sign"
@@ -466,7 +466,7 @@ done
 
 sha512sums=('9e464a44aea7678674e066e2e6cfec3cf74d8a8cdc11146a68d25f25b4e4e11c8b5b905bc5e3161c51a4b9a8c9b1d2d9f72140db874e80173aa4b10b6209e870'
             'SKIP'
-            'b49f03f51ebf5f8d29019115cab1970deb2bf58d1efa1d186e0bef7995a3b68e0d1eab447cb003455bed38f8c9084b00fc3b8f0868c3d06f50145ae2ac3103b2'
+            'd1587beb70a051ed5b128fe9639f343d248f280751679178dee37b721730ae5f59c0efdea43b7ce19288ef3b76d48236922fac5ad516272c5273d60cfd7d681b'
             'cae7dcbae7500b810095c255d9143400aade62ed4ebaf111a0dfdde60af30b70892522a62e6ee95e97098368921bf9ba7a0bfb1eb54baa372d591154967a9c94'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
