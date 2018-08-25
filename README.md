@@ -1,9 +1,10 @@
 # My own kernels. Use at your own risk.
-# Dell Inspiron 15-3542 (3542-2538) with Fourth Gen Intel Core i3/i5/i7 optimized.
-# linux-lucjan varies considerably from stock kernel. 
-# linux-lucjan incorporates:
+###### Dell Inspiron 15-3542 (3542-2538) with Fourth Gen Intel Core i3/i5/i7 optimized.
+###### linux-lucjan varies considerably from stock kernel. 
+***
+###### linux-lucjan incorporates:
 
-* [bfq improvements](https://groups.google.com/forum/#!forum/bfq-iosched) -  - latest fixes authored by Paolo Valente and BFQ Team
+* [bfq improvements](https://groups.google.com/forum/#!forum/bfq-iosched) - latest fixes authored by Paolo Valente and BFQ Team
  
 * [BFQ-SQ and BFQ-MQ Scheduler](https://github.com/Algodev-github/bfq-mq) - bfq-sq and bfq-mq from Algodev-github 
 
@@ -15,9 +16,7 @@
 
 * [random fixes from pfkernel](https://github.com/pfactum/pf-kernel) - for example patches from Arch Linux or specific patches authored by Oleksandr Natalenko
 
-
-# You've been warned.
-
+***
 # Download:
 
 ```
@@ -50,7 +49,7 @@ cd /some_path/lucjan-kernels/lucjan-kernels-unstable/package_name
 makepkg -srci
 
 ```
-
+***
 # Enable bfq-mq
 
 For now, you can use `sudo tee /sys/block/sda/queue/scheduler <<< bfq-mq` to enable "bfq-mq".
@@ -63,6 +62,5 @@ ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue
 ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq-mq"
 ```
 and run a command `sudo udevadm control --reload && sudo udevadm trigger`
-
-
-
+***
+# You've been warned.
