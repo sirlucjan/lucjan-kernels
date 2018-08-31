@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 4.18.5.ll8 Kernel Configuration
+# Linux/x86 4.18.5.ll9 Kernel Configuration
 #
 
 #
@@ -7396,7 +7396,7 @@ CONFIG_RTC_DRV_RV3029_HWMON=y
 #
 # Platform RTC drivers
 #
-CONFIG_RTC_DRV_CMOS=m
+CONFIG_RTC_DRV_CMOS=y
 CONFIG_RTC_DRV_DS1286=m
 CONFIG_RTC_DRV_DS1511=m
 CONFIG_RTC_DRV_DS1553=m
