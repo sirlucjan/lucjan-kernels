@@ -94,8 +94,8 @@ _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
 # _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
 # _lucjanname='lucjan'
-# _lucjanrev='ll6'
-# _lucjanrc='rc2'
+# _lucjanrev='ll16'
+# _lucjanrc='rc1'
 # _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
