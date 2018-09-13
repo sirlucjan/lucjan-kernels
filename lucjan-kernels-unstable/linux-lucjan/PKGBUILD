@@ -75,7 +75,7 @@ _major=4.18
 _minor=7
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=4.18.8.ll18
+pkgver=4.18.8.ll19
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -91,15 +91,15 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'python-sphinx' 'graphviz')
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
 # _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
 # _lucjanname='lucjan'
-# _lucjanrev='ll17'
+# _lucjanrev='ll18'
 # _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 ### linux-lucjan rc
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
 _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
 _lucjanname='lucjan'
-_lucjanrev='ll18'
-_lucjanrc='rc5'
+_lucjanrev='ll19'
+_lucjanrc='rc6'
 _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/linux-${_stable}.tar.xz"
@@ -483,7 +483,7 @@ sha512sums=('a36c664c7703ffa470e78f7de283030bddc6eb59e77ca847fa53c2841283fd6f43d
             'SKIP'
             '67eba5d7366ca4ecc9be80071c9b1fcac5604850ab0eb8fb435cbb04dda182f9fe7857bf3a8826f18b3985344fbe89f2eceb2ebda67441e254489f1fa5d777d7'
             'SKIP'
-            'b6eba5383c134d93b9979d3d0267a9ad0fb37bd0c07a083fc3c608dc17c3e2de9e1e975056f07d5a58bd144495063bdf84cd0344d54ddaf5a55c7cb66319d3cb'
+            '6e873d7257fac0b1100d128db253ca4156ac528ad53088ea6f0dd2ee80057942d95db82f56be936d9b0703bde174d697b38a6cc0e8189517b84e3608272fc492'
             '3c64f1dca69a2e6f99b53ad4f6885330f3ce869bb10cbd4de45bc2df7d6c106ce6f8506fb1ad740af01db89b84f7bf43271a2f49026eb7868e96e9c72d0e47e7'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '4a8b324aee4cccf3a512ad04ce1a272d14e5b05c8de90feb82075f55ea3845948d817e1b0c6f298f5816834ddd3e5ce0a0e2619866289f3c1ab8fd2f35f04f44'
