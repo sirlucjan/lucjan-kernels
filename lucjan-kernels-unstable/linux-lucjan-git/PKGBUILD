@@ -75,7 +75,7 @@ _pkgbase=linux-lucjan
 _major=4.18
 _srcname=linux-stable-rc
 pkgver=4.18.7.198.gae285c20144a.ll19
-pkgrel=0
+pkgrel=0.1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -94,7 +94,7 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git' 'python-sphinx' 'graphviz')
 _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
 _lucjanname='lucjan'
 _lucjanrev='ll19'
-_lucjanrc='rc6'
+_lucjanrc='rc7'
 _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git#branch=linux-${_major}.y"
@@ -470,7 +470,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '6e873d7257fac0b1100d128db253ca4156ac528ad53088ea6f0dd2ee80057942d95db82f56be936d9b0703bde174d697b38a6cc0e8189517b84e3608272fc492'
+            'b2752aac7349b59d395b56840f92f47fcb22efc12c030e6d33619145831bf623e93f26daa28a268a0be7816febe52be9856dff8189a3e098cf290bdc8143a13c'
             'SKIP'
             '3c64f1dca69a2e6f99b53ad4f6885330f3ce869bb10cbd4de45bc2df7d6c106ce6f8506fb1ad740af01db89b84f7bf43271a2f49026eb7868e96e9c72d0e47e7'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
