@@ -74,8 +74,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.18
 _srcname=linux-stable-rc
-pkgver=4.18.7.198.gae285c20144a.ll19
-pkgrel=0.1
+pkgver=4.18.8.0.gdfba61ec760e.ll20
+pkgrel=1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -84,18 +84,18 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git' 'python-sphinx' 'graphviz')
 
 ### linux-lucjan stable
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
-# _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
-# _lucjanname='lucjan'
-# _lucjanrev='ll18'
-# _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
+_lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
+_lucjanname='lucjan'
+_lucjanrev='ll20'
+_lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 ### linux-lucjan rc
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
-_lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
-_lucjanname='lucjan'
-_lucjanrev='ll19'
-_lucjanrc='rc7'
-_lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
+# _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
+# _lucjanname='lucjan'
+# _lucjanrev='ll19'
+# _lucjanrc='rc7'
+# _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git#branch=linux-${_major}.y"
         "${_lucjanpath}/${_lucjanpatch}"
@@ -470,7 +470,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'b2752aac7349b59d395b56840f92f47fcb22efc12c030e6d33619145831bf623e93f26daa28a268a0be7816febe52be9856dff8189a3e098cf290bdc8143a13c'
+            '5e27467bce33f7812316f69c6acaed8cc2d04443319c76b5575e9bd3aade6e919e62cd694b29a02e00b12aeb053c2eb23548bf596d72b28d23a47e25f1544b65'
             'SKIP'
             '3c64f1dca69a2e6f99b53ad4f6885330f3ce869bb10cbd4de45bc2df7d6c106ce6f8506fb1ad740af01db89b84f7bf43271a2f49026eb7868e96e9c72d0e47e7'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'

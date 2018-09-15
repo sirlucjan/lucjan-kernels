@@ -75,12 +75,12 @@ _major=4.18
 _minor=7
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=4.18.8.ll19
+pkgver=4.18.8.ll20
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -89,18 +89,18 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'python-sphinx' 'graphviz')
 
 ### linux-lucjan stable
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
-# _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
-# _lucjanname='lucjan'
-# _lucjanrev='ll18'
-# _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
+_lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
+_lucjanname='lucjan'
+_lucjanrev='ll20'
+_lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 ### linux-lucjan rc
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
-_lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
-_lucjanname='lucjan'
-_lucjanrev='ll19'
-_lucjanrc='rc7'
-_lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
+# _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
+# _lucjanname='lucjan'
+# _lucjanrev='ll19'
+# _lucjanrc='rc7'
+# _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/linux-${_stable}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/linux-${_stable}.tar.sign"
@@ -484,7 +484,7 @@ sha512sums=('a36c664c7703ffa470e78f7de283030bddc6eb59e77ca847fa53c2841283fd6f43d
             'SKIP'
             '67eba5d7366ca4ecc9be80071c9b1fcac5604850ab0eb8fb435cbb04dda182f9fe7857bf3a8826f18b3985344fbe89f2eceb2ebda67441e254489f1fa5d777d7'
             'SKIP'
-            'b2752aac7349b59d395b56840f92f47fcb22efc12c030e6d33619145831bf623e93f26daa28a268a0be7816febe52be9856dff8189a3e098cf290bdc8143a13c'
+            '5e27467bce33f7812316f69c6acaed8cc2d04443319c76b5575e9bd3aade6e919e62cd694b29a02e00b12aeb053c2eb23548bf596d72b28d23a47e25f1544b65'
             'SKIP'
             '3c64f1dca69a2e6f99b53ad4f6885330f3ce869bb10cbd4de45bc2df7d6c106ce6f8506fb1ad740af01db89b84f7bf43271a2f49026eb7868e96e9c72d0e47e7'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'

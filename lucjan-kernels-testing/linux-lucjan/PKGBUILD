@@ -72,8 +72,8 @@ _1k_HZ_ticks=y
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=4.18
-_minor=7
-pkgver=4.18.7.ll18
+_minor=8
+pkgver=4.18.8.ll20
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -87,7 +87,7 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'python-sphinx' 'graphviz')
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
 _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
 _lucjanname='lucjan'
-_lucjanrev='ll18'
+_lucjanrev='ll20'
 _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 ### linux-lucjan rc
@@ -95,7 +95,7 @@ _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 # _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
 # _lucjanname='lucjan'
 # _lucjanrev='ll19'
-# _lucjanrc='rc6'
+# _lucjanrc='rc7'
 # _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
@@ -465,9 +465,9 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('a36c664c7703ffa470e78f7de283030bddc6eb59e77ca847fa53c2841283fd6f43d99ec12451ac9e874bad8fac4d81ec219b5eb12eff2109ef5ac1126b338c19'
+sha512sums=('76a50ac9c270890dbd02384f1c4b0b53fcd0694242b5798790ef7bd694bb5d15c0180666bb76fd460fe89f94e49bf9df4da1cffa345205d127316b2baa407c6a'
             'SKIP'
-            '3106d21917a5f3cf9ace92383c19e560cda63513730d1acc17f35420641f9b229667d46d2578e7e331190903eed0f109e5982f1e1006e4d978d236ed3431ec0d'
+            '5e27467bce33f7812316f69c6acaed8cc2d04443319c76b5575e9bd3aade6e919e62cd694b29a02e00b12aeb053c2eb23548bf596d72b28d23a47e25f1544b65'
             'SKIP'
             '3c64f1dca69a2e6f99b53ad4f6885330f3ce869bb10cbd4de45bc2df7d6c106ce6f8506fb1ad740af01db89b84f7bf43271a2f49026eb7868e96e9c72d0e47e7'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
