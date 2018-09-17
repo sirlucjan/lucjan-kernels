@@ -74,8 +74,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.18
 _srcname=linux-stable-rc
-pkgver=4.18.8.0.gdfba61ec760e.ll20
-pkgrel=2
+pkgver=4.18.8.159.gea9147905497.ll21
+pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -84,18 +84,18 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git' 'python-sphinx' 'graphviz')
 
 ### linux-lucjan stable
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
-_lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
-_lucjanname='lucjan'
-_lucjanrev='ll20'
-_lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
+# _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
+# _lucjanname='lucjan'
+# _lucjanrev='ll20'
+# _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 ### linux-lucjan rc
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
-# _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
-# _lucjanname='lucjan'
-# _lucjanrev='ll19'
-# _lucjanrc='rc7'
-# _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
+_lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
+_lucjanname='lucjan'
+_lucjanrev='ll21'
+_lucjanrc='rc1'
+_lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git#branch=linux-${_major}.y"
         "${_lucjanpath}/${_lucjanpatch}"
@@ -470,7 +470,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '5e27467bce33f7812316f69c6acaed8cc2d04443319c76b5575e9bd3aade6e919e62cd694b29a02e00b12aeb053c2eb23548bf596d72b28d23a47e25f1544b65'
+            '9811e1e7d16595292c267da6d8e1c89fbbe8128bcce03d981310ff6d4a025f05a119f1ebc8cf61cb2445d6e432a4ad5dff6460d5ff399e8c2e0880f09c5db9cb'
             'SKIP'
             '05baf570bb1dd43287803399a66798e3624d9c4402b51da2c7014b7db2a6eaa4c4d2f127e19bb125a0ce2f7964361f850d535e2ed089de6f53e4b179fc1409fb'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
