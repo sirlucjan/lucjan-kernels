@@ -74,7 +74,7 @@ pkgbase=linux-lucjan
 _major=4.18
 _minor=9
 _minorc=$((_minor+1))
-_rcver=rc1
+_rcver=rc2
 pkgver=4.18.10.ll22
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
@@ -482,7 +482,7 @@ done
 
 sha512sums=('f0b8137a60ea3b7edb257a31d9c2b432db0d9af01f9b45b3ca3d8277f276ec1b8112e2daa744aa8eeee39df1ededed38495b952f22b0387b57822fde31eaa255'
             'SKIP'
-            '4a6e0af56fba58a90c7a7aad1937556f6a51d0003f3002cc1ab22ca46256f0abec9bb0ce87ad5d5984903bbd8782d5262ca79bd13453c6d769c5c6f327dd3365'
+            'ddce630c30d750c5a1209e2d760f901074c56612460024b6dc83bc0ad1497702b977ee0a9b8f6b5f46aaaed08d78db43f69b06a0e4be53bb0f09a9d7eb3b53d9'
             'SKIP'
             'ebfe9649c696a2b86c2f58385e8425da9182d0fd7c34aa572c300ea2153eabc29baa4baaa4300c1d89c523de7190d83c49d1691220b4d44da1d8ba0fd4b058a9'
             'SKIP'
