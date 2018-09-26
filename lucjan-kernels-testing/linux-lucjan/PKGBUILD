@@ -72,8 +72,8 @@ _1k_HZ_ticks=y
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=4.18
-_minor=9
-pkgver=4.18.8.ll21
+_minor=10
+pkgver=4.18.10.ll23
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -87,15 +87,15 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'python-sphinx' 'graphviz')
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
 _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
 _lucjanname='lucjan'
-_lucjanrev='ll21'
+_lucjanrev='ll23'
 _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 ### linux-lucjan rc
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
 # _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
 # _lucjanname='lucjan'
-# _lucjanrev='ll21'
-# _lucjanrc='rc3'
+# _lucjanrev='ll22'
+# _lucjanrc='rc1'
 # _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
@@ -465,9 +465,9 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('f0b8137a60ea3b7edb257a31d9c2b432db0d9af01f9b45b3ca3d8277f276ec1b8112e2daa744aa8eeee39df1ededed38495b952f22b0387b57822fde31eaa255'
+sha512sums=('bc03409cab11f85ecf0ea7a4b9629bb664c159dc894a433b0493d9be973be3865494aca27aacebb1712f014ccec07b2b6104cccb3a6cfae49a09c02b66d42381'
             'SKIP'
-            '6f0c77c341377f215672d6b8e2519dfa49cbc33db7ebb9c7b3280d8a4ee96f768a1e03c01b4c5874d14693091f1d5436b6dcce6902f63baa2be9dcaf585fb411'
+            'a293433ec48c79b7dbabbcdb01683d8041d110cd9fe01b88308d6c782637ee77db8905b770ce5d346658c9c72d7c940b825128a1bf5cda6b07e93017e0a8f5cb'
             'SKIP'
             '05baf570bb1dd43287803399a66798e3624d9c4402b51da2c7014b7db2a6eaa4c4d2f127e19bb125a0ce2f7964361f850d535e2ed089de6f53e4b179fc1409fb'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
