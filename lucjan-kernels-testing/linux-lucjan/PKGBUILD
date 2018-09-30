@@ -72,11 +72,11 @@ _1k_HZ_ticks=y
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=4.18
-_minor=10
-pkgver=4.18.10.ll24
+_minor=11
+pkgver=4.18.11.ll24
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
-pkgrel=2
+pkgrel=1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -465,7 +465,7 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('bc03409cab11f85ecf0ea7a4b9629bb664c159dc894a433b0493d9be973be3865494aca27aacebb1712f014ccec07b2b6104cccb3a6cfae49a09c02b66d42381'
+sha512sums=('01a78d7418b6cbc3e3d29b9578d76472243c40624cadee29621588885d0b27b0c274002d4d6bdffe56604ab5d0a885fa4437100161120e7260f61975144a9400'
             'SKIP'
             '9a1f41cfbdbf140de37ec19a82e1b3bca3eb9e14cec88e9f2db59dc12d37ebcc2c409a7c65dc3e4299f8be9539e4bbe4e98543c1c9360e4bbef6230d59c98035'
             'SKIP'
