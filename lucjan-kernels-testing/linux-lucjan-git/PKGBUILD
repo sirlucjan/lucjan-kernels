@@ -74,8 +74,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.18
 _srcname=linux
-pkgver=4.18.10.0.g183348489d36.ll24
-pkgrel=2
+pkgver=4.18.11.0.g2f411a0873a9.ll24
+pkgrel=1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -273,7 +273,7 @@ prepare() {
 	[[ -z "$_makegconfig" ]] || make gconfig
 
     ### Save configuration for later reuse
-	msg2 "Save configuration for later reuse"
+	msg2 "Save configuration for later reuse..."
 	cat .config > "${startdir}/config.last"
 }
 
