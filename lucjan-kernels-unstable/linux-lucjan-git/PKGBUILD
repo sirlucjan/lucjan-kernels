@@ -74,8 +74,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.18
 _srcname=linux-stable-rc
-pkgver=4.18.11.133.g74ba23ae47e5.ll24
-pkgrel=0
+pkgver=4.18.12.0.g7da07a3216a0.ll24
+pkgrel=1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -289,7 +289,7 @@ build() {
 }
 
 _package-kernel() {
-  pkgdesc='Linux Kernel and modules with the  BFQ-SQ-MQ I/0-scheduler, the PDS-mq CPU Scheduler and the UKSM. Fourth Gen Intel Core i3/i5/i7 optimized.'
+  pkgdesc="The ${pkgbase/linux/Linux} kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset featuring the BFQ-SQ-MQ I/0-scheduler, the PDS-mq CPU Scheduler and the UKSM. Fourth Gen Intel Core i3/i5/i7 optimized."
   depends=('coreutils' 'linux-firmware' 'mkinitcpio')
   optdepends=('crda: to set the correct wireless channels of your country' 'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
   groups=('linux-lucjan-git')
@@ -346,7 +346,7 @@ _package-kernel() {
   }  
 
 _package-headers() {
-  pkgdesc='Header files and scripts to build modules for linux-lucjan-git. Fourth Gen Intel Core i3/i5/i7 optimized.'
+  pkgdesc="Header files and scripts for building modules for ${pkgbase/linux/Linux} kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
   depends=('linux-lucjan-git-kernel')
   groups=('linux-lucjan-git')
 
@@ -429,7 +429,7 @@ _package-headers() {
 }
 
 _package-docs() {
-  pkgdesc='Kernel hackers manual - HTML documentation that comes with the linux-lucjan-git kernel. Fourth Gen Intel Core i3/i5/i7 optimized.'
+  pkgdesc="Kernel hackers manual - HTML documentation that comes with the ${pkgbase/linux/Linux} kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
   depends=('linux-lucjan-git-kernel')
   groups=('linux-lucjan-git')
   

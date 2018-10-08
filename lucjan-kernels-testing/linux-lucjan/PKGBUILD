@@ -285,7 +285,7 @@ build() {
 }
 
 _package-kernel() {
-  pkgdesc='Linux Kernel and modules with the  BFQ-SQ-MQ I/0-scheduler, the PDS-mq CPU Scheduler and the UKSM. Fourth Gen Intel Core i3/i5/i7 optimized.'
+  pkgdesc="The ${pkgbase/linux/Linux} kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset featuring the BFQ-SQ-MQ I/0-scheduler, the PDS-mq CPU Scheduler and the UKSM. Fourth Gen Intel Core i3/i5/i7 optimized."
   depends=('coreutils' 'linux-firmware' 'mkinitcpio')
   optdepends=('crda: to set the correct wireless channels of your country' 'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
   groups=('linux-lucjan')
@@ -342,7 +342,7 @@ _package-kernel() {
 }
 
 _package-headers() {
-  pkgdesc='Header files and scripts to build modules for linux-lucjan. Fourth Gen Intel Core i3/i5/i7 optimized.'
+  pkgdesc="Header files and scripts for building modules for ${pkgbase/linux/Linux} kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
   depends=('linux-lucjan-kernel')
   groups=('linux-lucjan')
 
@@ -425,7 +425,7 @@ _package-headers() {
 }
 
 _package-docs() {
-  pkgdesc='Kernel hackers manual - HTML documentation that comes with the linux-lucjan kernel. Fourth Gen Intel Core i3/i5/i7 optimized.'
+  pkgdesc="Kernel hackers manual - HTML documentation that comes with the ${pkgbase/linux/Linux} kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
   depends=('linux-lucjan-kernel')
   groups=('linux-lucjan')
   
