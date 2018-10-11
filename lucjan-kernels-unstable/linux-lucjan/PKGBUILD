@@ -75,12 +75,12 @@ _major=4.18
 _minor=12
 _minorc=$((_minor+1))
 _rcver=rc2
-pkgver=4.18.13.ll24
+pkgver=4.18.13.ll25
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -91,7 +91,7 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'python-sphinx' 'graphviz')
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
 _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
 _lucjanname='lucjan'
-_lucjanrev='ll24'
+_lucjanrev='ll25'
 _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 ### linux-lucjan rc
@@ -484,7 +484,7 @@ sha512sums=('e4eb62b512d7560cbe15b15aace01576996f5ed3a0b86c37a6a6794812d175aa4eb
             'SKIP'
             'b4790d486aa6691201f828876d3634bb878c783babf2f9252284c1620720b78e3df49123c4dac35255b6b79c8a84c03a4483b802278c1f645daa1f406b9633b5'
             'SKIP'
-            '9a1f41cfbdbf140de37ec19a82e1b3bca3eb9e14cec88e9f2db59dc12d37ebcc2c409a7c65dc3e4299f8be9539e4bbe4e98543c1c9360e4bbef6230d59c98035'
+            '52b0678a16c72f1b238b8ba36aad8f6632b0b67575777d7ab9d24ace5ca79775b01939aa94123dbab26ebfed33a325dc1649ff653c9412fb59b506e50e9e6d77'
             'SKIP'
             'df221308702002ab13c7922a356c452d6837ee73b423134a53c8530ab8143f9899f0af1ac8b5a6bb11d710d5197be762452a1e44c966db3395381ebb3f5d7e80'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
