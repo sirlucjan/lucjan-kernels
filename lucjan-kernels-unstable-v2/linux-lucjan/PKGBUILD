@@ -72,17 +72,16 @@ _1k_HZ_ticks=y
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=4.19
-#_minor=0
-#_minorc=$((_minor+1))
-#_rcver=rc1
-pkgver=4.19.ll1
-#_pkgver=${_major}.${_minorc}
-_pkgver=${_major}
+_minor=0
+_minorc=$((_minor+1))
+_rcver=rc1
+pkgver=4.19.1.ll1
+_pkgver=${_major}.${_minorc}
 #_stable=${_major}.${_minor}
 _stable=${_major}
-#_stablerc=${_pkgver}-${_rcver}
+_stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=11
+pkgrel=1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -101,13 +100,13 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'python-sphinx' 'graphviz')
 _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
 _lucjanname='lucjan'
 _lucjanrev='ll1'
-_lucjanrc='rc9'
+_lucjanrc='rc10'
 _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/linux-${_stable}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/linux-${_stable}.tar.sign"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${_stablerc}.xz"
-        #"https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${_stablerc}.sign"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${_stablerc}.xz"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${_stablerc}.sign"
         "${_lucjanpath}/${_lucjanpatch}"
         "${_lucjanpath}/${_lucjanpatch}.sig"
          # the main kernel config files
@@ -134,8 +133,8 @@ prepare() {
     cd $_srcname
 
     ### Applying patch from stable-review
-        #msg2 "Applying patch from stable-review"  
-        #patch -p1 -i ../patch-${_stablerc}
+        msg2 "Applying patch from stable-review"  
+        patch -p1 -i ../patch-${_stablerc}
      
     ### Fix naming schema in EXTRAVERSION
         _rc="$(cat Makefile | grep -m1 -e EXTRAVERSION | grep -o "[[:digit:]]*")"
@@ -484,7 +483,9 @@ done
 
 sha512sums=('ab67cc746b375a8b135e8b23e35e1d6787930d19b3c26b2679787d62951cbdbc3bb66f8ededeb9b890e5008b2459397f9018f1a6772fdef67780b06a4cb9f6f4'
             'SKIP'
-            '343fbf80088616893ba766a2c7fd404785c9a11592c262eb60ef1673abf10ae84b3d022294ee8246a2fbb6e202292992f6cd8fc1ebb6a618aee7274242658617'
+            '5aceebe2532f58efa22ce003d7718f2bbe94905ce70674ecdb01abc235366a54bac9710c5d16095938156c5d5922651f563fb144fdaf15c3fdd2ba05428d3045'
+            'SKIP'
+            'b002030bdf55c0b4048d23d6c859572a7c240b6f0ccc7d85c03a94fabdbaa614d69a200c0186ca03e4ca6ff8a91b2aea40d079c904387d3c72853d3eec12600f'
             'SKIP'
             'dbd0d6374a7aaced3e1e18aae864e6b6abfd2c0417439942a381e56c78c80acf34b718b197591195a54cad8e64090db101cadc0a90ce987469537f60071ad1a0'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
