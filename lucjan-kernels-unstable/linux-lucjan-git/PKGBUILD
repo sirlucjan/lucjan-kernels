@@ -75,7 +75,7 @@ _pkgbase=linux-lucjan
 _major=4.19
 _srcname=linux-stable-rc
 pkgver=4.19.1.r0.g07a03b97b9ce.ll1
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -84,18 +84,18 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git' 'python-sphinx' 'graphviz')
 
 ### linux-lucjan stable
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
-# _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
-# _lucjanname='lucjan'
-# _lucjanrev='ll1'
-# _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
+_lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
+_lucjanname='lucjan'
+_lucjanrev='ll1'
+_lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 ### linux-lucjan rc
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
-_lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
-_lucjanname='lucjan'
-_lucjanrev='ll1'
-_lucjanrc='rc10'
-_lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
+# _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
+# _lucjanname='lucjan'
+# _lucjanrev='ll1'
+# _lucjanrc='rc10'
+# _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git#branch=linux-${_major}.y"
         "${_lucjanpath}/${_lucjanpatch}"
