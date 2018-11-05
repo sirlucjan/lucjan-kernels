@@ -17,41 +17,7 @@
 │       ├── linux.install
 │       ├── linux.preset
 │       └── PKGBUILD
-├── lucjan-kernels-testing-v2
-│   ├── linux-lucjan
-│   │   ├── 60-linux-01-depmod.hook
-│   │   ├── 90-linux-02-initcpio.hook
-│   │   ├── 99-linux-03-remove.hook
-│   │   ├── config
-│   │   ├── linux.install
-│   │   ├── linux.preset
-│   │   └── PKGBUILD
-│   └── linux-lucjan-git
-│       ├── 60-linux-01-depmod.hook
-│       ├── 90-linux-02-initcpio.hook
-│       ├── 99-linux-03-remove.hook
-│       ├── config
-│       ├── linux.install
-│       ├── linux.preset
-│       └── PKGBUILD
 ├── lucjan-kernels-unstable
-│   ├── linux-lucjan
-│   │   ├── 60-linux-01-depmod.hook
-│   │   ├── 90-linux-02-initcpio.hook
-│   │   ├── 99-linux-03-remove.hook
-│   │   ├── config
-│   │   ├── linux.install
-│   │   ├── linux.preset
-│   │   └── PKGBUILD
-│   └── linux-lucjan-git
-│       ├── 60-linux-01-depmod.hook
-│       ├── 90-linux-02-initcpio.hook
-│       ├── 99-linux-03-remove.hook
-│       ├── config
-│       ├── linux.install
-│       ├── linux.preset
-│       └── PKGBUILD
-├── lucjan-kernels-unstable-v2
 │   ├── linux-lucjan
 │   │   ├── 60-linux-01-depmod.hook
 │   │   ├── 90-linux-02-initcpio.hook
@@ -70,4 +36,4 @@
 │       └── PKGBUILD
 └── README.md
 
-12 directories, 58 files
+6 directories, 30 files
