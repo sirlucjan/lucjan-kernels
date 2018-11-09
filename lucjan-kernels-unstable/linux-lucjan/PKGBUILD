@@ -75,7 +75,7 @@ _major=4.19
 _minor=0
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=4.19.1.ll2
+pkgver=4.19.1.ll3
 _pkgver=${_major}.${_minorc}
 #_stable=${_major}.${_minor}
 _stable=${_major}
@@ -92,7 +92,7 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'python-sphinx' 'graphviz')
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
 _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
 _lucjanname='lucjan'
-_lucjanrev='ll2'
+_lucjanrev='ll3'
 _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 ### linux-lucjan rc
@@ -138,7 +138,7 @@ prepare() {
      
     ### Setting version
         msg2 "Setting version..."
-        sed -e "/^EXTRAVERSION =/s/=.*/= .${_lucjanrev}/" -i Makefile
+        # sed -e "/^EXTRAVERSION =/s/=.*/= .${_lucjanrev}/" -i Makefile
         scripts/setlocalversion --save-scmversion
         echo "-$pkgrel" > localversion.10-pkgrel
         echo "$_kernelname" > localversion.20-pkgname
@@ -480,7 +480,7 @@ sha512sums=('ab67cc746b375a8b135e8b23e35e1d6787930d19b3c26b2679787d62951cbdbc3bb
             'SKIP'
             '5aceebe2532f58efa22ce003d7718f2bbe94905ce70674ecdb01abc235366a54bac9710c5d16095938156c5d5922651f563fb144fdaf15c3fdd2ba05428d3045'
             'SKIP'
-            'eef758d20234033cec41bda191c3884d143dfa2c969f751fedec02214438fc3ae98235169653eeb8654b4e30e20b3fcf9ed6b5f3750674e99528b8c823275b45'
+            'fe38b056c1344d4ea4ec84fe92eeb78ad0312df6428d5fa5e7a631cef01675222be94e54ce33c511b1c9e9e31514951518a6792e337469f7fc04a095a983b12a'
             'SKIP'
             '51ad7e1a59af40c28de10b9ddc6c458acfd3daa1e68e061766114d370a9475c8b9929118627102b4d01c25ff8371d32f1cdc738ae3fb93a7b7046e43eda0712d'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
