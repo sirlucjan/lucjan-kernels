@@ -72,13 +72,12 @@ _1k_HZ_ticks=y
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=4.19
-_minor=0
+_minor=1
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=4.19.1.ll3
+pkgver=4.19.2.ll4
 _pkgver=${_major}.${_minorc}
-#_stable=${_major}.${_minor}
-_stable=${_major}
+_stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
 pkgrel=0
@@ -90,18 +89,18 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'python-sphinx' 'graphviz')
 
 ### linux-lucjan stable
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
-_lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
-_lucjanname='lucjan'
-_lucjanrev='ll3'
-_lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
+# _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
+# _lucjanname='lucjan'
+# _lucjanrev='ll3'
+# _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 ### linux-lucjan rc
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
-# _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
-# _lucjanname='lucjan'
-# _lucjanrev='ll1'
-# _lucjanrc='rc10'
-# _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
+_lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
+_lucjanname='lucjan'
+_lucjanrev='ll4'
+_lucjanrc='rc1'
+_lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/linux-${_stable}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/linux-${_stable}.tar.sign"
@@ -476,11 +475,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('ab67cc746b375a8b135e8b23e35e1d6787930d19b3c26b2679787d62951cbdbc3bb66f8ededeb9b890e5008b2459397f9018f1a6772fdef67780b06a4cb9f6f4'
+sha512sums=('46f77eb99faa596b673920d4c0fcba6490f03907c0114eb18751cc2011e0a775037f5d2be536747c5337b8ae59e795071127282966b90b8cb818898f854b3260'
             'SKIP'
-            '5aceebe2532f58efa22ce003d7718f2bbe94905ce70674ecdb01abc235366a54bac9710c5d16095938156c5d5922651f563fb144fdaf15c3fdd2ba05428d3045'
+            'bb49cbcd4c30725ada7770fd9c3f342ffe5c9b465a9d8b559b6b0e6af10d69be055d22742611fcfb46add624d80f463f68b99499e39a7ae2b4f1674392bb4d11'
             'SKIP'
-            'fe38b056c1344d4ea4ec84fe92eeb78ad0312df6428d5fa5e7a631cef01675222be94e54ce33c511b1c9e9e31514951518a6792e337469f7fc04a095a983b12a'
+            'ef67f0f933a3e63b492106b1f9d7b830f4da252e1dc380685254eac2397f5cd431fbce4bda34726eefd01726079e7d84d1e1fe4e3f0a3ffe108d04f0c43aa945'
             'SKIP'
             '51ad7e1a59af40c28de10b9ddc6c458acfd3daa1e68e061766114d370a9475c8b9929118627102b4d01c25ff8371d32f1cdc738ae3fb93a7b7046e43eda0712d'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
