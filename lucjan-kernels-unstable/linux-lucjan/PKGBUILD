@@ -80,7 +80,7 @@ _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0.2
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -99,7 +99,7 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'python-sphinx' 'graphviz')
 _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
 _lucjanname='lucjan'
 _lucjanrev='ll4'
-_lucjanrc='rc2'
+_lucjanrc='rc3'
 _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/linux-${_stable}.tar.xz"
@@ -479,7 +479,7 @@ sha512sums=('46f77eb99faa596b673920d4c0fcba6490f03907c0114eb18751cc2011e0a775037
             'SKIP'
             'bb49cbcd4c30725ada7770fd9c3f342ffe5c9b465a9d8b559b6b0e6af10d69be055d22742611fcfb46add624d80f463f68b99499e39a7ae2b4f1674392bb4d11'
             'SKIP'
-            '2a7060b338d41fb92c0ab3b509788fe5573089f041992643673e026daade9f1c3abc3bad184d887cc3b5cdc8ab59b87108db52cd8da01c33cbc231f8005b11a6'
+            '3d771609890ae55abd75f02e43a057a241f4acf35d8af2923ff17880371d15437d242763c7c5e8b9560318ebb768c40adf12fa870d0305fa8ef2676fa4885a26'
             'SKIP'
             '51ad7e1a59af40c28de10b9ddc6c458acfd3daa1e68e061766114d370a9475c8b9929118627102b4d01c25ff8371d32f1cdc738ae3fb93a7b7046e43eda0712d'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
