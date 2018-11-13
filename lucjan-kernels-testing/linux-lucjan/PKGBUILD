@@ -72,8 +72,8 @@ _1k_HZ_ticks=y
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=4.19
-_minor=1
-pkgver=4.19.1.ll3
+_minor=2
+pkgver=4.19.2.ll4
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -87,15 +87,15 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'python-sphinx' 'graphviz')
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
 _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
 _lucjanname='lucjan'
-_lucjanrev='ll3'
+_lucjanrev='ll4'
 _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 ### linux-lucjan rc
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
 # _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
 # _lucjanname='lucjan'
-# _lucjanrev='ll1'
-# _lucjanrc='rc10'
+# _lucjanrev='ll4'
+# _lucjanrc='rc3'
 # _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
@@ -465,9 +465,9 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('46f77eb99faa596b673920d4c0fcba6490f03907c0114eb18751cc2011e0a775037f5d2be536747c5337b8ae59e795071127282966b90b8cb818898f854b3260'
+sha512sums=('56f44e570c8c73110107fa75e81ea054895484c4d84cdfc7bb756b7ae4953e3140124204123ae253d0c0eb020422e6642a5d12e0e7d3245ead986903f2d840fd'
             'SKIP'
-            'fe38b056c1344d4ea4ec84fe92eeb78ad0312df6428d5fa5e7a631cef01675222be94e54ce33c511b1c9e9e31514951518a6792e337469f7fc04a095a983b12a'
+            '3d771609890ae55abd75f02e43a057a241f4acf35d8af2923ff17880371d15437d242763c7c5e8b9560318ebb768c40adf12fa870d0305fa8ef2676fa4885a26'
             'SKIP'
             '51ad7e1a59af40c28de10b9ddc6c458acfd3daa1e68e061766114d370a9475c8b9929118627102b4d01c25ff8371d32f1cdc738ae3fb93a7b7046e43eda0712d'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
