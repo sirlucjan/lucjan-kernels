@@ -98,15 +98,14 @@ _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 # _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git#branch=linux-${_major}.y"
-        "${_lucjanpath}/${_lucjanpatch}"
-        "${_lucjanpath}/${_lucjanpatch}.sig"
+        "${_lucjanpath}/${_lucjanpatch}"{,.sig}
          # the main kernel config files
         'config'
          # pacman hook for depmod
         '60-linux-01-depmod.hook'
          # pacman hook for initramfs regeneration
         '90-linux-02-initcpio.hook'
-         # pacman hook for initramfs remove
+         # pacman hook for remove initramfs
         '99-linux-03-remove.hook'
          # standard config files for mkinitcpio ramdisk
         'linux.preset')

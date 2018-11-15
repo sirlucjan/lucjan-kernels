@@ -102,19 +102,16 @@ _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 # _lucjanrc='rc3'
 # _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
-source=("https://www.kernel.org/pub/linux/kernel/v4.x/linux-${_stable}.tar.xz"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/linux-${_stable}.tar.sign"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${_stablerc}.xz"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${_stablerc}.sign"
-        "${_lucjanpath}/${_lucjanpatch}"
-        "${_lucjanpath}/${_lucjanpatch}.sig"
+source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar"{.xz,.sign}
+        "https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-${_stablerc}"{.xz,.sign}
+        "${_lucjanpath}/${_lucjanpatch}"{,.sig}
          # the main kernel config files
         'config'
          # pacman hook for depmod
         '60-linux-01-depmod.hook'
          # pacman hook for initramfs regeneration
         '90-linux-02-initcpio.hook'
-         # pacman hook for initramfs remove
+         # pacman hook for remove initramfs
         '99-linux-03-remove.hook'
          # standard config files for mkinitcpio ramdisk
         'linux.preset')
