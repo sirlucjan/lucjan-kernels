@@ -76,7 +76,7 @@ _minor=2
 pkgver=4.19.2.ll5
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -465,7 +465,7 @@ done
 
 sha512sums=('56f44e570c8c73110107fa75e81ea054895484c4d84cdfc7bb756b7ae4953e3140124204123ae253d0c0eb020422e6642a5d12e0e7d3245ead986903f2d840fd'
             'SKIP'
-            '3e9360511fb1acc150211ac601c0c57a4231cc7de0c8a51fa173273ff82f01bcba7e0ad34d7b4e985a6795cf7fe43f74d3198fda6596c93207997f96b9e2b3ff'
+            '869a44addcdf6c2d6c60bb210b64ffd0cd9934a670e851016dcdf9585dc74737cf8317f737d204bc51fd1e07f261216400300d8df4e89bd80a2ca18ba04ae2e5'
             'SKIP'
             '060e64046bb5271b1791dede15c275dca3a833cab23ff986e713ef119664b0a9c6d317d12a28b3900ba331761cda441d50fdc4bd8b7d2d737ffe4d488344e977'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
