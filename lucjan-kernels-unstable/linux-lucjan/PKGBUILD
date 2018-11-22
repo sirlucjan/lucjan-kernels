@@ -121,7 +121,7 @@ _kernelname=${pkgbase#linux}
 
 pkgver() {
     
-        echo ${_pkgver}.${_lucjanrev}
+       printf ${_pkgver}.${_lucjanrev}
 
 }
 

@@ -117,7 +117,7 @@ pkgver() {
     cd $_srcname
         
     _ver="$(git describe --long --tags | sed -E 's/^v//;s/([^-]*-g)/r\1/;s/-/./g;s/\.rc/rc/')"
-    echo ${_ver}.${_lucjanrev}
+    printf ${_ver}.${_lucjanrev}
 } 
 
 prepare() {

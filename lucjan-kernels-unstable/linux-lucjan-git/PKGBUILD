@@ -74,8 +74,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.19
 _srcname=linux-stable-rc
-pkgver=4.19.3.r0.g73aa1c86c6ec.ll5
-pkgrel=2
+pkgver=4.19.3.r43.g2b8db8734888.ll5
+pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -117,7 +117,7 @@ pkgver() {
     cd $_srcname
         
     _ver="$(git describe --long --tags | sed -E 's/^v//;s/([^-]*-g)/r\1/;s/-/./g;s/\.rc/rc/')"
-    echo ${_ver}.${_lucjanrev}
+    printf ${_ver}.${_lucjanrev}
 } 
 
 prepare() {
