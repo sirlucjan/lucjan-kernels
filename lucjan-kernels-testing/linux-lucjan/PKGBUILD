@@ -73,7 +73,7 @@ pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=4.19
 _minor=4
-pkgver=4.19.4.ll5
+pkgver=4.19.4.ll6
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -87,7 +87,7 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'python-sphinx' 'graphviz')
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
 _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
 _lucjanname='lucjan'
-_lucjanrev='ll5'
+_lucjanrev='ll6'
 _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 ### linux-lucjan rc
@@ -470,7 +470,7 @@ done
 
 sha512sums=('419090eb4581335d0f637d8e42bb74eb316cb413943d2399119f74ee72c5a4d36e687e4fdd9b84b7b33a5871774589eed0ffd2016f347ba8a4af701a28c3a3c8'
             'SKIP'
-            '869a44addcdf6c2d6c60bb210b64ffd0cd9934a670e851016dcdf9585dc74737cf8317f737d204bc51fd1e07f261216400300d8df4e89bd80a2ca18ba04ae2e5'
+            '971310199995ab79248bf316cc1ba236409a11a2045e6eeac8e8d973c61fc65b58c4c2b6b29d58dea52e11228bd595aeee4b24ed1197ce16c4b833c815a5131d'
             'SKIP'
             '04871e4a18ba2ddb6a05ded6d76daba5b43a1b937d58835a147770d0a356070c1ce0681a538351bfe55d48ac35078b91662063f47f4c6eab5a81c085f35927d9'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
