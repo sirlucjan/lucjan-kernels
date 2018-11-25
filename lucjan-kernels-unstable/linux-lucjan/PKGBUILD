@@ -117,30 +117,30 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar"{.xz,.sign
         '99-linux-03-remove.hook'
          # standard config files for mkinitcpio ramdisk
         'linux.preset')
-        
+
 _kernelname=${pkgbase#linux}
 : ${_kernelname:=-lucjan}
 
 pkgver() {
-    
+
         printf ${_pkgver}.${_lucjanrev}
 
 }
 
 prepare() {
     cd $_srcname
-    
+
     ### Applying patch from stable-review
         msg2 "Applying patch from stable-review"  
         patch -p1 -i ../patch-${_stablerc}
-    
+
     ### Setting version
         msg2 "Setting version..."
         sed -e "/^EXTRAVERSION =/s/=.*/=/" -i Makefile
         scripts/setlocalversion --save-scmversion
         echo "-$pkgrel" > localversion.10-pkgrel
         echo "$_kernelname" > localversion.20-pkgname
-    
+
     ### Patching sources
         local src
         for src in "${source[@]}"; do
@@ -150,16 +150,16 @@ prepare() {
           msg2 "Applying patch $src..."
           patch -Np1 < "../$src"
         done
-    
-    ### Setting config   
+
+    ### Setting config
         msg2 "Setting config..."
         cp ../config .config
         make olddefconfig
-        
-    ### Prepared version   
+
+    ### Prepared version
         make -s kernelrelease > ../version
         msg2 "Prepared %s version %s" "$pkgbase" "$(<../version)"
-    
+
     ### Optionally use running kernel's config
 	# code originally by nous; http://aur.archlinux.org/packages.php?ID=40191
 	if [ -n "$_use_current" ]; then
@@ -173,22 +173,22 @@ prepare() {
 			warning "Aborting!"
 			exit
 		fi
-	fi    
-        
+	fi
+
     ### Set GCC flags
         if [ -n "$_gcc_haswell" ]; then
                 msg2 "Setting GCC flags for Intel Haswell CPU..."
                 sed -i -e s'/^CONFIG_GENERIC_CPU=y/# CONFIG_GENERIC_CPU is not set/' \
                     -i -e s'/^# CONFIG_MHASWELL is not set/CONFIG_MHASWELL=y/' ./.config
-        fi  
-        
+        fi
+
     ### Enable fancontrol
         if [ -n "$_dell_fancontrol" ]; then
                 msg2 "Enabling I8K for Dell..."
                 sed -i -e s'/^CONFIG_I8K=m/CONFIG_I8K=y/' \
                     -i -e s'/^CONFIG_SENSORS_DELL_SMM=m/CONFIG_SENSORS_DELL_SMM=y/' ./.config    
-        fi    
-        
+        fi
+
     ### Set performance governor
         if [ -n "$_per_gov" ]; then
                 msg2 "Setting performance governor..."
@@ -200,7 +200,7 @@ prepare() {
                     -i -e s'/^CONFIG_CPU_FREQ_GOV_USERSPACE=m/# CONFIG_CPU_FREQ_GOV_USERSPACE is not set/' \
                     -i -e s'/^CONFIG_CPU_FREQ_GOV_SCHEDUTIL=y/# CONFIG_CPU_FREQ_GOV_SCHEDUTIL is not set/' ./.config
         fi 
-        
+
     ### Disable Deadline I/O scheduler
 	if [ -n "$_deadline_disable" ]; then
 		msg2 "Disabling Deadline I/O scheduler..."
@@ -227,8 +227,8 @@ prepare() {
 		sed -i -e s'/^CONFIG_SCSI_MQ_DEFAULT=y/# CONFIG_SCSI_MQ_DEFAULT is not set/' \
 		    -i -e s'/^CONFIG_DM_MQ_DEFAULT=y/# CONFIG_DM_MQ_DEFAULT is not set/' ./.config
         fi
-    
-    ### Optionally set tickrate to 1000 
+
+    ### Optionally set tickrate to 1000
 	if [ -n "$_1k_HZ_ticks" ]; then
 		msg2 "Setting tick rate to 1k..."
 		sed -i -e 's/^CONFIG_HZ_300=y/# CONFIG_HZ_300 is not set/' \
@@ -256,10 +256,10 @@ prepare() {
         # See https://aur.archlinux.org/packages/modprobed-db
         if [ -n "$_localmodcfg" ]; then
             if [ -f $HOME/.config/modprobed.db ]; then
-            msg "Found a modprobed-db database for Steven Rostedt's make localmodconfig"
+            msg2 "Found a modprobed-db database for Steven Rostedt's make localmodconfig"
             make LSMOD=$HOME/.config/modprobed.db localmodconfig
         else
-            msg "Running Steven Rostedt's make localmodconfig now"
+            msg2 "Running Steven Rostedt's make localmodconfig now"
             make localmodconfig
             fi
         fi
@@ -347,7 +347,7 @@ _package-kernel() {
   sed "$subst" ../90-linux-02-initcpio.hook | install -Dm644 /dev/stdin \
     "$pkgdir/usr/share/libalpm/hooks/90-${pkgbase}-02-initcpio.hook"
   sed "$subst" ../99-linux-03-remove.hook | install -Dm644 /dev/stdin \
-    "$pkgdir/usr/share/libalpm/hooks/99-${pkgbase}-03-remove.hook"  
+    "$pkgdir/usr/share/libalpm/hooks/99-${pkgbase}-03-remove.hook"
 
   msg2 "Fixing permissions..."
   chmod -Rc u=rwX,go=rX "$pkgdir"
@@ -431,7 +431,7 @@ _package-headers() {
   msg2 "Adding symlink..."
   mkdir -p "$pkgdir/usr/src"
   ln -sr "$builddir" "$pkgdir/usr/src/$pkgbase-$pkgver"
-  
+
   msg2 "Fixing permissions..."
   chmod -Rc u=rwX,go=rX "$pkgdir"
 }
@@ -440,7 +440,7 @@ _package-docs() {
   pkgdesc="Kernel hackers manual - HTML documentation that comes with the ${pkgbase/linux/Linux} kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
   depends=('linux-lucjan-kernel')
   groups=('linux-lucjan')
-  
+
   local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
 
   cd $_srcname
