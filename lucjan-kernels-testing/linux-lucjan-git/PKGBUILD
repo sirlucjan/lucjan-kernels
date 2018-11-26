@@ -142,7 +142,7 @@ prepare() {
           patch -Np1 < "../$src"
         done
 
-    ### Setting config   
+    ### Setting config
         msg2 "Setting config..."
         cp ../config .config
 
