@@ -63,10 +63,10 @@ _CFQ_disable=y
 ### Disable Kyber I/O scheduler
 _kyber_disable=y
 
-### Disable MQ scheduling 
+### Disable MQ scheduling
 _mq_disable=
 
-### Running with a 1000 HZ tick rate 
+### Running with a 1000 HZ tick rate
 _1k_HZ_ticks=y
 
 ### Do not edit below this line unless you know what you're doing
@@ -76,8 +76,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.19
 _srcname=linux-stable-rc
-pkgver=4.19.4.r0.g98a661ea85a8.ll6
-pkgrel=2
+pkgver=4.19.4.r119.gbe4bbf9fbca5.ll6
+pkgrel=0.1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -142,14 +142,9 @@ prepare() {
           patch -Np1 < "../$src"
         done
 
-    ### Setting config
+    ### Setting config   
         msg2 "Setting config..."
         cp ../config .config
-        make olddefconfig
-
-    ### Prepared version
-        make -s kernelrelease > ../version
-        msg2 "Prepared %s version %s" "$pkgbase" "$(<../version)"
 
     ### Optionally use running kernel's config
 	# code originally by nous; http://aur.archlinux.org/packages.php?ID=40191
@@ -177,7 +172,7 @@ prepare() {
         if [ -n "$_dell_fancontrol" ]; then
                 msg2 "Enabling I8K for Dell..."
                 sed -i -e s'/^CONFIG_I8K=m/CONFIG_I8K=y/' \
-                    -i -e s'/^CONFIG_SENSORS_DELL_SMM=m/CONFIG_SENSORS_DELL_SMM=y/' ./.config    
+                    -i -e s'/^CONFIG_SENSORS_DELL_SMM=m/CONFIG_SENSORS_DELL_SMM=y/' ./.config
         fi
 
     ### Set performance governor
@@ -190,7 +185,7 @@ prepare() {
                     -i -e s'/^CONFIG_CPU_FREQ_GOV_CONSERVATIVE=m/# CONFIG_CPU_FREQ_GOV_CONSERVATIVE is not set/' \
                     -i -e s'/^CONFIG_CPU_FREQ_GOV_USERSPACE=m/# CONFIG_CPU_FREQ_GOV_USERSPACE is not set/' \
                     -i -e s'/^CONFIG_CPU_FREQ_GOV_SCHEDUTIL=y/# CONFIG_CPU_FREQ_GOV_SCHEDUTIL is not set/' ./.config
-        fi 
+        fi
 
     ### Disable Deadline I/O scheduler
 	if [ -n "$_deadline_disable" ]; then
@@ -254,6 +249,15 @@ prepare() {
             make localmodconfig
             fi
         fi
+
+    ### Rewrite configuration
+        msg2 "Rewrite configuration"
+        make prepare
+        yes "" | make config >/dev/null
+
+    ### Prepared version
+        make -s kernelrelease > ../version
+        msg2 "Prepared %s version %s" "$pkgbase" "$(<../version)"
 
     ### Running make nconfig
 	
