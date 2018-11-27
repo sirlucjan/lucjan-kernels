@@ -2,6 +2,7 @@
 Type = File
 Operation = Remove
 Target = boot/vmlinuz-%PKGBASE%
+Target = usr/lib/modules/%KERNVER%/vmlinuz
 
 [Action]
 Description = Remove %PKGBASE% initramfs files...
