@@ -100,11 +100,11 @@ if [ "$_linux_lucjan" = "actual" ]; then
 elif [ "$_linux_lucjan" = "testing" ]; then
 
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
-_lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
-_lucjanname='lucjan'
-_lucjanrev='ll4'
-_lucjanrc='rc3'
-_lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
+ _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
+ _lucjanname='lucjan'
+ _lucjanrev='ll4'
+ _lucjanrc='rc3'
+ _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 fi
 
