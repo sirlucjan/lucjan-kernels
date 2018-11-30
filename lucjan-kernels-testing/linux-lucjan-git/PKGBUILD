@@ -70,6 +70,7 @@ _mq_disable=
 _1k_HZ_ticks=y
 
 ### Download linux-lucjan patchset
+# ATTENTION - one of two predefined values should be selected!
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
 _linux_lucjan=actual

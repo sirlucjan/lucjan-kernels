@@ -70,6 +70,7 @@ _mq_disable=
 _1k_HZ_ticks=y
 
 ### Download linux-lucjan patchset
+# ATTENTION - one of two predefined values should be selected!
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
 _linux_lucjan=actual
@@ -81,8 +82,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.19
 _srcname=linux-stable-rc
-pkgver=4.19.5.r0.gb32d16ec9956.ll6
-pkgrel=2
+pkgver=4.19.5.r111.gac4af649901b.ll6
+pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
