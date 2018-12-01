@@ -1,4 +1,5 @@
 # Maintainer: Piotr Gorski <lucjan.lucjanov@gmail.com>
+# Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 # Contributor: Tobias Powalowski <tpowa@archlinux.org>
 # Contributor: Thomas Baechler <thomas@archlinux.org>
 
@@ -84,7 +85,7 @@ _minor=5
 pkgver=4.19.5.ll7
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -486,7 +487,7 @@ sha512sums=('ee460800a071aeae966078d3e7dc525e1e8e9cbb406fe878438c55da4ea42d10f50
             '04871e4a18ba2ddb6a05ded6d76daba5b43a1b937d58835a147770d0a356070c1ce0681a538351bfe55d48ac35078b91662063f47f4c6eab5a81c085f35927d9'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '6d474f9f8ccdbbf3cfc10987b2b11a405bfbbac6d77d17c727c83f297c43678db57b5af7fecc365de01474183cbd53dd70d77601465ee34a0be0d983c42e14d1'
-            '62706850c6d938c4f880b5274b1bf2bc099780c6d3be1691c794cbf1a644e83554f2b880fd6d9c713a9217668860a3284c8c950336e91fe64bd4d574669e12ca'
+            'c1cd9fd15eb4f6365d286b92c33a45cefd5be71b2a6f88cd66f21804064c4fce292a10abe02eba99d83f49d081a21aeae97ec396f732f308d23b4228d409a510'
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf')
             
 validpgpkeys=(

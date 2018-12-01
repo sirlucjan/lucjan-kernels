@@ -7,4 +7,4 @@ Target = usr/lib/modules/%KERNVER%/vmlinuz
 [Action]
 Description = Remove %PKGBASE% initramfs files...
 When = PreTransaction
-Exec = /usr/bin/rm -f /boot/initramfs-%PKGBASE%.img /boot/initramfs-%PKGBASE%-fallback.img 
+Exec = /usr/bin/rm -f /boot/initramfs-%PKGBASE%.img /boot/initramfs-%PKGBASE%-fallback.img
