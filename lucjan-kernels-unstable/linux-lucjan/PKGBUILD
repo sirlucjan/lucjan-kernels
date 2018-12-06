@@ -72,17 +72,17 @@ _1k_HZ_ticks=y
 # ATTENTION - one of two predefined values should be selected!
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
-_linux_lucjan=actual
+_linux_lucjan=testing
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=4.19
-_minor=5
+_minor=7
 _minorc=$((_minor+1))
-_rcver=rc2
-pkgver=4.19.6.ll10
+_rcver=rc1
+pkgver=4.19.8.ll12
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -99,7 +99,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll10'
+ _lucjanrev='ll11'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -107,7 +107,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll9'
+ _lucjanrev='ll12'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -488,11 +488,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('ee460800a071aeae966078d3e7dc525e1e8e9cbb406fe878438c55da4ea42d10f50c0ebfcf3ee4c792f3cc984ee8d8d3acdb8ca6bc11536fa6a4391de58643fb'
+sha512sums=('794809e6a6b750594112f9686367e33fb09479cfdfcc4e8762b9b9d82f2aedcd439bf2222b806f7849d305889d4c31e801a4a05bca11335c11021a24c0aaa79e'
             'SKIP'
-            '5b593bce10f6fa8837a72453b4b64546230da13fec3f24f65c44dd90847da028ebe266ebee5483e33b44c6882f10c231499cfb158a5d7044dfbbeae12356b081'
+            'fc298e3c7ea8e079bf8dae768965d6aeb2fcc65c38ded431f3f79497aee7e9084f7229fffb827da36f60906f5a1b9294af65d99215f920213b29b8009951a511'
             'SKIP'
-            'c4a12db8b94ae09e3228cd4ea7ac60300908d0dfac68e427c3d353329f4d679d9ed58b94900b6c6032ca15265e501f9dcd439abd31ce971876968504a2b4ba56'
+            'b8ef1095f6df0be15d326eda9e9808278e395a3606c8f356877b62bf46dc8f059dc08afa71c4c4be9a08bdf4be25a154ca872a709da6d979556c768a4b5dad89'
             'SKIP'
             '04871e4a18ba2ddb6a05ded6d76daba5b43a1b937d58835a147770d0a356070c1ce0681a538351bfe55d48ac35078b91662063f47f4c6eab5a81c085f35927d9'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
