@@ -72,7 +72,7 @@ _1k_HZ_ticks=y
 # ATTENTION - one of two predefined values should be selected!
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
-_linux_lucjan=testing
+_linux_lucjan=actual
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -81,8 +81,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.19
 _srcname=linux-stable-rc
-pkgver=4.19.8.r57.g131702ed5d98.ll15
-pkgrel=0.1
+pkgver=4.19.8.r119.g6a09e212b52e.ll14
+pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -480,7 +480,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '38e223ef93861f10ec45221b1f31f7e6eee4000da3a6136c5ef9469fcbd816e3ea121475d46573d47fe3c465bf8d7549522f5a54280aae7e267ac0abb7f60eae'
+            'f2bba98b5da0303c70c3a94568d637c6e5f832b89e4054a1b447645ab9e60cc9ecd689e623b79278d5fd4f18b3f7f0ae34f52f207d2623dc0e80c631baf1d3a0'
             'SKIP'
             '705d1dbf686fe5c7b5e7f34edde3d86e5d11c496de83d916814529068ae7105c02433d16da027627a7210520fbbefee69486d24bc28c3a4515fa658c37def34d'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
