@@ -34,7 +34,7 @@ git clone https://gitlab.com/sirlucjan/lucjan-kernels.git
 # Install:
 
 
-## Experimental
+### Experimental
 
 ```
 cd /some_path/lucjan-kernels/lucjan-kernels-experimental/package_name
@@ -42,7 +42,7 @@ makepkg -srci
 
 ```
 
-## Testing
+### Testing
 
 ```
 cd /some_path/lucjan-kernels/lucjan-kernels-testing/package_name
@@ -50,7 +50,7 @@ makepkg -srci
 
 ```
 
-## Unstable
+### Unstable
 
 ```
 cd /some_path/lucjan-kernels/lucjan-kernels-unstable/package_name
@@ -62,7 +62,7 @@ makepkg -srci
 
 For now, you can use `sudo tee /sys/block/sda/queue/scheduler <<< bfq-mq` to enable "bfq-mq".
 
-You can also add this to file `60-schedulers.rules `:
+You can also add this to file `60-schedulers.rules`:
 
 ```
 # Non-rotational disks
