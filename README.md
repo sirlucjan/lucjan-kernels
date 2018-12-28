@@ -34,22 +34,6 @@ git clone https://gitlab.com/sirlucjan/lucjan-kernels.git
 # Install:
 
 
-### Experimental V1
-
-```
-cd /some_path/lucjan-kernels/lucjan-kernels-experimental-v1/package_name
-makepkg -srci
-
-```
-
-### Experimental V2
-
-```
-cd /some_path/lucjan-kernels/lucjan-kernels-experimental-v2/package_name
-makepkg -srci
-
-```
-
 ### Testing
 
 ```
