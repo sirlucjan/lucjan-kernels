@@ -72,7 +72,7 @@ _1k_HZ_ticks=y
 # ATTENTION - one of two predefined values should be selected!
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
-_linux_lucjan=testing
+_linux_lucjan=actual
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -84,7 +84,7 @@ pkgver=4.20.ll1
 #_pkgver=${_major}.${_minor}
 _pkgver=${_major}
 _srcname=linux-${_pkgver}
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
