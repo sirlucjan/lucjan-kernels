@@ -12,7 +12,7 @@
 
 * [graysky's GCC patch](https://github.com/graysky2/kernel_gcc_patch) - version for gcc 8.1
 
-* [UKSM](https://github.com/dolohow/uksm) / [UKSM](https://www.usenix.org/sites/default/files/conference/protected-files/fast18_slides_xia.pdf) - resync from dolohow’s github
+* [UKSM (sources)](https://github.com/dolohow/uksm) / [UKSM (info)](https://www.usenix.org/sites/default/files/conference/protected-files/fast18_slides_xia.pdf) - resync from dolohow’s github
 
 * [PDS-mq](https://github.com/cchalpha/PDS-mq) / [PDS-mq blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
 
