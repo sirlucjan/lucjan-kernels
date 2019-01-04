@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 4.20.0.ll6 Kernel Configuration
+# Linux/x86 4.20.0.ll8 Kernel Configuration
 #
 
 #
@@ -2472,7 +2472,6 @@ CONFIG_RAID_ATTRS=m
 CONFIG_SCSI=m
 CONFIG_SCSI_DMA=y
 CONFIG_SCSI_NETLINK=y
-CONFIG_SCSI_MQ_DEFAULT=y
 CONFIG_SCSI_PROC_FS=y
 
 #
