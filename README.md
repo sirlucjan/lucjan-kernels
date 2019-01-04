@@ -12,11 +12,15 @@
 
 * [graysky's GCC patch](https://github.com/graysky2/kernel_gcc_patch) - version for gcc 8.1
 
-* [UKSM (sources)](https://github.com/dolohow/uksm) / [UKSM (info)](https://www.usenix.org/sites/default/files/conference/protected-files/fast18_slides_xia.pdf) - resync from dolohow’s github
+* [UKSM](https://github.com/dolohow/uksm) / [UKSM](https://www.usenix.org/sites/default/files/conference/protected-files/fast18_slides_xia.pdf) - resync from dolohow’s github
 
 * [PDS-mq](https://github.com/cchalpha/PDS-mq) / [PDS-mq blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
 
+* [random fixes from zen-kernel](https://github.com/zen-kernel/zen-kernel) - specific patches authored by Jan Alexander Steffens and ZEN Kernel Team
+
 * [random fixes from pfkernel](https://github.com/pfactum/pf-kernel) - for example patches from Arch Linux or specific patches authored by Oleksandr Natalenko
+
+* [LL-patches](https://github.com/sirlucjan/kernel-patches/tree/master/4.20/ll-patches) / [LL-patches](https://gitlab.com/sirlucjan/kernel-patches/tree/master/4.20/ll-patches) - specific patches authored by Piotr Gorski
 
 ***
 # Download:
