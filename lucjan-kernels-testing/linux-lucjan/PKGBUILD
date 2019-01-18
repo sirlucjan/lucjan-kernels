@@ -71,7 +71,7 @@ _1k_HZ_ticks=y
 # ATTENTION - one of two predefined values should be selected!
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
-_linux_lucjan=testing
+_linux_lucjan=actual
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -79,7 +79,7 @@ pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=4.20
 _minor=3
-pkgver=4.20.3.ll14
+pkgver=4.20.3.ll15
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -94,7 +94,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll13'
+ _lucjanrev='ll15'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -480,7 +480,7 @@ done
 
 sha512sums=('73461cc34491e2bd9ea7638225e6d06ade8f092efa66fbe7f38c3d7143d4f78b852175bcc1149970958fbcdeacb0ae7507a8544d0bbb55d3d3826787b8f3d615'
             'SKIP'
-            '48de4578daa11cd3e634108932e1e048724e9855f3664ca1671c5295efd2958531104fc82d52cf63f335b38f5c6b9f1cceb5339cabd3cc33b09ebc153d15b74a'
+            'c2d50e0662900844d83f4be8556837fac8630491340df8e35dc83ff4a420607e8363df20c874eb2fe2667a9b08654e03f8275eb6f53b11375567145b7fe1033c'
             'SKIP'
             '7c3270153e7f51405b8820a6c9cb0cdc6e2830deb886491551c5c0a901764bfd42f6cdea1e01e8a2fe7b6c94659aa680954b5746dab2089bc48d4bd216ea1b46'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
