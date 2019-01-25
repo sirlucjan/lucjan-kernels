@@ -80,8 +80,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.20
 _srcname=linux-stable-rc
-pkgver=4.20.4.r0.g3d4332cd8258.ll19
-pkgrel=1
+pkgver=4.20.4.r127.gc3515872cb7f.ll19
+pkgrel=0.2
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -136,6 +136,7 @@ prepare() {
     ### Setting version
         msg2 "Setting version..."
         sed -e "/^EXTRAVERSION =/s/=.*/=/" -i Makefile
+        touch .scmversion
         scripts/setlocalversion --save-scmversion
         echo "-$pkgrel" > localversion.10-pkgrel
         echo "$_kernelname" > localversion.20-pkgname
