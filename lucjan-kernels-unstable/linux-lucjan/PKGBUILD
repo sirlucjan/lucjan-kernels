@@ -71,17 +71,17 @@ _1k_HZ_ticks=y
 # ATTENTION - one of two predefined values should be selected!
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
-_linux_lucjan=actual
+_linux_lucjan=testing
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=4.20
-_minor=8
+_minor=10
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=4.20.9.ll28
+pkgver=4.20.11.ll29
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -106,8 +106,8 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll26'
- _lucjanrc='rc2'
+ _lucjanrev='ll29'
+ _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 fi
@@ -488,11 +488,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('0b121c65b2e4e08e08a4578b8e89159253d630dbf8c7c63fd13b91dc895799d3a0c6d928079a65df3a4ee93196c3a67c50d9d46911af48fd92f3fba55d50dfe8'
+sha512sums=('5081e9df2208d87a88eb1c9005c743519da984e9d4b2bec306b479f1ae0f8e8c3f7b24217bd5ccfd59861a0cfc540fdbaeaec7ca39dba8fac5839bca61fb4995'
             'SKIP'
-            'c9a6baadb51dd9255c7dd6131c2620d3c2d35904216756f4a4516affae8b2a5f68e5d9fdb28b2cc793ada2a9940e6ee78534e331ef098598e696f80e007ab552'
+            '8baf0cdb95f9a064561f48e394c4a79fbebc5c5ceb92ea4f92aa4de566f85e5d095334a5213bd4dec37b419de82d91f82eb0894352443ed7c1a3fb0ab639f1ae'
             'SKIP'
-            'd60889ecbd475115e55c811c0591e2a38b2062bf313dfb4e66fc9a0a031eb5109a9f4f0c8d1daea37ffef0081be3ef2332c4af0be81c5e4eeed220a7d2ea88a6'
+            '272de87c105c9d5a8198ed4ae9b9d34654524d76fa7bab56fd68e650f35663d31b4f4a5ca7a483764098e5dfe163573717b36880c9559b81f11ed01791f447db'
             'SKIP'
             '7c3270153e7f51405b8820a6c9cb0cdc6e2830deb886491551c5c0a901764bfd42f6cdea1e01e8a2fe7b6c94659aa680954b5746dab2089bc48d4bd216ea1b46'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
