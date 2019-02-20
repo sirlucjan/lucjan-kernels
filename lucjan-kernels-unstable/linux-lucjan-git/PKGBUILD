@@ -71,7 +71,7 @@ _1k_HZ_ticks=y
 # ATTENTION - one of two predefined values should be selected!
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
-_linux_lucjan=testing
+_linux_lucjan=actual
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -80,8 +80,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=4.20
 _srcname=linux-stable-rc
-pkgver=4.20.10.r93.g3b2d3f07bcd1.ll29
-pkgrel=0
+pkgver=4.20.11.r0.g104d68b9d65d.ll29
+pkgrel=1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -93,7 +93,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll28'
+ _lucjanrev='ll29'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
