@@ -71,7 +71,7 @@ _1k_HZ_ticks=y
 # ATTENTION - one of two predefined values should be selected!
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
-_linux_lucjan=actual
+_linux_lucjan=testing
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -81,7 +81,7 @@ _major=4.20
 _minor=11
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=4.20.12.ll32
+pkgver=4.20.12.ll34
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -98,7 +98,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll32'
+ _lucjanrev='ll33'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -106,7 +106,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll29'
+ _lucjanrev='ll34'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -492,7 +492,7 @@ sha512sums=('778668cdc932cc96bd9dacc3da7be5db05b03c5619624039bcaf1306b30debf8ba2
             'SKIP'
             '103411008a1f4364f83532374cfa2a89b7abb98f08254a7abcfd18b71981d3572e541407aa5838cda8c3664143a6ceec68a481a56377203fef0978b7696b7647'
             'SKIP'
-            'f6db2661e8d1c9290f33d4811456da025940320f60bcdd6de011325cf3fcb8419a704270f0d9f9aabe866da46411c91acd34e35a83416a6f8a246e5aabfa930f'
+            '712e7a393d33073be66c3794978639017f5f76d7013d1d3e74e026e9704f8e36c299fddfebb60088af9b555012bec6e3cd911bd813bed371651afd8991b2da87'
             'SKIP'
             '7c3270153e7f51405b8820a6c9cb0cdc6e2830deb886491551c5c0a901764bfd42f6cdea1e01e8a2fe7b6c94659aa680954b5746dab2089bc48d4bd216ea1b46'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
