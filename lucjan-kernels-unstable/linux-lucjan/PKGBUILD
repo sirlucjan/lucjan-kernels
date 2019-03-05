@@ -61,9 +61,6 @@ _CFQ_disable=y
 ### Disable Kyber I/O scheduler
 _kyber_disable=y
 
-### Disable MQ scheduling
-_mq_disable=
-
 ### Running with a 1000 HZ tick rate
 _1k_HZ_ticks=y
 
@@ -224,13 +221,6 @@ prepare() {
 		msg2 "Disabling Kyber I/O scheduler..."
 		sed -i -e s'/^CONFIG_MQ_IOSCHED_KYBER=y/# CONFIG_MQ_IOSCHED_KYBER is not set/' ./.config
 	fi
-	
-    ### Disable MQ scheduling
-	if [ -n "$_mq_disable" ]; then
-		msg2 "Disabling MQ scheduling..."
-		sed -i -e s'/^CONFIG_SCSI_MQ_DEFAULT=y/# CONFIG_SCSI_MQ_DEFAULT is not set/' \
-		    -i -e s'/^CONFIG_DM_MQ_DEFAULT=y/# CONFIG_DM_MQ_DEFAULT is not set/' ./.config
-        fi
 
     ### Optionally set tickrate to 1000
 	if [ -n "$_1k_HZ_ticks" ]; then
