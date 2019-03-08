@@ -70,31 +70,37 @@ _linux_lucjan=trunk
 
 ### Do not edit below this line unless you know what you're doing
 
-pkgbase=linux-lucjan-git
-_pkgbase=linux-lucjan
-# pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
+pkgbase=linux-lucjan
+# pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.0
-_srcname=linux-stable-rc
-pkgver=5.0.r47.gbe3f50196584.ll1
+_minor=0
+_minorc=$((_minor+1))
+_rcver=rc1
+pkgver=5.0.1.ll1
+_pkgver=${_major}.${_minorc}
+#_stable=${_major}.${_minor}
+_stable=${_major}
+_stablerc=${_pkgver}-${_rcver}
+_srcname=linux-${_stable}
 pkgrel=1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
 options=('!strip')
-makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git' 'python-sphinx' 'graphviz')
+makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'python-sphinx' 'graphviz')
 
 if [ "$_linux_lucjan" = "actual" ]; then
 
-# _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
- _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
+# _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
+ _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
  _lucjanrev='ll44'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
 
-# _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
- _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
+# _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
+ _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
  _lucjanrev='ll46'
  _lucjanrc='rc1'
@@ -102,8 +108,8 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 
 elif [ "$_linux_lucjan" = "trunk" ]; then
 
-# _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
- _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
+# _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/trunk"
+ _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
  _lucjanrev='ll1'
  _lucjanrc='rc6'
@@ -111,7 +117,8 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 
 fi
 
-source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git#branch=linux-${_major}.y"
+source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar"{.xz,.sign}
+        "https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-${_stablerc}"{.xz,.sign}
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
          # the main kernel config files
         'config'
@@ -125,17 +132,20 @@ source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.gi
         'linux.preset')
 
 _kernelname=${pkgbase#linux}
-: ${_kernelname:=-lucjan-git}
+: ${_kernelname:=-lucjan}
 
 pkgver() {
-    cd $_srcname
 
-    _ver="$(git describe --long --tags | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g')"
-    printf ${_ver}.${_lucjanrev}
+        printf ${_pkgver}.${_lucjanrev}
+
 }
 
 prepare() {
     cd $_srcname
+
+    ### Applying patch from stable-review
+        msg2 "Applying patch from stable-review"
+        patch -p1 -i ../patch-${_stablerc}
 
     ### Setting version
         msg2 "Setting version..."
@@ -286,10 +296,10 @@ build() {
 }
 
 _package-kernel() {
-  pkgdesc="The ${pkgbase/linux/Linux} kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset featuring the BFQ I/0-scheduler, the PDS-mq CPU Scheduler and the UKSM. Fourth Gen Intel Core i3/i5/i7 optimized."
+  pkgdesc="The ${pkgbase/linux/Linux} kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset featuring the BFQ-SQ-MQ I/0-scheduler, the PDS-mq CPU Scheduler and the UKSM. Fourth Gen Intel Core i3/i5/i7 optimized."
   depends=('coreutils' 'linux-firmware' 'mkinitcpio')
   optdepends=('crda: to set the correct wireless channels of your country' 'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
-  groups=('linux-lucjan-git')
+  groups=('linux-lucjan')
   backup=("etc/mkinitcpio.d/$pkgbase.preset")
   install=linux.install
 
@@ -346,8 +356,8 @@ _package-kernel() {
 
 _package-headers() {
   pkgdesc="Header files and scripts for building modules for ${pkgbase/linux/Linux} kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
-  depends=('linux-lucjan-git-kernel')
-  groups=('linux-lucjan-git')
+  depends=('linux-lucjan-kernel')
+  groups=('linux-lucjan')
 
   local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
 
@@ -429,8 +439,8 @@ _package-headers() {
 
 _package-docs() {
   pkgdesc="Kernel hackers manual - HTML documentation that comes with the ${pkgbase/linux/Linux} kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
-  depends=('linux-lucjan-git-kernel')
-  groups=('linux-lucjan-git')
+  depends=('linux-lucjan-kernel')
+  groups=('linux-lucjan')
 
   local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
 
@@ -468,7 +478,10 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('SKIP'
+sha512sums=('3fbab70c7b03b1a10e9fa14d1e2e1f550faba4f5792b7699ca006951da74ab86e7d7f19c6a67849ab99343186e7d6f2752cd910d76222213b93c1eab90abf1b0'
+            'SKIP'
+            '7233a6fa6e10929c6df7658f4096102fcf7e026efdc5949c56092503fad8fc2ea5c2692465c6b12748994574b96bfac9a1739731f0d3cfcb09259ccfbe861b62'
+            'SKIP'
             '8b59dbe2a139bf1d394f76fbd58de5665182974e6291b4dbf52a401b0ae667c6e6d5b404a7d45c623368d6613f583f43fd0c7e94790b414f0dd4d0b7b6243ccc'
             'SKIP'
             'ab018af5664b313838f54dfbc5b40a67266becb1101eecfa0f9275c7478b1de4c8fe6eab2022a1471a3bda99166d530153acb6532299fc1da98a0ee957682a20'
@@ -476,7 +489,9 @@ sha512sums=('SKIP'
             '6d474f9f8ccdbbf3cfc10987b2b11a405bfbbac6d77d17c727c83f297c43678db57b5af7fecc365de01474183cbd53dd70d77601465ee34a0be0d983c42e14d1'
             '8742e2eed421e2f29850e18616f435536c12036ff793f5682a3a8c980cf5dbfc88d17fd9539c87de15d9e4663dc3190f964f18a4722940465437927b6052abbf'
             '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf')
-
+            
 validpgpkeys=(
+              'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
+              '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
              )
