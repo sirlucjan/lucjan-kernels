@@ -55,9 +55,6 @@ _use_current=
 ### Disable Deadline I/O scheduler
 _deadline_disable=y
 
-### Disable CFQ I/O scheduler
-_CFQ_disable=y
-
 ### Disable Kyber I/O scheduler
 _kyber_disable=y
 
@@ -75,10 +72,10 @@ _linux_lucjan=actual
 pkgbase=linux-lucjan-git
 _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
-_major=4.20
+_major=5.0
 _srcname=linux
-pkgver=4.20.15.r0.g0a2be5bef7ea.ll46
-pkgrel=1
+pkgver=5.0.1.r0.g283506fcd65d.ll1
+pkgrel=3
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -90,7 +87,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll46'
+ _lucjanrev='ll1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -98,8 +95,8 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll34'
- _lucjanrc='rc1'
+ _lucjanrev='ll1'
+ _lucjanrc='rc7'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 fi
@@ -196,15 +193,7 @@ prepare() {
     ### Disable Deadline I/O scheduler
 	if [ -n "$_deadline_disable" ]; then
 		msg2 "Disabling Deadline I/O scheduler..."
-		sed -i -e s'/^CONFIG_IOSCHED_DEADLINE=y/# CONFIG_IOSCHED_DEADLINE is not set/' \
-		    -i -e s'/^CONFIG_MQ_IOSCHED_DEADLINE=y/# CONFIG_MQ_IOSCHED_DEADLINE is not set/' ./.config
-	fi
-	
-    ### Disable CFQ I/O scheduler
-	if [ -n "$_CFQ_disable" ]; then
-		msg2 "Disabling CFQ I/O scheduler..."
-		sed -i -e s'/^CONFIG_IOSCHED_CFQ=y/# CONFIG_IOSCHED_CFQ is not set/' \
-		    -i -e s'/^CONFIG_CFQ_GROUP_IOSCHED=y/# CONFIG_CFQ_GROUP_IOSCHED is not set/' ./.config	
+		sed -i -e s'/^CONFIG_MQ_IOSCHED_DEADLINE=y/# CONFIG_MQ_IOSCHED_DEADLINE is not set/' ./.config
 	fi
 	
     ### Disable Kyber I/O scheduler
@@ -287,7 +276,7 @@ build() {
 }
 
 _package-kernel() {
-  pkgdesc="The ${pkgbase/linux/Linux} kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset featuring the BFQ-SQ-MQ I/0-scheduler, the PDS-mq CPU Scheduler and the UKSM. Fourth Gen Intel Core i3/i5/i7 optimized."
+  pkgdesc="The ${pkgbase/linux/Linux} kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset featuring the BFQ I/0-scheduler, the PDS-mq CPU Scheduler and the UKSM. Fourth Gen Intel Core i3/i5/i7 optimized."
   depends=('coreutils' 'linux-firmware' 'mkinitcpio')
   optdepends=('crda: to set the correct wireless channels of your country' 'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
   groups=('linux-lucjan-git')
@@ -470,9 +459,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '7b56b21b26e88ec00d5aa55e4409de5cc8fec33947389e5cd011516ddfe8c11e6da7a04a26a1f95766b37b9b4d6271e2cb2991a329e6face193bdd2a90762700'
+            '6dbc3024ffb7a1ca299265a53c06fe0ebe8bdfe304a9225d2cf1629fb3974b9ed0f7d2fd59e1c6ee953e1b9171153a2c1c08271ca71efd99c982edbf62d5c685'
             'SKIP'
-            '7c3270153e7f51405b8820a6c9cb0cdc6e2830deb886491551c5c0a901764bfd42f6cdea1e01e8a2fe7b6c94659aa680954b5746dab2089bc48d4bd216ea1b46'
+            'ab018af5664b313838f54dfbc5b40a67266becb1101eecfa0f9275c7478b1de4c8fe6eab2022a1471a3bda99166d530153acb6532299fc1da98a0ee957682a20'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '6d474f9f8ccdbbf3cfc10987b2b11a405bfbbac6d77d17c727c83f297c43678db57b5af7fecc365de01474183cbd53dd70d77601465ee34a0be0d983c42e14d1'
             '8742e2eed421e2f29850e18616f435536c12036ff793f5682a3a8c980cf5dbfc88d17fd9539c87de15d9e4663dc3190f964f18a4722940465437927b6052abbf'
