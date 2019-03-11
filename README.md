@@ -6,10 +6,6 @@
 
 * [bfq improvements](https://groups.google.com/forum/#!forum/bfq-iosched) - latest fixes authored by Paolo Valente and BFQ Team
  
-* [BFQ-SQ and BFQ-MQ Scheduler](https://github.com/Algodev-github/bfq-mq) - bfq-sq and bfq-mq from Algodev-github
-
-* [bfq-mq improvements](https://github.com/Dragon-Team) - latest fixes authored by Andy Lavr and Dragon Team
-
 * [graysky's GCC patch](https://github.com/graysky2/kernel_gcc_patch) - version for gcc 8.1
 
 * [UKSM (sources)](https://github.com/dolohow/uksm) / [UKSM (info)](https://www.usenix.org/sites/default/files/conference/protected-files/fast18_slides_xia.pdf) - resync from dolohow’s github
@@ -56,22 +52,22 @@ makepkg -srci
 
 ```
 ***
-# Enable bfq-mq
+# Enable bfq
 
-~~For now, you can use `sudo tee /sys/block/sda/queue/scheduler <<< bfq-mq` to enable "bfq-mq".~~
+~~For now, you can use `sudo tee /sys/block/sda/queue/scheduler <<< bfq` to enable "bfq".~~
 
 ~~You can also add this to file `60-schedulers.rules`:~~
 
 ```
 # Non-rotational disks
-ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="bfq-mq"
+ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="bfq"
 # Rotational disks
-ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq-mq"
+ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq"
 ```
 
 ~~and run a command `sudo udevadm control --reload && sudo udevadm trigger`~~
 
-For now, bfq-mq is enabled by default! [(since 4.20-lucjan-ll13.patch and LL-elevator-set-default-scheduler-to-bfq-mq-for-blk-mq.patch)](https://github.com/sirlucjan/kernel-patches/blob/master/4.20/ll-patches/0004-LL-elevator-set-default-scheduler-to-bfq-mq-for-blk-.patch)
+For now, bfq is enabled by default! [(since 5.0-lucjan-ll1-rc1.patch and LL-elevator-set-default-scheduler-to-bfq-for-blk-mq.patch)](https://github.com/sirlucjan/kernel-patches/blob/master/5.0/ll-patches/0003-LL-Add-.ll-version.patch)
 
 
 ***
