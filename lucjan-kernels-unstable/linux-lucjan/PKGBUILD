@@ -65,22 +65,22 @@ _1k_HZ_ticks=y
 # ATTENTION - one of two predefined values should be selected!
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
-_linux_lucjan=actual
+_linux_lucjan=testing
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.0
-_minor=5
+_minor=6
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.0.6.ll20
+pkgver=5.0.7.ll21
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -100,8 +100,8 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll20'
- _lucjanrc='rc2'
+ _lucjanrev='ll21'
+ _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 fi
@@ -467,11 +467,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('ad0028a6bb7a9b6b227a03f3d97d725f3cbd8e39017f1c6f8b63554f0a63606a7513b9558a158c7e26ae556b27d3c58669b811114259c02cc890f6ab8e255031'
+sha512sums=('6f39129fde8533bf79d8d0c59f56bd0d65c456c494efa054d92b3605535e92e4bd137965340f79a0c5f6db17832217d8b9b1b27826560b1506667a5a77529f8d'
             'SKIP'
-            'b571d1a1a50274f376864ae983979321660cc32e893083a9daa31e438c2fc1c39d344ec3900c416c13a66f4f8ee7e87f12780a24084e0ce21f917df3bbf58257'
+            '60e5de06cf013d0c1b19eb631c300298eb3d8e57edb95b1f800e3dfddf3176823a0fcc9c5d7fcd3031cf1e67258d642c7fcd7c3fcfdde24e5c4f4cf2a991bd4f'
             'SKIP'
-            'c3ff3cc7eb58770646db61252e4c62962ac7e24cf75b06d82f7d22688bd3aa92b27fb317b850802f3183fae5df669cc3147553827f27ea592485c2235618cbf7'
+            'ffc2dc5bdace46c3553d8a8c8363a21b2201dabe0126afb131886e33c571de30521c7fc39c98bb04a1228eb3a90709273abd226a76364c48113eff1bc942c527'
             'SKIP'
             '4708dec64dff6e99c31ab8165bfedc1f460f0a248b0d98ee63f8b7c260cac4f7064fcac45529b05fb7f528ecc29d9c092dede55d8f54589708b5c2b51de444aa'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
