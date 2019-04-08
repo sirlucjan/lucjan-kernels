@@ -75,7 +75,7 @@ _pkgbase=linux-lucjan
 _major=5.0
 _srcname=linux
 pkgver=5.0.7.r0.g8b298d3a0bd5.ll21
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -459,7 +459,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'ce21221f54ab0503975cf20e02d5f11058225c07432a339dd0007a711a40196f53910b7a82b0da842e80ccb9ed2513652abcdef5076b65428771be9f5ea5a98e'
+            'dc2ba273457811cc648d35d5b79b8dd25ac2e69613ef374559df84db1236c2841563ca91956138b4baa1bfc30db294840560c4522e659e5caa20ce0be479d0c4'
             'SKIP'
             '4708dec64dff6e99c31ab8165bfedc1f460f0a248b0d98ee63f8b7c260cac4f7064fcac45529b05fb7f528ecc29d9c092dede55d8f54589708b5c2b51de444aa'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
