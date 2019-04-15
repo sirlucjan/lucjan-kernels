@@ -72,15 +72,15 @@ _linux_lucjan=actual
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.0
-_minor=6
+_minor=7
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.0.7.ll25
+pkgver=5.0.8.ll25
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.2
+pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -455,13 +455,13 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('6f39129fde8533bf79d8d0c59f56bd0d65c456c494efa054d92b3605535e92e4bd137965340f79a0c5f6db17832217d8b9b1b27826560b1506667a5a77529f8d'
+sha512sums=('6dadda639104c3d28467f301da48144db1fad0391f2adba7995b99827ed010c98e71cce1e23466b4c18f112cb66502162ebb8c7f3d2fe751900134dad492e08d'
             'SKIP'
-            '60e5de06cf013d0c1b19eb631c300298eb3d8e57edb95b1f800e3dfddf3176823a0fcc9c5d7fcd3031cf1e67258d642c7fcd7c3fcfdde24e5c4f4cf2a991bd4f'
+            'ae80861aae5fade9798c317a619919afc7699f6e012f477c6be54962473e65ce0bd1c68c59205fc3353ef372e20ba9b3feb8ed5154a78cd6b50b43e8a51cd0db'
             'SKIP'
             'a1c3a8a73772aeda54285c3aca2b0f65c0d5cd1fef96cc0bb770e74cd6eba5395dcf1af2ce99db7b30c515cd099af5631a717dec29603980faf06585d294df56'
             'SKIP'
-            '34b7c4c1ab3e2bc1b11b1a87afafd9d45cdeaf41fd7f1b77bf0e090ff51267c6229e41f8190a44aa0746aea67f6b909b64dac859841c8ebbd87d7b3c595e13c2'
+            'cbc99d323182cd727d1eca320b7923f792676a4b7c448bed0b4ee4a82a5684755235ed1d684146e65003d6e4457245fd562e15018a90872e569a91eaa910ef3f'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '6d474f9f8ccdbbf3cfc10987b2b11a405bfbbac6d77d17c727c83f297c43678db57b5af7fecc365de01474183cbd53dd70d77601465ee34a0be0d983c42e14d1'
             '8742e2eed421e2f29850e18616f435536c12036ff793f5682a3a8c980cf5dbfc88d17fd9539c87de15d9e4663dc3190f964f18a4722940465437927b6052abbf'
