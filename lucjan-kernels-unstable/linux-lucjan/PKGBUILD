@@ -65,17 +65,17 @@ _1k_HZ_ticks=y
 # ATTENTION - one of two predefined values should be selected!
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
-_linux_lucjan=actual
+_linux_lucjan=testing
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.0
-_minor=8
+_minor=9
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.0.9.ll29
+pkgver=5.0.10.ll30
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -100,7 +100,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll28'
+ _lucjanrev='ll30'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -455,11 +455,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('8b72ea3d250272b08e069ccf1e9a6ad23a3d4fe9bade86e8ba022a447de2341508c9b28fdebba2b6eeaaed88ad6633bc2e48621c49bc467e24d21958588b0210'
+sha512sums=('915397cb24c12c87c96caf264bccf08176632090ce8fe77c899659af274f16f58e160fa607b9d863a42951c75581f1ede594dd73f0486194ccd3e39dbda2e28e'
             'SKIP'
-            '0b308649fece28936dcdf76078e30ed1dd7a14a9991af18864ee64b82b8304d92db9a0151916b036e4bff7077aab811a926db52bd54c57b6d4692258a105ce7a'
+            'c92a542e96c5e0e27b503910b53c03f49b172d0d756084e79e800e6127f3ba977427f27f6def6e97fd57b2d6580b0d2709c875d22ebe56c31366d48c9027a1cd'
             'SKIP'
-            '80a19b504c663faaf4607bd939cc2b5442e24ef9cbfd9ed4c4de73aee1c3e4c656f3d977ccd8545b4395935f21bb1729e6aacb50f858ccabfc275f592268d1bd'
+            'db4adf046482a8b435bbaf2e2ad14a30223b52c802d3e8d90eb406c492cdce93e5590cd2107caad9c7c78ef5fe660acf2e18aea1b7d5a9d5cc7e743b0785753b'
             'SKIP'
             'cbc99d323182cd727d1eca320b7923f792676a4b7c448bed0b4ee4a82a5684755235ed1d684146e65003d6e4457245fd562e15018a90872e569a91eaa910ef3f'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
