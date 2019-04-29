@@ -65,7 +65,7 @@ _1k_HZ_ticks=y
 # ATTENTION - one of two predefined values should be selected!
 # 'actual' - stable releases (recommended)
 # 'testing' - rc releases (active only temporarily)
-_linux_lucjan=testing
+_linux_lucjan=actual
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -75,12 +75,12 @@ _major=5.0
 _minor=9
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.0.10.ll30
+pkgver=5.0.10.ll31
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -92,7 +92,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll29'
+ _lucjanrev='ll31'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -459,7 +459,7 @@ sha512sums=('915397cb24c12c87c96caf264bccf08176632090ce8fe77c899659af274f16f58e1
             'SKIP'
             'c92a542e96c5e0e27b503910b53c03f49b172d0d756084e79e800e6127f3ba977427f27f6def6e97fd57b2d6580b0d2709c875d22ebe56c31366d48c9027a1cd'
             'SKIP'
-            'db4adf046482a8b435bbaf2e2ad14a30223b52c802d3e8d90eb406c492cdce93e5590cd2107caad9c7c78ef5fe660acf2e18aea1b7d5a9d5cc7e743b0785753b'
+            '72a85e8367bb147633686c2d04be17cd8717180365654bcec76e1b9b9061ad03efd2df33273ea1bc0b126fc7f9e33bc7160e91b299e2d01d32fb9a09d4ebd689'
             'SKIP'
             '94784ace0fd1e250c47c1dddebe7a815320a7edccc4732985149e683d206453680194840500f24bd3b81ad841cd5c76c86fbc4d1be1ca45bc270d808fef5581c'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
