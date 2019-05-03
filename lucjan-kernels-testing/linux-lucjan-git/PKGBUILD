@@ -90,16 +90,16 @@ if [ "$_linux_lucjan" = "actual" ]; then
  _lucjanname='lucjan'
  _lucjanrev='ll32'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
- 
+
 elif [ "$_linux_lucjan" = "pending" ]; then
 
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
  _lucjanrev='ll32'
- _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch" 
-
-elif [ "$_linux_lucjan" = "testing" ]; then
+ _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
+ 
+ elif [ "$_linux_lucjan" = "testing" ]; then
 
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
