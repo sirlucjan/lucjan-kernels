@@ -62,10 +62,11 @@ _kyber_disable=y
 _1k_HZ_ticks=y
 
 ### Download linux-lucjan patchset
-# ATTENTION - one of two predefined values should be selected!
+# ATTENTION - one of three predefined values should be selected!
 # 'actual' - stable releases (recommended)
+# 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
-_linux_lucjan=actual
+_linux_lucjan=pending
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -80,7 +81,7 @@ _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0
+pkgrel=0.1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -95,7 +96,15 @@ if [ "$_linux_lucjan" = "actual" ]; then
  _lucjanrev='ll32'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
-elif [ "$_linux_lucjan" = "testing" ]; then
+elif [ "$_linux_lucjan" = "pending" ]; then
+
+# _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
+ _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
+ _lucjanname='lucjan'
+ _lucjanrev='ll32'
+ _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
+ 
+ elif [ "$_linux_lucjan" = "testing" ]; then
 
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
@@ -459,7 +468,7 @@ sha512sums=('d8bb0721f941798bd98205a452e93b970695af7594c6d55635159dbee9a35760765
             'SKIP'
             '9957f3710263703082d2848a41c89a4d5241d750b2d8d18d7d24842181901d10b5df2291d974e0f0109e018fa467b83875cf20ac3f25b6a74aa35e0e1b8edd7f'
             'SKIP'
-            '594a361aac28aa1a243c83df078cfb719737f4bfcf850b8276651758104d6fc3734d8ab42625f75523bb0a3c12435761796257009bead1eac78457178397705a'
+            '183aff6eff68f01f37a3992d74cbb4e2e8f39e7ab75b9a25611d48691693079e47e023d4b74fedb89738b57cafccb7a80a519ef803c364d57f6e3c5b3700f7e7'
             'SKIP'
             '94784ace0fd1e250c47c1dddebe7a815320a7edccc4732985149e683d206453680194840500f24bd3b81ad841cd5c76c86fbc4d1be1ca45bc270d808fef5581c'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
