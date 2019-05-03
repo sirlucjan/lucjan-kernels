@@ -62,8 +62,9 @@ _kyber_disable=y
 _1k_HZ_ticks=y
 
 ### Download linux-lucjan patchset
-# ATTENTION - one of two predefined values should be selected!
+# ATTENTION - one of three predefined values should be selected!
 # 'actual' - stable releases (recommended)
+# 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 _linux_lucjan=actual
 
@@ -91,7 +92,15 @@ if [ "$_linux_lucjan" = "actual" ]; then
  _lucjanrev='ll32'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
-elif [ "$_linux_lucjan" = "testing" ]; then
+elif [ "$_linux_lucjan" = "pending" ]; then
+
+# _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
+ _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
+ _lucjanname='lucjan'
+ _lucjanrev='ll32'
+ _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
+ 
+ elif [ "$_linux_lucjan" = "testing" ]; then
 
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
