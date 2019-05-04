@@ -99,8 +99,8 @@ elif [ "$_linux_lucjan" = "pending" ]; then
  _lucjanname='lucjan'
  _lucjanrev='ll32'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
- 
- elif [ "$_linux_lucjan" = "testing" ]; then
+
+elif [ "$_linux_lucjan" = "testing" ]; then
 
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
