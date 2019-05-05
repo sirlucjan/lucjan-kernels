@@ -66,7 +66,7 @@ _1k_HZ_ticks=y
 # 'actual' - stable releases (recommended)
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
-_linux_lucjan=actual
+_linux_lucjan=testing
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -76,7 +76,7 @@ _major=5.0
 _minor=12
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.0.13.ll32
+pkgver=5.0.13.ll34
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -93,7 +93,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll32'
+ _lucjanrev='ll33'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -109,8 +109,8 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll32'
- _lucjanrc='rc2'
+ _lucjanrev='ll34'
+ _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 fi
@@ -468,7 +468,7 @@ sha512sums=('cf3b2607d9f4fac1e5724c71fdb7cbbcd86711ddad45a045f805ac9250c759ec558
             'SKIP'
             '3b3b169d53d0775b887e9384eccf7166a6fade48d69fb126c664beede6d289a1559bc0e7ea927de67f7a0b55d41b111ffa30d30908f0cb1de2c98e184c5d75ca'
             'SKIP'
-            '183aff6eff68f01f37a3992d74cbb4e2e8f39e7ab75b9a25611d48691693079e47e023d4b74fedb89738b57cafccb7a80a519ef803c364d57f6e3c5b3700f7e7'
+            'abf74fef5c342b973fe1f276f0b8a8c41af687b155ee37d21feed89c8e3d8fa7df41073dc8fbd423fc649e6e43e5514386e69d440d4e37c73a78baa304c22ccb'
             'SKIP'
             '94784ace0fd1e250c47c1dddebe7a815320a7edccc4732985149e683d206453680194840500f24bd3b81ad841cd5c76c86fbc4d1be1ca45bc270d808fef5581c'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
