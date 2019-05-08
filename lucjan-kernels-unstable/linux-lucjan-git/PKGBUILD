@@ -66,7 +66,7 @@ _1k_HZ_ticks=y
 # 'actual' - stable releases (recommended)
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
-_linux_lucjan=pending
+_linux_lucjan=actual
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -75,8 +75,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=5.0
 _srcname=linux-stable-rc
-pkgver=5.0.13.r84.gbfca9d5e5795.ll34
-pkgrel=0.2
+pkgver=5.0.13.r123.g5b4a1a11a18c.ll34
+pkgrel=0.3
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
