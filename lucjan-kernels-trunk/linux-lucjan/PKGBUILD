@@ -74,15 +74,15 @@ _linux_lucjan=trunk
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.1
-_minor=4
+_minor=5
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.1.5.ll1
+pkgver=5.1.6.ll1
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.4
+pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -120,7 +120,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
  _lucjanrev='ll1'
- _lucjanrc='rc14'
+ _lucjanrc='rc15'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 fi
@@ -474,11 +474,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('b423c1d40ccbe8d8f96e4e44395f4263da68cd77396f66d97197686d504d622202d7bd3b2cbdb3f43e721b80a5c4338694573378a26c633b31305cf7784e2814'
+sha512sums=('7f96bafb72156a9cd8646c648057ca3e9779e9dad7306a0c316df3f306c74fad99a8fbf36ce0c3b190bb05ab4dc8d0758db941a435923c41c42427a00ad8ef42'
             'SKIP'
-            'e86110c4d9fa819ffbdf2f28af0bd916776fd89ece60745310e0733b22f85cedcfdb9e1e905fe961c9f5c6a9d98eec80cd18c10b9d0269f6edb93a7ee227a700'
+            '0543e762b9e0ae940a6a759459aae64262277cd5797c698b55a6c5c331ca9ae10e9357ed9a1a29b35c437817c87a0d3fce39eee4d264e226e9d9908d89cdddec'
             'SKIP'
-            '9465176a6158e957c1c0e78f109f9e28a748325a6adb465c6607b270fe71b74d63eb82ec7b50326a2bb74aad8d53ecf0612d308da447fd8ce558e6d4b3813315'
+            '384e0b0d69ffe43a3f4b98c9c9182a407cb9def8f2cfe7b8f66d6424b4cbeaf4ec9e6a91067acbfaa443690d3cc99b69f7d20381e214e028b4ac9df290c17f7d'
             'SKIP'
             '82da2ade7567f04016073fbec03297aa4836ea979605222984c06bc28c33d5990cdd06bf7e1e89faf5eb3bd9ee8a5a5841530eb8faec5d89a4f8a6c3d8d72dd0'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
