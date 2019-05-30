@@ -62,21 +62,22 @@ _kyber_disable=y
 _1k_HZ_ticks=y
 
 ### Download linux-lucjan patchset
-# ATTENTION - one of three predefined values should be selected!
+# ATTENTION - one of four predefined values should be selected!
 # 'actual' - stable releases (recommended)
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
-_linux_lucjan=actual
+# 'trunk' - pre-rc releases (active only temporarily)
+_linux_lucjan=trunk
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan-git
 _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
-_major=5.0
+_major=5.1
 _srcname=linux
-pkgver=5.0.19.r0.g3f7c1cab1a61.ll37
-pkgrel=1
+pkgver=5.1.5.r0.g835365932f0d.ll1
+pkgrel=2
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -106,6 +107,15 @@ elif [ "$_linux_lucjan" = "testing" ]; then
  _lucjanname='lucjan'
  _lucjanrev='ll37'
  _lucjanrc='rc1'
+ _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
+ 
+elif [ "$_linux_lucjan" = "trunk" ]; then
+
+# _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
+ _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
+ _lucjanname='lucjan'
+ _lucjanrev='ll1'
+ _lucjanrc='rc14'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 fi
@@ -456,9 +466,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '7a46887b4fc554ef42186ce3d1d16e99156130a078edb5651a669ec50de7de79f02e9d0bec4932e3339b5644d8292746aaffcbd4f185e6267b9282551e0ff6f8'
+            '9465176a6158e957c1c0e78f109f9e28a748325a6adb465c6607b270fe71b74d63eb82ec7b50326a2bb74aad8d53ecf0612d308da447fd8ce558e6d4b3813315'
             'SKIP'
-            '94784ace0fd1e250c47c1dddebe7a815320a7edccc4732985149e683d206453680194840500f24bd3b81ad841cd5c76c86fbc4d1be1ca45bc270d808fef5581c'
+            '82da2ade7567f04016073fbec03297aa4836ea979605222984c06bc28c33d5990cdd06bf7e1e89faf5eb3bd9ee8a5a5841530eb8faec5d89a4f8a6c3d8d72dd0'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '6d474f9f8ccdbbf3cfc10987b2b11a405bfbbac6d77d17c727c83f297c43678db57b5af7fecc365de01474183cbd53dd70d77601465ee34a0be0d983c42e14d1'
             '8742e2eed421e2f29850e18616f435536c12036ff793f5682a3a8c980cf5dbfc88d17fd9539c87de15d9e4663dc3190f964f18a4722940465437927b6052abbf'

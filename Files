@@ -1,22 +1,5 @@
 .
 ├── Files
-├── lucjan-kernels-experimental
-│   ├── linux-lucjan
-│   │   ├── 60-linux-01-depmod.hook
-│   │   ├── 90-linux-02-initcpio.hook
-│   │   ├── 99-linux-03-remove.hook
-│   │   ├── config
-│   │   ├── linux.install
-│   │   ├── linux.preset
-│   │   └── PKGBUILD
-│   └── linux-lucjan-git
-│       ├── 60-linux-01-depmod.hook
-│       ├── 90-linux-02-initcpio.hook
-│       ├── 99-linux-03-remove.hook
-│       ├── config
-│       ├── linux.install
-│       ├── linux.preset
-│       └── PKGBUILD
 ├── lucjan-kernels-testing
 │   ├── linux-lucjan
 │   │   ├── 60-linux-01-depmod.hook
@@ -70,4 +53,4 @@
 │       └── PKGBUILD
 └── README.md
 
-12 directories, 58 files
+9 directories, 44 files
