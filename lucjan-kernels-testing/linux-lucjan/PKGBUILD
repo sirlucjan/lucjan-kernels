@@ -74,8 +74,8 @@ _linux_lucjan=actual
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.1
-_minor=6
-pkgver=5.1.6.ll2
+_minor=7
+pkgver=5.1.7.ll2
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -465,7 +465,7 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('284abb67cf809381d3b381b1ad29a2213b0d79e2f6a84efc654b1fff7c453a3e95ddcb3e26131ee19feaedaa100c205faeaa4fc1704075fdf0ae1a9d066abd68'
+sha512sums=('97d35a89c5d0032b062424737046185dbb8fbffcea35f2fb20809f56210388746d4883cd1ef2b05546b871e50919dcee5f3e67a01a0ccf0b8e59fdcfe1fed849'
             'SKIP'
             '7b908540c4975acf7ad0b40d23317c49b414486de206fa396596ca36fcc66d536c883a596dfa3b7e8809347308d90b8ca4016f74db397dea400a612a019b844e'
             'SKIP'
