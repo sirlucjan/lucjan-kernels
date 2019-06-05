@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.1.0-ll3 Kernel Configuration
+# Linux/x86 5.1.7-ll3 Kernel Configuration
 #
 
 #
@@ -1700,11 +1700,6 @@ CONFIG_BQL=y
 CONFIG_BPF_JIT=y
 CONFIG_BPF_STREAM_PARSER=y
 CONFIG_NET_FLOW_LIMIT=y
-
-#
-# RAID 6
-#
-# CONFIG_RAID6_FORCE_ALGO is not set
 
 #
 # Network testing
@@ -9614,6 +9609,7 @@ CONFIG_BINARY_PRINTF=y
 # Library routines
 #
 CONFIG_RAID6_PQ=m
+# CONFIG_RAID6_FORCE_ALGO is not set
 CONFIG_RAID6_PQ_BENCHMARK=y
 CONFIG_BITREVERSE=y
 CONFIG_RATIONAL=y
