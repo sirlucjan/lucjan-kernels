@@ -74,8 +74,8 @@ _linux_lucjan=actual
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.1
-_minor=7
-pkgver=5.1.7.ll4
+_minor=8
+pkgver=5.1.8.ll5
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -90,7 +90,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll4'
+ _lucjanrev='ll5'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -106,8 +106,8 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll2'
- _lucjanrc='rc2'
+ _lucjanrev='ll5'
+ _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
  
 elif [ "$_linux_lucjan" = "trunk" ]; then
@@ -465,9 +465,9 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('97d35a89c5d0032b062424737046185dbb8fbffcea35f2fb20809f56210388746d4883cd1ef2b05546b871e50919dcee5f3e67a01a0ccf0b8e59fdcfe1fed849'
+sha512sums=('a12c9cabcaaf34cbebcfc16c8938ea5cc4ca3f5a41eacc5ab5f7a0754b444d1183a97b3dae8a85943c28e21b7169ad05d2b12eeb7bf841907c407a8bb053003c'
             'SKIP'
-            'edf209765d53ce6003728533ef9bd1c3605f32f570c7d63335144207d71ac8da1e946ebd4e5f3a7c929786d08f4937cb0af8dc589a73bb251b03c337ed3ef6dc'
+            '580d44165a8362860e1c7062830bec1c81e14815cbff5ca20808eaf2cf6ab91d6bd8ce6fce0c37f10453cba3f7931dac7253febb33c1efeb40e44289a322973a'
             'SKIP'
             '856823b39a1cb5069c70b02350a6c9ff54ba0dfc7b44641b8241895590628e71e28299b69a9917c1bcbaa78d1f473b24cd12bddd9e66f43cb4680507a11e92d6'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
