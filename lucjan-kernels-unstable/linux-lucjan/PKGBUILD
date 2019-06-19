@@ -77,12 +77,12 @@ _major=5.1
 _minor=11
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.1.12.ll11
+pkgver=5.1.12.ll12
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -94,7 +94,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll11'
+ _lucjanrev='ll12'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -478,7 +478,7 @@ sha512sums=('57344826673b59b44540369d1ddc4e8358324ea031821c99b5829f2a97d01f1d065
             'SKIP'
             '6243175859e404c58adc1580475f123566126ecd02ec82a7bdf7883d7013093050525428a31e0474ab814af874236751ff73d4a63cdc4b86b8e64d0e7d5703d4'
             'SKIP'
-            'aa4effe11d253406ed67c3ffda7c27c3233c364a74f03c2ab668db51458e56d6475b8918b2f1d67017520c7fb793870bcd13aab486bc78e113a39c3220d4903d'
+            'b0b49a95c0e047a1efa8f30d13f1cc7fd8176b0eef905c32b586b52751b804059b2921c4c9de2fa974b7975c21cfe6297111deda80cca1e3eda702811250e5f0'
             'SKIP'
             '86d20f5c3651a63c10f782143d98ce60ebc91ec62c179454740a2f1570d3bfaef2051a948e05069a66c3b4b9a8e33842f1f3cd6a77be828543181c695b83f4e4'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
