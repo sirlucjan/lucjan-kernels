@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.1.14-ll17 Kernel Configuration
+# Linux/x86 5.1.15-ll26 Kernel Configuration
 #
 
 #
@@ -9193,6 +9193,7 @@ CONFIG_PSTORE_RAM=y
 CONFIG_UFS_FS=m
 # CONFIG_UFS_FS_WRITE is not set
 # CONFIG_UFS_DEBUG is not set
+# CONFIG_AUFS_FS is not set
 CONFIG_NETWORK_FILESYSTEMS=y
 CONFIG_NFS_FS=m
 CONFIG_NFS_V2=m
