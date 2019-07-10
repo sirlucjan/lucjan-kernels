@@ -77,7 +77,7 @@ _pkgbase=linux-lucjan
 _major=5.2
 _srcname=linux
 pkgver=5.2.r0.g0ecfebd2b524.ll1
-pkgrel=1
+pkgrel=2
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -116,7 +116,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
  _lucjanrev='ll1'
- _lucjanrc='rc2'
+ _lucjanrc='rc3'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 fi
@@ -480,7 +480,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '42cb17329fd167f9bbda4081af6bce8db3528664db553f1a7f51c6e3bb3bb9892a1f94765da98d54c660aa2010cfb50678677ce9edadb2384d73adb98a666550'
+            '6a2308c63e3a927c733c14a1d572f7b4b7336037c32e187cf67fc18e751883d8551a8203fbaee70c1f9dbef104249a9d7f00be683e158aac829162f4c1e0e38d'
             'SKIP'
             '11f0d911ff0c646279ea86d7ac7b9b86e18fcea11baff387f79fbb1f44e2a32da2c9e6d23ae5604205c5ed173d6a76e7de87e8fc02a10acdc7f5f6bfc60a9799'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
