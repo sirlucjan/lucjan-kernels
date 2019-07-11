@@ -67,27 +67,30 @@ _1k_HZ_ticks=y
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='trunk'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
-_major=5.1
-_minor=16
-_minorc=$((_minor+1))
+_major=5.2
+#_minor=0
+#_minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.1.17.ll31
-_pkgver=${_major}.${_minorc}
-_stable=${_major}.${_minor}
-_stablerc=${_pkgver}-${_rcver}
+pkgver=5.2.ll1
+_pkgver=${_major}
+_stable=${_major}
+#_pkgver=${_major}.${_minorc}
+#_stable=${_major}.${_minor}
+#_stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0
+pkgrel=4
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
 options=('!strip')
-makedepends=('kmod' 'inetutils' 'bc' 'libelf')
+makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'python-sphinx' 'python-sphinx_rtd_theme'
+             'graphviz' 'imagemagick')
 
 if [ "$_linux_lucjan" = "actual" ]; then
 
@@ -120,13 +123,13 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
  _lucjanrev='ll1'
- _lucjanrc='rc15'
+ _lucjanrc='rc4'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 fi
 
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar"{.xz,.sign}
-        "https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-${_stablerc}"{.xz,.sign}
+        #"https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-${_stablerc}"{.xz,.sign}
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
          # the main kernel config files
         'config'
@@ -152,8 +155,8 @@ prepare() {
     cd $_srcname
 
     ### Applying patch from stable-review
-        msg2 "Applying patch from stable-review"
-        patch -p1 -i ../patch-${_stablerc}
+        #msg2 "Applying patch from stable-review"
+        #patch -p1 -i ../patch-${_stablerc}
 
     ### Setting version
         msg2 "Setting version..."
@@ -300,7 +303,7 @@ prepare() {
 build() {
   cd $_srcname
 
-  make bzImage modules
+  make bzImage modules htmldocs
 }
 
 _package-kernel() {
@@ -458,6 +461,18 @@ _package-docs() {
   mkdir -p "$builddir"
   cp -t "$builddir" -a Documentation
 
+  msg2 "Removing doctrees..."
+  rm -r "$builddir/Documentation/output/.doctrees"
+
+  msg2 "Moving HTML docs..."
+  local src dst
+  while read -rd '' src; do
+    dst="$builddir/Documentation/${src#$builddir/Documentation/output/}"
+    mkdir -p "${dst%/*}"
+    mv "$src" "$dst"
+    rmdir -p --ignore-fail-on-non-empty "${src%/*}"
+  done < <(find "$builddir/Documentation/output" -type f -print0)
+  
   msg2 "Adding symlink..."
   mkdir -p "$pkgdir/usr/share/doc"
   ln -sr "$builddir/Documentation" "$pkgdir/usr/share/doc/$pkgbase"
@@ -474,13 +489,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('4d3292aa215e7a6a3cd65bb57fc19d029d9ba36fd8d91002c515f03dbad0563a46f91e6cb914e06cc8a5809014bfb4659cab03194d8c5e5e66055fd4c9ed821a'
+sha512sums=('5a28f8a34c4e0470617f5638b7112e6252109b78f23b1eed484a228530970c7ef5c130d6e5a09cf25ea2f6a0329602dcc1ec66ce893182e15b27d99bd228789c'
             'SKIP'
-            '7aac6f0807d2d982725c605cf52ead37d9ee88b4d3526f5293da1329d38034c736232d743b5d5badf6a1bd427ebba1224cbced4a787343ff49b8e91ecc88097e'
+            'a1eb7e7fd376287740296cbd87a3edeea3fefe84e354abd4ddbd1479581a3201f3b333426ba06accd8d1c354fdf9e4338f71688cb607231aa2080ebc62a6915e'
             'SKIP'
-            'e1c51870fb7a1053e182c0376c425a1f817b416a02765dbdb76c2da3a891229c67da7d65a9ec756595dcdd42775d705d93646eba5a10615c9127be79c6c69831'
-            'SKIP'
-            'badc783c952e50a8470ba3e380c82ae5546f10e8fe6fa9e5c6ed3110c0c9bc323daf0309b34a6da5be3404b30956d6628d061b58f7db332d9cf1ed5356217c6e'
+            'f3f8dacbdf61a42a2db9644ff61ea56cc090036590056453a50f83e08c4704238d458d86c70024a070573aeb2410ef8a7975d010acc41b5894d9a113c97d5240'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '6d474f9f8ccdbbf3cfc10987b2b11a405bfbbac6d77d17c727c83f297c43678db57b5af7fecc365de01474183cbd53dd70d77601465ee34a0be0d983c42e14d1'
             '8742e2eed421e2f29850e18616f435536c12036ff793f5682a3a8c980cf5dbfc88d17fd9539c87de15d9e4663dc3190f964f18a4722940465437927b6052abbf'
