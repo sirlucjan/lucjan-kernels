@@ -67,24 +67,23 @@ _1k_HZ_ticks=y
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.2
-#_minor=0
-#_minorc=$((_minor+1))
+_minor=0
+_minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.2.ll1
-_pkgver=${_major}
+pkgver=5.2.1.ll2
+_pkgver=${_major}.${_minorc}
 _stable=${_major}
-#_pkgver=${_major}.${_minorc}
 #_stable=${_major}.${_minor}
-#_stablerc=${_pkgver}-${_rcver}
+_stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=5
+pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -113,7 +112,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll1'
+ _lucjanrev='ll2'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
  
@@ -129,7 +128,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 fi
 
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar"{.xz,.sign}
-        #"https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-${_stablerc}"{.xz,.sign}
+        "https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-${_stablerc}"{.xz,.sign}
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
          # the main kernel config files
         'config'
@@ -155,8 +154,8 @@ prepare() {
     cd $_srcname
 
     ### Applying patch from stable-review
-        #msg2 "Applying patch from stable-review"
-        #patch -p1 -i ../patch-${_stablerc}
+        msg2 "Applying patch from stable-review"
+        patch -p1 -i ../patch-${_stablerc}
 
     ### Setting version
         msg2 "Setting version..."
@@ -491,7 +490,9 @@ done
 
 sha512sums=('5a28f8a34c4e0470617f5638b7112e6252109b78f23b1eed484a228530970c7ef5c130d6e5a09cf25ea2f6a0329602dcc1ec66ce893182e15b27d99bd228789c'
             'SKIP'
-            'a1eb7e7fd376287740296cbd87a3edeea3fefe84e354abd4ddbd1479581a3201f3b333426ba06accd8d1c354fdf9e4338f71688cb607231aa2080ebc62a6915e'
+            '275f32f358a239453624d818a375bc97d89e28231fda18c4593d2c15f517dbb7432f728fe133d88ffc9da90a393fc8cff517aa92b7fc8dcf832ebc41f3618517'
+            'SKIP'
+            '4e3719fb00095c03ca019131c506418629f1938686c4017b5f67973cb03a9490b637769857bd316815dc70ecfd151fa03b7961e345d1ce3b95a1a0cadc88f4b7'
             'SKIP'
             'f3f8dacbdf61a42a2db9644ff61ea56cc090036590056453a50f83e08c4704238d458d86c70024a070573aeb2410ef8a7975d010acc41b5894d9a113c97d5240'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
