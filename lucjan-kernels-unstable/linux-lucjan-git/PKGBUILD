@@ -76,8 +76,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=5.2
 _srcname=linux-stable-rc
-pkgver=5.2.r53.ga0dc007dee17.ll2
-pkgrel=0
+pkgver=5.2.r62.g61731e8fe278.ll2
+pkgrel=0.1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -479,7 +479,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '4e3719fb00095c03ca019131c506418629f1938686c4017b5f67973cb03a9490b637769857bd316815dc70ecfd151fa03b7961e345d1ce3b95a1a0cadc88f4b7'
+            'b2375922545f275ffee282e65dbdde977994bd1c2be4144cccc246dfdeda2bbfb44b8d2d507616964f737c8759620734cb8d26662da8788112723740e76259e3'
             'SKIP'
             'f3f8dacbdf61a42a2db9644ff61ea56cc090036590056453a50f83e08c4704238d458d86c70024a070573aeb2410ef8a7975d010acc41b5894d9a113c97d5240'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
