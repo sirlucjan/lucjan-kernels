@@ -74,12 +74,11 @@ _linux_lucjan='actual'
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.2
-#_minor=0
-pkgver=5.2.ll1
-_pkgver=${_major}
-#_pkgver=${_major}.${_minor}
+_minor=1
+pkgver=5.2.1.ll2
+_pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
-pkgrel=5
+pkgrel=1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -92,7 +91,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll1'
+ _lucjanrev='ll2'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -108,7 +107,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll1'
+ _lucjanrev='ll2'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
  
@@ -479,9 +478,9 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('5a28f8a34c4e0470617f5638b7112e6252109b78f23b1eed484a228530970c7ef5c130d6e5a09cf25ea2f6a0329602dcc1ec66ce893182e15b27d99bd228789c'
+sha512sums=('26bedcb07951b263d5b2ea003eb3e3433f2798e3ff90f9ab4e9d22cb011167dfc5af66f8361e43e53b980db1412ee1cddd4689a1b85c923a31c06961c6e4978f'
             'SKIP'
-            'a1eb7e7fd376287740296cbd87a3edeea3fefe84e354abd4ddbd1479581a3201f3b333426ba06accd8d1c354fdf9e4338f71688cb607231aa2080ebc62a6915e'
+            'b2375922545f275ffee282e65dbdde977994bd1c2be4144cccc246dfdeda2bbfb44b8d2d507616964f737c8759620734cb8d26662da8788112723740e76259e3'
             'SKIP'
             'f3f8dacbdf61a42a2db9644ff61ea56cc090036590056453a50f83e08c4704238d458d86c70024a070573aeb2410ef8a7975d010acc41b5894d9a113c97d5240'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
