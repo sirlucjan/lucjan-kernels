@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.2.1.ll4 Kernel Configuration
+# Linux/x86 5.2.1.ll6 Kernel Configuration
 #
 
 #
@@ -946,7 +946,6 @@ CONFIG_MQ_IOSCHED_DEADLINE=y
 CONFIG_MQ_IOSCHED_KYBER=y
 CONFIG_IOSCHED_BFQ=y
 CONFIG_BFQ_GROUP_IOSCHED=y
-# CONFIG_BFQ_CGROUP_DEBUG is not set
 # end of IO Schedulers
 
 CONFIG_PREEMPT_NOTIFIERS=y
