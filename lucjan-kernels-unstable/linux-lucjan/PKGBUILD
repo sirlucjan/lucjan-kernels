@@ -67,20 +67,19 @@ _1k_HZ_ticks=y
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.2
-_minor=0
+_minor=1
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.2.1.ll8
+pkgver=5.2.2.ll9
 _pkgver=${_major}.${_minorc}
-_stable=${_major}
-#_stable=${_major}.${_minor}
+_stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
 pkgrel=0
@@ -112,7 +111,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll2'
+ _lucjanrev='ll9'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
  
@@ -270,7 +269,7 @@ prepare() {
         fi
 
     ### Rewrite configuration
-        msg2 "Rewrite configuration"
+        msg2 "Rewrite configuration..."
         make prepare
         yes "" | make config >/dev/null
 
@@ -488,11 +487,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('5a28f8a34c4e0470617f5638b7112e6252109b78f23b1eed484a228530970c7ef5c130d6e5a09cf25ea2f6a0329602dcc1ec66ce893182e15b27d99bd228789c'
+sha512sums=('26bedcb07951b263d5b2ea003eb3e3433f2798e3ff90f9ab4e9d22cb011167dfc5af66f8361e43e53b980db1412ee1cddd4689a1b85c923a31c06961c6e4978f'
             'SKIP'
-            '275f32f358a239453624d818a375bc97d89e28231fda18c4593d2c15f517dbb7432f728fe133d88ffc9da90a393fc8cff517aa92b7fc8dcf832ebc41f3618517'
+            '16470b115aaf9f404727661747c5125bfd8d35a5ac48ac8618c808e10eaa9b10e330d9efd98ae047bf53788663152879b63f37085aa1d66e7c8819311a293a34'
             'SKIP'
-            '1f81111b59cf8e410ec42698d28ac02bcef10b123c4c42e18f4398662a9a334d71999cd13db7900a262efc1b31e46c4207d1b72b8a8f67c91fe72bb3998acede'
+            'f964ce459934a9b09497a40019d039723fdc517e613b5f8a861f10176b166e76d2df7da35f42eb6108905dae6aed28cafa677713ff35d177498100d787c47bf5'
             'SKIP'
             'a72f798ed231bbea7601e156c09686e76b4316965b335ed7f56300e734fabcd63cabb65a271893bf443f7b01eb901b7f785e0e3261fbdea17dc7dba02fb6a7fe'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
