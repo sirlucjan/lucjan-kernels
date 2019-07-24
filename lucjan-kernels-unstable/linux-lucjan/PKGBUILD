@@ -67,22 +67,22 @@ _1k_HZ_ticks=y
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.2
-_minor=1
+_minor=2
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.2.2.ll9
+pkgver=5.2.3.ll10
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.2
+pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -111,7 +111,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll9'
+ _lucjanrev='ll10'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
  
@@ -487,11 +487,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('26bedcb07951b263d5b2ea003eb3e3433f2798e3ff90f9ab4e9d22cb011167dfc5af66f8361e43e53b980db1412ee1cddd4689a1b85c923a31c06961c6e4978f'
+sha512sums=('71e96393157e700990fb5a114107033120041e951a51434e769f4b985bf6d67005ba5f96e8a4125b77f090758320c4797ad955f139b848de05b8e0c3adc7346f'
             'SKIP'
-            '16470b115aaf9f404727661747c5125bfd8d35a5ac48ac8618c808e10eaa9b10e330d9efd98ae047bf53788663152879b63f37085aa1d66e7c8819311a293a34'
+            '5d06188093c46d5bb63a38f777df21d535c7b832fe07a310d4071dfe1bda7083073b84051bb1bf944a8e717df060631cfbe395a2202c10fdc558e7c41db84c77'
             'SKIP'
-            'f964ce459934a9b09497a40019d039723fdc517e613b5f8a861f10176b166e76d2df7da35f42eb6108905dae6aed28cafa677713ff35d177498100d787c47bf5'
+            '06951684ed48119bd5634d210509db1f7bb66c093db464f8dffad008980fb2cb38a98c17750b080ac258e84b2307a989d7030bfc14805d10929f600c7c522e11'
             'SKIP'
             '6ba1579140bf979c2043b0057f6559a8e15d09f0d2295f0b8ea91a8ff6ff2b03838e58a97e034e0de17813f90903cf2b187561b783a52c30c5c7a651b0c2e1f8'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
