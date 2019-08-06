@@ -67,7 +67,7 @@ _1k_HZ_ticks=y
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='pending'
+_linux_lucjan='actual'
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -77,7 +77,7 @@ _pkgbase=linux-lucjan
 _major=5.2
 _srcname=linux-stable-rc
 pkgver=5.2.6.r132.g22499a291939.ll15
-pkgrel=0
+pkgrel=0.1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
