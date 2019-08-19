@@ -76,7 +76,7 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=5.2
 _srcname=linux
-pkgver=5.2.9.r0.gaad39e30fb9e.ll24
+pkgver=5.2.9.r0.gaad39e30fb9e.ll25
 pkgrel=1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -90,7 +90,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll24'
+ _lucjanrev='ll25'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -106,7 +106,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll23'
+ _lucjanrev='ll26'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
  
@@ -479,7 +479,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '4c6cb85a88746534fe96adf754a684024fb9f34651824dd9bac7d8f4e45d64d645b0c4a32987853aa696a632d3bfaa49dfa28d2abd890039a53aa8e75dc1105b'
+            '1ca7c478135a510160546ac65fce7c238ce485528fabec802aa28fadb5b32d01867d4f20b6a92706a51473d279feda7b8c8ec1fdcf1c7380cf06b641a5e9f402'
             'SKIP'
             '5cc195f0532a2ad8bd56140bc7b33f249b4e97b36738a8ea77f60d558eaf1c96e70da26313274df1c58d0ad838926c5a23904daefe684b6e74aaf7621f29d3e8'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
