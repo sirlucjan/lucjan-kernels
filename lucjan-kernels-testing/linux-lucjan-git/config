@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.2.5.ll9 Kernel Configuration
+# Linux/x86 5.2.9.ll26 Kernel Configuration
 #
 
 #
@@ -9433,6 +9433,7 @@ CONFIG_OVERLAY_FS_REDIRECT_DIR=y
 CONFIG_OVERLAY_FS_INDEX=y
 CONFIG_OVERLAY_FS_XINO_AUTO=y
 CONFIG_OVERLAY_FS_METACOPY=y
+# CONFIG_SHIFT_FS is not set
 
 #
 # Caches
