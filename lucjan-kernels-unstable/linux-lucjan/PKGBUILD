@@ -127,8 +127,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 fi
 
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar"{.xz,.sign}
-        #"https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/5.2/stable-review/patch-${_stablerc}"
-        "https://gitlab.com/sirlucjan/kernel-patches/raw/master/5.2/stable-review/patch-${_stablerc}"
+        "patch-${_stablerc}::https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-${_major}.y&id2=v${_major}.${_minor}"
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
          # the main kernel config files
         'config'
@@ -490,7 +489,7 @@ done
 
 sha512sums=('2e3fad96cce66e1ef0a8f82c221970e6535d2d20b5ed8dcc3f368cd51576ff57bd31f5b5b09f7b19acee4f73c7ef5f1a0aa8ecb5176c431c2d4cb5c770432f4b'
             'SKIP'
-            'f91bf4e455ae5354613302877a40bf92c2a40364b09214564d84f6f948aa70749e77ca1dfdf12249c279115771274daacf0fc0ac954a21e09a3ca55a9d3f9f2a'
+            '0de623cd2b7025433377879d05a0a7f13788d23934a366f33b72aab90dfb59ee3dfffb4ed0e472bff803c6e2afa59909e9b8595d1892e03b04851e18081c528a'
             '3faf240e990dab7862b6b9915e31bf20e4b9dffff06277d04fec0aee497eb7ec4859a3ddd14ef083cd72b071534a7da5bfd3b57bd40d6d59bf6bdbdfcc65ac2a'
             'SKIP'
             '867ca2e8350a19004886896836400a99f58ab2bb84ed64adff92ee0d7873af2a29713ed23c019bb196f192ce052671f53adb9b13a85fffb649b3b2e2db420a43'
