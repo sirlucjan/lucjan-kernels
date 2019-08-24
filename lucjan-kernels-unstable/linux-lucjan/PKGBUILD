@@ -127,7 +127,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 fi
 
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar"{.xz,.sign}
-        "patch-${_stablerc}::https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-${_major}.y&id2=v${_major}.${_minor}"
+        "patch-${_stablerc}.diff::https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-${_major}.y&id2=v${_major}.${_minor}"
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
          # the main kernel config files
         'config'
@@ -154,7 +154,7 @@ prepare() {
 
     ### Applying patch from stable-review
         msg2 "Applying patch from stable-review"
-        patch -p1 -i ../patch-${_stablerc}
+        patch -p1 -i ../patch-${_stablerc}.diff
 
     ### Setting version
         msg2 "Setting version..."
