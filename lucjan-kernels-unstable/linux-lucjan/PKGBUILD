@@ -151,7 +151,7 @@ prepare() {
 
     ### Applying patch from stable-review
         msg2 "Applying patch from stable-review"
-        patch -p1 -i ../patch-${_stablerc}.diff
+        patch -p1 -i ../patch-${_stablerc}
 
     ### Setting version
         msg2 "Setting version..."
