@@ -113,6 +113,13 @@ elif [ "$_bfq_rev" = "unstable" ]; then
 
 fi
 
+### linux-lucjan
+# If you do not use the kernel development version (stable-rc)
+# only the actual branch will be used. Pending and testing branches 
+# are used only in development versions (stable-rc) 
+# and the trunk branch is used only in the first releases 
+# of the new kernel line.
+
 if [ "$_linux_lucjan" = "actual" ]; then
 
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
