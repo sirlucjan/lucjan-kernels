@@ -59,7 +59,7 @@ _kyber_disable=y
 _1k_HZ_ticks=y
 
 ### Download bfq-reverts patchset
-# ATTENTION - one of four predefined values should be selected!
+# ATTENTION - one of two predefined values should be selected!
 # 'stable' - stable releases (recommended)
 # 'unstable' - rc releases (active only temporarily)
 _bfq_rev='unstable'
