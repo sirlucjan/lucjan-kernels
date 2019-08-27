@@ -58,6 +58,12 @@ _kyber_disable=y
 ### Running with a 1000 HZ tick rate
 _1k_HZ_ticks=y
 
+### Download bfq-reverts patchset
+# ATTENTION - one of two predefined values should be selected!
+# 'stable' - stable releases (recommended)
+# 'unstable' - rc releases (active only temporarily)
+_bfq_rev='stable'
+
 ### Download linux-lucjan patchset
 # ATTENTION - one of four predefined values should be selected!
 # 'actual' - stable releases (recommended)
@@ -82,6 +88,38 @@ options=('!strip')
 makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git' 'python-sphinx' 'python-sphinx_rtd_theme'
              'graphviz' 'imagemagick') 
 
+### BFQ reverts
+# Some patches for BFQ conflict with patches for BFQ-dev. 
+# To use linux-lucjan smoothly do not change 
+# the settings below. Otherwise kernel 
+# will not compile.
+             
+if [ "$_bfq_rev" = "stable" ]; then
+
+# _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/stable"
+ _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/stable"
+ _bfqrevname='bfq-reverts'
+ _bfqrevver='ver1'
+ _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}.patch"
+
+elif [ "$_bfq_rev" = "unstable" ]; then
+
+# _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/unstable"
+ _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/unstable"
+ _bfqrevname='bfq-reverts'
+ _bfqrevver='ver1'
+ _bfqrevrc='rc1'
+ _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}-${_bfqrevrc}.patch"
+
+fi
+
+### linux-lucjan
+# If you do not use the kernel development version (stable-rc)
+# only the actual branch will be used. Pending and testing branches 
+# are used only in development versions (stable-rc) 
+# and the trunk branch is used only in the first releases 
+# of the new kernel line.
+             
 if [ "$_linux_lucjan" = "actual" ]; then
 
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
@@ -119,6 +157,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 fi
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git#branch=linux-${_major}.y"
+        #"${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
          # the main kernel config files
         'config'
