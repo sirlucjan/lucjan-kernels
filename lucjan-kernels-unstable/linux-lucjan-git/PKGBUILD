@@ -61,7 +61,7 @@ _1k_HZ_ticks=y
 ### Download bfq-reverts patchset
 # ATTENTION - one of two predefined values should be selected!
 # 'stable' - stable releases (recommended)
-# 'unstable' - resync stable releases (active only temporarily)
+# 'unstable' - rc releases (active only temporarily)
 _bfq_rev='unstable'
 
 ### Download linux-lucjan patchset
