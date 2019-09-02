@@ -77,8 +77,8 @@ _linux_lucjan='actual'
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.2
-_minor=10
-pkgver=5.2.10.ll31
+_minor=11
+pkgver=5.2.11.ll32
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -126,7 +126,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll31'
+ _lucjanrev='ll32'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -158,7 +158,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 fi
 
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar"{.xz,.sign}
-        #"${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
+        "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
          # the main kernel config files
         'config'
@@ -513,9 +513,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('abd20b6bf41572c51df0d609db205e2d5f541aa486c2d37c15d4dd43e8bf36a06eb5514bdd5a1c114fd6f6c00a3bf9d1ac40a722b8e01146e2779f806b3a4ee7'
+sha512sums=('6116f7b71711a01e741bf1f9b3e20e9d46b3b2d6c1dfadad79742d42a2142e13dfec0c569b21d0cbcf030369b75bb39c27c05f08f3e9594d391d1df4ddbdbbb6'
             'SKIP'
-            'ea590c626cbdc3bc198741febaa0140c495ea73974964990e897505a9da61bc651c1e1a76bdf2760f79a8076de5694d01345aa398d69c19c6db33ba8ef6615ba'
+            'b472715df2a0ebb507d0642d195464f4623e440577aa72c05651e4b4ce679c4b3f1ac2656dc3c9d0faf253f12285d709839c9f27bfb0f92c73a84cfeafac7964'
+            'SKIP'
+            '2dbeff3b7171b7108ebc046c4d2de29c7ccc7371260189cc134d29d5fd496ed04f56ad0265fd46841eb4bdcc5992f37a3703a1a522aa77c885e531f9b076a1aa'
             'SKIP'
             'dd585d3db37c5f26d919c2410a550129f1d70a63f00bab68e37a6005af9e5edc3874aaf794db91f00e670e2fd0c6cd0cf74006b76ff4bf3fdced45f3bf0b0b71'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
