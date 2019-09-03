@@ -79,8 +79,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=5.2
 _srcname=linux-stable-rc
-pkgver=5.2.10.r163.g9f631715ffe6.ll33
-pkgrel=0
+pkgver=5.2.11.r0.gc3915fe1bf12.ll33
+pkgrel=1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -157,7 +157,9 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 fi
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git#branch=linux-${_major}.y"
+         # bfq-reverts
         "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
+         # linux-lucjan
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
          # the main kernel config files
         'config'
