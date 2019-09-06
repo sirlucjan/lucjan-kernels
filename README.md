@@ -10,7 +10,7 @@
 
 * [bfq-lucjan-dev](https://github.com/sirlucjan/bfq-mq-lucjan/commits/dev-bfq-on-5.2-lucjan) - latest fixes authored by Paolo Valente and BFQ Team and forked by Piotr Gorski
  
-* [graysky's GCC patch](https://github.com/graysky2/kernel_gcc_patch) - version for gcc 8.1
+* [graysky's GCC patch](https://github.com/graysky2/kernel_gcc_patch) - version for gcc 9.1
 
 * [BMQ](https://gitlab.com/alfredchen/bmq) / [BMQ blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
 
