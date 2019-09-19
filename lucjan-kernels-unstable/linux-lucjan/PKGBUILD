@@ -77,17 +77,16 @@ _linux_lucjan='actual'
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.3
-#_minor=0
-#_minorc=$((_minor+1))
-#_rcver=rc1
-pkgver=5.3.ll1
-_pkgver=${_major}
+_minor=0
+_minorc=$((_minor+1))
+_rcver=rc1
+pkgver=5.3.1.ll1
+_pkgver=${_major}.${_minorc}
 _stable=${_major}
-#_pkgver=${_major}.${_minorc}
 #_stable=${_major}.${_minor}
-#_stablerc=${_pkgver}-${_rcver}
+_stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=4
+pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -164,7 +163,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 fi
 
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar"{.xz,.sign}
-         # "https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-${_stablerc}"{.xz,.sign}
+        "https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-${_stablerc}"{.xz,.sign}
          # bfq-reverts
          # "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
          # linux-lucjan
@@ -193,8 +192,8 @@ prepare() {
     cd $_srcname
 
     ### Applying patch from stable-review
-        # msg2 "Applying patch from stable-review"
-        # patch -p1 -i ../patch-${_stablerc}
+        msg2 "Applying patch from stable-review"
+        patch -p1 -i ../patch-${_stablerc}
 
     ### Setting version
         msg2 "Setting version..."
@@ -527,6 +526,8 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('6b5edef47c319a3fa7f6c20a3e0903a5acd89ec75e32dc5f99adcb60c9fe118ea312722d9c3d27e2e3900afa2455afb86e83a8b6bb131009bc79ddbe6fb0595d'
+            'SKIP'
+            '55ca538ee159a1d5161c9ba1af3ee01bb29d2f8dca28b9ad42f2a020cce0d26b06a75e5b86090d324d8f04ee53a7963c74d5e0d7ed93a2b72b3af00b31063443'
             'SKIP'
             '688155ec86f02ff0d3bb787227971dcd6411581f6c8e07460bc90acb230f8787866df230fc23322b68e3859403bfb80222e340640baffe18403831e968811b64'
             'SKIP'
