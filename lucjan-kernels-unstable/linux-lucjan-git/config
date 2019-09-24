@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.3.0.ll1 Kernel Configuration
+# Linux/x86 5.3.1.ll9 Kernel Configuration
 #
 
 #
@@ -1675,6 +1675,7 @@ CONFIG_NET_SCH_DEFAULT=y
 # CONFIG_DEFAULT_CODEL is not set
 CONFIG_DEFAULT_FQ_CODEL=y
 # CONFIG_DEFAULT_SFQ is not set
+# CONFIG_DEFAULT_CAKE is not set
 # CONFIG_DEFAULT_PFIFO_FAST is not set
 CONFIG_DEFAULT_NET_SCH="fq_codel"
 
