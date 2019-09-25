@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.3.1.ll9 Kernel Configuration
+# Linux/x86 5.3.1.ll10 Kernel Configuration
 #
 
 #
@@ -8457,6 +8457,7 @@ CONFIG_KPC2000_CORE=m
 CONFIG_KPC2000_SPI=m
 CONFIG_KPC2000_I2C=m
 CONFIG_KPC2000_DMA=m
+# CONFIG_EXFAT_FS is not set
 
 #
 # ISDN CAPI drivers
