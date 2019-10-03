@@ -70,22 +70,23 @@ _bfq_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.3
-_minor=1
-_minorc=$((_minor+1))
+_minor=2
+#_minorc=$((_minor+1))
+_minorc=$((_minor+2))
 _rcver=rc1
-pkgver=5.3.2.ll13
+pkgver=5.3.4.ll14
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -191,6 +192,8 @@ prepare() {
     cd $_srcname
 
     ### Applying patch from stable-review
+        msg2 "Fix SUBLEVEL"
+        sed -i -e "s|SUBLEVEL = 2|SUBLEVEL = 3|g" Makefile
         msg2 "Applying patch from stable-review"
         patch -p1 -i ../patch-${_stablerc}
 
@@ -524,11 +527,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('7aa3dbcd17fe373f8bd0b463c78db668ebbf4830e3c4227726161accec4e11ece946c753d4c01ad2a5f76d8d14878d71bc37ad261a0879d27046f19e7b4d0536'
+sha512sums=('73e4c5e788be9a60e01a428bfcbb8e93b47da3f49cbeea4ab22cd9d1bfc56ca58302e6a76059fc8a4d7a13b966f7185de0e340b0d592e656359938e8172f2534'
             'SKIP'
-            '4c768b1d81c24db4b05eeb45ba6e220b8d1fc04882c1547a9cc4cb0ff7a3782c8dff00de210c87545a6b1b2fc44e8e813b279003d2376f19bff5db7242dd3af1'
+            'ca31973ab65a03cfa3778424382772ceab5aac9504be5eb2b0af53420800a11374611434c58a31d53ee1e7113803083cc721375734adeb5ed4cfa2387ffcf828'
             'SKIP'
-            'ea72080ada4a85ba78ae57d765a33c4fa2e50bcbe0c6e47c6e203040d91abb9c9d411d91afd4d7b67e2df8d72547e395e29f53ace7e42ad8d82ad13006d71634'
+            'a5f33ea35b8b2c90538029cd456291f2ffa694d1f65bb23a8aa4481a55b827a10d2159cb1acd5726a0817b524f61d225a430d1dffd91c1785edfc882ce688c8c'
             'SKIP'
             '25aab13fad05860c7ecac12f51934ce7919e47b966ada57b0d945fdcda9e0c6cb2cb84c4add86a123ba21ac3eead273581940d8b6e4018b704fd763cc875abe9'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
