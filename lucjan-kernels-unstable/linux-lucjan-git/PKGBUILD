@@ -79,8 +79,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=5.3
 _srcname=linux-stable-rc
-pkgver=5.3.2.r346.gc9adc631ac5f.ll14
-pkgrel=0.2
+pkgver=5.3.2.r346.gc9adc631ac5f.ll15
+pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -125,7 +125,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll13'
+ _lucjanrev='ll14'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -141,7 +141,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll14'
+ _lucjanrev='ll15'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
  
@@ -516,9 +516,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'a5f33ea35b8b2c90538029cd456291f2ffa694d1f65bb23a8aa4481a55b827a10d2159cb1acd5726a0817b524f61d225a430d1dffd91c1785edfc882ce688c8c'
+            '7c35daf49b76de8f7f78a8e38a3c0c9f0d38a5b12f9376e604bea7a9a6407d854dcdc464316a30c82479ec2b9e840b699f066bfd792f6bca7c2835204e25772a'
             'SKIP'
-            '25aab13fad05860c7ecac12f51934ce7919e47b966ada57b0d945fdcda9e0c6cb2cb84c4add86a123ba21ac3eead273581940d8b6e4018b704fd763cc875abe9'
+            '3dd7e1c8a55c476ce8ae1edb25749e05a735430888b5524985623c0b10ba1b105a0f0ff91bf75c3924756d401c0e9e66f9424fdbe1fe542678749597dd94e5e1'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
             '6d474f9f8ccdbbf3cfc10987b2b11a405bfbbac6d77d17c727c83f297c43678db57b5af7fecc365de01474183cbd53dd70d77601465ee34a0be0d983c42e14d1'
             '8742e2eed421e2f29850e18616f435536c12036ff793f5682a3a8c980cf5dbfc88d17fd9539c87de15d9e4663dc3190f964f18a4722940465437927b6052abbf'
