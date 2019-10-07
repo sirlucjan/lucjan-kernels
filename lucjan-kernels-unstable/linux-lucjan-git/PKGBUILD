@@ -80,7 +80,7 @@ _pkgbase=linux-lucjan
 _major=5.3
 _srcname=linux-stable-rc
 pkgver=5.3.4.r167.ga2703e78c28a.ll16
-pkgrel=0.3
+pkgrel=0.4
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -416,9 +416,6 @@ _package-headers() {
 
   # add xfs and shmem for aufs building
   mkdir -p "$builddir"/{fs/xfs,mm}
-
-  # ???
-  mkdir "$builddir/.tmp_versions"
 
   msg2 "Installing headers..."
   cp -t "$builddir" -a include
