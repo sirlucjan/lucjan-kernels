@@ -77,8 +77,8 @@ _linux_lucjan='actual'
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.3
-_minor=4
-pkgver=5.3.4.ll16
+_minor=5
+pkgver=5.3.5.ll16
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -159,7 +159,7 @@ fi
 
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar"{.xz,.sign}
          # bfq-reverts
-         # "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
+        "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
          # linux-lucjan
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
          # the main kernel config files
@@ -520,9 +520,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('74952f133ad968bd440f0b2b49bc2ea3cb0a72fde18fc3ee6fc93c81da6ef036f972288508ba2487f604dc980b4d0d79588b0249bb06a7b4e10dc0f754eac799'
+sha512sums=('de3fb30feb7536593096ac0bf86cbd536d3dc49e2a5eb7d5215896c5975918d17dac288604b0f36b1e17fef23eae85353ff7e2e3760d7cad4585a33c966751a9'
             'SKIP'
-            'ae6d9d166531b35490eea2cbd5ca6d8320506867e15136203ec3f06b4637975b411934d0b04115057a05f4327f1728e3febf7cabae203761cd180acb1662bbf3'
+            '75e2cab8be3f058bd9f759ac874ce24efed4707dba76fdd56b32fa09638339e84018bea498d31f90e87831a32e2d462e8b1a5ef0507a65062789bb821f80e9cb'
+            'SKIP'
+            'c43a4e1cb36bbd71202f5e8bc9934292690f63aef1bdc625ff5ab1b9f76fe5da38ec0ca0d647f897289db16eb43f0cc29930d16a00c8e5f4b1bba119eb923fc7'
             'SKIP'
             '3dd7e1c8a55c476ce8ae1edb25749e05a735430888b5524985623c0b10ba1b105a0f0ff91bf75c3924756d401c0e9e66f9424fdbe1fe542678749597dd94e5e1'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
