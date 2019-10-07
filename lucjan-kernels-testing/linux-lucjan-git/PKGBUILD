@@ -79,7 +79,7 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=5.3
 _srcname=linux
-pkgver=5.3.4.r0.ged56826f1779.ll16
+pkgver=5.3.5.r0.gdc073f193b70.ll16
 pkgrel=1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -158,7 +158,7 @@ fi
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git#branch=linux-${_major}.y"
          # bfq-reverts
-         #"${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
+        "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
          # linux-lucjan
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
          # the main kernel config files
@@ -521,7 +521,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'ae6d9d166531b35490eea2cbd5ca6d8320506867e15136203ec3f06b4637975b411934d0b04115057a05f4327f1728e3febf7cabae203761cd180acb1662bbf3'
+            '75e2cab8be3f058bd9f759ac874ce24efed4707dba76fdd56b32fa09638339e84018bea498d31f90e87831a32e2d462e8b1a5ef0507a65062789bb821f80e9cb'
+            'SKIP'
+            'c43a4e1cb36bbd71202f5e8bc9934292690f63aef1bdc625ff5ab1b9f76fe5da38ec0ca0d647f897289db16eb43f0cc29930d16a00c8e5f4b1bba119eb923fc7'
             'SKIP'
             '3dd7e1c8a55c476ce8ae1edb25749e05a735430888b5524985623c0b10ba1b105a0f0ff91bf75c3924756d401c0e9e66f9424fdbe1fe542678749597dd94e5e1'
             '7ad5be75ee422dda3b80edd2eb614d8a9181e2c8228cd68b3881e2fb95953bf2dea6cbe7900ce1013c9de89b2802574b7b24869fc5d7a95d3cc3112c4d27063a'
