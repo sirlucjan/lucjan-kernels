@@ -375,12 +375,12 @@ _package-kernel() {
   # fill in mkinitcpio preset and pacman hooks
   sed "$subst" ../linux.preset | install -Dm644 /dev/stdin \
     "$pkgdir/etc/mkinitcpio.d/$pkgbase.preset"
-  sed "$subst" ../60-linux.hook | install -Dm644 /dev/stdin \
-    "$pkgdir/usr/share/libalpm/hooks/60-${pkgbase}.hook"
-  sed "$subst" ../90-linux.hook | install -Dm644 /dev/stdin \
-    "$pkgdir/usr/share/libalpm/hooks/90-${pkgbase}.hook"
-  sed "$subst" ../99-linux.hook | install -Dm644 /dev/stdin \
-    "$pkgdir/usr/share/libalpm/hooks/99-${pkgbase}.hook"
+  sed "$subst" ../60-linux-01-depmod.hook | install -Dm644 /dev/stdin \
+    "$pkgdir/usr/share/libalpm/hooks/60-${pkgbase}-01-depmod.hook"
+  sed "$subst" ../90-linux-02-initcpio.hook | install -Dm644 /dev/stdin \
+    "$pkgdir/usr/share/libalpm/hooks/90-${pkgbase}-02-initcpio.hook"
+  sed "$subst" ../99-linux-03-remove.hook | install -Dm644 /dev/stdin \
+    "$pkgdir/usr/share/libalpm/hooks/99-${pkgbase}-03-remove.hook"
 
   msg2 "Fixing permissions..."
   chmod -Rc u=rwX,go=rX "$pkgdir"
