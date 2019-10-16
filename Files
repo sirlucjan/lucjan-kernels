@@ -27,7 +27,6 @@
 │   │   ├── linux.preset
 │   │   └── PKGBUILD
 │   └── linux-lucjan-git
-│       ├── 0001-Revert-io_uring-only-flush-workqueues-on-fileset-rem.patch
 │       ├── 60-linux-01-depmod.hook
 │       ├── 90-linux-02-initcpio.hook
 │       ├── 99-linux-03-remove.hook
@@ -37,4 +36,4 @@
 │       └── PKGBUILD
 └── README.md
 
-6 directories, 31 files
+6 directories, 30 files
