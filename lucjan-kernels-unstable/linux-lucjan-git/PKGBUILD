@@ -79,7 +79,7 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=5.3
 _srcname=linux-stable-rc
-pkgver=5.3.5.r149.ge863f125e178.ll20
+pkgver=5.3.6.r111.gd8fee438c028.ll20
 pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -157,6 +157,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 fi
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git#branch=linux-${_major}.y"
+        '0001-Revert-io_uring-only-flush-workqueues-on-fileset-rem.patch' 
          # bfq-reverts
         "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
          # linux-lucjan
@@ -507,6 +508,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
+            '02efa2ccc7a2bd34265d7e16f4daeeec851a1dcc801f72818d47e1fd93185323409ed76e5a73c774fcb43e8755f32fc6d51ea1815557e39a8afc5c0c799f577f'
             '75e2cab8be3f058bd9f759ac874ce24efed4707dba76fdd56b32fa09638339e84018bea498d31f90e87831a32e2d462e8b1a5ef0507a65062789bb821f80e9cb'
             'SKIP'
             'a816e99c5bb0ae77bb0570449daf2a15564fa5ff6d1cfd192a93f97edb60b571ad9aacdb441a04628d40c96b6e15ceac62c64c280419a7e6de0ca38a2c15dad9'
