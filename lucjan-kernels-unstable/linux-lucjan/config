@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.3.3.ll14 Kernel Configuration
+# Linux/x86 5.3.6.ll22 Kernel Configuration
 #
 
 #
@@ -3488,7 +3488,6 @@ CONFIG_WLAN_VENDOR_ADMTEK=y
 CONFIG_ADM8211=m
 CONFIG_ATH_COMMON=m
 CONFIG_WLAN_VENDOR_ATH=y
-CONFIG_ATH_USER_REGD=y
 # CONFIG_ATH_DEBUG is not set
 CONFIG_ATH5K=m
 CONFIG_ATH5K_DEBUG=y
