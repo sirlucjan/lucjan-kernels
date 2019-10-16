@@ -119,7 +119,7 @@ fi
 # only the actual branch will be used. Pending and testing branches 
 # are used only in development versions (stable-rc) 
 # and the trunk branch is used only in the first releases 
-# of the new kernel line.
+# of the new kernel line or contains only temporary solutions.
              
 if [ "$_linux_lucjan" = "actual" ]; then
 
