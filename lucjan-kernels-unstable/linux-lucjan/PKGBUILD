@@ -70,22 +70,22 @@ _bfq_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='pending'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.3
-_minor=6
+_minor=7
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.3.7.ll28
+pkgver=5.3.8.ll28
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -138,7 +138,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll16'
+ _lucjanrev='ll28'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -519,13 +519,13 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('2e83065e29f2e7f3a7c8ae68e4a5497804126c9edd7e76278c3565773789f52982e16987be4f14535bc6950a20a9a3ff74523b4d8accc1db1b898a8d2c0755be'
+sha512sums=('ed4a7eb2345106e94f93e0bf1731f1d6588f172d01d3a39a38415ec777202a3f31838ab2f63b560b9349c2623a74c78d989c3907d3e29ac705f3cfb6527ebed0'
             'SKIP'
-            '30a3724c57098b0dfe0f29158be0faa74f24ef51ae024cd4eb7c1e89eb29406352ae0b357f6e1b50ee7d6114ff3ed033c1c125a03ee1453ee380ff97fda4a419'
+            'eb8b1b1d34af2124e0b22b5c3de54c2e1213cbf639eff2778139851966d9c86b7a546cec0bc7b1f538d768e0641513b91d2253c6cf7a55679c16b3ddd64a9d65'
             'SKIP'
             '75e2cab8be3f058bd9f759ac874ce24efed4707dba76fdd56b32fa09638339e84018bea498d31f90e87831a32e2d462e8b1a5ef0507a65062789bb821f80e9cb'
             'SKIP'
-            '79879aa6d5edd4fd6885fc83aa406e965a9dbcb1a5c2ac857780bad78cc65676f8cade3e283c435b38118d71ed8443a40e0b1b08c8888509bf8cf3de563f78a2'
+            'e82311feb773eceddd62dd0d9a4af8ce53cebb0cfa26b19de37266dd51a29bf2f1d6d9ac749cea580ad839f16df8fe3e814ed53f4f59fbfc59c2c6368f59f1b5'
             'SKIP'
             '833514fc5d668a85048ef4573ab5cbe4aaa9062aaadcdc2412565ca4a60ebd1cd069a8626ae8fd8ebe6ca2121de7ddc70387fd596c46732567d1a54d8f17459e'
             '6b57a66b870b2f525e2dedd8f224b89474fd4ec6ea18484b0a67a1a2b9a4fc95d025cac181504406ea42a35d6c1b184c0d4e38c92815022935fc55746c69c7c1'
