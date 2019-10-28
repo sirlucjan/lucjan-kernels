@@ -195,7 +195,7 @@ prepare() {
     cd $_srcname
 
     ### Applying patch from stable-review
-        msg2 "Applying patch from stable-review"
+        msg2 "Applying patch from stable-review..."
         patch -p1 -i ../patch-${_stablerc}
 
     ### Setting version
