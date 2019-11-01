@@ -93,7 +93,7 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'git' 'python-sphinx' 'python-sphi
 # To use linux-lucjan smoothly do not change 
 # the settings below. Otherwise kernel 
 # will not compile.
-             
+
 if [ "$_bfq_rev" = "stable" ]; then
 
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/stable"
