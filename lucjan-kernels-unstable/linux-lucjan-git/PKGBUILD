@@ -144,7 +144,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
  _lucjanrev='ll16'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
- 
+
 elif [ "$_linux_lucjan" = "trunk" ]; then
 
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
