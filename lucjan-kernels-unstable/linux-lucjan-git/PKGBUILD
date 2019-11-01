@@ -80,7 +80,7 @@ _pkgbase=linux-lucjan
 _major=5.3
 _srcname=linux-stable-rc
 pkgver=5.3.8.r0.gdb0655e705be.ll29
-pkgrel=2
+pkgrel=3
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -162,18 +162,7 @@ source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.gi
          # linux-lucjan
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
          # the main kernel config files
-        'config'
-         # pacman hook for depmod
-        '60-linux-01-depmod.hook'
-         # pacman hook for initramfs regeneration
-        '90-linux-02-initcpio.hook'
-         # pacman hook for remove initramfs
-        '99-linux-03-remove.hook'
-         # standard config files for mkinitcpio ramdisk
-        'linux.preset')
-
-_kernelname=${pkgbase#linux}
-: ${_kernelname:=-lucjan-git}
+        'config')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
@@ -195,7 +184,7 @@ prepare() {
         touch .scmversion
         scripts/setlocalversion --save-scmversion
         echo "-$pkgrel" > localversion.10-pkgrel
-        echo "$_kernelname" > localversion.20-pkgname
+        echo "${pkgbase#linux}" > localversion.20-pkgname
 
     ### Patching sources
         local src
@@ -343,8 +332,6 @@ _package-kernel() {
               'linux-firmware: firmware images needed for some devices'
               'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
   groups=('linux-lucjan-git')
-  backup=("etc/mkinitcpio.d/$pkgbase.preset")
-  install=linux.install
 
   cd $_srcname
   local kernver="$(<version)"
@@ -354,7 +341,6 @@ _package-kernel() {
   # systemd expects to find the kernel here to allow hibernation
   # https://github.com/systemd/systemd/commit/edda44605f06a41fb86b7ab8128dcf99161d2344
   install -Dm644 "$(make -s image_name)" "$modulesdir/vmlinuz"
-  install -Dm644 "$modulesdir/vmlinuz" "$pkgdir/boot/vmlinuz-$pkgbase"
 
   # Used by mkinitcpio to name the kernel
   echo "$pkgbase" | install -Dm644 /dev/stdin "$modulesdir/pkgbase"
@@ -364,27 +350,6 @@ _package-kernel() {
 
   # remove build and source links
   rm "$modulesdir"/{source,build}
-
-  msg2 "Installing hooks..."
-  # sed expression for following substitutions
-  local subst="
-    s|%PKGBASE%|$pkgbase|g
-    s|%KERNVER%|$kernver|g
-  "
-
-  # hack to allow specifying an initially nonexisting install file
-  sed "$subst" "$startdir/$install" > "$startdir/$install.pkg"
-  true && install=$install.pkg
-
-  # fill in mkinitcpio preset and pacman hooks
-  sed "$subst" ../linux.preset | install -Dm644 /dev/stdin \
-    "$pkgdir/etc/mkinitcpio.d/$pkgbase.preset"
-  sed "$subst" ../60-linux-01-depmod.hook | install -Dm644 /dev/stdin \
-    "$pkgdir/usr/share/libalpm/hooks/60-${pkgbase}-01-depmod.hook"
-  sed "$subst" ../90-linux-02-initcpio.hook | install -Dm644 /dev/stdin \
-    "$pkgdir/usr/share/libalpm/hooks/90-${pkgbase}-02-initcpio.hook"
-  sed "$subst" ../99-linux-03-remove.hook | install -Dm644 /dev/stdin \
-    "$pkgdir/usr/share/libalpm/hooks/99-${pkgbase}-03-remove.hook"
 
   msg2 "Fixing permissions..."
   chmod -Rc u=rwX,go=rX "$pkgdir"
@@ -515,11 +480,7 @@ sha512sums=('SKIP'
             'SKIP'
             '028f762703bb49917cbde83fcad6e4c1e4a42e322ebd2833e64d1ba6d6049baac885b44d5a65fedbfb11b3f40d45e49a1fa5745547e1f2fccf4c7df27b26d420'
             'SKIP'
-            '0eb151706449f902c36065a2c209b992de6d1b9e9f9bc8628bd14c8982155976677cf10addb856925cb3d5b5272d2953e043d8b05e671995c6817842d55e1382'
-            '6b57a66b870b2f525e2dedd8f224b89474fd4ec6ea18484b0a67a1a2b9a4fc95d025cac181504406ea42a35d6c1b184c0d4e38c92815022935fc55746c69c7c1'
-            '6d474f9f8ccdbbf3cfc10987b2b11a405bfbbac6d77d17c727c83f297c43678db57b5af7fecc365de01474183cbd53dd70d77601465ee34a0be0d983c42e14d1'
-            '8742e2eed421e2f29850e18616f435536c12036ff793f5682a3a8c980cf5dbfc88d17fd9539c87de15d9e4663dc3190f964f18a4722940465437927b6052abbf'
-            '2dc6b0ba8f7dbf19d2446c5c5f1823587de89f4e28e9595937dd51a87755099656f2acec50e3e2546ea633ad1bfd1c722e0c2b91eef1d609103d8abdc0a7cbaf')
+            '0eb151706449f902c36065a2c209b992de6d1b9e9f9bc8628bd14c8982155976677cf10addb856925cb3d5b5272d2953e043d8b05e671995c6817842d55e1382')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
