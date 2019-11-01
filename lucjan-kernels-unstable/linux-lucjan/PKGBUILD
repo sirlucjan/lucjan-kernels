@@ -98,7 +98,7 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'python-sphinx' 'python-sphinx_rtd
 # To use linux-lucjan smoothly do not change 
 # the settings below. Otherwise kernel 
 # will not compile.
-             
+
 if [ "$_bfq_rev" = "stable" ]; then
 
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/stable"
@@ -117,7 +117,7 @@ elif [ "$_bfq_rev" = "unstable" ]; then
  _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}-${_bfqrevrc}.patch"
 
 fi
-             
+
 ### linux-lucjan
 # If you do not use the kernel development version (stable-rc)
 # only the actual branch will be used. Pending and testing branches 

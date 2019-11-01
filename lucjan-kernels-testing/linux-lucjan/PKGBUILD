@@ -94,7 +94,7 @@ makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'python-sphinx' 'python-sphinx_rtd
 # To use linux-lucjan smoothly do not change 
 # the settings below. Otherwise kernel 
 # will not compile.
-             
+
 if [ "$_bfq_rev" = "stable" ]; then
 
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/stable"
@@ -120,7 +120,7 @@ fi
 # are used only in development versions (stable-rc) 
 # and the trunk branch is used only in the first releases 
 # of the new kernel line or contains only temporary solutions.
-             
+
 if [ "$_linux_lucjan" = "actual" ]; then
 
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
