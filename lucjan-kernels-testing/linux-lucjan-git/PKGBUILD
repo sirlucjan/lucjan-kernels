@@ -80,7 +80,7 @@ _pkgbase=linux-lucjan
 _major=5.3
 _srcname=linux
 pkgver=5.3.8.r0.gdb0655e705be.ll29
-pkgrel=3
+pkgrel=4
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -141,7 +141,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll16'
+ _lucjanrev='ll30'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -480,7 +480,7 @@ sha512sums=('SKIP'
             'SKIP'
             '028f762703bb49917cbde83fcad6e4c1e4a42e322ebd2833e64d1ba6d6049baac885b44d5a65fedbfb11b3f40d45e49a1fa5745547e1f2fccf4c7df27b26d420'
             'SKIP'
-            '0eb151706449f902c36065a2c209b992de6d1b9e9f9bc8628bd14c8982155976677cf10addb856925cb3d5b5272d2953e043d8b05e671995c6817842d55e1382')
+            '21da9b243d8da21d9b6b03bd4ac62878b624c102b72f39273b74424fd21a7882a9bca9c4711d628800192b4be64cfbeaa5ab4c947e17294f219805fa08c54ce8')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
