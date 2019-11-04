@@ -79,8 +79,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=5.3
 _srcname=linux
-pkgver=5.3.8.r0.gdb0655e705be.ll29
-pkgrel=4
+pkgver=5.3.8.r0.gdb0655e705be.ll30
+pkgrel=1
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
@@ -125,7 +125,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll29'
+ _lucjanrev='ll30'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -141,7 +141,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll30'
+ _lucjanrev='ll31'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -478,7 +478,7 @@ done
 sha512sums=('SKIP'
             '75e2cab8be3f058bd9f759ac874ce24efed4707dba76fdd56b32fa09638339e84018bea498d31f90e87831a32e2d462e8b1a5ef0507a65062789bb821f80e9cb'
             'SKIP'
-            '028f762703bb49917cbde83fcad6e4c1e4a42e322ebd2833e64d1ba6d6049baac885b44d5a65fedbfb11b3f40d45e49a1fa5745547e1f2fccf4c7df27b26d420'
+            'be9bde6c9e075a1b145a71ff0c00ad218c434c32b78fdc26ec3bc85edd1165e5f84886b2a581a6bc08a72153eef19ff6cabfd86df9b451045be9c7bacee722fc'
             'SKIP'
             '21da9b243d8da21d9b6b03bd4ac62878b624c102b72f39273b74424fd21a7882a9bca9c4711d628800192b4be64cfbeaa5ab4c947e17294f219805fa08c54ce8')
 
