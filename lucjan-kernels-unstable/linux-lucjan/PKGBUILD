@@ -77,10 +77,10 @@ _linux_lucjan='actual'
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.3
-_minor=10
+_minor=11
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.3.11.ll41
+pkgver=5.3.12.ll41
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -163,7 +163,9 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 fi
 
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar"{.xz,.sign}
-        "https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-${_stablerc}"{.xz,.sign}
+         # "https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-${_stablerc}"{.xz,.sign}
+         # https://lkml.org/lkml/2019/8/23/712
+        "patch-${_stablerc}.diff::https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-${_major}.y&id2=v${_major}.${_minor}"
          # bfq-reverts
         "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
          # linux-lucjan
@@ -186,7 +188,8 @@ prepare() {
 
     ### Applying patch from stable-review
         msg2 "Applying patch from stable-review..."
-        patch -p1 -i ../patch-${_stablerc}
+        # patch -p1 -i ../patch-${_stablerc}
+        patch -p1 -i ../patch-${_stablerc}.diff
 
     ### Setting version
         msg2 "Setting version..."
@@ -485,10 +488,9 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('ad01f687b70e1ae670848e484b308907a29b32731832e2fc155c64e56daa9362cae3f1770936056edbebe40c6224303ba32da4af3980e22a3ddc3599a3117139'
+sha512sums=('24e167531014b637793aab5ce47e6e747f619e2a0e598c0db348ea9069fc3fd86c81d4ee63ae085d42aba260d702f5b797e550c7e22c3d5df4fe8d9c32f5b3d5'
             'SKIP'
-            '1e52c1fa5759966e41224be5b1021de37714fe08ff5e6427801c171f4c5dcdbaf44598c46bf936e128ba40e3e5412d301d68142422cff698ef1832211c833e78'
-            'SKIP'
+            'f93ce647ca294fa45b2486f3c189a3a66e0bcac5b772525be19b8dffab123eddd3500e82c41a970f93d0bc931c201c2b342ea8ec5a9aac2626c79c4580db2865'
             '75e2cab8be3f058bd9f759ac874ce24efed4707dba76fdd56b32fa09638339e84018bea498d31f90e87831a32e2d462e8b1a5ef0507a65062789bb821f80e9cb'
             'SKIP'
             '86e776e2c9f3989a599e5d6c9f20bf589f417185257fdb72475e7423c85f3bf6f1702711bf0041230de6e18ba6607b6665657db4316e80f9b5e4c4e8b09f6289'
