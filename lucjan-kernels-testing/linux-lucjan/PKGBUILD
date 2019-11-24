@@ -77,8 +77,8 @@ _linux_lucjan='actual'
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.3
-_minor=12
-pkgver=5.3.12.ll41
+_minor=13
+pkgver=5.3.13.ll41
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -101,7 +101,7 @@ if [ "$_bfq_rev" = "stable" ]; then
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/stable"
  _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/stable"
  _bfqrevname='bfq-reverts'
- _bfqrevver='ver1'
+ _bfqrevver='ver2'
  _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}.patch"
 
 elif [ "$_bfq_rev" = "unstable" ]; then
@@ -476,9 +476,9 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('84eec92afff148295e6d6a2c47046e5a270c2934ad696f1102793f0566d32e7bd1ea1dc70a4be066cad9ede0a9a712a0a33fbc31f64b7440031c39c0e33acdd0'
+sha512sums=('bc9e98cc666761b94bae2a13d4cd9f4a5b563526d634e1185653b936e7d53edf1d0d8545835794c2196ab7b91d03651a7035ab41a2492adaefcf307791e050b3'
             'SKIP'
-            '75e2cab8be3f058bd9f759ac874ce24efed4707dba76fdd56b32fa09638339e84018bea498d31f90e87831a32e2d462e8b1a5ef0507a65062789bb821f80e9cb'
+            'affcda7905b562ac2c5f4933ff8d312c62a3f9f1c730175217239e788921127faa9b4480c85bca0e4a079c84644a13c33034d7ec021c90c8d56708730d92abb5'
             'SKIP'
             '86e776e2c9f3989a599e5d6c9f20bf589f417185257fdb72475e7423c85f3bf6f1702711bf0041230de6e18ba6607b6665657db4316e80f9b5e4c4e8b09f6289'
             'SKIP'
