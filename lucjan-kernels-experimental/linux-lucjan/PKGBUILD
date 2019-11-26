@@ -82,7 +82,7 @@ pkgver=5.4.ll1
 #_pkgver=${_major}.${_minor}
 _pkgver=${_major}
 _srcname=linux-${_pkgver}
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -153,7 +153,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
  _lucjanrev='ll1'
- _lucjanrc='rc1'
+ _lucjanrc='rc2'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 fi
@@ -446,7 +446,7 @@ done
 
 sha512sums=('9f60f77e8ab972b9438ac648bed17551c8491d6585a5e85f694b2eaa4c623fbc61eb18419b2656b6795eac5deec0edaa04547fc6723fbda52256bd7f3486898f'
             'SKIP'
-            '2162e6d05d9af39dcef858a35551203595db4a647585f64b399cb95c794f6fa1b12ee063b49dbf77f60b83a1c6c9188308cc135cb1299013b590d3101a545e88'
+            'e79f8d1ea90b8a302e5e8910521bbe9ec47a47bd45e9a0c7dc19d9786b4eb181b52f504a37cba4692d9a7fd85b94b7b0493b7052eb0a6f75476dc36126ecc0c3'
             'SKIP'
             '9a9e0a60bbe661a022b4579264ed1e8427b10a401bef6f0f6ba3a74855a85f162e2aae3ef2c4ecb121befa2923d2409ab38364795257fa8571aaf7adb6dbacc4')
             
