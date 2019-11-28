@@ -70,25 +70,25 @@ _bfq_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='trunk'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
-# pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
-_major=5.3
-_minor=13
-pkgver=5.3.13.ll44
-_pkgver=${_major}.${_minor}
+# pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers')
+_major=5.4
+# _minor=1
+pkgver=5.4.ll1
+#_pkgver=${_major}.${_minor}
+_pkgver=${_major}
 _srcname=linux-${_pkgver}
-pkgrel=1
+pkgrel=4
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
 options=('!strip')
-makedepends=('kmod' 'inetutils' 'bc' 'libelf' 'python-sphinx' 'python-sphinx_rtd_theme'
-             'graphviz' 'imagemagick')
+makedepends=('bc' 'kmod' 'libelf')
 
 ### BFQ reverts
 # Some patches for BFQ conflict with patches for BFQ-dev. 
@@ -101,7 +101,7 @@ if [ "$_bfq_rev" = "stable" ]; then
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/stable"
  _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/stable"
  _bfqrevname='bfq-reverts'
- _bfqrevver='ver2'
+ _bfqrevver='ver1'
  _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}.patch"
 
 elif [ "$_bfq_rev" = "unstable" ]; then
@@ -109,7 +109,7 @@ elif [ "$_bfq_rev" = "unstable" ]; then
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/unstable"
  _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/unstable"
  _bfqrevname='bfq-reverts'
- _bfqrevver='ver2'
+ _bfqrevver='ver1'
  _bfqrevrc='rc1'
  _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}-${_bfqrevrc}.patch"
 
@@ -127,7 +127,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll44'
+ _lucjanrev='ll1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -135,7 +135,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll34'
+ _lucjanrev='ll1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -143,7 +143,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll36'
+ _lucjanrev='ll1'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
  
@@ -152,15 +152,15 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll21'
- _lucjanrc='rc0'
+ _lucjanrev='ll1'
+ _lucjanrc='rc3'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 fi
 
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar"{.xz,.sign}
          # bfq-reverts
-        "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
+         # "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
          # linux-lucjan
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
          # the main kernel config files
@@ -323,7 +323,7 @@ prepare() {
 build() {
   cd $_srcname
 
-  make bzImage modules htmldocs
+  make bzImage modules
 }
 
 _package-kernel() {
@@ -436,39 +436,7 @@ _package-headers() {
   chmod -Rc u=rwX,go=rX "$pkgdir"
 }
 
-_package-docs() {
-  pkgdesc="Kernel hacker's manual for the $pkgdesc kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
-  depends=('linux-lucjan-kernel')
-  groups=('linux-lucjan')
-
-  cd $_srcname
-  local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
-
-  msg2 "Installing documentation..."
-  mkdir -p "$builddir"
-  cp -t "$builddir" -a Documentation
-
-  msg2 "Removing unneeded files..."
-  rm -rv "$builddir"/Documentation/{,output/}.[^.]*
-
-  msg2 "Moving HTML docs..."
-  local src dst
-  while read -rd '' src; do
-    dst="$builddir/Documentation/${src#$builddir/Documentation/output/}"
-    mkdir -p "${dst%/*}"
-    mv "$src" "$dst"
-    rmdir -p --ignore-fail-on-non-empty "${src%/*}"
-  done < <(find "$builddir/Documentation/output" -type f -print0)
-
-  msg2 "Adding symlink..."
-  mkdir -p "$pkgdir/usr/share/doc"
-  ln -sr "$builddir/Documentation" "$pkgdir/usr/share/doc/$pkgbase"
-
-  msg2 "Fixing permissions..."
-  chmod -Rc u=rwX,go=rX "$pkgdir"
-}
-
-pkgname=("$pkgbase-kernel" "$pkgbase-headers" "$pkgbase-docs")
+pkgname=("$pkgbase-kernel" "$pkgbase-headers")
 for _p in "${pkgname[@]}"; do
   eval "package_$_p() {
     $(declare -f "_package${_p#$pkgbase}")
@@ -476,13 +444,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('bc9e98cc666761b94bae2a13d4cd9f4a5b563526d634e1185653b936e7d53edf1d0d8545835794c2196ab7b91d03651a7035ab41a2492adaefcf307791e050b3'
+sha512sums=('9f60f77e8ab972b9438ac648bed17551c8491d6585a5e85f694b2eaa4c623fbc61eb18419b2656b6795eac5deec0edaa04547fc6723fbda52256bd7f3486898f'
             'SKIP'
-            'affcda7905b562ac2c5f4933ff8d312c62a3f9f1c730175217239e788921127faa9b4480c85bca0e4a079c84644a13c33034d7ec021c90c8d56708730d92abb5'
+            '18f790535f1a2627b9c879d11f0eeb41b4761ebda250ec4fe63af4ddfb252d2ea17bc2f6fee0accc121ee1c8edf3769afd5272b27694256837411e2dd8373936'
             'SKIP'
-            '3c8d4927052a230f690631162511c11a2d3e90a4034ed497245513d7813155c6818897d15acbcc548b6f736b037391c84d5419c3426ac7c820f543be206392d6'
-            'SKIP'
-            '758550998979f443ebc124931ace2935778018bf66268fa54943cb7b126e680feb0cd9c87116f401c69ea3f3cc55af0f6f9835e6c43454b5952b1845ef03f62b')
+            '5da203db8f6565c0618af6bb682730e1d9af528f2ce827c3ceb6a2dc7b81b384120384b9a7eed4235a363a1f7c4f5d55a6eed4243e0cfd1fafeea38fba92fd41')
             
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
