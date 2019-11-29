@@ -75,7 +75,7 @@ _linux_lucjan='actual'
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
-# pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers')
+# pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.4
 _minor=0
 _minorc=$((_minor+1))
@@ -86,13 +86,14 @@ _stable=${_major}
 #_stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
 options=('!strip')
-makedepends=('bc' 'kmod' 'libelf')
+makedepends=('kmod' 'bc' 'libelf' 'python-sphinx' 'python-sphinx_rtd_theme'
+             'graphviz' 'imagemagick')
 
 ### BFQ reverts
 # Some patches for BFQ conflict with patches for BFQ-dev. 
@@ -335,7 +336,7 @@ prepare() {
 build() {
   cd $_srcname
 
-  make bzImage modules
+  make bzImage modules htmldocs
 }
 
 _package-kernel() {
@@ -448,7 +449,31 @@ _package-headers() {
   chmod -Rc u=rwX,go=rX "$pkgdir"
 }
 
-pkgname=("$pkgbase-kernel" "$pkgbase-headers")
+_package-docs() {
+  pkgdesc="Kernel hacker's manual for the $pkgdesc kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
+  depends=('linux-lucjan-kernel')
+  groups=('linux-lucjan')
+
+  cd $_srcname
+  local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
+
+  msg2 "Installing documentation..."
+  local src dst
+  while read -rd '' src; do
+    dst="${src#Documentation/}"
+    dst="$builddir/Documentation/${dst#output/}"
+    install -Dm644 "$src" "$dst"
+  done < <(find Documentation -name '.*' -prune -o ! -type d -print0)
+
+  msg2 "Adding symlink..."
+  mkdir -p "$pkgdir/usr/share/doc"
+  ln -sr "$builddir/Documentation" "$pkgdir/usr/share/doc/$pkgbase"
+
+  msg2 "Fixing permissions..."
+  chmod -Rc u=rwX,go=rX "$pkgdir"
+}
+
+pkgname=("$pkgbase-kernel" "$pkgbase-headers" "$pkgbase-docs")
 for _p in "${pkgname[@]}"; do
   eval "package_$_p() {
     $(declare -f "_package${_p#$pkgbase}")
