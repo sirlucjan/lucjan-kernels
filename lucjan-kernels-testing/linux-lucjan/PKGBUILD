@@ -437,7 +437,7 @@ _package-headers() {
 }
 
 _package-docs() {
-  pkgdesc="Kernel hacker's manual for the $pkgdesc kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
+  pkgdesc="Documentation for the $pkgdesc kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
   depends=('linux-lucjan-kernel')
   groups=('linux-lucjan')
 
