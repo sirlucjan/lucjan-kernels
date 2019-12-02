@@ -473,7 +473,7 @@ sha512sums=('bde6dc6ff03ea5319029b269f58e4c099d2a0f04105944b475bcc143db6d5385550
             '06db876eb347bb74a99d1ace7be655f1b71740a766f6680092ca0b1011e4832a1782a7c3e9ced70a99f544df6f827ed95fceef93ca6ad1d9a32dca9ff637f818'
             'SKIP'
             '5da203db8f6565c0618af6bb682730e1d9af528f2ce827c3ceb6a2dc7b81b384120384b9a7eed4235a363a1f7c4f5d55a6eed4243e0cfd1fafeea38fba92fd41')
-            
+
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
               '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
