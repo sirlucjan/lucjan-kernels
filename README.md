@@ -5,18 +5,18 @@
 ###### linux-lucjan incorporates:
 
 * [bfq improvements](https://groups.google.com/forum/#!forum/bfq-iosched) - latest fixes authored by Paolo Valente and BFQ Team
- 
+
 * [bfq-dev](https://github.com/Algodev-github/bfq-mq/commits/dev-bfq-on-5.4) - latest fixes authored by Paolo Valente and BFQ Team
 
 * [bfq-lucjan-dev](https://github.com/sirlucjan/bfq-mq-lucjan/commits/dev-bfq-on-5.4-lucjan) - latest fixes authored by Paolo Valente and BFQ Team and forked by Piotr Gorski
  
 * [graysky's GCC patch](https://github.com/graysky2/kernel_gcc_patch) - version for gcc 9.1
 
-* [BMQ](https://gitlab.com/alfredchen/bmq) / [BMQ blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
+* [BMQ](https://gitlab.com/alfredchen/linux-bmq/commits/linux-5.4.y-bmq) / [BMQ blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
 
-* [random fixes from zen-kernel](https://github.com/zen-kernel/zen-kernel) - specific patches authored by Jan Alexander Steffens and ZEN Kernel Team
+* [random fixes from zen-kernel](https://github.com/zen-kernel/zen-kernel/commits/5.4/master) - specific patches authored by Jan Alexander Steffens and ZEN Kernel Team
 
-* [random fixes from pfkernel](https://github.com/pfactum/pf-kernel) / [random fixes from pfkernel](https://gitlab.com/post-factum/pf-kernel) - for example patches from Arch Linux or specific patches authored by Oleksandr Natalenko
+* [random fixes from pfkernel](https://github.com/pfactum/pf-kernel/commits/pf-5.4) / [random fixes from pfkernel](https://gitlab.com/post-factum/pf-kernel/commits/pf-5.4) - for example patches from Arch Linux or specific patches authored by Oleksandr Natalenko
 
 * [fixes from ClearLinux](https://github.com/clearlinux-pkgs/linux) - specific patches authored by ClearLinux Team
 
