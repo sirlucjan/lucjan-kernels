@@ -70,17 +70,17 @@ _bfq_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.4
-_minor=1
+_minor=2
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.4.2.ll12
+pkgver=5.4.3.ll13
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -480,11 +480,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('bde6dc6ff03ea5319029b269f58e4c099d2a0f04105944b475bcc143db6d53855501fdc6eefd6cc3f84fb674297bed8a5ed70dbbd26178d0ae4e4f3a7c976b46'
+sha512sums=('42bd0e1887555cf92d424243d85bb39911669da814b0201503319604f1d45f7f0b45d535ee08ca7831f47047db96125496159945c3cd05dac491e0f5e0685854'
             'SKIP'
-            'd57494cc734016587d846cace20fbfa8880d92df0e8de3476bb5c11775343218f13575e5964fa29d72db1862259e5d4ee85c2e1d8e5393a42ec6e376dc321384'
+            '1d4f7e53d5970f8660594c23d1764d3eeedf4ea1ca176fd07eeadb9735bca58d8d4c0f8db0ffb65951acb8afb64b69d1a063c5ff776bc68ea36f3949ee35ba08'
             'SKIP'
-            'e50057c22684b52908f90bc6114c1d7b9f79156f769db3ce5832390ad90ae6d491092861393f4bba88d0723b6e0f5f8fbc68da1b042e0267054bdcb091454c3b'
+            'abc0dadb8a05805555521a5a92db48ffb59a8670154382f84b5890e0396670eb67e68e476b2df6cd16641be0a4334b6cc66e5054020bd36792d1e2744ae86aa6'
             'SKIP'
             '5da203db8f6565c0618af6bb682730e1d9af528f2ce827c3ceb6a2dc7b81b384120384b9a7eed4235a363a1f7c4f5d55a6eed4243e0cfd1fafeea38fba92fd41')
 
