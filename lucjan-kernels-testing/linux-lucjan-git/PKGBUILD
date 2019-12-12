@@ -18,15 +18,6 @@ _makexconfig=
 ### Tweak kernel options prior to a build via gconfig
 _makegconfig=
 
-### Setting GCC Flags for CONFIG_MHASWELL
-_gcc_haswell=y
-
-### Enable fancontrol for DELL
-_dell_fancontrol=y
-
-### Set performance governor as default
-_per_gov=y
-
 # NUMA is optimized for multi-socket motherboards.
 # A single multi-core CPU actually runs slower with NUMA enabled.
 # See, https://bugs.archlinux.org/task/31187
@@ -49,11 +40,23 @@ _localmodcfg=
 # a new kernel is released, but again, convenient for package bumps.
 _use_current=
 
+### Setting GCC Flags for CONFIG_MHASWELL
+_gcc_haswell=y
+
+### Enable fancontrol for DELL
+_dell_fancontrol=y
+
+### Set performance governor as default
+_per_gov=y
+
 ### Disable Deadline I/O scheduler
 _deadline_disable=y
 
 ### Disable Kyber I/O scheduler
 _kyber_disable=y
+
+### Enable KBUILD_CFLAGS -O3
+_cc_harder=y
 
 ### Running with a 1000 HZ tick rate
 _1k_HZ_ticks=y
@@ -80,7 +83,7 @@ _pkgbase=linux-lucjan
 _major=5.4
 _srcname=linux
 pkgver=5.4.2.r0.g5f8bc2bb0e0f.ll12
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -253,6 +256,13 @@ prepare() {
 		msg2 "Disabling Kyber I/O scheduler..."
 		sed -i -e s'/^CONFIG_MQ_IOSCHED_KYBER=y/# CONFIG_MQ_IOSCHED_KYBER is not set/' ./.config
 	fi
+
+    ### Enable KBUILD_CFLAGS -O3
+	if [ -n "$_cc_harder" ]; then
+		msg2 "Enabling KBUILD_CFLAGS -O3..."
+		sed -i -e s'/^CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE=y/# CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE is not set/' \
+                    -i -e s'/^# CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3 is not set/CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3=y/' ./.config
+        fi
 
     ### Optionally set tickrate to 1000
 	if [ -n "$_1k_HZ_ticks" ]; then
