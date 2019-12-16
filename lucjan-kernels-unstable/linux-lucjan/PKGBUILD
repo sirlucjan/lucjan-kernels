@@ -73,17 +73,17 @@ _bfq_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.4
-_minor=2
+_minor=3
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.4.3.ll15
+pkgver=5.4.4.ll16
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -150,7 +150,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll14'
+ _lucjanrev='ll16'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -490,11 +490,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('42bd0e1887555cf92d424243d85bb39911669da814b0201503319604f1d45f7f0b45d535ee08ca7831f47047db96125496159945c3cd05dac491e0f5e0685854'
+sha512sums=('bbdf4179c5263f313aac56a75ebe14da6d05128b27b3d84305743605745bb0ffa872dc6fd349a9f066676ab39ed395e512bb1b27fec47a99d6f002cd25f64ed5'
             'SKIP'
-            '1d4f7e53d5970f8660594c23d1764d3eeedf4ea1ca176fd07eeadb9735bca58d8d4c0f8db0ffb65951acb8afb64b69d1a063c5ff776bc68ea36f3949ee35ba08'
+            'e12c3ed9ff3f27d29b48449855be28f3b4f8d5843ecb8f107a41a71f151890bda98ad6089a713765845517d7f29afff5d3c7a539ec7992ec222ee43f05a8e033'
             'SKIP'
-            '8c6a967c027179043e51034045030c0829f9c0a74e493c8ff7ba638f93ea0052fb22323ef97659720a207d1efdcaee92dac0fb6190f0ef1dac2da95badd24dd0'
+            'c14755e424d750fd1cce7648c19b1fd06ba9279495d5feb45e354ff1426705458dabeb90b15da65582a056293ebb322a22b6caf01cbbd1c4b8287f3083521b56'
             'SKIP'
             'af40a5dd8e5706495ddcb50ab18433adcd8a58f4f01a368acf3968af055002a5c54979e280fa4634a202cd718454f07f2342849e17cc8a6a390e2801ee983208')
 
