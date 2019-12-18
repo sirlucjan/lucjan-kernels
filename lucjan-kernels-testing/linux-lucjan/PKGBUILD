@@ -81,7 +81,7 @@ pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.4
  _minor=4
-pkgver=5.4.4.ll17
+pkgver=5.4.4.ll18
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -130,7 +130,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll17'
+ _lucjanrev='ll18'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -138,7 +138,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll17'
+ _lucjanrev='ll18'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -480,7 +480,7 @@ done
 
 sha512sums=('e3978c8c8b271693acded64a86a755248cd43b419b948c052c5c3041c7c0fc4d58442bb4bbad27d4762e4d07a2a1cfa340d14a702bd69e0d7795478426509797'
             'SKIP'
-            '3b6d1a3e2640144f5268396a2ea9d2afa66e28a018100800544f600da3bbd7dc14bd04fd2ea94dceef0768fa60984d4489492c04de9179de5a98f80a124452eb'
+            '7ebc7430504198ade430dd454289f18fbb664c19ac5ea504aa3db8cb0dde95bbbc31e9d696dc445afcc8fd089946c58ce61e1cc52dc33f473c07f1b42aca1a6c'
             'SKIP'
             'af40a5dd8e5706495ddcb50ab18433adcd8a58f4f01a368acf3968af055002a5c54979e280fa4634a202cd718454f07f2342849e17cc8a6a390e2801ee983208')
 
