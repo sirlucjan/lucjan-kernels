@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.4.13.ll46 Kernel Configuration
+# Linux/x86 5.4.13.ll47 Kernel Configuration
 #
 
 #
@@ -20,6 +20,7 @@ CONFIG_THREAD_INFO_IN_TASK=y
 #
 # General setup
 #
+CONFIG_LL_BRANDING=y
 CONFIG_INIT_ENV_ARG_LIMIT=32
 # CONFIG_COMPILE_TEST is not set
 # CONFIG_HEADER_TEST is not set
@@ -148,7 +149,6 @@ CONFIG_HAVE_UNSTABLE_SCHED_CLOCK=y
 #
 # Scheduler features
 #
-CONFIG_LL_BRANDING=y
 CONFIG_SCHED_BMQ=y
 CONFIG_SCHED_TIMESLICE=4
 CONFIG_UCLAMP_TASK=y
