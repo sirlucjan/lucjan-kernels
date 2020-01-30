@@ -12,17 +12,17 @@
  
 * [graysky's GCC patch](https://github.com/graysky2/kernel_gcc_patch) - version for gcc 9.1
 
-* [BMQ](https://gitlab.com/alfredchen/linux-bmq/tree/linux-5.4.y-bmq) / [BMQ blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
+* [BMQ](https://gitlab.com/alfredchen/linux-bmq/tree/linux-5.5.y-bmq) / [BMQ blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
 
-* [random fixes from zen-kernel](https://github.com/zen-kernel/zen-kernel/tree/5.4/master) - specific patches authored by Jan Alexander Steffens and ZEN Kernel Team
+* [random fixes from zen-kernel](https://github.com/zen-kernel/zen-kernel/tree/5.5/master) - specific patches authored by Jan Alexander Steffens and ZEN Kernel Team
 
-* [random fixes from pfkernel](https://github.com/pfactum/pf-kernel/tree/pf-5.4) / [random fixes from pfkernel](https://gitlab.com/post-factum/pf-kernel/tree/pf-5.4) - for example patches from Arch Linux or specific patches authored by Oleksandr Natalenko
+* [random fixes from pfkernel](https://github.com/pfactum/pf-kernel/tree/pf-5.5) / [random fixes from pfkernel](https://gitlab.com/post-factum/pf-kernel/tree/pf-5.5) - for example patches from Arch Linux or specific patches authored by Oleksandr Natalenko
 
 * [fixes from ClearLinux](https://github.com/clearlinux-pkgs/linux) - specific patches authored by ClearLinux Team
 
-* [LL-patches](https://github.com/sirlucjan/kernel-patches/tree/master/5.4/ll-patches) / [LL-patches](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.4/ll-patches) - specific patches authored by Piotr Gorski
+* [LL-patches](https://github.com/sirlucjan/kernel-patches/tree/master/5.5/ll-patches) / [LL-patches](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.5/ll-patches) - specific patches authored by Piotr Gorski
 
-* [LL-branding](https://github.com/sirlucjan/kernel-patches/tree/master/5.4/ll-branding) / [LL-branding](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.4/ll-branding) - specific patches authored by Piotr Gorski
+* [LL-branding](https://github.com/sirlucjan/kernel-patches/tree/master/5.5/ll-branding) / [LL-branding](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.5/ll-branding) - specific patches authored by Piotr Gorski
 
 ***
 
@@ -30,7 +30,7 @@
 
 ###### To use lucjan-kernels smoothly apply bfq-reverts before linux-lucjan patch. Otherwise the kernel will not compile.
 
-* ~~[bfq-reverts](https://github.com/sirlucjan/kernel-patches/tree/master/5.4/bfq-reverts) / [bfq-reverts](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.4/bfq-reverts) - specific patches authored by Piotr Gorski~~
+* ~~[bfq-reverts](https://github.com/sirlucjan/kernel-patches/tree/master/5.5/bfq-reverts) / [bfq-reverts](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.5/bfq-reverts) - specific patches authored by Piotr Gorski~~
 
 ***
 # Download:
