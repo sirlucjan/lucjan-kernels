@@ -73,7 +73,7 @@ _bfq_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='pending'
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -88,7 +88,7 @@ _stable=${_major}
 #_stable=${_major}.${_minor}
 _stablerc=${pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -494,7 +494,7 @@ sha512sums=('fa74fdabb5e63384a39e54da05b86a9ae9ea16179524b041fbbdffc7177e80b5360
             'SKIP'
             '0956d1ccb7495f3d859af48e27adba1b38387b474aaad7e847f6270165ae27eacf8ef76776056664259df5dbf6ea41688370988895cd3fda906522ecc3ee66a1'
             'SKIP'
-            'f268b6f82fe17e501323311be32dbdd9b3bb7c9017cda856bac962fb31b8b2f0a714b56eed52c40dd9d1b5d00c98daec76d56b55c1bf374ed6081e6b7e1edd34'
+            '0285e8375bab04e4b27be3bc7d99b9d692dcbc4e2f18019f6d0eaccbcb045613a50a465e0805c506364d49b15a401be36abcfc3a5ada78d9da896969be6b6f86'
             'SKIP'
             '48e82fcb9758903f32b482df1a8b13358cb22fca086465ad7e7770a9d2bf7c84c4025c4f94335c6ba202bc1ccf723be9098c2ff0a20c6dcd88b8f35da147b6d3')
 
