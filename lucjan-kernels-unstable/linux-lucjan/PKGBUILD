@@ -80,17 +80,15 @@ _linux_lucjan='actual'
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.5
-#_minor=0
-#_minorc=$((_minor+1))
-#_rcver=rc1
-pkgver=5.5.ll1
-_pkgver=${_major}
+_minor=0
+_minorc=$((_minor+1))
+_rcver=rc1
+pkgver=${_major}.${_minorc}
 _stable=${_major}
-#_pkgver=${_major}.${_minorc}
 #_stable=${_major}.${_minor}
-#_stablerc=${_pkgver}-${_rcver}
+_stablerc=${pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=3
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -168,7 +166,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 fi
 
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar"{.xz,.sign}
-         # "https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-${_stablerc}"{.xz,.sign}
+        "https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-${_stablerc}"{.xz,.sign}
          # https://lkml.org/lkml/2019/8/23/712
          # "patch-${_stablerc}.diff::https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-${_major}.y&id2=v${_major}.${_minor}"
          # bfq-reverts
@@ -193,7 +191,7 @@ prepare() {
 
     ### Applying patch from stable-review
         # echo "Applying patch from stable-review..."
-        # patch -p1 -i ../patch-${_stablerc}
+        patch -p1 -i ../patch-${_stablerc}
         # patch -p1 -i ../patch-${_stablerc}.diff
 
     ### Setting version
@@ -493,6 +491,8 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('fa74fdabb5e63384a39e54da05b86a9ae9ea16179524b041fbbdffc7177e80b53600ae98d76be127ba216148f9dc55fe07ab20637e22c6d6030cb4aa09eb2f86'
+            'SKIP'
+            '0956d1ccb7495f3d859af48e27adba1b38387b474aaad7e847f6270165ae27eacf8ef76776056664259df5dbf6ea41688370988895cd3fda906522ecc3ee66a1'
             'SKIP'
             'f268b6f82fe17e501323311be32dbdd9b3bb7c9017cda856bac962fb31b8b2f0a714b56eed52c40dd9d1b5d00c98daec76d56b55c1bf374ed6081e6b7e1edd34'
             'SKIP'
