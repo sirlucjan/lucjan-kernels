@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.5.1.ll3 Kernel Configuration
+# Linux/x86 5.5.1.ll8 Kernel Configuration
 #
 
 #
@@ -150,7 +150,6 @@ CONFIG_HAVE_UNSTABLE_SCHED_CLOCK=y
 # Scheduler features
 #
 CONFIG_SCHED_BMQ=y
-CONFIG_SCHED_TIMESLICE=2
 CONFIG_UCLAMP_TASK=y
 CONFIG_UCLAMP_BUCKETS_COUNT=5
 # end of Scheduler features
