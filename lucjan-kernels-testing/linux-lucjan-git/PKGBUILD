@@ -250,7 +250,7 @@ prepare() {
 		echo "Disabling Deadline I/O scheduler..."
 		sed -i -e s'/^CONFIG_MQ_IOSCHED_DEADLINE=y/# CONFIG_MQ_IOSCHED_DEADLINE is not set/' ./.config
 	fi
-	
+
     ### Disable Kyber I/O scheduler
 	if [ -n "$_kyber_disable" ]; then
 		echo "Disabling Kyber I/O scheduler..."
@@ -310,19 +310,15 @@ prepare() {
         echo "Prepared $pkgbase version $(<version)"
 
     ### Running make nconfig
-	
 	[[ -z "$_makenconfig" ]] ||  make nconfig
-	
+
     ### Running make menuconfig
-	
 	[[ -z "$_makemenuconfig" ]] || make menuconfig
-	
+
     ### Running make xconfig
-	
 	[[ -z "$_makexconfig" ]] || make xconfig
-	
+
     ### Running make gconfig
-	
 	[[ -z "$_makegconfig" ]] || make gconfig
 
     ### Save configuration for later reuse
