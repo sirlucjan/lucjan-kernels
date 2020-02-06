@@ -83,7 +83,7 @@ _pkgbase=linux-lucjan
 _major=5.5
 _srcname=linux
 pkgver=5.5.2.r0.g567f0ad8b0b7.ll15
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -307,7 +307,7 @@ prepare() {
 
     ### Prepared version
         make -s kernelrelease > version
-        echo "Prepared %s version %s" "$pkgbase" "$(<version)"
+        echo "Prepared $pkgbase version $(<version)"
 
     ### Running make nconfig
 	
