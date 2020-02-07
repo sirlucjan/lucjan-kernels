@@ -6,12 +6,10 @@
 
 * [bfq improvements](https://groups.google.com/forum/#!forum/bfq-iosched) - latest fixes authored by Paolo Valente and BFQ Team
 
-* [bfq-dev](https://github.com/Algodev-github/bfq-mq/tree/dev-bfq-on-5.4) - latest fixes authored by Paolo Valente and BFQ Team
+* [bfq-dev](https://github.com/Algodev-github/bfq-mq/tree/dev-bfq-on-5.5) - latest fixes authored by Paolo Valente and BFQ Team
 
-* [bfq-lucjan-dev](https://github.com/sirlucjan/bfq-mq-lucjan/tree/dev-bfq-on-5.4-lucjan) - latest fixes authored by Paolo Valente and BFQ Team and forked by Piotr Gorski
+* [bfq-lucjan-dev](https://github.com/sirlucjan/bfq-mq-lucjan/tree/dev-bfq-on-5.5-lucjan) - latest fixes authored by Paolo Valente and BFQ Team and forked by Piotr Gorski
 
-* [bfq-dev-rc](https://github.com/sirlucjan/kernel-patches/tree/master/5.5/bfq-dev-lucjan-sep) / [bfq-dev-rc](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.5/bfq-dev-lucjan-sep) - specific patches authored by Paolo Valente and Piotr Gorski
- 
 * [graysky's GCC patch](https://github.com/graysky2/kernel_gcc_patch) - version for gcc 9.1
 
 * [BMQ](https://gitlab.com/alfredchen/linux-bmq/tree/linux-5.5.y-bmq) / [BMQ blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
