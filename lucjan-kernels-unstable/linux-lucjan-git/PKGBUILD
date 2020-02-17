@@ -82,8 +82,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=5.5
 _srcname=linux-stable-rc
-pkgver=5.5.3.r121.ged6d023a1817.ll27
-pkgrel=0
+pkgver=5.5.4.r0.g3f29db9524f0.ll27
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -477,7 +477,7 @@ done
 sha512sums=('SKIP'
             'a7e1d1657fb5d582b8eded45398be12292b7ab9f9196ddb2af583a87d4e75bd3413b9c839b26263406f1b477bc94962b60ad090fb82c8d33f21c6e21eaeeb3bb'
             'SKIP'
-            '4d55e9b77f641f9a949a1bf0099df1d1a69891f30f96c47b3dc1bbec3c55fa505961c8f60a7afd33f62386408023b2b1e795049a4d586ac7819a3263de6f16c5')
+            'e0abfac255904ede951d894420db9ba5dd51b56a5888d48ebe08165e5153b74f2dfdfa74f89ea9c999a0ba98ba737b1723f6575d949e64315ca6f749e0483358')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
