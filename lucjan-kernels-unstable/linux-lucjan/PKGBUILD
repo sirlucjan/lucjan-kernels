@@ -88,7 +88,7 @@ _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -494,7 +494,7 @@ sha512sums=('2d0ed596509546169d0e0d46c23e10920e6b565178e044fe57b68b7ff0ec5c613bb
             'SKIP'
             '7fba8fefb1d7080e850e7ca2c1522ba6118e161754268245ad532bb576e967c675c0cd2db07b3d85e96dd7a85673fb3425d08301c91c8fca2adebb0aa266efd2'
             'SKIP'
-            '6d32c90503af38b9350c3c9c0ddbbe5e92600b19062791c0622b7009404793f14c77dd32a92aa81c1075743b3775d0248291144878cf1863aff3dc23249804df')
+            '5504c7d755cb245e10233c4ba7de8ad008d64bd9b23cd1c8d971dc84df01467cfd1b181bab2a7d0114dd04580d385fda8f6e36e52dbe1daa144ec5daf1bec0c7')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
