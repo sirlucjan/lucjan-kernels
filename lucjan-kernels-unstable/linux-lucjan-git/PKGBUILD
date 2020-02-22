@@ -83,7 +83,7 @@ _pkgbase=linux-lucjan
 _major=5.5
 _srcname=linux-stable-rc
 pkgver=5.5.5.r400.g84fa24740caa.ll32
-pkgrel=0.1
+pkgrel=0.2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -329,7 +329,8 @@ prepare() {
 build() {
   cd $_srcname
 
-  make bzImage modules htmldocs
+  make all
+  make htmldocs
 }
 
 _package-kernel() {
