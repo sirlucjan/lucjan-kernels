@@ -84,7 +84,7 @@ _minor=5
 pkgver=5.5.5.ll31
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
-pkgrel=2
+pkgrel=3
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -329,7 +329,8 @@ prepare() {
 build() {
   cd $_srcname
 
-  make bzImage modules htmldocs
+  make all
+  make htmldocs
 }
 
 _package-kernel() {
