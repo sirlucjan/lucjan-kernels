@@ -73,17 +73,17 @@ _bfq_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.5
-_minor=5
+_minor=6
 _minorc=$((_minor+1))
-_rcver=rc3
-pkgver=5.5.6.ll33
+_rcver=rc1
+pkgver=5.5.7.ll34
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -150,7 +150,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll32'
+ _lucjanrev='ll34'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -487,13 +487,13 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('2d0ed596509546169d0e0d46c23e10920e6b565178e044fe57b68b7ff0ec5c613bb090105affc74e5bcacda36f8c8a49c269017e90dd7145f58e9359707f35d1'
+sha512sums=('faa2c4687d7da6eb4d0db08492408b64558166bd4918e88c01b1fa34893aaeee8dc352aa10dc8f58628f224bdfee7a7f8e88b98da771463237898845f45407e3'
             'SKIP'
-            'bbf335d8d46a9cf87bde7f6fbd5944e6d42b36c1c2a5d4b8f0be180ba62b5e25cda8bda5d72716d8539bddeac9796fd79efcda3cf634daa15a9d2c5047d7e697'
+            'fa4ad32d1a428b81aa960b6dcfb68274e3db290d954df4978e2aedcdb4bec0cf0941e0632767ad0ec9f3b5ed1957b4e7b6bf987abd6889dcaeab5face8861fb2'
             'SKIP'
             'cafac86fa68cae1de3f7d4ba9f9803ae107dbae7f13f82f8fc8f554f84d5d57025a15e8529b533ef18b58a3407240e7954cebcb5b7f392726a906c32d00efaac'
             'SKIP'
-            '96a7ac60454fb13e60d3470a29d7b9044a339a5b3555a7d3f26d5e910dccbc87194a534d6a75828456ae4cc4c98bbbfb48fb64ff330206329ff6f8d5c1aaea6e'
+            '5ae20e2d1c782fbba8b508a1fbdb9e9fcf1f135bcd2c9ffb59c8cc293044ff380374889940ab71f59cd3ca64dcb4881d21e8e6724d0e2ca86971279f08b3537e'
             'SKIP'
             'ee4a0704cf71d0677b4eb8b2c81c6a36d8d3f53470f3fdc271eda31f5ef6c2049ca54dcd5c37794b90194fde3e0e5b9d4658ed4995c17ab643480d47b6451b42')
 
