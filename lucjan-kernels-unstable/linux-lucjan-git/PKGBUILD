@@ -82,8 +82,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=5.5
 _srcname=linux-stable-rc
-pkgver=5.5.8.r190.g11e07aec07807.ll42
-pkgrel=0
+pkgver=5.5.8.r191.gc68f329e75f26.ll42
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -112,7 +112,7 @@ elif [ "$_bfq_rev" = "unstable" ]; then
  _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/unstable"
  _bfqrevname='bfq-reverts'
  _bfqrevver='ver2'
- _bfqrevrc='rc1'
+ _bfqrevrc='rc2'
  _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}-${_bfqrevrc}.patch"
 
 fi
@@ -476,7 +476,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'b57f62d05518bf3101b6e247b399798d0047bf3a36979132202cb1bdfe7f6ae99a5501b18139f343a3acc539966968773cbe5ecbd96b8bbbaca214a23cdb2325'
+            '7380a402f9c5cd80d2f99d12022a7ed92a47abf9e6c2fe40c0ef7423e6cbb2b457608866d976ab39caa10e62fb9188c689c7a48fbf28794f1865ec232380d474'
             'SKIP'
             '6c15f46aaa373d20f6aea9b0cad2c9f9a3f33c83255b2d6cafced8e59dc2cf3bbb1cdf00b52d21d1e5fed381962beb2166cf2463ce6092f232d706a3052ad818'
             'SKIP'
