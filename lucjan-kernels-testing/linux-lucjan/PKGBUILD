@@ -80,8 +80,8 @@ _linux_lucjan='actual'
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.5
-_minor=9
-pkgver=5.5.9.ll42
+_minor=10
+pkgver=5.5.10.ll43
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -130,7 +130,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll42'
+ _lucjanrev='ll43'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -146,7 +146,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll42'
+ _lucjanrev='ll43'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -475,11 +475,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('43ec99c2496567753f8945cbdbf131e706ced98132418b80643c9730dab125ca993defda60e0eb64a8242b76127b7550d8bee89cb7d31ae51293344a25344171'
+sha512sums=('6420778d586a70c31dfdb4df576e935acba81a7062c288e663ee3f8530a5dedd8bf628452e08e6a3909394d29e01154f1f165835ab91c038570bbc6d9d0bf3b4'
             'SKIP'
             '7380a402f9c5cd80d2f99d12022a7ed92a47abf9e6c2fe40c0ef7423e6cbb2b457608866d976ab39caa10e62fb9188c689c7a48fbf28794f1865ec232380d474'
             'SKIP'
-            '6c15f46aaa373d20f6aea9b0cad2c9f9a3f33c83255b2d6cafced8e59dc2cf3bbb1cdf00b52d21d1e5fed381962beb2166cf2463ce6092f232d706a3052ad818'
+            'd57b92e047706d34e155db74c2ff2c1640b53e110cba2512444a9b1b7a4fa3ca0d58065af350d3155563e2adbd890fce97a3c215bd3e57e3d4848afa8f79496c'
             'SKIP'
             'ee4a0704cf71d0677b4eb8b2c81c6a36d8d3f53470f3fdc271eda31f5ef6c2049ca54dcd5c37794b90194fde3e0e5b9d4658ed4995c17ab643480d47b6451b42')
 
