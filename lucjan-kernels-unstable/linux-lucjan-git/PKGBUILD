@@ -65,7 +65,7 @@ _1k_HZ_ticks=y
 # ATTENTION - one of two predefined values should be selected!
 # 'stable' - stable releases (recommended)
 # 'unstable' - rc releases (active only temporarily)
-_bfq_rev='stable'
+_bfq_rev='unstable'
 
 ### Download linux-lucjan patchset
 # ATTENTION - one of four predefined values should be selected!
@@ -82,8 +82,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=5.5
 _srcname=linux-stable-rc
-pkgver=5.5.9.r207.gbea94317c526b.ll49
-pkgrel=0
+pkgver=5.5.9.r310.g8b841eb697e17.ll49
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -111,8 +111,8 @@ elif [ "$_bfq_rev" = "unstable" ]; then
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/unstable"
  _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/unstable"
  _bfqrevname='bfq-reverts'
- _bfqrevver='ver2'
- _bfqrevrc='rc2'
+ _bfqrevver='ver3'
+ _bfqrevrc='rc1'
  _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}-${_bfqrevrc}.patch"
 
 fi
@@ -476,7 +476,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '7380a402f9c5cd80d2f99d12022a7ed92a47abf9e6c2fe40c0ef7423e6cbb2b457608866d976ab39caa10e62fb9188c689c7a48fbf28794f1865ec232380d474'
+            '29490f6033d88bcf9dd64ddcad291c4632c9cbea58dc2571c6f6828d331a7c804ee6f21b0b889d7b2a997b1d829c34eb434fb0bb6cf7a9dc81520fd5cea2903a'
             'SKIP'
             '343cb9ba51f4182d11709231c46263c57eb39ab845ae45edb79141fc1fbbc1e5d0578a65c6189366ab6ec5fff63c835b73d350b801fdc3a565dfbb6ca342ceee'
             'SKIP'
