@@ -73,7 +73,7 @@ _bfq_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -83,7 +83,7 @@ _major=5.5
 _minor=13
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.5.14.ll53
+pkgver=5.5.14.ll55
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -134,7 +134,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll53'
+ _lucjanrev='ll54'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -150,7 +150,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll43'
+ _lucjanrev='ll55'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -493,7 +493,7 @@ sha512sums=('33b7f709275143c3ba10c3537d84dcc8ef822bc16de3d78411dc4c36650746fdbfb
             'SKIP'
             '7380a402f9c5cd80d2f99d12022a7ed92a47abf9e6c2fe40c0ef7423e6cbb2b457608866d976ab39caa10e62fb9188c689c7a48fbf28794f1865ec232380d474'
             'SKIP'
-            'bb00757edef28bc4c86b9b76284efe790bca568db4f79a762e63f258e656029ea5c6ef1d56d6c4fd9deab0720c8177d7d0be012443f30128cc8c2118b7603dc8'
+            '39050fab59f4563642a1286e390f1e2f72fe501a416aa28bd50f2d1c882e766d73c72de2ad5e2cd7146505824a357ee93d7434deba5ff04a100b7f6520e32058'
             'SKIP'
             '517feefec0316e41261651a3555a15fc94560c6412321212834cc47482c23c18202aa09ed554184e827023b977adcc74a3e234f7995c39f29f4bf6db961987bf')
 
