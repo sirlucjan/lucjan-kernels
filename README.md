@@ -14,7 +14,7 @@
 
 * [BMQ](https://gitlab.com/alfredchen/linux-bmq/tree/linux-5.6.y-bmq) / [BMQ blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
 
-* [random fixes from zen-kernel](https://github.com/zen-kernel/zen-kernel/tree/5.5/master) - specific patches authored by Jan Alexander Steffens and ZEN Kernel Team
+* [random fixes from zen-kernel](https://github.com/zen-kernel/zen-kernel/tree/5.6/master) - specific patches authored by Jan Alexander Steffens and ZEN Kernel Team
 
 * [random fixes from pfkernel](https://github.com/pfactum/pf-kernel/tree/pf-5.6) / [random fixes from pfkernel](https://gitlab.com/post-factum/pf-kernel/tree/pf-5.6) - for example patches from Arch Linux or specific patches authored by Oleksandr Natalenko
 
