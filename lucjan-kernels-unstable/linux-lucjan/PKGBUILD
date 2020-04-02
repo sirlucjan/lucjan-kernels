@@ -73,17 +73,17 @@ _bfq_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='testing'
+_linux_lucjan='trunk'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
-_major=5.5
-_minor=14
+_major=5.6
+_minor=1
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.5.15.ll56
+pkgver=5.6.2.ll6
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -108,7 +108,7 @@ if [ "$_bfq_rev" = "stable" ]; then
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/stable"
  _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/stable"
  _bfqrevname='bfq-reverts'
- _bfqrevver='ver2'
+ _bfqrevver='ver1'
  _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}.patch"
 
 elif [ "$_bfq_rev" = "unstable" ]; then
@@ -116,7 +116,7 @@ elif [ "$_bfq_rev" = "unstable" ]; then
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/unstable"
  _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/unstable"
  _bfqrevname='bfq-reverts'
- _bfqrevver='ver3'
+ _bfqrevver='ver1'
  _bfqrevrc='rc1'
  _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}-${_bfqrevrc}.patch"
 
@@ -134,7 +134,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll55'
+ _lucjanrev='ll6'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -142,7 +142,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll51'
+ _lucjanrev='ll6'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -150,7 +150,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll56'
+ _lucjanrev='ll6'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -159,8 +159,8 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll1'
- _lucjanrc='rc2'
+ _lucjanrev='ll6'
+ _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 fi
@@ -170,7 +170,7 @@ source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar"{.xz,.sign
          # https://lkml.org/lkml/2019/8/23/712
          # "patch-${_stablerc}.diff::https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-${_major}.y&id2=v${_major}.${_minor}"
          # bfq-reverts
-        "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
+         # "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
          # linux-lucjan
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
          # the main kernel config files
@@ -351,6 +351,7 @@ _package-kernel() {
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices'
               'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
+  provides=(VIRTUALBOX-GUEST-MODULES WIREGUARD-MODULE)
   groups=('linux-lucjan')
 
   cd $_srcname
@@ -370,9 +371,6 @@ _package-kernel() {
 
   # remove build and source links
   rm "$modulesdir"/{source,build}
-
-  echo "Fixing permissions..."
-  chmod -Rc u=rwX,go=rX "$pkgdir"
 }
 
 _package-headers() {
@@ -450,9 +448,6 @@ _package-headers() {
   echo "Adding symlink..."
   mkdir -p "$pkgdir/usr/src"
   ln -sr "$builddir" "$pkgdir/usr/src/$pkgbase"
-
-  echo "Fixing permissions..."
-  chmod -Rc u=rwX,go=rX "$pkgdir"
 }
 
 _package-docs() {
@@ -474,9 +469,6 @@ _package-docs() {
   echo "Adding symlink..."
   mkdir -p "$pkgdir/usr/share/doc"
   ln -sr "$builddir/Documentation" "$pkgdir/usr/share/doc/$pkgbase"
-
-  echo "Fixing permissions..."
-  chmod -Rc u=rwX,go=rX "$pkgdir"
 }
 
 pkgname=("$pkgbase-kernel" "$pkgbase-headers" "$pkgbase-docs")
@@ -487,15 +479,13 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('e9e44a4e6f50ddc04260731d4ea58530f2f06fd1c9c14feb404ea42af44db58e4db5367b385cddba302aa221f686920d58623c2925c1872692275a30a769f30b'
+sha512sums=('c87fc62d986b025d8d420d51db4068dd6e98eb720988ffc2b4f2a71e77d634305a69de6c42ef4b4bd46a6d01c67b6de18cf4648d9ee856f29694c337a1e84cfb'
             'SKIP'
-            '762b3ef6365ff8295455193ac61d2664c48d3902c3f3d761a8489ae029efc137744897e9c627f750f43cf122bee42f318e49bcd9cb03a94caa6b5e2d3f2c76bf'
+            '1f07b3fcdb8c7523bfd1cc80fcb4a1e97e1a399c5970595269350595673e57071fb2e4412055399518b9d6bc45a0bae274a8a68bcc65c94b9b02cfab9324ba79'
             'SKIP'
-            '7380a402f9c5cd80d2f99d12022a7ed92a47abf9e6c2fe40c0ef7423e6cbb2b457608866d976ab39caa10e62fb9188c689c7a48fbf28794f1865ec232380d474'
+            '181312d5d032caa420c862eae5b8019b4056e3605cbcfb409e0702d69c20c8a07dcd4ca06ce8220d484801059ae3d6d9727627bc71d0dc8dd040486566a5386d'
             'SKIP'
-            '3b781950f2aa8e063fab907091efd7494ccc8a73e8d85f470a69473b7f14aac719e35daa9093f792ba872a1d82357e6cd5e9afcf37cc831fa3e8e55c871b6e2f'
-            'SKIP'
-            '517feefec0316e41261651a3555a15fc94560c6412321212834cc47482c23c18202aa09ed554184e827023b977adcc74a3e234f7995c39f29f4bf6db961987bf')
+            '69af81d8f1742f14887c91ff00f788599f993cf6117f667ecf889d6aa1ef4726b044bc512cfea26d8d1128c2e31de5c55abd76b2dbe4e62272dc80d1c3ed9323')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
