@@ -7,7 +7,8 @@
 │   │   └── sphinx-workaround.patch
 │   └── linux-lucjan-git
 │       ├── config
-│       └── PKGBUILD
+│       ├── PKGBUILD
+│       └── sphinx-workaround.patch
 ├── lucjan-kernels-unstable
 │   ├── linux-lucjan
 │   │   ├── config
@@ -17,4 +18,4 @@
 │       └── PKGBUILD
 └── README.md
 
-6 directories, 11 files
+6 directories, 12 files
