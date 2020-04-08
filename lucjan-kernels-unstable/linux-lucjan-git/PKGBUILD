@@ -82,8 +82,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=5.6
 _srcname=linux-stable-rc
-pkgver=5.6.2.r31.gf106acd0db7c.ll10
-pkgrel=0.1
+pkgver=5.6.2.r31.gf106acd0db7c.ll11
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -129,7 +129,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll10'
+ _lucjanrev='ll11'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -165,6 +165,7 @@ source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/${_srcname}.git#br
          # "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
          # linux-lucjan
          "${_lucjanpath}/${_lucjanpatch}"{,.sig}
+         'sphinx-workaround.patch'
          # the main kernel config files
         'config')
 
@@ -468,9 +469,10 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'f7ccb24a9b43bdd17e8ca57e7a930ac1da9b8d78a5c6f0c952ce69f244b75aaaa1a5f59691cacb32944521d05f3c786b371e4cc3a181bfd92a2c272d8e1b4d09'
+            'e1bf793591d3420d3e6de4e0c6c76a86ba29824e712fb99c043ef5695228fb1abefb77204ba5b4b1ef73ead56ad9306bee9c87618583f424e29e03e8718173cf'
             'SKIP'
-            'fe39f820f379b6cb8a587ff05bee4645af991e45e30937b9a1336b5e8d41028009a138a1e2235effb94ddc9d567adc377c72f97add76365035988bca86f72508')
+            '98e97155f86bbe837d43f27ec1018b5b6fdc6c372d6f7f2a0fe29da117d53979d9f9c262f886850d92002898682781029b80d4ee923633fc068f979e6c8254be'
+            '4c80916e30501d6345a180d12b1f8a7415c1b13fed9da2af8eea9e37f7a9d56e9d4d9ba7bbe452a52579ef4bb9503ba7746e692332d6ae0d84545716c0699936')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
