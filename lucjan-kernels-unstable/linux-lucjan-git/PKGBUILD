@@ -82,8 +82,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=5.6
 _srcname=linux-stable-rc
-pkgver=5.6.3.r285.g1113b108c404.ll18
-pkgrel=0
+pkgver=5.6.3.r294.g576aa353744c.ll18
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -162,10 +162,10 @@ fi
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/${_srcname}.git#branch=linux-${_major}.y"
          # bfq-reverts
-         "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
+        "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
          # linux-lucjan
-         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
-         'sphinx-workaround.patch'
+        "${_lucjanpath}/${_lucjanpatch}"{,.sig}
+        'sphinx-workaround.patch'
          # the main kernel config files
         'config')
 
