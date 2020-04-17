@@ -82,7 +82,7 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=5.6
 _srcname=linux
-pkgver=5.6.4.r0.g0a27a2949606.ll17
+pkgver=5.6.5.r0.gf07f08b09f05.ll18
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -129,7 +129,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll17'
+ _lucjanrev='ll18'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -145,7 +145,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll6'
+ _lucjanrev='ll18'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -162,7 +162,7 @@ fi
 
 source=("git://git.kernel.org/pub/scm/linux/kernel/git/stable/${_srcname}.git#branch=linux-${_major}.y"
          # bfq-reverts
-         # "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
+        "${_bfqrevpath}/${_bfqrevpatch}"{,.sig}
          # linux-lucjan
         "${_lucjanpath}/${_lucjanpatch}"{,.sig}
         'sphinx-workaround.patch'
@@ -469,7 +469,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '59f7fb1c0156ebe7809c0f042e3378c6dcbfeaa08e84de1048b2af91305dacec76e6fe4725eb03acd3d45cb49d35240f777621b2b6ff6e23655578cc5885301f'
+            'a4a54052c3107cacab2c9772c44fa1d740829e9d16a8b88eb974a9c05d806815acfe12b7292fc70348c17138e60592e3902a6f71543952dbc98f62d209ca59a4'
+            'SKIP'
+            'b5a1f2ffd7dfd83d90ffc7d28c3c76ae2b6ab4383e242f9f2acc5acabff7320a50b024024ab40f0a24f7a33bb4d30693212a47d0c503bc521aeb48853a7e834c'
             'SKIP'
             '98e97155f86bbe837d43f27ec1018b5b6fdc6c372d6f7f2a0fe29da117d53979d9f9c262f886850d92002898682781029b80d4ee923633fc068f979e6c8254be'
             '4c80916e30501d6345a180d12b1f8a7415c1b13fed9da2af8eea9e37f7a9d56e9d4d9ba7bbe452a52579ef4bb9503ba7746e692332d6ae0d84545716c0699936')
