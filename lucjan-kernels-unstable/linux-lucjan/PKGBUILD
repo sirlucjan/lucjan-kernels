@@ -73,7 +73,7 @@ _bfq_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -83,7 +83,7 @@ _major=5.6
 _minor=5
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.6.6.ll19
+pkgver=5.6.6.ll21
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -134,7 +134,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll19'
+ _lucjanrev='ll20'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -150,7 +150,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll18'
+ _lucjanrev='ll21'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -486,10 +486,10 @@ sha512sums=('42a160b6d51619e77ef3743cdafc18aa3d0c86aec0508f057730cd25f21dbb5765f
             'SKIP'
             'a4a54052c3107cacab2c9772c44fa1d740829e9d16a8b88eb974a9c05d806815acfe12b7292fc70348c17138e60592e3902a6f71543952dbc98f62d209ca59a4'
             'SKIP'
-            'ecde5484252c9427014c081b6165ee785acf39bbeb4f2c7f387bc8ec868d91b33477d997ba110775f221a0c880ae9f0a210cda3ae54e57a91b391826ba84fa66'
+            'b38e8380ae8e9f06168f6e55cef88d8c0d86ea049bb20a226dd569d02c39043277c15967f4cd320f6c0af46bbb9a5cd5b25ad79697254400e7977add71ae5508'
             'SKIP'
             '98e97155f86bbe837d43f27ec1018b5b6fdc6c372d6f7f2a0fe29da117d53979d9f9c262f886850d92002898682781029b80d4ee923633fc068f979e6c8254be'
-            '4c80916e30501d6345a180d12b1f8a7415c1b13fed9da2af8eea9e37f7a9d56e9d4d9ba7bbe452a52579ef4bb9503ba7746e692332d6ae0d84545716c0699936')
+            '881354185b1a3a26ba375c6227260769570b1905ba3eca4f44758d55897795eabee72f7272d7203dbf2ea57b30b73d785ef72d45c712eb9e9debab79b5d0862b')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
