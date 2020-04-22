@@ -65,7 +65,7 @@ _1k_HZ_ticks=y
 # ATTENTION - one of two predefined values should be selected!
 # 'stable' - stable releases (recommended)
 # 'unstable' - rc releases (active only temporarily)
-_bfq_rev='stable'
+_bfq_rev='unstable'
 
 ### Download linux-lucjan patchset
 # ATTENTION - one of four predefined values should be selected!
@@ -80,15 +80,15 @@ _linux_lucjan='actual'
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.6
-_minor=5
+_minor=6
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.6.6.ll21
+pkgver=5.6.7.ll21
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -116,7 +116,7 @@ elif [ "$_bfq_rev" = "unstable" ]; then
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/unstable"
  _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/unstable"
  _bfqrevname='bfq-reverts'
- _bfqrevver='ver1'
+ _bfqrevver='ver2'
  _bfqrevrc='rc1'
  _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}-${_bfqrevrc}.patch"
 
@@ -480,11 +480,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('42a160b6d51619e77ef3743cdafc18aa3d0c86aec0508f057730cd25f21dbb5765f20627dc938d9c9c348f64bb5608aab790d6ff8984b76a8980522d45d9cc39'
+sha512sums=('62fa97250323560323eaed57afba43f4fdef97a180ec8f0e0c39d86d41a63c3fa4242d27cda28f5c65f03290596cab2055d1ae7594c6134c3dcc821e24c21d4e'
             'SKIP'
-            '1e28cd0d3c7c107f30f6cde8b4e68512123937ee92a177fa81ee88ce152062cd1f115054e9aa7f81cdd367426437d81372223ca339540e9fbc646c8d367fb8cb'
+            '0545c29bfb4f8228038f21cc7f8c6ed15540e340ed5868025cd75d8c7a567506d2214e3393a68e7ced1a78e99b56d46f058e791ce58941462ab9fb6ddf5db0ec'
             'SKIP'
-            'a4a54052c3107cacab2c9772c44fa1d740829e9d16a8b88eb974a9c05d806815acfe12b7292fc70348c17138e60592e3902a6f71543952dbc98f62d209ca59a4'
+            '7574bc008344fde984b5e09ae2ce2dfe22dc109e1d97e3f59985d99300017e9c9221342a8f7459592b54e1a4cc82a7469f8ad4dd6dbd2a434c23219af971aeff'
             'SKIP'
             'b38e8380ae8e9f06168f6e55cef88d8c0d86ea049bb20a226dd569d02c39043277c15967f4cd320f6c0af46bbb9a5cd5b25ad79697254400e7977add71ae5508'
             'SKIP'
