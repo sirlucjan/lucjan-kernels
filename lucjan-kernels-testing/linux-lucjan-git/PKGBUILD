@@ -82,7 +82,7 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=5.6
 _srcname=linux
-pkgver=5.6.6.r0.g7c5727032160.ll22
+pkgver=5.6.7.r0.g55b2af1c23eb.ll22
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -103,7 +103,7 @@ if [ "$_bfq_rev" = "stable" ]; then
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/stable"
  _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/stable"
  _bfqrevname='bfq-reverts'
- _bfqrevver='ver1'
+ _bfqrevver='ver2'
  _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}.patch"
 
 elif [ "$_bfq_rev" = "unstable" ]; then
@@ -111,7 +111,7 @@ elif [ "$_bfq_rev" = "unstable" ]; then
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/unstable"
  _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/unstable"
  _bfqrevname='bfq-reverts'
- _bfqrevver='ver1'
+ _bfqrevver='ver2'
  _bfqrevrc='rc1'
  _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}-${_bfqrevrc}.patch"
 
@@ -469,9 +469,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'a4a54052c3107cacab2c9772c44fa1d740829e9d16a8b88eb974a9c05d806815acfe12b7292fc70348c17138e60592e3902a6f71543952dbc98f62d209ca59a4'
+            '7574bc008344fde984b5e09ae2ce2dfe22dc109e1d97e3f59985d99300017e9c9221342a8f7459592b54e1a4cc82a7469f8ad4dd6dbd2a434c23219af971aeff'
             'SKIP'
-            '94c4128fdb792a3a39e9b2774da165f1d09360c37b49d8d08c5cf922c237fd6d15a7891091d6a7d8315b358946e3c82f14bffdef1451c4dce9f626d5b71d51ce'
+            'd67e00b4058db7f586c52552f24d1c558aed662a3754745dd39107f9f43205385dc3961d162ba54b5cb851fd8fcfabf6e61be9630c69f1e498868aa85c3ebec5'
             'SKIP'
             '98e97155f86bbe837d43f27ec1018b5b6fdc6c372d6f7f2a0fe29da117d53979d9f9c262f886850d92002898682781029b80d4ee923633fc068f979e6c8254be'
             '881354185b1a3a26ba375c6227260769570b1905ba3eca4f44758d55897795eabee72f7272d7203dbf2ea57b30b73d785ef72d45c712eb9e9debab79b5d0862b')
