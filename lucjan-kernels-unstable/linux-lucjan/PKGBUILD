@@ -73,17 +73,17 @@ _bfq_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='pending'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.6
-_minor=6
+_minor=7
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.6.7.ll27
+pkgver=5.6.8.ll27
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -480,13 +480,13 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('62fa97250323560323eaed57afba43f4fdef97a180ec8f0e0c39d86d41a63c3fa4242d27cda28f5c65f03290596cab2055d1ae7594c6134c3dcc821e24c21d4e'
+sha512sums=('aa943c61a639ee1348a70878e728ec7bf25dcdfa54cac0e66d1bd3d8093e347758bb1667a8b7424636c557cfd98cf471154e9c6b42710907736f6986d9ff982c'
             'SKIP'
-            '0545c29bfb4f8228038f21cc7f8c6ed15540e340ed5868025cd75d8c7a567506d2214e3393a68e7ced1a78e99b56d46f058e791ce58941462ab9fb6ddf5db0ec'
+            'ec187f463425edd3b5c4387d4cfc8f5f60759d9bbad37a3bef7b1d678cf5992b4b1e522ff1c9724e011bc8b0b24a5607f266e2869fd672fc2ca37c13e0299de2'
             'SKIP'
             '7574bc008344fde984b5e09ae2ce2dfe22dc109e1d97e3f59985d99300017e9c9221342a8f7459592b54e1a4cc82a7469f8ad4dd6dbd2a434c23219af971aeff'
             'SKIP'
-            '98bf155c618648348069cfd00834ac44dde2bb8460f26110c4f59688b02e79f927a9b4905f87701db4de663183cfda1d9887c0aab01299907028f228d50167b3'
+            '750fa2751227377895cc3ef75203011781c420c5538f6507df7f485b80c8038cc2dd53f85a536ca2cff94dfcadf00f440e7f32b4b3438a4eea6fce047ac3e5c8'
             'SKIP'
             '98e97155f86bbe837d43f27ec1018b5b6fdc6c372d6f7f2a0fe29da117d53979d9f9c262f886850d92002898682781029b80d4ee923633fc068f979e6c8254be'
             '881354185b1a3a26ba375c6227260769570b1905ba3eca4f44758d55897795eabee72f7272d7203dbf2ea57b30b73d785ef72d45c712eb9e9debab79b5d0862b')
