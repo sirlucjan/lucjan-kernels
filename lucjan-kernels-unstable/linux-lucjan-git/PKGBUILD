@@ -93,9 +93,9 @@ makedepends=('kmod' 'bc' 'libelf' 'git' 'python-sphinx' 'python-sphinx_rtd_theme
              'graphviz' 'imagemagick')
 
 ### BFQ reverts
-# Some patches for BFQ conflict with patches for BFQ-dev. 
-# To use linux-lucjan smoothly do not change 
-# the settings below. Otherwise kernel 
+# Some patches for BFQ conflict with patches for BFQ-dev.
+# To use linux-lucjan smoothly do not change
+# the settings below. Otherwise kernel
 # will not compile.
 
 if [ "$_bfq_rev" = "stable" ]; then
@@ -119,9 +119,9 @@ fi
 
 ### linux-lucjan
 # If you do not use the kernel development version (stable-rc)
-# only the actual branch will be used. Pending and testing branches 
-# are used only in development versions (stable-rc) 
-# and the trunk branch is used only in the first releases 
+# only the actual branch will be used. Pending and testing branches
+# are used only in development versions (stable-rc)
+# and the trunk branch is used only in the first releases
 # of the new kernel line or contains only temporary solutions.
 
 if [ "$_linux_lucjan" = "actual" ]; then
