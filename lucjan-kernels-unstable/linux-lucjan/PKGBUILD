@@ -73,17 +73,17 @@ _bfq_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.6
-_minor=12
+_minor=13
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.6.13.ll48
+pkgver=5.6.14.ll49
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -150,8 +150,8 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll43'
- _lucjanrc='rc1'
+ _lucjanrev='ll49'
+ _lucjanrc='rc2'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 elif [ "$_linux_lucjan" = "trunk" ]; then
@@ -480,13 +480,13 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('34f91c07287707901786166c6056e75edabea263fa61bcce8d5c925ed48323020e1400283fa29263e6e2e740b75e0165077388330ed900d81f30b35c73fa7752'
+sha512sums=('f171638debb017ffcc5b9ce19b190cfa05638412e1f03344a5a7be45be901eb97c2df1449c9899c33a7668019f4c6d4eb1f99d864ab9a7050fbfd6b06c7aca8d'
             'SKIP'
-            'bd88fbb29895821e7418457e2fb9c9bb76fb68301cd88e0682604813b5b9f7b8102605db213a73583dcc556582fc371ac71f875c9d75630fd44c95172e8daa7a'
+            'ad118b0b913aabafdec8e28b1ecdb7d8c24de3a9e90c6433d10b74b701ed88583a1f7c46f508f55f58bc76107172f50b202d45f6bbf9fe13c4ae56350f3080fe'
             'SKIP'
             '7574bc008344fde984b5e09ae2ce2dfe22dc109e1d97e3f59985d99300017e9c9221342a8f7459592b54e1a4cc82a7469f8ad4dd6dbd2a434c23219af971aeff'
             'SKIP'
-            '58181bfcd3fd23f692cd779eaa63f82b1b9e324d0c40fef1f549fded82affc1fdb595388f3e2c97af7f0834cd70811b3c09346fb25e7ca9505003a31abfbe6e2'
+            '3cefc51cdab56e843ab738cc924f1f9483ba7c97677820cdae5ac812c07e375118e0e8c4ee6be8fe3ab367b2f23b7310b13d790c69db74e4576c965af2a4497a'
             'SKIP'
             '98e97155f86bbe837d43f27ec1018b5b6fdc6c372d6f7f2a0fe29da117d53979d9f9c262f886850d92002898682781029b80d4ee923633fc068f979e6c8254be'
             '47ec973f24b7c2a3cf60401a9bdb617f68845c582f7247ff106e93e9536a82eee51fe8018ec867b148a9de5d690b0e1409cde0abf97db3ff716846d224b04b0c')
