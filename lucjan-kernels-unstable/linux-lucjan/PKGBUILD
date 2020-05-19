@@ -83,12 +83,12 @@ _major=5.6
 _minor=13
 _minorc=$((_minor+1))
 _rcver=rc2
-pkgver=5.6.14.ll49
+pkgver=5.6.14.ll50
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -134,7 +134,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll48'
+ _lucjanrev='ll49'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -150,8 +150,8 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll49'
- _lucjanrc='rc2'
+ _lucjanrev='ll50'
+ _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 elif [ "$_linux_lucjan" = "trunk" ]; then
@@ -486,7 +486,7 @@ sha512sums=('f171638debb017ffcc5b9ce19b190cfa05638412e1f03344a5a7be45be901eb97c2
             'SKIP'
             '7574bc008344fde984b5e09ae2ce2dfe22dc109e1d97e3f59985d99300017e9c9221342a8f7459592b54e1a4cc82a7469f8ad4dd6dbd2a434c23219af971aeff'
             'SKIP'
-            '3cefc51cdab56e843ab738cc924f1f9483ba7c97677820cdae5ac812c07e375118e0e8c4ee6be8fe3ab367b2f23b7310b13d790c69db74e4576c965af2a4497a'
+            '27e0ba7d5f7eb1283710ef262e4af614fbc257b121cef1d8142b2fe715864dc27a6267bcb90df1a34cfddab1c8055d81ccc5fa872d81fa088079ee641e2b3768'
             'SKIP'
             '98e97155f86bbe837d43f27ec1018b5b6fdc6c372d6f7f2a0fe29da117d53979d9f9c262f886850d92002898682781029b80d4ee923633fc068f979e6c8254be'
             '47ec973f24b7c2a3cf60401a9bdb617f68845c582f7247ff106e93e9536a82eee51fe8018ec867b148a9de5d690b0e1409cde0abf97db3ff716846d224b04b0c')
