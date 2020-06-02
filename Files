@@ -1,7 +1,11 @@
 .
 ├── Files
 ├── lucjan-kernels-experimental
-│   └── linux-lucjan
+│   ├── linux-lucjan
+│   │   ├── config
+│   │   ├── PKGBUILD
+│   │   └── sphinx-workaround.patch
+│   └── linux-lucjan-git
 │       ├── config
 │       ├── PKGBUILD
 │       └── sphinx-workaround.patch
@@ -25,4 +29,4 @@
 │       └── sphinx-workaround.patch
 └── README.md
 
-8 directories, 17 files
+9 directories, 20 files
