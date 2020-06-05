@@ -13,7 +13,7 @@ _makenconfig=
 _makemenuconfig=
 
 ### Tweak kernel options prior to a build via xconfig
-_makexconfig=y
+_makexconfig=
 
 ### Tweak kernel options prior to a build via gconfig
 _makegconfig=
