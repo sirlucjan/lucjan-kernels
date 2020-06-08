@@ -83,14 +83,14 @@ _pkgbase=linux-lucjan
 _major=5.7
 _srcname=linux-stable-rc
 pkgver=5.7.r15.g676bb83805a9.ll7
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'bc' 'libelf' 'git' 'python-sphinx' 'python-sphinx_rtd_theme'
-             'graphviz' 'imagemagick')
+             'graphviz' 'imagemagick' 'pahole')
 
 ### BFQ reverts
 # Some patches for BFQ conflict with patches for BFQ-dev.
@@ -356,7 +356,7 @@ _package-kernel() {
   echo "$pkgbase" | install -Dm644 /dev/stdin "$modulesdir/pkgbase"
 
   echo "Installing modules..."
-  make INSTALL_MOD_PATH="$pkgdir/usr" modules_install
+  make INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 modules_install
 
   # remove build and source links
   rm "$modulesdir"/{source,build}
@@ -434,6 +434,9 @@ _package-headers() {
     esac
   done < <(find "$builddir" -type f -perm -u+x ! -name vmlinux -print0)
 
+  echo "Stripping vmlinux..."
+  strip -v $STRIP_STATIC "$builddir/vmlinux"
+
   echo "Adding symlink..."
   mkdir -p "$pkgdir/usr/src"
   ln -sr "$builddir" "$pkgdir/usr/src/$pkgbase"
@@ -474,7 +477,7 @@ sha512sums=('SKIP'
             '80fa3bb492781956211e2d36895954e08913f63c6dc0592c8c2bc7c298bc3d09e05a197c321ae5d3f67c27ae1a1e3e57732459d3dd6f760fe1c47f13d3202ec8'
             'SKIP'
             '98e97155f86bbe837d43f27ec1018b5b6fdc6c372d6f7f2a0fe29da117d53979d9f9c262f886850d92002898682781029b80d4ee923633fc068f979e6c8254be'
-            'f0a0dabe9caa461ca23f7da36547219072fc18b6011c06db8e194a2623561a49128130bce86bdeebccd05efa8ce1d7f00bbe2f0cc01c798a2fd5608480b823fd')
+            '466ea15660b0fb5042121cc01cb7760f215b21fd6c4539c28e57f468b4967393cd913ee574213288ca8b5cb92de604e82861e891b39996c6778c3b1c4b2faaf8')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
