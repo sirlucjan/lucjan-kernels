@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.7.1-ll7 Kernel Configuration
+# Linux/x86 5.7.3-ll14 Kernel Configuration
 #
 
 #
@@ -4449,6 +4449,7 @@ CONFIG_I2C_AMD_MP2=m
 CONFIG_I2C_I801=m
 CONFIG_I2C_ISCH=m
 CONFIG_I2C_ISMT=m
+CONFIG_I2C_NCT6775=m
 CONFIG_I2C_PIIX4=m
 CONFIG_I2C_CHT_WC=m
 CONFIG_I2C_NFORCE2=m
