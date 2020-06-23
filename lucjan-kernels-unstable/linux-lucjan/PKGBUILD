@@ -83,12 +83,12 @@ _major=5.7
 _minor=4
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.7.5.ll18
+pkgver=5.7.5.ll19
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -134,7 +134,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll18'
+ _lucjanrev='ll19'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -150,7 +150,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll18'
+ _lucjanrev='ll20'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -489,7 +489,7 @@ sha512sums=('cbd4088816abace8f9c3687ea23836d3bc4084cdc8568b01bf9f41ac80a9b6acc05
             'SKIP'
             '349a69c0b4ec02a437d3e7780dc2b1b85c09509b604e7ffb0c9c6964bf837d406d9bd2625e2d94112fc8c70f6ffef6183949af220d3be8bce5b69a9729854e31'
             'SKIP'
-            '940fd2afc871f1c83d7e917c84cfcd015ee4ee8198ecc14921d2590f452f02c99f5f20ed89202f4a701a01e8c3afee6a1ad339054e25be8c90a3412099b5a5f4'
+            'd8444509be85fe8d98ada030d9411259e82c36f58a928f5e29e3ff7f7e1f0c73673d90e1145cb121c3730091dcecfe96056ffdfc3e14c664381221e38ef5bb6b'
             'SKIP'
             '98e97155f86bbe837d43f27ec1018b5b6fdc6c372d6f7f2a0fe29da117d53979d9f9c262f886850d92002898682781029b80d4ee923633fc068f979e6c8254be'
             '0ef7ca40a0321acfd54e3091b7ff12dee77bd4fcb8312123f3b2ea817da7e3c3cf97410bcaae6dbd6bd9b3173c895a172d8764165d779f59de6dbbb316263fed')
