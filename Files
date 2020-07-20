@@ -16,9 +16,8 @@
 │   │   └── sphinx-workaround.patch
 │   └── linux-lucjan-git
 │       ├── config
-│       ├── linux-lucjan-git-5.7.9.r245.gd3c98742b46c.ll49-0.1.src.tar.gz
 │       ├── PKGBUILD
 │       └── sphinx-workaround.patch
 └── README.md
 
-6 directories, 15 files
+6 directories, 14 files
