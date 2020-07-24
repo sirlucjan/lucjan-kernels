@@ -14,7 +14,7 @@
 
 * [graysky's GCC patch](https://github.com/graysky2/kernel_gcc_patch) - version for gcc 10.1
 
-* [Project C](https://gitlab.com/alfredchen/linux-prjc/-/commits/linux-5.7.y-prjc) / [Project C blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
+* [Project C](https://gitlab.com/alfredchen/linux-prjc/tree/linux-5.7.y-prjc) / [Project C blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
 
 * [random fixes from zen-kernel](https://github.com/zen-kernel/zen-kernel/tree/5.7/master) - specific patches authored by Jan Alexander Steffens and ZEN Kernel Team
 
