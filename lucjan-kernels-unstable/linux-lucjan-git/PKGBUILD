@@ -82,8 +82,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=5.7
 _srcname=linux-stable-rc
-pkgver=5.7.12.r125.g0ceaad177e51.ll61
-pkgrel=0.3
+pkgver=5.7.12.r125.g0ceaad177e51.ll62
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -129,7 +129,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll61'
+ _lucjanrev='ll62'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -474,10 +474,10 @@ done
 sha512sums=('SKIP'
             '349a69c0b4ec02a437d3e7780dc2b1b85c09509b604e7ffb0c9c6964bf837d406d9bd2625e2d94112fc8c70f6ffef6183949af220d3be8bce5b69a9729854e31'
             'SKIP'
-            'a237e106a375124e29b8d71b116aa601ccbeedf59ea9ee5caddd15d73cc45326f7cd15548c8adffd81844b20f274c66ed2236bddea7c68153371d2f96f4ca9aa'
+            '85b17179de1e41ffb7e303a08b087020216741c0f4252f0973b14ad656e9c12cc8999fac5028b46273164a829fb78ebc7870da8f6a8ab2b0bd6f800a5b86f60e'
             'SKIP'
             '98e97155f86bbe837d43f27ec1018b5b6fdc6c372d6f7f2a0fe29da117d53979d9f9c262f886850d92002898682781029b80d4ee923633fc068f979e6c8254be'
-            '15e30888da1edb278615e164de7f5619e435536ec21db6b0da0044cd675568c822e3736eb72cf2fccd387ea36d4e0bbf8d9d6b5b8d15885ef3c4c62970569b2f')
+            '23e967b8797ed6e367297ef4dc2d0e96d67656318864f9c8fe0826040b1fe040b994b2530314b4351bf11fe0343f427dd6e011e06e5e636452ebd1e583035048')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
