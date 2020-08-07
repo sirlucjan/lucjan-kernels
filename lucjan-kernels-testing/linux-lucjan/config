@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.7.11-ll54 Kernel Configuration
+# Linux/x86 5.7.14-ll62 Kernel Configuration
 #
 
 #
@@ -200,6 +200,7 @@ CONFIG_PID_NS=y
 CONFIG_NET_NS=y
 CONFIG_CHECKPOINT_RESTORE=y
 CONFIG_SCHED_AUTOGROUP=y
+SCHED_AUTOGROUP_DEFAULT_ENABLED=y
 # CONFIG_SYSFS_DEPRECATED is not set
 CONFIG_RELAY=y
 CONFIG_BLK_DEV_INITRD=y
