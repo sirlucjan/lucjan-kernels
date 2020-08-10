@@ -80,15 +80,15 @@ _linux_lucjan='actual'
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.7
-_minor=13
+_minor=14
 _minorc=$((_minor+1))
-_rcver=rc2
-pkgver=5.7.14.ll62
+_rcver=rc1
+pkgver=5.7.15.ll62
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -483,9 +483,9 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('60af6a81e86f7502b3ab94366107f638ac0656c4cc000d4393ab1b55dae1742cbde161b462a5de504285cd0baad22164dcac52cf38b8a0d98bfd5c638979fd71'
+sha512sums=('2130ea327ff02aedd63e6de266a5dc7993d1706955d308788e7bfdf524210509a549ebcfdd0b97952ebd531a46f3d412f1053f5accf72f5314b6570dc866b585'
             'SKIP'
-            'faa2e99645ae71abb7cb3649e9dd30c422855c3a01cb6f8651121328fa3a8007f7198e13bdb9d080eef3033bd4ae2d1c0f3efdcd51b88e049446bfc51e3c5fa8'
+            '29e5ae98a9319106d1f176bb94648d6b5cf3967b07e749b975894574fa860dde01eaac3ab5e8356d5df3cec6bd0eea3449e7b856eb99f4ae7940beaaa0bb96f7'
             'SKIP'
             '349a69c0b4ec02a437d3e7780dc2b1b85c09509b604e7ffb0c9c6964bf837d406d9bd2625e2d94112fc8c70f6ffef6183949af220d3be8bce5b69a9729854e31'
             'SKIP'
