@@ -81,7 +81,7 @@ pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.8
 _minor=7
-pkgver=5.8.7.ll12
+pkgver=5.8.7.ll13
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -130,7 +130,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll12'
+ _lucjanrev='ll13'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -475,10 +475,10 @@ sha512sums=('f529143fad82d0ab36a6f0f2b3ff1e00be12c53bdee7248b371206de0668f21b944
             'SKIP'
             '31a53157734564da378aad5dc084db43f34fe868c78cebf4c6625d255cf02765b6a7125b7a7a79841a28e8087a6ed01715507f0531a152220261a2b19e3c3d29'
             'SKIP'
-            '41749646db03e9435c2a1299c56c1b0b03673a123bd90cb264cea762889d74f2e006d5fde013d44cc60c6b89b2f9e27feaae401f5487e03788f3db7ed3f1d719'
+            '61d852220f12bb0f87185a3d573f2f763663172d9b9bed19e2ccc1468eab5efb7d860591415f0e088950fd8cce49e5e8aee96b6a91f51a0665d82665c0ccbcae'
             'SKIP'
             '98e97155f86bbe837d43f27ec1018b5b6fdc6c372d6f7f2a0fe29da117d53979d9f9c262f886850d92002898682781029b80d4ee923633fc068f979e6c8254be'
-            '495cc911ece3e2a69e907ae57926195dff62f5ace6c2ff246c7eb6bbb2cb1bf1cacb22bf03055ea74e2d8fcb64541247c51c5b6dbbcbb5b7d1c8aac084f2124f')
+            'a5c545e54ed046a52e7db834c03bf37d4185c502e6e2455c86ce589cb8615b4e6f9aea259f5e44989ca26e16c652901e0076998692096a358e19eeedbc5eaec3')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
