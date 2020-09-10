@@ -267,12 +267,12 @@ prepare() {
     ### Selecting the CPU scheduler
 	if [ "$_projectc" = "bmq" ]; then
 		echo "Selecting BMQ CPU scheduler..."
-		sed -i -e s'/# CONFIG_SCHED_BMQ is not set/CONFIG_SCHED_BMQ=y/' \
-                    -i -e s'/CONFIG_SCHED_PDS=y/# CONFIG_SCHED_PDS is not set/' ./.config
-        elif [ "$_projectc" = "pds" ]; then
+		sed -i -e s'/^# CONFIG_SCHED_BMQ is not set/CONFIG_SCHED_BMQ=y/' \
+                    -i -e s'/^CONFIG_SCHED_PDS=y/# CONFIG_SCHED_PDS is not set/' ./.config
+	elif [ "$_projectc" = "pds" ]; then
 		echo "Selecting PDS CPU scheduler..."
-		sed -i -e s'/CONFIG_SCHED_BMQ=y/# CONFIG_SCHED_BMQ is not set/' \
-                    -i -e s'/# CONFIG_SCHED_PDS is not set/CONFIG_SCHED_PDS=y/' ./.config
+		sed -i -e s'/^CONFIG_SCHED_BMQ=y/# CONFIG_SCHED_BMQ is not set/' \
+                    -i -e s'/^# CONFIG_SCHED_PDS is not set/CONFIG_SCHED_PDS=y/' ./.config
 	fi
 
     ### Enable KBUILD_CFLAGS -O3
