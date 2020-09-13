@@ -59,7 +59,7 @@ _kyber_disable=y
 # ATTENTION - one of two predefined values should be selected!
 # 'bmq' - select 'BitMap Queue CPU scheduler' 
 # 'pds' - select 'Priority and Deadline based Skip list multiple queue CPU scheduler'
-_projectc='bmq'
+_projectc='pds'
 
 ### Enable KBUILD_CFLAGS -O3
 _cc_harder=y
@@ -94,7 +94,7 @@ _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
