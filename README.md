@@ -10,7 +10,7 @@
 
 * [bfq-dev-lucjan](https://github.com/sirlucjan/bfq-mq-lucjan/tree/dev-bfq-on-5.6-lucjan) - latest fixes authored by Paolo Valente and BFQ Team and forked by Piotr Gorski
 
-* [bfq-dev-lucjan-rc](https://github.com/sirlucjan/kernel-patches/tree/master/5.8/bfq-dev-lucjan) / [bfq-dev-rc](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.8/bfq-dev-lucjan) - specific patches authored by Paolo Valente and Piotr Gorski
+* [bfq-dev-lucjan-rc](https://github.com/sirlucjan/kernel-patches/tree/master/5.8/bfq-dev-lucjan) / [bfq-dev-lucjan-rc](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.8/bfq-dev-lucjan) - specific patches authored by Paolo Valente and Piotr Gorski
 
 * [graysky's GCC patch](https://github.com/graysky2/kernel_gcc_patch) - version for gcc 10.1
 
