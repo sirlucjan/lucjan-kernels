@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.8.7.ll13 Kernel Configuration
+# Linux/x86 5.8.10.ll23 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 10.2.0"
 CONFIG_CC_IS_GCC=y
@@ -157,8 +157,8 @@ CONFIG_HAVE_UNSTABLE_SCHED_CLOCK=y
 # Scheduler features
 #
 CONFIG_SCHED_ALT=y
-CONFIG_SCHED_BMQ=y
-# CONFIG_SCHED_PDS is not set
+# CONFIG_SCHED_BMQ is not set
+CONFIG_SCHED_PDS=y
 CONFIG_UCLAMP_TASK=y
 CONFIG_UCLAMP_BUCKETS_COUNT=5
 # end of Scheduler features
