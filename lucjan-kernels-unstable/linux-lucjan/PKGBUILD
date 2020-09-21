@@ -71,7 +71,7 @@ _1k_HZ_ticks=y
 # ATTENTION - one of two predefined values should be selected!
 # 'stable' - stable releases (recommended)
 # 'unstable' - rc releases (active only temporarily)
-_bfq_rev='stable'
+_bfq_rev='unstable'
 
 ### Download linux-lucjan patchset
 # ATTENTION - one of four predefined values should be selected!
@@ -79,17 +79,17 @@ _bfq_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.8
-_minor=9
+_minor=10
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.8.10.ll24
+pkgver=5.8.11.ll25
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -156,7 +156,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll23'
+ _lucjanrev='ll25'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -500,13 +500,13 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('d3a3a494a5ddc258d6e8eaf92eeb8957ca94ecc8657157c0647369772630848d3fb3633133fd184cc020a148b659d95a6e3d850d435c64ffa55e2f5156687220'
+sha512sums=('cff8cbbf30b8a8b3e151573d36dd6a36e3ddf849f1866f02c811c30a95945d76752051aff6c5b680d19d72dc42a6238ba438f3e00755c1eb64b5ba0276fbad0f'
             'SKIP'
-            '50228b7aba5537ab3820e4a68a0f074be09d503e58c9fb29a3946a73de00e0c688e7ab541dc16ffd9d00e1ad34e90da451fdb1be92dbd3da3afc0b1d31e056f8'
+            '975a9ce61dac464372b752da1c652691249abc152836c9215db0bf9b39ea7a5d2aaaea67c1a4537113143031e6529bae2bc76196e71b1ac8c1431bdb63290a6f'
             'SKIP'
-            '31a53157734564da378aad5dc084db43f34fe868c78cebf4c6625d255cf02765b6a7125b7a7a79841a28e8087a6ed01715507f0531a152220261a2b19e3c3d29'
+            '43b3dabae1111fc5579034e7bca30bce249117a9dae6dcbf42e4a8847b0085061658f945685d0500f6717417b5ba4280ab1665351c30845ab83090e237260602'
             'SKIP'
-            '8b93c1231accc22bea109a13762197198098b3ce7b9e0e1e23a5195a48433b78a2388b0acb5b8cd113fbd0ce1f90553af616792fd399178bcf004fa2b9a6bc36'
+            'aa394c2235769401cc32d7e04ff2cbf5f09d0b62f97e81d79c66ad10ade7f7124a56e6083811155ae0a0254668bc4a16fe65b0480defb94cd92355744d099d43'
             'SKIP'
             '98e97155f86bbe837d43f27ec1018b5b6fdc6c372d6f7f2a0fe29da117d53979d9f9c262f886850d92002898682781029b80d4ee923633fc068f979e6c8254be'
             '806a4a560379f71081f2970457b8577698039dc8b6d2b0ce66e553e43098edcc5462073e94178c58c2199294219a302b6fe3c1ada33d01f9539694233766ddd1')
