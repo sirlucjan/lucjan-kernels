@@ -86,8 +86,8 @@ _linux_lucjan='actual'
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.8
-_minor=10
-pkgver=5.8.10.ll25
+_minor=11
+pkgver=5.8.11.ll26
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -110,7 +110,7 @@ if [ "$_bfq_rev" = "stable" ]; then
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/stable"
  _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/stable"
  _bfqrevname='bfq-reverts'
- _bfqrevver='ver2'
+ _bfqrevver='ver3'
  _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}.patch"
 
 elif [ "$_bfq_rev" = "unstable" ]; then
@@ -136,7 +136,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll25'
+ _lucjanrev='ll26'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -488,11 +488,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('cff8cbbf30b8a8b3e151573d36dd6a36e3ddf849f1866f02c811c30a95945d76752051aff6c5b680d19d72dc42a6238ba438f3e00755c1eb64b5ba0276fbad0f'
+sha512sums=('bb6994f09aabfb0076f3023dd8359c5c569a4b398d3a3c3c8d6b27052092cab56ad675f45dd6ceba7fe431f2a6a587858f3c21415b5a00adb346bd2c68d85b0f'
             'SKIP'
-            '31a53157734564da378aad5dc084db43f34fe868c78cebf4c6625d255cf02765b6a7125b7a7a79841a28e8087a6ed01715507f0531a152220261a2b19e3c3d29'
+            '43b3dabae1111fc5579034e7bca30bce249117a9dae6dcbf42e4a8847b0085061658f945685d0500f6717417b5ba4280ab1665351c30845ab83090e237260602'
             'SKIP'
-            '58e3dfe63fe24b060ec5739684753cca2a238f62158d075bd8194769633c1d3e00d6a38bb2856fa49d8b52091bbf8a6856e6b360b555b87c85ab48316e239323'
+            'a02e78063422cb2f51d993a6d3364ac3010d0d492b9d5e8d728daa2a01fbfc88771923355af27b09d9dcc06821c6117ff189b059b5d4941999b67700260a163f'
             'SKIP'
             '98e97155f86bbe837d43f27ec1018b5b6fdc6c372d6f7f2a0fe29da117d53979d9f9c262f886850d92002898682781029b80d4ee923633fc068f979e6c8254be'
             '806a4a560379f71081f2970457b8577698039dc8b6d2b0ce66e553e43098edcc5462073e94178c58c2199294219a302b6fe3c1ada33d01f9539694233766ddd1')
