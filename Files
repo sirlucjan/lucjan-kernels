@@ -10,12 +10,11 @@
 ├── lucjan-kernels-unstable
 │   ├── linux-lucjan
 │   │   ├── config
-│   │   ├── PKGBUILD
-│   │   └── sphinx-workaround.patch
+│   │   └── PKGBUILD
 │   └── linux-lucjan-git
 │       ├── config
 │       ├── PKGBUILD
 │       └── sphinx-workaround.patch
 └── README.md
 
-6 directories, 12 files
+6 directories, 11 files
