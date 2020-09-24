@@ -13,8 +13,7 @@
 │   │   └── PKGBUILD
 │   └── linux-lucjan-git
 │       ├── config
-│       ├── PKGBUILD
-│       └── sphinx-workaround.patch
+│       └── PKGBUILD
 └── README.md
 
-6 directories, 11 files
+6 directories, 10 files
