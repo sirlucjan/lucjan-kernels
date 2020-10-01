@@ -89,7 +89,7 @@ _pkgbase=linux-lucjan
 _major=5.8
 _srcname=linux
 pkgver=5.8.13.r0.gcdcec6869074.ll32
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -296,11 +296,9 @@ prepare() {
             sed -i -e 's/CONFIG_NUMA=y/# CONFIG_NUMA is not set/' \
                 -i -e '/CONFIG_AMD_NUMA=y/d' \
                 -i -e '/CONFIG_X86_64_ACPI_NUMA=y/d' \
-                -i -e '/CONFIG_NODES_SPAN_OTHER_NODES=y/d' \
                 -i -e '/# CONFIG_NUMA_EMU is not set/d' \
-                -i -e '/CONFIG_NODES_SHIFT=6/d' \
+                -i -e '/CONFIG_NODES_SHIFT=5/d' \
                 -i -e '/CONFIG_NEED_MULTIPLE_NODES=y/d' \
-                -i -e '/# CONFIG_MOVABLE_NODE is not set/d' \
                 -i -e '/CONFIG_USE_PERCPU_NUMA_NODE_ID=y/d' \
                 -i -e '/CONFIG_ACPI_NUMA=y/d' ./.config
         fi
