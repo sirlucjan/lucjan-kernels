@@ -88,7 +88,7 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=5.9
 _srcname=linux
-pkgver=5.9.r0.gbbf5c979011a.ll13
+pkgver=5.9.r0.gbbf5c979011a.ll14
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -135,7 +135,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll13'
+ _lucjanrev='ll14'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -143,7 +143,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll13'
+ _lucjanrev='ll14'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -151,7 +151,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll13'
+ _lucjanrev='ll14'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -160,7 +160,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll13'
+ _lucjanrev='ll14'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -488,7 +488,7 @@ done
 sha512sums=('SKIP'
             '9f4051fb4f6920b751a69b8c0fdb14d25a993da945b831181f00749983fca520feff4382b69e571ee118439e2dc97369fa8534a0b704b535dc8c6cd2135c48ad'
             'SKIP'
-            '2ec3fd2e769e3a9a0853f4ff49134a2b37d7312334cd47748bc1b5b9abead3898b910d731067f8d22632e1fb6a52ddb821a24acd7fd9b832d10ccb689c4fc57d'
+            'a09aa0ffbd3e1a20e646f80b0413bb32c456605093f3e0211b9d96f18d42ddd42ca076b601e3f550e8872bc688f29126af38f4b8a941b50c234c9a020df0cfe2'
             'SKIP'
             '603341b1fda2d84b0b0886fcaf51d833833303711f3671c5c8f3c74fdca569a5c79be5ba492c8b49e0f2256f132f197f7cb1346fb13557320e148fb71624a69c')
 
