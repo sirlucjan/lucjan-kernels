@@ -79,17 +79,17 @@ _bfq_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='trunk'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan-git
 _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
-_major=5.8
+_major=5.9
 _srcname=linux-stable-rc
-pkgver=5.8.14.r125.gf4ed6fb8f168.ll39
-pkgrel=0.3
+pkgver=5.9.1.r29.gf4abe3a710d1.ll19
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -109,7 +109,7 @@ if [ "$_bfq_rev" = "stable" ]; then
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/stable"
  _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/stable"
  _bfqrevname='bfq-reverts'
- _bfqrevver='ver3'
+ _bfqrevver='ver1'
  _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}.patch"
 
 elif [ "$_bfq_rev" = "unstable" ]; then
@@ -117,7 +117,7 @@ elif [ "$_bfq_rev" = "unstable" ]; then
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/unstable"
  _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/unstable"
  _bfqrevname='bfq-reverts'
- _bfqrevver='ver3'
+ _bfqrevver='ver1'
  _bfqrevrc='rc1'
  _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}-${_bfqrevrc}.patch"
 
@@ -135,7 +135,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll39'
+ _lucjanrev='ll19'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -143,7 +143,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll39'
+ _lucjanrev='ll19'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -151,7 +151,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll26'
+ _lucjanrev='ll19'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -160,7 +160,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll11'
+ _lucjanrev='ll19'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -486,11 +486,11 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '43b3dabae1111fc5579034e7bca30bce249117a9dae6dcbf42e4a8847b0085061658f945685d0500f6717417b5ba4280ab1665351c30845ab83090e237260602'
+            '9f4051fb4f6920b751a69b8c0fdb14d25a993da945b831181f00749983fca520feff4382b69e571ee118439e2dc97369fa8534a0b704b535dc8c6cd2135c48ad'
             'SKIP'
-            '6a88fd505ab67307a49da4023b93807d117d6ef2d3ad30cac5a4363e9d3e4455161a430ab2ec8dd312166d6fde9ebef72c50fb0449561b2f211e8c3a61dd236d'
+            '0156deeeeeeee9ccd4c9af2ec1653679b939660d6d2e8b6e12a214ac323e21f5d3959a6c73182a35fc2bfbe2dece9a14832bf6d45ab2e59c49d144c3c619ca98'
             'SKIP'
-            'f1564b94dffb3e3e1af4b22f879d0887c85277d34cb96b82642157470bc65ab9c366f7b5b07cb9a310a5924685f3b983ed37edd1eaedcd043ecbb10065f29287')
+            '603341b1fda2d84b0b0886fcaf51d833833303711f3671c5c8f3c74fdca569a5c79be5ba492c8b49e0f2256f132f197f7cb1346fb13557320e148fb71624a69c')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
