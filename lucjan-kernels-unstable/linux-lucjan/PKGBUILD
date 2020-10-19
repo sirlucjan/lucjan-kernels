@@ -79,19 +79,20 @@ _bfq_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='trunk'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
-_major=5.8
-_minor=15
+_major=5.9
+_minor=0
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.8.16.ll39
+pkgver=5.9.1.ll19
 _pkgver=${_major}.${_minorc}
-_stable=${_major}.${_minor}
+#_stable=${_major}.${_minor}
+_stable=${_major}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
 pkgrel=0
@@ -114,7 +115,7 @@ if [ "$_bfq_rev" = "stable" ]; then
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/stable"
  _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/stable"
  _bfqrevname='bfq-reverts'
- _bfqrevver='ver3'
+ _bfqrevver='ver1'
  _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}.patch"
 
 elif [ "$_bfq_rev" = "unstable" ]; then
@@ -122,7 +123,7 @@ elif [ "$_bfq_rev" = "unstable" ]; then
 # _bfqrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_major}/bfq-reverts/unstable"
  _bfqrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_major}/bfq-reverts/unstable"
  _bfqrevname='bfq-reverts'
- _bfqrevver='ver3'
+ _bfqrevver='ver1'
  _bfqrevrc='rc1'
  _bfqrevpatch="${_major}-${_bfqrevname}-${_bfqrevver}-${_bfqrevrc}.patch"
 
@@ -140,7 +141,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll39'
+ _lucjanrev='ll19'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -148,7 +149,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll39'
+ _lucjanrev='ll19'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -156,7 +157,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll26'
+ _lucjanrev='ll19'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -165,7 +166,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll11'
+ _lucjanrev='ll19'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -497,15 +498,15 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('36233a6a8e20cf885aa5e6fed52d3e7ff3cf3a1b92b2a3e63255194abf3cffa8716ff025daa65712bb30186cee173c03af44a99f17e9755080fe5756b9745fc3'
+sha512sums=('d3d92ce4246bad74c9a784212f160d98449b1e8793970c2c308276568d852b8effe0528686bdb87d55d691f09a826abf7938d69bdd4759ce65ddd5c05ffe4eca'
             'SKIP'
-            'e0948557ab8701bf4966bd7ea7981f26347621bc6841be48c54bad32ac73fde16b9898bf76478a8884077ab720f4fef83ab7036cfa31ceac492cd5a35c8f0963'
+            '7e685207250007079a547cc94d5d1fc90ea15a080a00a03cd56c050e21375f47b3797389ad899e928324da2adc63153fc3309e51778d5ca3c1cf1bc670a2de32'
             'SKIP'
-            '43b3dabae1111fc5579034e7bca30bce249117a9dae6dcbf42e4a8847b0085061658f945685d0500f6717417b5ba4280ab1665351c30845ab83090e237260602'
+            '9f4051fb4f6920b751a69b8c0fdb14d25a993da945b831181f00749983fca520feff4382b69e571ee118439e2dc97369fa8534a0b704b535dc8c6cd2135c48ad'
             'SKIP'
-            '6a88fd505ab67307a49da4023b93807d117d6ef2d3ad30cac5a4363e9d3e4455161a430ab2ec8dd312166d6fde9ebef72c50fb0449561b2f211e8c3a61dd236d'
+            '0156deeeeeeee9ccd4c9af2ec1653679b939660d6d2e8b6e12a214ac323e21f5d3959a6c73182a35fc2bfbe2dece9a14832bf6d45ab2e59c49d144c3c619ca98'
             'SKIP'
-            'f1564b94dffb3e3e1af4b22f879d0887c85277d34cb96b82642157470bc65ab9c366f7b5b07cb9a310a5924685f3b983ed37edd1eaedcd043ecbb10065f29287')
+            '603341b1fda2d84b0b0886fcaf51d833833303711f3671c5c8f3c74fdca569a5c79be5ba492c8b49e0f2256f132f197f7cb1346fb13557320e148fb71624a69c')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
