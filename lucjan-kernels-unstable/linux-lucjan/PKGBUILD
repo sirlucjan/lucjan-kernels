@@ -79,22 +79,22 @@ _bfq_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.9
-_minor=1
+_minor=2
 _minorc=$((_minor+1))
 _rcver=rc1
-pkgver=5.9.2.ll30
+pkgver=5.9.3.ll31
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -156,7 +156,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll30'
+ _lucjanrev='ll31'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -490,13 +490,13 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('96af08c1dc964e5dbb3d221880ef8ca246f13370d2dc2f5ae64039f0352efc687c7446a2b4f86dad553b776ee75f78bbf58bb9bc845c9b57a9013ece63264874'
+sha512sums=('98efc0d10e76685eb3280546d8d9b0251062a8ede05959d0de95df18414d2a07ced0a585ba58dd5aad188ad2761d7c5150cd8a8435a6bb53d692702f434732a9'
             'SKIP'
-            '10c2806ef4a6fc2a25aa558e0042e232f64b16ce42c3dbb8e45bbf9ee1b8a21d29ff8391c46c69c18ebb695616a98f509addd57a7d99731112fde1a61a089a2f'
+            'f8fd7e7829c1c539bf2d0ef6ad3a5a9f064d4d1d1031679a816c4bdeea11732713bb9618f8abce9e8456116410692713809eea14dd9af065d37fa03240fb5047'
             'SKIP'
             '9f4051fb4f6920b751a69b8c0fdb14d25a993da945b831181f00749983fca520feff4382b69e571ee118439e2dc97369fa8534a0b704b535dc8c6cd2135c48ad'
             'SKIP'
-            '89152ebd0ac9ab3d0f40b30090452a8acafa48f10d33c5856c5bbd9f01e212f043f8e291b3302ad405a38a0fd71054cd01706ba2a6c83e5c9ca81c3a5d975dfa'
+            'f3dc08128c7f4b26378ceeea33800aa89e00d35c19cf2bf0057d044767f0c3c1fbce3ec1295aa5bb88f3d00c8ffa1a4440f6955e33741de12a47cc9fe8ab4478'
             'SKIP'
             'a37dce4d987f75503cac49bd01e74b6a2ebe015079e397079754d18f142d399172a073051095c27785ead72285e9a28596fc00f5423d48b9e34df592e6f02776')
 
