@@ -88,8 +88,8 @@ _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
 _major=5.9
 _srcname=linux-stable-rc
-pkgver=5.9.3.r309.gcce2c5ced888.ll33
-pkgrel=0
+pkgver=5.9.3.r356.ge82877680501.ll33
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -481,7 +481,7 @@ done
 sha512sums=('SKIP'
             '9f4051fb4f6920b751a69b8c0fdb14d25a993da945b831181f00749983fca520feff4382b69e571ee118439e2dc97369fa8534a0b704b535dc8c6cd2135c48ad'
             'SKIP'
-            '095226639580c01165e984ff63192140979114310befac465f5d0583287f8a7553d720bc5ee52fbb31950671629373740bee41f1a5894a4aec251213637f63cb'
+            '9c621dcd0970f21ce14c145ec93f0cbbde7dd911ce44a8f88012acd2ae7e56f8e3439a8d814da6f0ca51c14b5e8cf7264f8d3166119a7e888c6c912b59dcdce5'
             'SKIP'
             'a37dce4d987f75503cac49bd01e74b6a2ebe015079e397079754d18f142d399172a073051095c27785ead72285e9a28596fc00f5423d48b9e34df592e6f02776')
 
