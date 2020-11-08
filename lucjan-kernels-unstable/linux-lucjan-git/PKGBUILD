@@ -89,8 +89,8 @@ _pkgbase=linux-lucjan
 _major=5.9
 _patches=${_major}-dev
 _srcname=linux-stable-rc
-pkgver=5.9.6.r63.gd32b9b5f0816.ll36
-pkgrel=0.1
+pkgver=5.9.6.r72.gc8f4a6ef2495.ll36
+pkgrel=0.2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -483,7 +483,7 @@ done
 sha512sums=('SKIP'
             'a452a64d86a33d68c57b7c27e8e4ea7c85827425ca83ea0c2309aa570de362480aaac7481e8863e9a8d0eaceab738001be2a9e7fda06d9e4c09455db83b62201'
             'SKIP'
-            '4c493c1aa35974a7d921431c86be15052f413a6a21ff131b01089cc264579d22bd9046b173576d9b01edd7956ee6fa7e0cf41f3ffdd208ff4d5306848a38bc7f'
+            '98e7172ba7e0a4c3f07ecd79633640d7792b4396e159cfd3771aef04cfa55c2893f2992a75ae79bab0bb523a59e2a8017662c5ffb85b8b72aec7be98fffa225c'
             'SKIP'
             '5ba22c5226f737f1a5a6b727d5505fef84cbe070c24d92108784c033cf3e95a74c21c97c459b0612d7e73c5ef737d0c90693ce72a6e12583508305aeba42d576')
 
