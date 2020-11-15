@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.9.8.ll39 Kernel Configuration
+# Linux/x86 5.9.8.ll42 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 10.2.0"
 CONFIG_CC_IS_GCC=y
@@ -10647,17 +10647,7 @@ CONFIG_BINARY_PRINTF=y
 #
 # Library routines
 #
-
-#
-# RAID 6
-#
 CONFIG_RAID6_PQ=m
-CONFIG_RAID6_FORCE_ALGO=y
-# CONFIG_RAID6_FORCE_INT is not set
-# CONFIG_RAID6_FORCE_SSSE3 is not set
-CONFIG_RAID6_FORCE_AVX2=y
-# end of RAID 6
-
 CONFIG_RAID6_PQ_BENCHMARK=y
 CONFIG_LINEAR_RANGES=y
 CONFIG_PACKING=y
