@@ -89,7 +89,7 @@ _pkgbase=linux-lucjan
 _major=5.9
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.9.8.r0.g951cbbc386ff.ll42
+pkgver=5.9.8.r0.g951cbbc386ff.ll43
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -119,7 +119,7 @@ elif [ "$_ll_rev" = "unstable" ]; then
 # _llrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_patches}/ll-reverts/unstable"
  _llrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_patches}/ll-reverts/unstable"
  _llrevname='ll-reverts'
- _llrevver='ver2'
+ _llrevver='ver5'
  _llrevrc='rc1'
  _llrevpatch="${_major}-${_llrevname}-${_llrevver}-${_llrevrc}.patch"
 
@@ -137,7 +137,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll42'
+ _lucjanrev='ll43'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -153,7 +153,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll37'
+ _lucjanrev='ll44'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -483,7 +483,7 @@ done
 sha512sums=('SKIP'
             'a452a64d86a33d68c57b7c27e8e4ea7c85827425ca83ea0c2309aa570de362480aaac7481e8863e9a8d0eaceab738001be2a9e7fda06d9e4c09455db83b62201'
             'SKIP'
-            '96a9f170f19f72dbc5980dc5810f649007427a3c2f487ff3d044fb70596e0be64fb02faacf6e87aaf3abf616ccb495fa5d087405caf7e3c1f13cc6f7d5df5a01'
+            '4232a17542bc23838cbe3614f6a890fa9f03eac7e0f98badba24c874be972d3f990d72ed37a744a1b18cccdd1da4f4602a0aaad75fc7ee73082dca27086893db'
             'SKIP'
             'efdf1c2c20739c5d657ca108d6d61630215cf6f1c610dce4e409b4f93385a5001785f238e7b6b0805d2569efa33cced02a6c89cbcfb5e9d30fcc284b5e53fc00')
 
