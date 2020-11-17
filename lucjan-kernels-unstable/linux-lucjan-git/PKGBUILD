@@ -79,7 +79,7 @@ _ll_rev='unstable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='pending'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -89,7 +89,7 @@ _pkgbase=linux-lucjan
 _major=5.9
 _patches=${_major}-dev
 _srcname=linux-stable-rc
-pkgver=5.9.8.r75.gf022ed13f4d9.ll42
+pkgver=5.9.8.r256.gfb1622495321.ll43
 pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -119,7 +119,7 @@ elif [ "$_ll_rev" = "unstable" ]; then
 # _llrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_patches}/ll-reverts/unstable"
  _llrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_patches}/ll-reverts/unstable"
  _llrevname='ll-reverts'
- _llrevver='ver2'
+ _llrevver='ver5'
  _llrevrc='rc1'
  _llrevpatch="${_major}-${_llrevname}-${_llrevver}-${_llrevrc}.patch"
 
@@ -153,7 +153,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll37'
+ _lucjanrev='ll43'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -481,9 +481,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'aa77afdda606640559d4f05ce657c225b613c04ad5187ddfcf7c5e89fea50b3a8655ffe26de9f7f66c2592f0ef2f668aa599a100a3ac9ff1c793d861ca107b9f'
+            'b6fd5707e83af315c058d7d301361c5d409ec914e8386d8059d5a66b661b16196e219c7d42efde8788d6b1a157543ab14808351819d4cef42f48228e958273d4'
             'SKIP'
-            'cd847d9d3c48936b32cb436c752d4aea9d50737afa47f2ad6e40267b08e177a6c1aed3865326caa0f109cece46a07b838529df7ed7c4b1090ab7f33bc7a4a3f2'
+            'c94cc854994fdee280d39626cc43869bae08c67af8d9f6c146313abe90d7270180c8d86213a0c440c44ba214fa61a2bd113ae29769a7f6bf07c424a04db5f21d'
             'SKIP'
             'efdf1c2c20739c5d657ca108d6d61630215cf6f1c610dce4e409b4f93385a5001785f238e7b6b0805d2569efa33cced02a6c89cbcfb5e9d30fcc284b5e53fc00')
 
