@@ -71,7 +71,7 @@ _1k_HZ_ticks=y
 # ATTENTION - one of two predefined values should be selected!
 # 'stable' - stable releases (recommended)
 # 'unstable' - rc releases (active only temporarily)
-_ll_rev='unstable'
+_ll_rev='stable'
 
 ### Download linux-lucjan patchset
 # ATTENTION - one of four predefined values should be selected!
@@ -79,7 +79,7 @@ _ll_rev='unstable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='testing'
+_linux_lucjan='actual'
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -90,7 +90,7 @@ _major=5.9
 _patches=${_major}-dev
 _srcname=linux-stable-rc
 pkgver=5.9.8.r256.gfb1622495321.ll45
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -111,7 +111,7 @@ if [ "$_ll_rev" = "stable" ]; then
 # _llrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_patches}/ll-reverts/stable"
  _llrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_patches}/ll-reverts/stable"
  _llrevname='ll-reverts'
- _llrevver='ver1'
+ _llrevver='ver5'
  _llrevpatch="${_major}-${_llrevname}-${_llrevver}.patch"
 
 elif [ "$_ll_rev" = "unstable" ]; then
@@ -137,7 +137,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll44'
+ _lucjanrev='ll45'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -481,9 +481,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'b6fd5707e83af315c058d7d301361c5d409ec914e8386d8059d5a66b661b16196e219c7d42efde8788d6b1a157543ab14808351819d4cef42f48228e958273d4'
+            '0e57ffe7f1a990c7934e74b3d57c60c10f35994c07a3a5b19d95c1d79c3ece989c3446dc6a6b4616f9bb5bf8a3450fb4c6a4b30bbf572aef905039391dd8dd65'
             'SKIP'
-            'd61f0fb62149482fe4ee4a82cde3b397078b946e3874db50d44ab41956d572be453becd749292ec11d69450470dfe035c39e6c882b5c730630ce92f24ae6a08c'
+            'e95158b9064d5cc67a5b20251ed72c52fc0206bdc2a3d3bd8ce7e3162d0244adebaf5410e77b7bd4561b2dc75f1eb42a7cce5acffdd85577cd91103f26d10808'
             'SKIP'
             'efdf1c2c20739c5d657ca108d6d61630215cf6f1c610dce4e409b4f93385a5001785f238e7b6b0805d2569efa33cced02a6c89cbcfb5e9d30fcc284b5e53fc00')
 
