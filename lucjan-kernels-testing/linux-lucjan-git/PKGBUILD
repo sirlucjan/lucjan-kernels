@@ -89,7 +89,7 @@ _pkgbase=linux-lucjan
 _major=5.9
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.9.9.r0.g1398820fee51.ll48
+pkgver=5.9.10.r0.g5dbeb9f76cef.ll48
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -483,7 +483,7 @@ done
 sha512sums=('SKIP'
             '0e57ffe7f1a990c7934e74b3d57c60c10f35994c07a3a5b19d95c1d79c3ece989c3446dc6a6b4616f9bb5bf8a3450fb4c6a4b30bbf572aef905039391dd8dd65'
             'SKIP'
-            'f4b36bdc053c7ea8acaf6be69314274f37d37c365a79a441925e937bd1cf2a58ce65e70e9116bcdd5734943bba49de12efb7ed02726c5781009ca9ea0785dff1'
+            'f0d0e2b0f552afcc053621a58211c7f99452c85d2570c576f346ede0d70c0e09829ef941d98788fcd058431eced3edae9453b863dc46961ca0b6b21ba4bef2ea'
             'SKIP'
             'efdf1c2c20739c5d657ca108d6d61630215cf6f1c610dce4e409b4f93385a5001785f238e7b6b0805d2569efa33cced02a6c89cbcfb5e9d30fcc284b5e53fc00')
 
