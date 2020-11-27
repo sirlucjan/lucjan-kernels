@@ -40,6 +40,12 @@ _localmodcfg=
 # a new kernel is released, but again, convenient for package bumps.
 _use_current=
 
+### Selecting linux-lucjan branding
+# ATTENTION - one of two predefined values should be selected!
+# 'yes' - enable linux-lucjan branding
+# 'no' - disable linux-lucjan branding
+_ll_branding='yes'
+
 ### Setting GCC Flags for CONFIG_MHASWELL
 _gcc_haswell=y
 
@@ -90,7 +96,7 @@ _major=5.9
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.9.11.r7136.gc2a154d991aa.ll57
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -225,6 +231,15 @@ prepare() {
 			warning "Aborting!"
 			exit
 		fi
+	fi
+
+    ### Selecting linux-lucjan branding
+	if [ "$_ll_branding" = "yes" ]; then
+		echo "Enabling linux-lucjan branding..."
+		scripts/config --enable CONFIG_LL_BRANDING
+	elif [ "$_ll_branding" = "no" ]; then
+		echo "Disabling linux-lucjan branding..."
+		scripts/config --disable CONFIG_LL_BRANDING
 	fi
 
     ### Set GCC flags
