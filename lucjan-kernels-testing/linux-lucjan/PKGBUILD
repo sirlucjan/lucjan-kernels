@@ -92,9 +92,9 @@ _linux_lucjan='actual'
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.9
-_minor=11
+_minor=12
 _patches=${_major}-dev
-pkgver=5.9.11.ll60
+pkgver=5.9.12.ll61
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -144,7 +144,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll60'
+ _lucjanrev='ll61'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -160,7 +160,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll51'
+ _lucjanrev='ll61'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -495,11 +495,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('6a85177d72862769f203d8dd8ad7986e60cd57382c1cc907826c1bae40e725d8d54568f319ef0c0aa55a16300364e5b0d7e83c428e96987f32bfc968e63c69a5'
+sha512sums=('164a89388a56140140e0b4ba3f39a45f85a73c9862f5104cf591a6d6826cfc2498b4080f862cc592f04853328ba9236f8aa305e4f0f876f6b18eda2e42ea6dcb'
             'SKIP'
             '0e57ffe7f1a990c7934e74b3d57c60c10f35994c07a3a5b19d95c1d79c3ece989c3446dc6a6b4616f9bb5bf8a3450fb4c6a4b30bbf572aef905039391dd8dd65'
             'SKIP'
-            '108f3f47166d6e16748d53cfa85da1478a5a5dae5a297b83c4b92b91e6d02ff040b139d6ba551d73874b63e54fa30a2263c097db516b94c10c0489cf26dc99c2'
+            '345f8a6cad700b8a1c6d6fb197b9e94e2f0a194ca7dd7c5cbf6d3bae4548c8575b6f1cf44b77e8470ab4dfdb9f0247909ba1e3574f3af0d1b513d63ad7fd5896'
             'SKIP'
             '1fd70ef0d26298f048938deef51e94ec7415a97141d21e1e31009abcdca2e2caf031a158963d7f0dfb3607794d40756ff0abc7e1386f0858223f3e2e77f55fe0')
 
