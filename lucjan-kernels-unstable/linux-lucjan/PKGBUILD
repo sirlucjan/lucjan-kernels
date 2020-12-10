@@ -85,18 +85,18 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.9
-_minor=12
+_minor=13
 _minorc=$((_minor+1))
 _rcver=rc1
 _patches=${_major}-dev
-pkgver=5.9.13.ll68
+pkgver=5.9.14.ll69
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -164,8 +164,8 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll61'
- _lucjanrc='rc1'
+ _lucjanrev='ll69'
+ _lucjanrc='rc2'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 elif [ "$_linux_lucjan" = "trunk" ]; then
@@ -507,13 +507,13 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('164a89388a56140140e0b4ba3f39a45f85a73c9862f5104cf591a6d6826cfc2498b4080f862cc592f04853328ba9236f8aa305e4f0f876f6b18eda2e42ea6dcb'
+sha512sums=('ec5ca9544775faeb809459f58358b14f06e9d16afff40a017877602efc3117c4a901c8c65bbc3891cf5272a436ac5216d9d5b42c2b92980755ce2f459023eabd'
             'SKIP'
-            '6cd47749b4504d88e685f9ed6144158a8f836f93d70dcb0a67f01ddcc912f1325f8534828202658f8fd50abecd6d65a618db3dbffd7f165874c24ae951bd3e97'
+            '655d81c244b8ce85a10668e1215524dc1b1483d5f90ae42369687c1fc9e826da1bf342a6e327e856a139a0b85f45288317c6c54fddabee28e25be5a05421785b'
             'SKIP'
             '0e57ffe7f1a990c7934e74b3d57c60c10f35994c07a3a5b19d95c1d79c3ece989c3446dc6a6b4616f9bb5bf8a3450fb4c6a4b30bbf572aef905039391dd8dd65'
             'SKIP'
-            'e8e404f782ed96aed58defd30ef690baeea653953af928cc5437de98660a894224ca2ef9a1ee9fc417c834603fb892625a714eea69469c0a8785308e824fc2b1'
+            '617b617b1a7e5286d45f2805d53f0804ed08f6105b6a28efbcce55acff58d1b250dd2e7a7e4bc3aaaedff8ee8ffe6c263d54a40d2e48642123c8103004682b97'
             'SKIP'
             '1fd70ef0d26298f048938deef51e94ec7415a97141d21e1e31009abcdca2e2caf031a158963d7f0dfb3607794d40756ff0abc7e1386f0858223f3e2e77f55fe0')
 
