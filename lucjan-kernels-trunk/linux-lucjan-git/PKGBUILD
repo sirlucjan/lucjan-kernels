@@ -73,6 +73,9 @@ _cc_harder=y
 ### Running with a 1000 HZ tick rate
 _1k_HZ_ticks=y
 
+### Enable MODULE_COMPRESS_ZSTD
+_zstd_modules=
+
 ### Download ll-reverts patchset
 # ATTENTION - one of two predefined values should be selected!
 # 'stable' - stable releases (recommended)
@@ -96,7 +99,7 @@ _major=5.10
 _patches=${_major}-dev
 _srcname=linux-stable-rc
 pkgver=5.10.1.r0.g841fca5a32cc.ll5
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -311,6 +314,13 @@ prepare() {
 	if [ -n "$_NUMAdisable" ]; then
 		echo "Disabling NUMA from kernel config..."
 		scripts/config --disable CONFIG_NUMA
+	fi
+
+    ### Enable MODULE_COMPRESS_ZSTD
+	if [ -n "$_zstd_modules" ]; then
+		echo "Enabling ZSTD module compression..."
+		scripts/config --disable CONFIG_MODULE_COMPRESS_XZ
+		scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD
 	fi
 
     ### Optionally load needed modules for the make localmodconfig
