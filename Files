@@ -18,6 +18,10 @@
 │   └── linux-lucjan-git
 │       ├── config
 │       └── PKGBUILD
+├── lucjan-kernels-trunk
+│   └── linux-lucjan
+│       ├── config
+│       └── PKGBUILD
 ├── lucjan-kernels-unstable
 │   ├── linux-lucjan
 │   │   ├── config
@@ -27,4 +31,4 @@
 │       └── PKGBUILD
 └── README.md
 
-11 directories, 16 files
+13 directories, 18 files

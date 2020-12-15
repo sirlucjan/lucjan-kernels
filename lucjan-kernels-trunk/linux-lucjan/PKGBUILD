@@ -1,0 +1,525 @@
+# Maintainer: Piotr Gorski <lucjan.lucjanov@gmail.com>
+# Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
+# Contributor: Tobias Powalowski <tpowa@archlinux.org>
+# Contributor: Thomas Baechler <thomas@archlinux.org>
+
+### BUILD OPTIONS
+# Set these variables to ANYTHING that is not null to enable them
+
+### Tweak kernel options prior to a build via nconfig
+_makenconfig=
+
+### Tweak kernel options prior to a build via menuconfig
+_makemenuconfig=
+
+### Tweak kernel options prior to a build via xconfig
+_makexconfig=
+
+### Tweak kernel options prior to a build via gconfig
+_makegconfig=
+
+# NUMA is optimized for multi-socket motherboards.
+# A single multi-core CPU actually runs slower with NUMA enabled.
+# See, https://bugs.archlinux.org/task/31187
+_NUMAdisable=y
+
+# Compile ONLY used modules to VASTLYreduce the number of modules built
+# and the build time.
+#
+# To keep track of which modules are needed for your specific system/hardware,
+# give module_db script a try: https://aur.archlinux.org/packages/modprobed-db
+# This PKGBUILD read the database kept if it exists
+#
+# More at this wiki page ---> https://wiki.archlinux.org/index.php/Modprobed-db
+_localmodcfg=
+
+# Use the current kernel's .config file
+# Enabling this option will use the .config of the RUNNING kernel rather than
+# the ARCH defaults. Useful when the package gets updated and you already went
+# through the trouble of customizing your config options.  NOT recommended when
+# a new kernel is released, but again, convenient for package bumps.
+_use_current=
+
+### Selecting linux-lucjan branding
+# ATTENTION - one of two predefined values should be selected!
+# 'yes' - enable linux-lucjan branding
+# 'no' - disable linux-lucjan branding
+_ll_branding='yes'
+
+### Setting GCC Flags for CONFIG_MHASWELL
+_gcc_haswell=y
+
+### Enable fancontrol for DELL
+_dell_fancontrol=y
+
+### Set performance governor as default
+_per_gov=y
+
+### Disable Deadline I/O scheduler
+_deadline_disable=y
+
+### Disable Kyber I/O scheduler
+_kyber_disable=y
+
+### Selecting the CPU scheduler
+# ATTENTION - one of two predefined values should be selected!
+# 'bmq' - select 'BitMap Queue CPU scheduler'
+# 'pds' - select 'Priority and Deadline based Skip list multiple queue CPU scheduler'
+_projectc='pds'
+
+### Enable KBUILD_CFLAGS -O3
+_cc_harder=y
+
+### Running with a 1000 HZ tick rate
+_1k_HZ_ticks=y
+
+### Download ll-reverts patchset
+# ATTENTION - one of two predefined values should be selected!
+# 'stable' - stable releases (recommended)
+# 'unstable' - rc releases (active only temporarily)
+_ll_rev='stable'
+
+### Download linux-lucjan patchset
+# ATTENTION - one of four predefined values should be selected!
+# 'actual' - stable releases (recommended)
+# 'pending' - resync stable releases (active only temporarily)
+# 'testing' - rc releases (active only temporarily)
+# 'trunk' - pre-rc releases (active only temporarily)
+_linux_lucjan='trunk'
+
+### Do not edit below this line unless you know what you're doing
+
+pkgbase=linux-lucjan
+# pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
+_major=5.10
+_minor=0
+_minorc=$((_minor+1))
+_rcver=rc1
+_patches=${_major}-dev
+pkgver=5.10.1.ll5
+_pkgver=${_major}.${_minorc}
+_stable=${_major}
+#_stable=${_major}.${_minor}
+_stablerc=${_pkgver}-${_rcver}
+_srcname=linux-${_stable}
+pkgrel=0
+pkgdesc='Linux LL'
+arch=('x86_64')
+url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
+license=('GPL2')
+options=('!strip')
+makedepends=('kmod' 'bc' 'libelf' 'python-sphinx' 'python-sphinx_rtd_theme'
+             'graphviz' 'imagemagick' 'pahole' 'cpio' 'perl' 'tar' 'xz')
+
+### LL reverts
+# Some patches for BFQ/block-stable conflict with
+# patches for BFQ-dev/block-mainline.
+# To use linux-lucjan smoothly do not change
+# the settings below. Otherwise kernel
+# will not compile.
+
+if [ "$_ll_rev" = "stable" ]; then
+
+# _llrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_patches}/ll-reverts/stable"
+ _llrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_patches}/ll-reverts/stable"
+ _llrevname='ll-reverts'
+ _llrevver='ver1'
+ _llrevpatch="${_major}-${_llrevname}-${_llrevver}.patch"
+
+elif [ "$_ll_rev" = "unstable" ]; then
+
+# _llrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_patches}/ll-reverts/unstable"
+ _llrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_patches}/ll-reverts/unstable"
+ _llrevname='ll-reverts'
+ _llrevver='ver1'
+ _llrevrc='rc1'
+ _llrevpatch="${_major}-${_llrevname}-${_llrevver}-${_llrevrc}.patch"
+
+fi
+
+### linux-lucjan
+# If you do not use the kernel development version (stable-rc)
+# only the actual branch will be used. Pending and testing branches
+# are used only in development versions (stable-rc)
+# and the trunk branch is used only in the first releases
+# of the new kernel line or contains only temporary solutions.
+
+if [ "$_linux_lucjan" = "actual" ]; then
+
+# _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
+ _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
+ _lucjanname='lucjan'
+ _lucjanrev='ll5'
+ _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
+
+elif [ "$_linux_lucjan" = "pending" ]; then
+
+# _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
+ _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
+ _lucjanname='lucjan'
+ _lucjanrev='ll5'
+ _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
+
+elif [ "$_linux_lucjan" = "testing" ]; then
+
+# _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
+ _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
+ _lucjanname='lucjan'
+ _lucjanrev='ll5'
+ _lucjanrc='rc1'
+ _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
+
+elif [ "$_linux_lucjan" = "trunk" ]; then
+
+# _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/trunk"
+ _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
+ _lucjanname='lucjan'
+ _lucjanrev='ll5'
+ _lucjanrc='rc1'
+ _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
+
+fi
+
+source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar"{.xz,.sign}
+        "https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-${_stablerc}"{.xz,.sign}
+         # https://lkml.org/lkml/2019/8/23/712
+         # "patch-${_stablerc}.diff::https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-${_major}.y&id2=v${_major}.${_minor}"
+         # ll-reverts
+        "${_llrevpath}/${_llrevpatch}"{,.sig}
+         # linux-lucjan
+        "${_lucjanpath}/${_lucjanpatch}"{,.sig}
+         # the main kernel config files
+        'config')
+
+export KBUILD_BUILD_HOST=archlinux
+export KBUILD_BUILD_USER=$pkgbase
+export KBUILD_BUILD_TIMESTAMP="$(date -Ru${SOURCE_DATE_EPOCH:+d @$SOURCE_DATE_EPOCH})"
+
+pkgver() {
+
+        printf ${_pkgver}.${_lucjanrev}
+
+}
+
+prepare() {
+    cd $_srcname
+
+    ### Applying patch from stable-review
+        # echo "Applying patch from stable-review..."
+        patch -p1 -i ../patch-${_stablerc}
+        # patch -p1 -i ../patch-${_stablerc}.diff
+
+    ### Setting version
+        echo "Setting version..."
+        sed -e "/^EXTRAVERSION =/s/=.*/=/" -i Makefile
+        touch .scmversion
+        scripts/setlocalversion --save-scmversion
+        echo "-$pkgrel" > localversion.10-pkgrel
+        echo "${pkgbase#linux}" > localversion.20-pkgname
+
+    ### Patching sources
+        local src
+        for src in "${source[@]}"; do
+          src="${src%%::*}"
+          src="${src##*/}"
+          [[ $src = *.patch ]] || continue
+          echo "Applying patch $src..."
+          patch -Np1 < "../$src"
+        done
+
+    ### Setting config
+        echo "Setting config..."
+        cp ../config .config
+
+    ### Optionally use running kernel's config
+	# code originally by nous; http://aur.archlinux.org/packages.php?ID=40191
+	if [ -n "$_use_current" ]; then
+		if [[ -s /proc/config.gz ]]; then
+			echo "Extracting config from /proc/config.gz..."
+			# modprobe configs
+			zcat /proc/config.gz > ./.config
+		else
+			warning "Your kernel was not compiled with IKCONFIG_PROC!"
+			warning "You cannot read the current config!"
+			warning "Aborting!"
+			exit
+		fi
+	fi
+
+    ### Selecting linux-lucjan branding
+	if [ "$_ll_branding" = "yes" ]; then
+		echo "Enabling linux-lucjan branding..."
+		scripts/config --enable CONFIG_LL_BRANDING
+	elif [ "$_ll_branding" = "no" ]; then
+		echo "Disabling linux-lucjan branding..."
+		scripts/config --disable CONFIG_LL_BRANDING
+	fi
+
+    ### Set GCC flags
+	if [ -n "$_gcc_haswell" ]; then
+		echo "Setting GCC flags for Intel Haswell CPU..."
+		scripts/config --disable CONFIG_GENERIC_CPU
+		scripts/config --enable CONFIG_MHASWELL
+	fi
+
+    ### Enable fancontrol
+	if [ -n "$_dell_fancontrol" ]; then
+		echo "Enabling I8K for Dell..."
+		scripts/config --enable CONFIG_I8K
+		scripts/config --enable CONFIG_SENSORS_DELL_SMM
+	fi
+
+    ### Set performance governor
+        if [ -n "$_per_gov" ]; then
+		echo "Setting performance governor..."
+		scripts/config --disable CONFIG_CPU_FREQ_DEFAULT_GOV_SCHEDUTIL
+		scripts/config --enable CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE
+		echo "Disabling uneeded governors..."
+		scripts/config --disable CONFIG_CPU_FREQ_GOV_ONDEMAND
+		scripts/config --disable CONFIG_CPU_FREQ_GOV_CONSERVATIVE
+		scripts/config --disable CONFIG_CPU_FREQ_GOV_USERSPACE
+		scripts/config --disable CONFIG_CPU_FREQ_GOV_SCHEDUTIL
+        fi
+
+    ### Disable Deadline I/O scheduler
+	if [ -n "$_deadline_disable" ]; then
+		echo "Disabling Deadline I/O scheduler..."
+		scripts/config --disable CONFIG_MQ_IOSCHED_DEADLINE
+	fi
+
+    ### Disable Kyber I/O scheduler
+	if [ -n "$_kyber_disable" ]; then
+		echo "Disabling Kyber I/O scheduler..."
+		scripts/config --disable CONFIG_MQ_IOSCHED_KYBER
+	fi
+
+    ### Selecting the CPU scheduler
+	if [ "$_projectc" = "bmq" ]; then
+		echo "Selecting BMQ CPU scheduler..."
+		scripts/config --enable CONFIG_SCHED_BMQ
+		scripts/config --disable CONFIG_SCHED_PDS
+	elif [ "$_projectc" = "pds" ]; then
+		echo "Selecting PDS CPU scheduler..."
+		scripts/config --disable CONFIG_SCHED_BMQ
+		scripts/config --enable CONFIG_SCHED_PDS
+	fi
+
+    ### Enable KBUILD_CFLAGS -O3
+	if [ -n "$_cc_harder" ]; then
+		echo "Enabling KBUILD_CFLAGS -O3..."
+		scripts/config --disable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
+		scripts/config --enable CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
+        fi
+
+    ### Optionally set tickrate to 1000
+	if [ -n "$_1k_HZ_ticks" ]; then
+		echo "Setting tick rate to 1k..."
+		scripts/config --disable CONFIG_HZ_300
+		scripts/config --enable CONFIG_HZ_1000
+		scripts/config --set-val CONFIG_HZ 1000
+	fi
+
+    ### Optionally disable NUMA for 64-bit kernels only
+        # (x86 kernels do not support NUMA)
+	if [ -n "$_NUMAdisable" ]; then
+		echo "Disabling NUMA from kernel config..."
+		scripts/config --disable CONFIG_NUMA
+	fi
+
+    ### Optionally load needed modules for the make localmodconfig
+        # See https://aur.archlinux.org/packages/modprobed-db
+	if [ -n "$_localmodcfg" ]; then
+		if [ -f $HOME/.config/modprobed.db ]; then
+		echo "Running Steven Rostedt's make localmodconfig now"
+		make LSMOD=$HOME/.config/modprobed.db localmodconfig
+	else
+		echo "No modprobed.db data found"
+		exit
+		fi
+	fi
+
+    ### Rewrite configuration
+        echo "Rewrite configuration..."
+        make prepare
+        yes "" | make config >/dev/null
+
+    ### Prepared version
+        make -s kernelrelease > version
+        echo "Prepared $pkgbase version $(<version)"
+
+    ### Running make nconfig
+	[[ -z "$_makenconfig" ]] ||  make nconfig
+
+    ### Running make menuconfig
+	[[ -z "$_makemenuconfig" ]] || make menuconfig
+
+    ### Running make xconfig
+	[[ -z "$_makexconfig" ]] || make xconfig
+
+    ### Running make gconfig
+	[[ -z "$_makegconfig" ]] || make gconfig
+
+    ### Save configuration for later reuse
+	echo "Save configuration for later reuse..."
+	cat .config > "${startdir}/config.last"
+}
+
+build() {
+  cd $_srcname
+
+  make all
+  make htmldocs
+}
+
+_package-kernel() {
+  pkgdesc="The $pkgdesc kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset. Fourth Gen Intel Core i3/i5/i7 optimized."
+  depends=('coreutils' 'kmod' 'initramfs')
+  optdepends=('crda: to set the correct wireless channels of your country'
+              'linux-firmware: firmware images needed for some devices'
+              'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
+  provides=(VIRTUALBOX-GUEST-MODULES WIREGUARD-MODULE)
+  groups=('linux-lucjan')
+
+  cd $_srcname
+  local kernver="$(<version)"
+  local modulesdir="$pkgdir/usr/lib/modules/$kernver"
+
+  echo "Installing boot image..."
+  # systemd expects to find the kernel here to allow hibernation
+  # https://github.com/systemd/systemd/commit/edda44605f06a41fb86b7ab8128dcf99161d2344
+  install -Dm644 "$(make -s image_name)" "$modulesdir/vmlinuz"
+
+  # Used by mkinitcpio to name the kernel
+  echo "$pkgbase" | install -Dm644 /dev/stdin "$modulesdir/pkgbase"
+
+  echo "Installing modules..."
+  make INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 modules_install
+
+  # remove build and source links
+  rm "$modulesdir"/{source,build}
+}
+
+_package-headers() {
+  pkgdesc="Headers and scripts for building modules for the $pkgdesc kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
+  depends=('linux-lucjan-kernel')
+  groups=('linux-lucjan')
+
+  cd $_srcname
+  local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
+
+  echo "Installing build files..."
+  install -Dt "$builddir" -m644 .config Makefile Module.symvers System.map \
+    localversion.* version vmlinux
+  install -Dt "$builddir/kernel" -m644 kernel/Makefile
+  install -Dt "$builddir/arch/x86" -m644 arch/x86/Makefile
+  cp -t "$builddir" -a scripts
+
+  # add objtool for external module building and enabled VALIDATION_STACK option
+  install -Dt "$builddir/tools/objtool" tools/objtool/objtool
+
+  # add xfs and shmem for aufs building
+  mkdir -p "$builddir"/{fs/xfs,mm}
+
+  echo "Installing headers..."
+  cp -t "$builddir" -a include
+  cp -t "$builddir/arch/x86" -a arch/x86/include
+  install -Dt "$builddir/arch/x86/kernel" -m644 arch/x86/kernel/asm-offsets.s
+
+  install -Dt "$builddir/drivers/md" -m644 drivers/md/*.h
+  install -Dt "$builddir/net/mac80211" -m644 net/mac80211/*.h
+
+  # http://bugs.archlinux.org/task/13146
+  install -Dt "$builddir/drivers/media/i2c" -m644 drivers/media/i2c/msp3400-driver.h
+
+  # http://bugs.archlinux.org/task/20402
+  install -Dt "$builddir/drivers/media/usb/dvb-usb" -m644 drivers/media/usb/dvb-usb/*.h
+  install -Dt "$builddir/drivers/media/dvb-frontends" -m644 drivers/media/dvb-frontends/*.h
+  install -Dt "$builddir/drivers/media/tuners" -m644 drivers/media/tuners/*.h
+
+  echo "Installing KConfig files..."
+  find . -name 'Kconfig*' -exec install -Dm644 {} "$builddir/{}" \;
+
+  echo "Removing unneeded architectures..."
+  local arch
+  for arch in "$builddir"/arch/*/; do
+    [[ $arch = */x86/ ]] && continue
+    echo "Removing $(basename "$arch")"
+    rm -r "$arch"
+  done
+
+  echo "Removing documentation..."
+  rm -r "$builddir/Documentation"
+
+  echo "Removing broken symlinks..."
+  find -L "$builddir" -type l -printf 'Removing %P\n' -delete
+
+  echo "Removing loose objects..."
+  find "$builddir" -type f -name '*.o' -printf 'Removing %P\n' -delete
+
+  echo "Stripping build tools..."
+  local file
+  while read -rd '' file; do
+    case "$(file -bi "$file")" in
+      application/x-sharedlib\;*)      # Libraries (.so)
+        strip -v $STRIP_SHARED "$file" ;;
+      application/x-archive\;*)        # Libraries (.a)
+        strip -v $STRIP_STATIC "$file" ;;
+      application/x-executable\;*)     # Binaries
+        strip -v $STRIP_BINARIES "$file" ;;
+      application/x-pie-executable\;*) # Relocatable binaries
+        strip -v $STRIP_SHARED "$file" ;;
+    esac
+  done < <(find "$builddir" -type f -perm -u+x ! -name vmlinux -print0)
+
+  echo "Stripping vmlinux..."
+  strip -v $STRIP_STATIC "$builddir/vmlinux"
+
+  echo "Adding symlink..."
+  mkdir -p "$pkgdir/usr/src"
+  ln -sr "$builddir" "$pkgdir/usr/src/$pkgbase"
+}
+
+_package-docs() {
+  pkgdesc="Documentation for the $pkgdesc kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
+  depends=('linux-lucjan-kernel')
+  groups=('linux-lucjan')
+
+  cd $_srcname
+  local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
+
+  echo "Installing documentation..."
+  local src dst
+  while read -rd '' src; do
+    dst="${src#Documentation/}"
+    dst="$builddir/Documentation/${dst#output/}"
+    install -Dm644 "$src" "$dst"
+  done < <(find Documentation -name '.*' -prune -o ! -type d -print0)
+
+  echo "Adding symlink..."
+  mkdir -p "$pkgdir/usr/share/doc"
+  ln -sr "$builddir/Documentation" "$pkgdir/usr/share/doc/$pkgbase"
+}
+
+pkgname=("$pkgbase-kernel" "$pkgbase-headers" "$pkgbase-docs")
+for _p in "${pkgname[@]}"; do
+  eval "package_$_p() {
+    $(declare -f "_package${_p#$pkgbase}")
+    _package${_p#$pkgbase}
+  }"
+done
+
+sha512sums=('95bc137d0cf9148da6a9d1f1a878698dc27b40f68e22c597544010a6c591ce1b256f083489d3ff45ff77753289b535135590194d88ef9f007d0ddab3d74de70e'
+            'SKIP'
+            '914f82695130aa5a0c8d897ecb19498f5772e6c35837c625334955fa48e8548f5985400f8091603c2f052782b745d6af422337381e62478e4312cf31ddef6c4c'
+            'SKIP'
+            'e0952a1c0e6375af06aa53f2abc219f7b94f3b94f75e3067944b586fc1eb3f1b36598602fd3731993e4ef14bf0580760df41fc4a654ab528d7d202dd40960272'
+            'SKIP'
+            'a739cdd157298a85253d9ef4ed3e6be255d6ce91ff01d89a897cc639be977b4f55dfa46aa34f65146e669d68f9cace2e0df729a75b568991bfe226320a10549e'
+            'SKIP'
+            '24fb5b0662c924e0a4999d48351ff27b46de5edc078e858bd382c7a86014ef9e13bc815f5c6a1df0c4edb6f81d3a4d5b0c799171b4a3f28e8237e697d6931491')
+
+validpgpkeys=(
+              'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
+              '647F28654894E3BD457199BE38DBBDC86092693E' # Greg Kroah-Hartman
+              '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
+             )
