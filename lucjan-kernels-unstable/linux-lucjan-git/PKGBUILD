@@ -74,6 +74,10 @@ _cc_harder=y
 _1k_HZ_ticks=y
 
 ### Enable MODULE_COMPRESS_ZSTD
+# WARNING Not recommended.
+# An experimental solution, still in testing phase.
+# Possible compilation and installation errors.
+# Leave it unselected.
 _zstd_modules=
 
 ### Download ll-reverts patchset
