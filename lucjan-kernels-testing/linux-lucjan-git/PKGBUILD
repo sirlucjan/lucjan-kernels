@@ -81,7 +81,7 @@ _1k_HZ_ticks=y
 # However, if you want to test the new solution,
 # first install mkinitcpio-zstd and kmod-zstd
 # https://gitlab.com/sirlucjan/lucjan-kernels/-/tree/master/depends
-_zstd_modules=
+_zstd_modules=y
 
 ### Download ll-reverts patchset
 # ATTENTION - one of two predefined values should be selected!
@@ -106,7 +106,7 @@ _major=5.9
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.9.15.r0.g8df7025920eb.ll79
-pkgrel=2
+pkgrel=3
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
