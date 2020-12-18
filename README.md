@@ -98,4 +98,32 @@ For now, bfq is enabled by default! [(since 5.0-lucjan-ll1-rc1.patch and LL-elev
 
 
 ***
+
+***
+# Enable zstd compressed modules
+
+###### To build a kernel with modules compressed in zstd format, insert any character here (it can be "y", "x" or any other value):
+
+```
+### Enable MODULE_COMPRESS_ZSTD
+# WARNING Not recommended.
+# An experimental solution, still in testing phase.
+# Possible compilation and installation errors.
+# Leave it unselected.
+# However, if you want to test the new solution,
+# first install mkinitcpio-zstd and kmod-zstd
+# https://gitlab.com/sirlucjan/lucjan-kernels/-/tree/master/depends
+_zstd_modules=
+```
+###### Remember that to do this you need to install modified versions of kmod (kmod-zstd) and mkinitcpio (mkinitcpio-zstd). To do this, run the following command:
+
+```
+cd /some_path/lucjan-kernels/depends/package_name
+makepkg -srci
+
+```
+
+###### NOTE: mkinitcpio-zstd will overwrite the mkinitcpio.conf file and the old one will be saved as mkinitcpio.conf.pacsave - however, I recommend backing up this file before installing the modified mkinitcpio version.
+
+***
 # You've been warned.
