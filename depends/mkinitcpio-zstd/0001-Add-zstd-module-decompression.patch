@@ -1,0 +1,41 @@
+From 226bc23ea246cf52f27e17cc6ceed3f94a9698f9 Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Thu, 17 Dec 2020 21:52:56 +0100
+Subject: [PATCH] Add zstd module decompression
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ functions | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/functions b/functions
+index 5094c25..88652b6 100644
+--- a/functions
++++ b/functions
+@@ -776,7 +776,7 @@ try_enable_color() {
+ 
+ install_modules() {
+     local m moduledest=$BUILDROOT/lib/modules/$KERNELVERSION
+-    local -a xz_comp gz_comp
++    local -a xz_comp gz_comp zst_comp
+ 
+     [[ $KERNELVERSION == none ]] && return 0
+ 
+@@ -796,10 +796,14 @@ install_modules() {
+             *.gz)
+                 gz_comp+=("$moduledest/kernel/${m##*/}")
+                 ;;
++            *.zst)
++                zst_comp+=("$moduledest/kernel/${m##*/}")
++                ;;
+         esac
+     done
+     (( ${#xz_comp[*]} )) && xz -d "${xz_comp[@]}"
+     (( ${#gz_comp[*]} )) && gzip -d "${gz_comp[@]}"
++    (( ${#zst_comp[*]} )) && zstd -d "${zst_comp[@]}"
+ 
+     msg "Generating module dependencies"
+     install -m644 -t "$moduledest" "$_d_kmoduledir"/modules.builtin
+-- 
+2.29.2.456.g3a0b884cab
+

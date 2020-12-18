@@ -1,0 +1,49 @@
+# Maintainer: Piotr Gorski <lucjan.lucjanov@gmail.com>
+# Maintainer: Giancarlo Razzolini <grazzolini@archlinux.org>
+# Maintainer: Dave Reisner <dreisner@archlinux.org>
+# Maintainer: Thomas Bächler <thomas@archlinux.org>
+
+pkgname=mkinitcpio-zstd
+_pkgname=mkinitcpio
+pkgver=29
+pkgrel=1
+pkgdesc="Modular initramfs image creation utility"
+arch=('any')
+url="https://projects.archlinux.org/mkinitcpio.git/"
+license=('GPL')
+depends=('awk' 'mkinitcpio-busybox>=1.19.4-2' 'kmod' 'util-linux>=2.23' 'libarchive' 'coreutils'
+         'bash' 'diffutils' 'findutils' 'grep' 'filesystem>=2011.10-1' 'gzip' 'systemd')
+makedepends=('asciidoc')
+optdepends=('xz: Use lzma or xz compression for the initramfs image'
+            'bzip2: Use bzip2 compression for the initramfs image'
+            'lzop: Use lzo compression for the initramfs image'
+            'lz4: Use lz4 compression for the initramfs image'
+            'mkinitcpio-nfs-utils: Support for root filesystem on NFS')
+provides=('initramfs' "mkinitcpio=$pkgver")
+conflicts=('mkinitcpio')
+backup=('etc/mkinitcpio.conf')
+source=("https://sources.archlinux.org/other/$_pkgname/$_pkgname-$pkgver.tar.gz"{,.sig}
+        "0001-Add-zstd-module-decompression.patch")
+install=mkinitcpio.install
+sha512sums=('cc03159f16ae12a0d1ebf6a1827f8cdaf73ad0910bf2b1b0f30b737b1cff472130eb41c3669c180291a9861c3c3167498d1f9d60cb9782aeb1ef1d0cd2156068'
+            'SKIP'
+            '41070527da47b6205ddf616df705f3c52891f4447b3571e9f4dd041eab780dbed714aaf9d7fd154a87588d5fa1bb915dd8ed031ba5f59e532a15736dfa2d65d1')
+b2sums=('4303216cc3c020bf58491a18b13785660e08f418a333f5b975b29b1da4f6b4427f5bbda358018a34e6894217c6368fdf3fe73d361e770a4b6e40abb12ba2fd02'
+        'SKIP'
+        'b4ed49c2b33092c2557c09d101ceada8e5102d977825e827dff54ad427bc39c0ec1108178c4e43c1d9ecd245e1c5151ea4d0b81f2c495da9cfa9de01524a9e03')
+validpgpkeys=('ECCAC84C1BA08A6CC8E63FBBF22FB1D78A77AEAB'    # Giancarlo Razzolini
+              '86CFFCA918CF3AF47147588051E8B148A9999C34')   # Evangelos Foutras
+
+prepare() {
+ cd $_pkgname-$pkgver
+ # 0001-Add-zstd-module-decompression.patch
+ patch -Np1 < $srcdir/0001-Add-zstd-module-decompression.patch
+}
+
+check() {
+  make -C "$_pkgname-$pkgver" check
+}
+
+package() {
+  make -C "$_pkgname-$pkgver" DESTDIR="$pkgdir" install
+}

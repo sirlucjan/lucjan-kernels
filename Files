@@ -1,4 +1,16 @@
 .
+├── depends
+│   ├── kmod-zstd
+│   │   ├── 0001-add-Zstandard-compression-support.patch
+│   │   ├── 0002-testsuite-add-test-for-zstd-compressed-module.patch
+│   │   ├── depmod.hook
+│   │   ├── depmod.script
+│   │   ├── depmod-search.conf
+│   │   └── PKGBUILD
+│   └── mkinitcpio-zstd
+│       ├── 0001-Add-zstd-module-decompression.patch
+│       ├── mkinitcpio.install
+│       └── PKGBUILD
 ├── Files
 ├── lucjan-kernels-experimental
 │   ├── linux-lucjan
@@ -34,4 +46,4 @@
 │       └── PKGBUILD
 └── README.md
 
-14 directories, 20 files
+17 directories, 29 files
