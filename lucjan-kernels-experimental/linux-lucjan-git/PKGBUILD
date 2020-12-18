@@ -78,9 +78,6 @@ _1k_HZ_ticks=y
 # An experimental solution, still in testing phase.
 # Possible compilation and installation errors.
 # Leave it unselected.
-# However, if you want to test the new solution,
-# first install mkinitcpio-zstd and kmod-zstd
-# https://gitlab.com/sirlucjan/lucjan-kernels/-/tree/master/depends
 _zstd_modules=
 
 ### Download ll-reverts patchset
@@ -106,17 +103,14 @@ _major=5.10
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.10.1.r0.g841fca5a32cc.ll10
-pkgrel=2
+pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
 options=('!strip')
-makedepends=('kmod' 'bc' 'libelf' 'python-sphinx' 'python-sphinx_rtd_theme'
+makedepends=('kmod' 'bc' 'libelf' 'git' 'python-sphinx' 'python-sphinx_rtd_theme'
              'graphviz' 'imagemagick' 'pahole' 'cpio' 'perl' 'tar' 'xz')
-if [ -n "$_zstd_modules" ]; then
-    depends+=('kmod-zstd' 'mkinitcpio-zstd')
-fi
 
 ### LL reverts
 # Some patches for BFQ/block-stable conflict with
