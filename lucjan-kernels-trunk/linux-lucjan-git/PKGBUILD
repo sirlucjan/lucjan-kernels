@@ -73,6 +73,9 @@ _cc_harder=y
 ### Running with a 1000 HZ tick rate
 _1k_HZ_ticks=y
 
+### Enable protect file mappings under memory pressure
+_mm_protect=
+
 ### Enable MODULE_COMPRESS_ZSTD
 # WARNING Not recommended.
 # An experimental solution, still in testing phase.
@@ -106,7 +109,7 @@ _major=5.10
 _patches=${_major}-dev
 _srcname=linux-stable-rc
 pkgver=5.10.1.r17.gc96cfd687a3f.ll12
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -317,6 +320,15 @@ prepare() {
 		scripts/config --disable CONFIG_HZ_300
 		scripts/config --enable CONFIG_HZ_1000
 		scripts/config --set-val CONFIG_HZ 1000
+	fi
+
+    ### Enable protect file mappings under memory pressure
+	if [ -n "$_mm_protect" ]; then
+		echo "Enabling file protect file mappings under memory pressure..."
+		scripts/config --enable CONFIG_UNEVICTABLE_ACTIVEFILE
+		scripts/config --enable CONFIG_UNEVICTABLE_INACTIVEFILE
+		scripts/config --set-val CONFIG_UNEVICTABLE_ACTIVEFILE_KBYTES 262144
+		scripts/config --set-val CONFIG_UNEVICTABLE_INACTIVEFILE_KBYTES 0
 	fi
 
     ### Optionally disable NUMA for 64-bit kernels only
