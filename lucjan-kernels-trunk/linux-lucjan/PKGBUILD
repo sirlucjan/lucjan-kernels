@@ -336,7 +336,7 @@ prepare() {
 
     ### Enable protect file mappings under memory pressure
 	if [ -n "$_mm_protect" ]; then
-		echo "Enabling file protect file mappings under memory pressure..."
+		echo "Enabling protect file mappings under memory pressure..."
 		scripts/config --enable CONFIG_UNEVICTABLE_ACTIVEFILE
 		scripts/config --enable CONFIG_UNEVICTABLE_INACTIVEFILE
 		scripts/config --set-val CONFIG_UNEVICTABLE_ACTIVEFILE_KBYTES 262144
