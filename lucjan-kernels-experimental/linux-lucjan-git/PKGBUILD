@@ -74,7 +74,7 @@ _cc_harder=y
 _1k_HZ_ticks=y
 
 ### Enable protect file mappings under memory pressure
-_mm_protect=
+_mm_protect=y
 
 ### Enable MODULE_COMPRESS_ZSTD
 # WARNING Not recommended.
@@ -109,7 +109,7 @@ _major=5.10
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.10.2.r0.gd1988041d19d.ll16
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
