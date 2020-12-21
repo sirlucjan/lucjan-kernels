@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.10.1.ll12 Kernel Configuration
+# Linux/x86 5.10.1.ll14 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 10.2.0"
 CONFIG_CC_IS_GCC=y
@@ -385,6 +385,7 @@ CONFIG_ACRN_GUEST=y
 # CONFIG_MEXCAVATOR is not set
 # CONFIG_MZEN is not set
 # CONFIG_MZEN2 is not set
+# CONFIG_MZEN3 is not set
 # CONFIG_MPSC is not set
 # CONFIG_MATOM is not set
 # CONFIG_MCORE2 is not set
