@@ -108,7 +108,7 @@ _pkgbase=linux-lucjan
 _major=5.10
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.10.2.r9481.geb043323d674.ll13
+pkgver=5.10.2.r9481.geb043323d674.ll14
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -159,7 +159,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll13'
+ _lucjanrev='ll14'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -167,7 +167,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll13'
+ _lucjanrev='ll14'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -175,7 +175,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll13'
+ _lucjanrev='ll14'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -184,7 +184,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll13'
+ _lucjanrev='ll14'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -530,9 +530,9 @@ done
 sha512sums=('SKIP'
             'e0952a1c0e6375af06aa53f2abc219f7b94f3b94f75e3067944b586fc1eb3f1b36598602fd3731993e4ef14bf0580760df41fc4a654ab528d7d202dd40960272'
             'SKIP'
-            '13faba7cea0dccef0f638abedff6a4f4476f9d84511b92053290fa1d27ffe733d2c3fcdb77f5d41b3823092f7c8a0ced090baa4a73f46ff02f4f0ca5408322cd'
+            'ae8604fdd81ad53c121a3c31472936e93160909bcab6d6d0b6cb55cae4971508a9bee961ff2e5f181a105f12cb8365989f32067ab66fdd487bcfe167c52137a7'
             'SKIP'
-            '549aa4cf6b7727e508c6558e39b76cf36fe5c9e8e280115323a77ee79eb6dc9b6941221ffce738268ff9ef65a144ad36fba600f92fa6b3ba057dfbc8c3954dfc')
+            'b53cfab9bcee7bb7288c96d617af67be96d7c16636fc71a731410cfce17da89619fdc2cbf0c846b4e81f39cf7e3988a145f95d82934500af1406fcd838c41b9b')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
