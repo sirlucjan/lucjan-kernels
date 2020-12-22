@@ -73,6 +73,9 @@ _cc_harder=y
 ### Running with a 1000 HZ tick rate
 _1k_HZ_ticks=y
 
+### Enable protect file mappings under memory pressure
+_mm_protect=y
+
 ### Enable MODULE_COMPRESS_ZSTD
 # WARNING Not recommended.
 # An experimental solution, still in testing phase.
@@ -95,23 +98,23 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='trunk'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
-_major=5.9
-_minor=15
+_major=5.10
+_minor=1
 _minorc=$((_minor+1))
 _rcver=rc1
 _patches=${_major}-dev
-pkgver=5.9.16.ll79
+pkgver=5.10.2.ll16
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0
+pkgrel=0.3
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -135,7 +138,7 @@ if [ "$_ll_rev" = "stable" ]; then
 # _llrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_patches}/ll-reverts/stable"
  _llrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_patches}/ll-reverts/stable"
  _llrevname='ll-reverts'
- _llrevver='ver5'
+ _llrevver='ver1'
  _llrevpatch="${_major}-${_llrevname}-${_llrevver}.patch"
 
 elif [ "$_ll_rev" = "unstable" ]; then
@@ -143,7 +146,7 @@ elif [ "$_ll_rev" = "unstable" ]; then
 # _llrevpath="https://raw.githubusercontent.com/sirlucjan/kernel-patches/master/${_patches}/ll-reverts/unstable"
  _llrevpath="https://gitlab.com/sirlucjan/kernel-patches/raw/master/${_patches}/ll-reverts/unstable"
  _llrevname='ll-reverts'
- _llrevver='ver5'
+ _llrevver='ver1'
  _llrevrc='rc1'
  _llrevpatch="${_major}-${_llrevname}-${_llrevver}-${_llrevrc}.patch"
 
@@ -161,7 +164,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll79'
+ _lucjanrev='ll16'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -169,7 +172,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll76'
+ _lucjanrev='ll16'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -177,7 +180,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll70'
+ _lucjanrev='ll16'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -186,7 +189,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll19'
+ _lucjanrev='ll16'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -329,6 +332,15 @@ prepare() {
 		scripts/config --disable CONFIG_HZ_300
 		scripts/config --enable CONFIG_HZ_1000
 		scripts/config --set-val CONFIG_HZ 1000
+	fi
+
+    ### Enable protect file mappings under memory pressure
+	if [ -n "$_mm_protect" ]; then
+		echo "Enabling protect file mappings under memory pressure..."
+		scripts/config --enable CONFIG_UNEVICTABLE_ACTIVEFILE
+		scripts/config --enable CONFIG_UNEVICTABLE_INACTIVEFILE
+		scripts/config --set-val CONFIG_UNEVICTABLE_ACTIVEFILE_KBYTES 262144
+		scripts/config --set-val CONFIG_UNEVICTABLE_INACTIVEFILE_KBYTES 0
 	fi
 
     ### Optionally disable NUMA for 64-bit kernels only
@@ -527,15 +539,15 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('8547b0a11996e3af91e0d57e186170620f19b90bd808ece6814ba8aa8e5aafc5810bb86e228dce51f8a1bd88b61b7fb3dd4b79986be57d7d7a1718dcbf6a4851'
+sha512sums=('5b6cc32f2daa1de35ceeb0007536d6e49776064370d94f8d77c19cefc97e88c47ff55cb4c6add7c49189e7203ff44a05ffacf3c0f4b766f719d6df1a110f95bb'
             'SKIP'
-            '91f8cdcadc65ab8d428cd18c8b123c1f126c7b4d86506f95690e7045490f07230db3b45aa6a349cdf62ade963c33fad84e1694caf78e5830100a9a8915ee2795'
+            '8e930bfdcfa26f1f310e90aefdc53cbdef4dc973be8587b1d9014649fecb1e8d174ca43153e4096baacbcbbf1de331b98a1b447dbb6cf9179ca58795fe9740d6'
             'SKIP'
-            '0e57ffe7f1a990c7934e74b3d57c60c10f35994c07a3a5b19d95c1d79c3ece989c3446dc6a6b4616f9bb5bf8a3450fb4c6a4b30bbf572aef905039391dd8dd65'
+            'e0952a1c0e6375af06aa53f2abc219f7b94f3b94f75e3067944b586fc1eb3f1b36598602fd3731993e4ef14bf0580760df41fc4a654ab528d7d202dd40960272'
             'SKIP'
-            '810cf1f9f3b5e123e47cf1740123805b31d428ceb0d769ff824443c6bcd067f2dff847b856f2d17cc8f3c06137208f018477761c27aa36d03165027e4a45e6f7'
+            'bac9c272c1e930e30a52c02b68cfd34673ceb08ec72e3e80b267ba9b334512de175f728a527f9c7813d1fb5163e99dc007698fbbad7a9bbaea43662b5e5dfe43'
             'SKIP'
-            '9778a77e6cba16b2a8f1170c92d4e92ed66eff6fc2e77eedf382350a0e5fc6f8b69ca2548ae168909da71f40a1d8cf05231f0dbf9a92ce53fc2d5c16cfc75370')
+            'b72005ee84e266eeee2e43665806109643f72e340497c59ba319208918f46ab7835f9fb346c2950dbcbb5bd7ea739c0c1f079735f12efe3991ba8f906cc3cdc4')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
