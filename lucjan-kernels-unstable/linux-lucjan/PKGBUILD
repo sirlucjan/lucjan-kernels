@@ -109,12 +109,12 @@ _minor=1
 _minorc=$((_minor+1))
 _rcver=rc1
 _patches=${_major}-dev
-pkgver=5.10.2.ll16
+pkgver=5.10.2.ll17
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.4
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -164,7 +164,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll16'
+ _lucjanrev='ll17'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -338,9 +338,8 @@ prepare() {
 	if [ -n "$_mm_protect" ]; then
 		echo "Enabling protect file mappings under memory pressure..."
 		scripts/config --enable CONFIG_UNEVICTABLE_ACTIVEFILE
-		scripts/config --enable CONFIG_UNEVICTABLE_INACTIVEFILE
-		scripts/config --set-val CONFIG_UNEVICTABLE_ACTIVEFILE_KBYTES 262144
-		scripts/config --set-val CONFIG_UNEVICTABLE_INACTIVEFILE_KBYTES 0
+		scripts/config --set-val CONFIG_UNEVICTABLE_ACTIVEFILE_KBYTES_LOW 524288
+		scripts/config --set-val CONFIG_UNEVICTABLE_ACTIVEFILE_KBYTES_MIN 262144
 	fi
 
     ### Optionally disable NUMA for 64-bit kernels only
@@ -545,9 +544,9 @@ sha512sums=('5b6cc32f2daa1de35ceeb0007536d6e49776064370d94f8d77c19cefc97e88c47ff
             'SKIP'
             'e0952a1c0e6375af06aa53f2abc219f7b94f3b94f75e3067944b586fc1eb3f1b36598602fd3731993e4ef14bf0580760df41fc4a654ab528d7d202dd40960272'
             'SKIP'
-            '10fcee287d8d23772095f8cf589ac8d8a5211b8533495153bff52b410d5f9f0a3a880c8d2d12720985327bb84b84d4a373fc935d72f780090c4aa3bd540b0fe9'
+            'a6de96a4c4e661e19b380e46f6ccf17fa0a5388312d0a34738e16b63465fa573e98b825cf879a4073de55d4b2e6cf1ec451cc563a3fd89addb526bf130ab7cc1'
             'SKIP'
-            'b72005ee84e266eeee2e43665806109643f72e340497c59ba319208918f46ab7835f9fb346c2950dbcbb5bd7ea739c0c1f079735f12efe3991ba8f906cc3cdc4')
+            '4cccf02a53f3851e15e26f52c578d530d56ba7b668ac28b995bdeea5a43cd1e0804efe1cdb4a9afa563215ffedc2fc7c3a8fb79e05b7fd5c9d4d0a891d0cfbea')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
