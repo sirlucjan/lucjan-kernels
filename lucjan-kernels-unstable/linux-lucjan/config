@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.10.2.ll17 Kernel Configuration
+# Linux/x86 5.10.3.ll27 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 10.2.0"
 CONFIG_CC_IS_GCC=y
@@ -9047,6 +9047,7 @@ CONFIG_F2FS_FS_LZ4=y
 CONFIG_F2FS_FS_ZSTD=y
 CONFIG_F2FS_FS_LZORLE=y
 CONFIG_ZONEFS_FS=m
+# CONFIG_SPADFS_FS is not set
 CONFIG_FS_DAX=y
 CONFIG_FS_DAX_PMD=y
 CONFIG_FS_POSIX_ACL=y
