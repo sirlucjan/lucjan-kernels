@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.10.4.ll30 Kernel Configuration
+# Linux/x86 5.10.4.ll32 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 10.2.0"
 CONFIG_CC_IS_GCC=y
@@ -2331,7 +2331,7 @@ CONFIG_MTD_CFI_I2=y
 # CONFIG_MTD_MCHP23K256 is not set
 # CONFIG_MTD_SST25L is not set
 # CONFIG_MTD_SLRAM is not set
-# CONFIG_MTD_PHRAM is not set
+CONFIG_MTD_PHRAM=m
 # CONFIG_MTD_MTDRAM is not set
 CONFIG_MTD_BLOCK2MTD=m
 
