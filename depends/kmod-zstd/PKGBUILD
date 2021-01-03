@@ -4,12 +4,12 @@
 pkgname=kmod-zstd
 _pkgname=kmod
 pkgver=27
-pkgrel=3
+pkgrel=4
 pkgdesc="Linux kernel module management tools and library"
 arch=('x86_64')
 url='https://git.kernel.org/?p=utils/kernel/kmod/kmod.git;a=summary'
 license=('GPL2')
-depends=('glibc' 'zlib' 'openssl' 'xz')
+depends=('glibc' 'zlib' 'openssl' 'xz' 'zstd')
 makedepends=('gtk-doc')
 checkdepends=('linux-headers' 'libelf')
 options=('strip' 'debug')
