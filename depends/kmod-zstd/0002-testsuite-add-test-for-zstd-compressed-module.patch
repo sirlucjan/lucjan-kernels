@@ -1,7 +1,7 @@
-From 7adbe24a19b7335569ffeb3fbefc78e154675d03 Mon Sep 17 00:00:00 2001
+From ff77b9063d6a0a69506f54c19fd5826352342281 Mon Sep 17 00:00:00 2001
 From: Torge Matthies <openglfreak@googlemail.com>
 Date: Tue, 8 Sep 2020 21:59:21 +0200
-Subject: [PATCH 2/2] testsuite: add test for zstd-compressed module
+Subject: [PATCH 2/3] testsuite: add test for zstd-compressed module
 
 I took away one module from the gzip-compressed modules for this purpose.
 
@@ -42,5 +42,5 @@ index 5140f7a..358e740 100755
      cat ${MODULE_PLAYGROUND}/dummy.sha1 >> ${ROOTFS}/$m
  done
 -- 
-2.29.2.456.g3a0b884cab
+2.30.0
 

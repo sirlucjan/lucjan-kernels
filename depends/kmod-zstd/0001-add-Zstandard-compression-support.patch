@@ -1,7 +1,7 @@
-From 3572d157411d64c3e4550d5bff9175d7cc5b4189 Mon Sep 17 00:00:00 2001
+From 4cca54077d3948dc1433a8253968b01e0f930857 Mon Sep 17 00:00:00 2001
 From: Torge Matthies <openglfreak@googlemail.com>
 Date: Tue, 8 Sep 2020 21:59:20 +0200
-Subject: [PATCH 1/2] add Zstandard compression support
+Subject: [PATCH 1/3] add Zstandard compression support
 
 I changed the style of the hackargs variable in autogen.sh to multiline
 because said line was becoming a bit long with the new --with-zstd arg
@@ -291,5 +291,5 @@ index 5e25e58..621446b 100644
  		{ "/bla.ko.x", false },
  		{ "/bla.ko.", false },
 -- 
-2.29.2.456.g3a0b884cab
+2.30.0
 

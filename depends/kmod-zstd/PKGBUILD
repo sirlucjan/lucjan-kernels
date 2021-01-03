@@ -4,7 +4,7 @@
 pkgname=kmod-zstd
 _pkgname=kmod
 pkgver=27
-pkgrel=2
+pkgrel=3
 pkgdesc="Linux kernel module management tools and library"
 arch=('x86_64')
 url='https://git.kernel.org/?p=utils/kernel/kmod/kmod.git;a=summary'
@@ -20,12 +20,14 @@ validpgpkeys=('EAB33C9690013C733916AC839BA2A5A630CBEA53')  # Lucas DeMarchi
 source=("https://www.kernel.org/pub/linux/utils/kernel/$_pkgname/$_pkgname-$pkgver.tar."{xz,sign}
         '0001-add-Zstandard-compression-support.patch'
         '0002-testsuite-add-test-for-zstd-compressed-module.patch'
+        '0003-build-fix-distcheck-due-to-missing-zstd.patch'
         'depmod-search.conf'
         'depmod.hook' 'depmod.script')
 md5sums=('3973a74786670d3062d89a827e266581'
          'SKIP'
-         '7b6003c3a80de8f488cdaa840f2a3d87'
-         'd4dcc5a3802ecf6e9d066f0a94a0c9c5'
+         'c5307e31557b62f9496529c27d59244d'
+         '557aec6e612d47a77b98d57ef3cc2c19'
+         'ab3de2d18935e408bc9ff85a37e3289c'
          'dd62cbf62bd8f212f51ef8c43bec9a77'
          'e179ace75721e92b04b2e145b69dab29'
          '18fb3d1f6024a5a84514c8276cb3ebff')
@@ -36,6 +38,8 @@ prepare() {
  patch -Np1 < $srcdir/0001-add-Zstandard-compression-support.patch
  # 0002-testsuite-add-test-for-zstd-compressed-module.patch
  patch -Np1 < $srcdir/0002-testsuite-add-test-for-zstd-compressed-module.patch
+ # 0003-testsuite-add-test-for-zstd-compressed-module.patch
+ patch -Np1 < $srcdir/0003-build-fix-distcheck-due-to-missing-zstd.patch
 }
          
 build() {
