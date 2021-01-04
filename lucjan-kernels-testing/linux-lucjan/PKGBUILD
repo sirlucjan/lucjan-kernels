@@ -82,8 +82,10 @@ _mm_protect=y
 # Possible compilation and installation errors.
 # Leave it unselected.
 # However, if you want to test the new solution,
-# first install mkinitcpio-zstd and kmod-zstd
-# https://gitlab.com/sirlucjan/lucjan-kernels/-/tree/master/depends
+# first install mkinitcpio-zstd and kmod-zstd:
+# https://gitlab.com/sirlucjan/lucjan-kernels/tree/master/depends
+# or
+# https://github.com/sirlucjan/lucjan-kernels/tree/master/depends
 _zstd_modules=y
 
 ### Download ll-reverts patchset
