@@ -111,8 +111,10 @@ For now, bfq is enabled by default! [(since 5.0-lucjan-ll1-rc1.patch and LL-elev
 # Possible compilation and installation errors.
 # Leave it unselected.
 # However, if you want to test the new solution,
-# first install mkinitcpio-zstd and kmod-zstd
-# https://gitlab.com/sirlucjan/lucjan-kernels/-/tree/master/depends
+# first install mkinitcpio-zstd and kmod-zstd:
+# https://gitlab.com/sirlucjan/lucjan-kernels/tree/master/depends
+# or
+# https://github.com/sirlucjan/lucjan-kernels/tree/master/depends
 _zstd_modules=
 ```
 ###### Remember that to do this you need to install modified versions of kmod (kmod-zstd) and mkinitcpio (mkinitcpio-zstd). To do this, run the following command:
