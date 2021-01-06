@@ -1,0 +1,33 @@
+From 7118242a7992dfecd983ec7d1ce7f49908b1a5b0 Mon Sep 17 00:00:00 2001
+From: Chocobo1 <Chocobo1@users.noreply.github.com>
+Date: Fri, 30 Oct 2020 12:20:28 +0800
+Subject: [PATCH 2/3] Allow user to override default compression options
+
+---
+ mkinitcpio | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/mkinitcpio b/mkinitcpio
+index 9b585cd..352ee4e 100755
+--- a/mkinitcpio
++++ b/mkinitcpio
+@@ -206,13 +206,13 @@ build_image() {
+             msg "Creating %s-compressed initcpio image: %s" "$compress" "$out"
+             ;;&
+         xz)
+-            COMPRESSION_OPTIONS+=('--check=crc32')
++            COMPRESSION_OPTIONS=('--check=crc32' "${COMPRESSION_OPTIONS[@]}")
+             ;;
+         lz4)
+-            COMPRESSION_OPTIONS+=('-l')
++            COMPRESSION_OPTIONS=('-l' "${COMPRESSION_OPTIONS[@]}")
+             ;;
+         zstd)
+-            COMPRESSION_OPTIONS+=('-19' '-T0')
++            COMPRESSION_OPTIONS=('-19' '-T0' "${COMPRESSION_OPTIONS[@]}")
+             ;;
+     esac
+ 
+-- 
+2.30.0
+

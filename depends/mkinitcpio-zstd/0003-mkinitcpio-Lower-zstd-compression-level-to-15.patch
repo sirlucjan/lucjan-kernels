@@ -1,0 +1,28 @@
+From 15df6e4f41ab2be8d77a75b4d02a445b1b1381a6 Mon Sep 17 00:00:00 2001
+From: Giancarlo Razzolini <grazzolini@archlinux.org>
+Date: Tue, 5 Jan 2021 16:14:40 -0300
+Subject: [PATCH 3/3] mkinitcpio: Lower zstd compression level to 15
+
+After extensive testing, lowering the compression level to 15 seems to achieve
+a compression time on the ball park of gzip, while also having ~10% savings on
+top of it.
+---
+ mkinitcpio | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mkinitcpio b/mkinitcpio
+index 352ee4e..9e875b7 100755
+--- a/mkinitcpio
++++ b/mkinitcpio
+@@ -212,7 +212,7 @@ build_image() {
+             COMPRESSION_OPTIONS=('-l' "${COMPRESSION_OPTIONS[@]}")
+             ;;
+         zstd)
+-            COMPRESSION_OPTIONS=('-19' '-T0' "${COMPRESSION_OPTIONS[@]}")
++            COMPRESSION_OPTIONS=('-15' '-T0' "${COMPRESSION_OPTIONS[@]}")
+             ;;
+     esac
+ 
+-- 
+2.30.0
+
