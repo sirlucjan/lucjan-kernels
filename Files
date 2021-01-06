@@ -10,8 +10,9 @@
 │   │   └── PKGBUILD
 │   └── mkinitcpio-zstd
 │       ├── 0001-Add-zstd-module-decompression.patch
-│       ├── 0002-Allow-user-to-override-default-compression-options.patch
-│       ├── 0003-mkinitcpio-Lower-zstd-compression-level-to-15.patch
+│       ├── 0002-Set-default-compressor-to-zstd.patch
+│       ├── 0003-Allow-user-to-override-default-compression-options.patch
+│       ├── 0004-mkinitcpio-Lower-zstd-compression-level-to-15.patch
 │       ├── mkinitcpio.install
 │       └── PKGBUILD
 ├── Files
@@ -35,4 +36,4 @@
 │       └── PKGBUILD
 └── README.md
 
-11 directories, 24 files
+11 directories, 25 files

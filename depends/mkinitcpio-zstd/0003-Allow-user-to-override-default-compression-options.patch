@@ -1,14 +1,14 @@
-From 7118242a7992dfecd983ec7d1ce7f49908b1a5b0 Mon Sep 17 00:00:00 2001
+From 76c462cbee4a7ac9e837a9360977c400dc942a26 Mon Sep 17 00:00:00 2001
 From: Chocobo1 <Chocobo1@users.noreply.github.com>
 Date: Fri, 30 Oct 2020 12:20:28 +0800
-Subject: [PATCH 2/3] Allow user to override default compression options
+Subject: [PATCH 3/4] Allow user to override default compression options
 
 ---
  mkinitcpio | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/mkinitcpio b/mkinitcpio
-index 9b585cd..352ee4e 100755
+index 38ed8be..31d0d02 100755
 --- a/mkinitcpio
 +++ b/mkinitcpio
 @@ -206,13 +206,13 @@ build_image() {

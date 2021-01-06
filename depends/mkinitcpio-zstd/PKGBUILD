@@ -6,7 +6,7 @@
 pkgname=mkinitcpio-zstd
 _pkgname=mkinitcpio
 pkgver=29
-pkgrel=3
+pkgrel=4
 pkgdesc="Modular initramfs image creation utility"
 arch=('any')
 url="https://projects.archlinux.org/mkinitcpio.git/"
@@ -24,19 +24,22 @@ conflicts=('mkinitcpio')
 backup=('etc/mkinitcpio.conf')
 source=("https://sources.archlinux.org/other/$_pkgname/$_pkgname-$pkgver.tar.gz"{,.sig}
         "0001-Add-zstd-module-decompression.patch"
-        "0002-Allow-user-to-override-default-compression-options.patch"
-        "0003-mkinitcpio-Lower-zstd-compression-level-to-15.patch")
+        "0002-Set-default-compressor-to-zstd.patch"
+        "0003-Allow-user-to-override-default-compression-options.patch"
+        "0004-mkinitcpio-Lower-zstd-compression-level-to-15.patch")
 install=mkinitcpio.install
 sha512sums=('cc03159f16ae12a0d1ebf6a1827f8cdaf73ad0910bf2b1b0f30b737b1cff472130eb41c3669c180291a9861c3c3167498d1f9d60cb9782aeb1ef1d0cd2156068'
             'SKIP'
-            '42b9a6ea2576168619fdd60633099ee18190220b162799c00cb49adb514e182d0e8e9a7a4dfea8c7c593a96aeb3f04bf899b81f36c74fdcf06762c692c818d1b'
-            'b7e16346e86e7621b6b60a38ad91b1652c82ea541fc5033f1a7b7635d5032ae6d8e8b40061ba629da040cffd09ad63667f5a226a6bb6b1232b1aa341465db372'
-            '77ce086cf9b8924ef18ab9e6d99c80d48be4a53d7a18281a00a589a5a954f2316a5f2a6987d7a0811ec5f8df18c00dfdcc6a22dd7a6bb4b059e02527b81e8425')
+            '4b2cf42de3acc7beebc23f18e414d8f8df129f0bf04e9b1bd7b03f9747103222d8c9ce3fc71cf71075808354e02cfd8c3caa4d59ffbc37ca7d7b2c475d5a9bd4'
+            '97e5353ede9d652bfe78c0b298961870c2eef6b3d26085e212201df24a16316fd4f4eb61f2c224b3594dcee63d13af2ed86845c4458e941aa77cbb5ed11c7d1c'
+            'ddb091b27cbb93f245e606acb528c7ea72cecad832426aa5c3e2120cc58d557674949fc99b9bb571d356561e3808fe1ad53e29a81936118a136ef858729d6909'
+            'f2aaa3109bd6a9945d61da85c060304d4901ebc5a4772e3c6d1bda62d8389fd7618649c000f9c1e5240afd87ba42f63d1aebfc30c562ed25244c41d6fb0671a0')
 b2sums=('4303216cc3c020bf58491a18b13785660e08f418a333f5b975b29b1da4f6b4427f5bbda358018a34e6894217c6368fdf3fe73d361e770a4b6e40abb12ba2fd02'
         'SKIP'
-        '02e4c4702da91136ec4df2fc2e8b403244590379ad75d3b07422d0c3c4032c42c635f17e870c2a6a358d628c4a2b023bffb66dc8c53652b8ef51467813dd4206'
-        'ff526de2cc670070ee3cd8d41c50be890bf979c533913d22aa3b0f0d9fac8d4afa99742c3bd74f2f050ecb580befb8d2ac5807ea3faea79519f9a3e82e005884'
-        '366eb17c0bbb0fed7fc6b95d289a80088996c621db1a0ef9a596784d84ae7ace41adc8edd0dd08a75efaa537748590daf779665320ffa4ee3679e1fda340f956')
+        '08fd9d1e56c8ec46dd190b4004141481a6446bb9cdf0ab2762479f0deb233b9d34bb08d75418fc6aba3030b123bf659a5f5eb7311563117bcc8b0186a0e593a2'
+        '6e69260868c5cfa86c4d7628afe8c67a86a763530a4120f41cb2fda2e57aef90d5fff544775d3de40a280f4f0513c667ab13c96beb3be4c71f1fe0e993368d58'
+        '5c2ecaa776a447156e3d76cc5b4cc63c69d7d3f6ab0e54c7d3c1587f398bb8bdd2768f29be973d37ca41f5ac3a97818e6965d2e2a221a02f39db16b40957d6b3'
+        'c555768c5e4ac38026776d6237a8670f965fc5265bd18035b2222a67e3f35e0fdc6323697cbe893a3b483878b129dc633767c1fb25e09eb65fe405fd11fd6c13')
 validpgpkeys=('ECCAC84C1BA08A6CC8E63FBBF22FB1D78A77AEAB'    # Giancarlo Razzolini
               '86CFFCA918CF3AF47147588051E8B148A9999C34')   # Evangelos Foutras
 
@@ -44,10 +47,12 @@ prepare() {
  cd $_pkgname-$pkgver
  # 0001-Add-zstd-module-decompression.patch
  patch -Np1 < $srcdir/0001-Add-zstd-module-decompression.patch
- # 0002-Allow-user-to-override-default-compression-options.patch
- patch -Np1 < $srcdir/0002-Allow-user-to-override-default-compression-options.patch
- # 0003-mkinitcpio-Lower-zstd-compression-level-to-15.patch
- patch -Np1 < $srcdir/0003-mkinitcpio-Lower-zstd-compression-level-to-15.patch
+ # 0002-Set-default-compressor-to-zstd.patch
+ patch -Np1 < $srcdir/0002-Set-default-compressor-to-zstd.patch
+ # 0003-Allow-user-to-override-default-compression-options.patch
+ patch -Np1 < $srcdir/0003-Allow-user-to-override-default-compression-options.patch
+ # 0004-mkinitcpio-Lower-zstd-compression-level-to-15.patch
+ patch -Np1 < $srcdir/0004-mkinitcpio-Lower-zstd-compression-level-to-15.patch
 }
 
 check() {
