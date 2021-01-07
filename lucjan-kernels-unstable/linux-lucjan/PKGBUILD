@@ -100,23 +100,23 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.10
-_minor=4
+_minor=5
 _minorc=$((_minor+1))
 _rcver=rc1
 _patches=${_major}-dev
-pkgver=5.10.5.ll39
+pkgver=5.10.6.ll40
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -182,7 +182,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll39'
+ _lucjanrev='ll40'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -540,13 +540,13 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('aab782786cc06b5f1872bbb88c4f55a73d222f8ecf1ab8f5b7d96de2160b11b4407e02a44b206d2c00e395ba0662aa5a038b8e10d185621a0b33c576b523b490'
+sha512sums=('f3462c8ee26c34a8ee344fa146f6f3aeceab03ef1cff83f3b831251f52aa70823d67085030a37b7fea21b305e20bcd7616d16557a7b5bd757b8f84d9805413da'
             'SKIP'
-            '5e8dcec8bb33e026a45275c149cde1a2ea56a842af1f438e4c844bc4953e57d99705ed34b129bb1956dac601c04d8bd19ceed00a98c3e548642ce1d23ccf1095'
+            'dbc25f55227a93773f2845cdedc72cb1aa019e33caf5353d5f3ab1041f11d1169df51796ee41692597b0627b883e7a1299e5d4c4dc445160edb2d5d22ef19aaa'
             'SKIP'
             'e0952a1c0e6375af06aa53f2abc219f7b94f3b94f75e3067944b586fc1eb3f1b36598602fd3731993e4ef14bf0580760df41fc4a654ab528d7d202dd40960272'
             'SKIP'
-            '0bf811f2361a1dbb9be3312a9bee39e9d57a4b0b23212c7bc0dacb2a7172cd0de9bdd1532e5d3b96024b897db66274c124f226b4c1ff026786f78e9b5d38e4e1'
+            'b6a7cc846b463014a0d6a9178db5b33aa2b345078d25dc3cbfd9d4e6f62591bd5cc6dbfd6b5cd7ccd706a1d16f31059018361c9aadc9dbb936afb177ba26bdcb'
             'SKIP'
             '20fbe2895245d2f66ee4ebf864d70e183f7f489f0e9b461f18e743e634b3b9ec2f5467facdbe42354946f187e82e785823e73bef291f843632e73e6b322da5e4')
 
