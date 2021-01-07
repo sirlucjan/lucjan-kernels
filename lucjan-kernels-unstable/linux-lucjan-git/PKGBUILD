@@ -100,7 +100,7 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -110,8 +110,8 @@ _pkgbase=linux-lucjan
 _major=5.10
 _patches=${_major}-dev
 _srcname=linux-stable-rc
-pkgver=5.10.4.r64.g18347c4f0781.ll39
-pkgrel=0.1
+pkgver=5.10.5.r21.g208f314c03c5.ll40
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -177,7 +177,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll39'
+ _lucjanrev='ll40'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -531,7 +531,7 @@ done
 sha512sums=('SKIP'
             'e0952a1c0e6375af06aa53f2abc219f7b94f3b94f75e3067944b586fc1eb3f1b36598602fd3731993e4ef14bf0580760df41fc4a654ab528d7d202dd40960272'
             'SKIP'
-            '0bf811f2361a1dbb9be3312a9bee39e9d57a4b0b23212c7bc0dacb2a7172cd0de9bdd1532e5d3b96024b897db66274c124f226b4c1ff026786f78e9b5d38e4e1'
+            'b6a7cc846b463014a0d6a9178db5b33aa2b345078d25dc3cbfd9d4e6f62591bd5cc6dbfd6b5cd7ccd706a1d16f31059018361c9aadc9dbb936afb177ba26bdcb'
             'SKIP'
             '20fbe2895245d2f66ee4ebf864d70e183f7f489f0e9b461f18e743e634b3b9ec2f5467facdbe42354946f187e82e785823e73bef291f843632e73e6b322da5e4')
 
