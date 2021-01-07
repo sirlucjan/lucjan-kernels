@@ -3,14 +3,13 @@
 
 pkgname=kmod-zstd
 _pkgname=kmod
-pkgver=27
-pkgrel=4
+pkgver=28
+pkgrel=1
 pkgdesc="Linux kernel module management tools and library"
 arch=('x86_64')
 url='https://git.kernel.org/?p=utils/kernel/kmod/kmod.git;a=summary'
 license=('GPL2')
 depends=('glibc' 'zlib' 'openssl' 'xz' 'zstd')
-makedepends=('gtk-doc')
 checkdepends=('linux-headers' 'libelf')
 options=('strip' 'debug')
 provides=('module-init-tools=3.16' 'libkmod.so' "kmod=$pkgver")
@@ -18,28 +17,16 @@ conflicts=('module-init-tools'  'kmod')
 replaces=('module-init-tools')
 validpgpkeys=('EAB33C9690013C733916AC839BA2A5A630CBEA53')  # Lucas DeMarchi
 source=("https://www.kernel.org/pub/linux/utils/kernel/$_pkgname/$_pkgname-$pkgver.tar."{xz,sign}
-        '0001-add-Zstandard-compression-support.patch'
-        '0002-testsuite-add-test-for-zstd-compressed-module.patch'
-        '0003-build-fix-distcheck-due-to-missing-zstd.patch'
         'depmod-search.conf'
         'depmod.hook' 'depmod.script')
-md5sums=('3973a74786670d3062d89a827e266581'
+md5sums=('0a2b887b1b3dfb8c0b3f41f598203e56'
          'SKIP'
-         'c5307e31557b62f9496529c27d59244d'
-         '557aec6e612d47a77b98d57ef3cc2c19'
-         'ab3de2d18935e408bc9ff85a37e3289c'
          'dd62cbf62bd8f212f51ef8c43bec9a77'
          'e179ace75721e92b04b2e145b69dab29'
          '18fb3d1f6024a5a84514c8276cb3ebff')
 
 prepare() {
  cd $_pkgname-$pkgver
- # 0001-add-Zstandard-compression-support.patch
- patch -Np1 < $srcdir/0001-add-Zstandard-compression-support.patch
- # 0002-testsuite-add-test-for-zstd-compressed-module.patch
- patch -Np1 < $srcdir/0002-testsuite-add-test-for-zstd-compressed-module.patch
- # 0003-testsuite-add-test-for-zstd-compressed-module.patch
- patch -Np1 < $srcdir/0003-build-fix-distcheck-due-to-missing-zstd.patch
 }
          
 build() {
@@ -47,7 +34,6 @@ build() {
 
   ./configure \
     --sysconfdir=/etc \
-    --enable-gtk-doc \
     --with-xz \
     --with-zstd \
     --with-zlib \

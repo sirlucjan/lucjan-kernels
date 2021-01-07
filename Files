@@ -1,9 +1,6 @@
 .
 ├── depends
 │   ├── kmod-zstd
-│   │   ├── 0001-add-Zstandard-compression-support.patch
-│   │   ├── 0002-testsuite-add-test-for-zstd-compressed-module.patch
-│   │   ├── 0003-build-fix-distcheck-due-to-missing-zstd.patch
 │   │   ├── depmod.hook
 │   │   ├── depmod.script
 │   │   ├── depmod-search.conf
@@ -36,4 +33,4 @@
 │       └── PKGBUILD
 └── README.md
 
-11 directories, 25 files
+11 directories, 22 files
