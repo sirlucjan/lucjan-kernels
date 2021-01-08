@@ -111,7 +111,7 @@ _major=5.10
 _patches=${_major}-dev
 _srcname=linux-stable-rc
 pkgver=5.10.5.r21.g208f314c03c5.ll40
-pkgrel=0.1
+pkgrel=0.2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -120,7 +120,7 @@ options=('!strip')
 makedepends=('kmod' 'bc' 'libelf' 'git' 'python-sphinx' 'python-sphinx_rtd_theme'
              'graphviz' 'imagemagick' 'pahole' 'cpio' 'perl' 'tar' 'xz')
 if [ -n "$_zstd_modules" ]; then
-    depends+=('mkinitcpio-zstd')
+    depends+=('initramfs-zstd')
 fi
 
 ### LL reverts
