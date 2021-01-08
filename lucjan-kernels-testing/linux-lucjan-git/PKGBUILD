@@ -82,7 +82,7 @@ _mm_protect=y
 # Possible compilation and installation errors.
 # Leave it unselected.
 # However, if you want to test the new solution,
-# first install mkinitcpio-zstd and kmod-zstd:
+# first install mkinitcpio-zstd:
 # https://gitlab.com/sirlucjan/lucjan-kernels/tree/master/depends
 # or
 # https://github.com/sirlucjan/lucjan-kernels/tree/master/depends
@@ -111,7 +111,7 @@ _major=5.10
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.10.5.r0.gf5247949c0a9.ll39
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -120,7 +120,7 @@ options=('!strip')
 makedepends=('kmod' 'bc' 'libelf' 'git' 'python-sphinx' 'python-sphinx_rtd_theme'
              'graphviz' 'imagemagick' 'pahole' 'cpio' 'perl' 'tar' 'xz')
 if [ -n "$_zstd_modules" ]; then
-    depends+=('kmod-zstd' 'mkinitcpio-zstd')
+    depends+=('mkinitcpio-zstd')
 fi
 
 ### LL reverts
