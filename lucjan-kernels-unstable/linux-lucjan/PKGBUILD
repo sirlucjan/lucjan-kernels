@@ -116,7 +116,7 @@ _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.2
+pkgrel=0.3
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -408,7 +408,8 @@ _package-kernel() {
   depends=('coreutils' 'kmod' 'initramfs')
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices'
-              'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
+              'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig'
+              'initramfs-zstd: install modules compressed in ZSTD format - read the information above in PKGBUILD')
   provides=(VIRTUALBOX-GUEST-MODULES WIREGUARD-MODULE)
   groups=('linux-lucjan')
 
