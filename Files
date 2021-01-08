@@ -1,10 +1,5 @@
 .
 ├── depends
-│   ├── kmod-zstd
-│   │   ├── depmod.hook
-│   │   ├── depmod.script
-│   │   ├── depmod-search.conf
-│   │   └── PKGBUILD
 │   └── mkinitcpio-zstd
 │       ├── 0001-Add-zstd-module-decompression.patch
 │       ├── 0002-Set-default-compressor-to-zstd.patch
@@ -33,4 +28,4 @@
 │       └── PKGBUILD
 └── README.md
 
-11 directories, 22 files
+10 directories, 18 files
