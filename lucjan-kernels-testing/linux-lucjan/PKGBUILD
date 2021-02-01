@@ -107,9 +107,9 @@ _linux_lucjan='actual'
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.10
-_minor=11
+_minor=12
 _patches=${_major}-dev
-pkgver=5.10.11.ll68
+pkgver=5.10.12.ll69
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -162,7 +162,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll68'
+ _lucjanrev='ll69'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -178,7 +178,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll57'
+ _lucjanrev='ll69'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -529,11 +529,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('251cdb885190769551c7c51476113e53ca11ea32f0234491ece3cfffe9f1c15e517dbba1c8f3c0d1a41351e2c14ccfff94aa00301a0c8a4a86b2569b1dd70ca5'
+sha512sums=('01062437c9af1654346b5baf550dbefe3cedab18b3d793ee528d1fc27556d5ecc438b6a39a4163acb65434f50516f8c98a3b1be723afbb620680695b909a376e'
             'SKIP'
             'e0952a1c0e6375af06aa53f2abc219f7b94f3b94f75e3067944b586fc1eb3f1b36598602fd3731993e4ef14bf0580760df41fc4a654ab528d7d202dd40960272'
             'SKIP'
-            '95d58eed89ce86e0910317d9d01470d7a398c722a115027458b5e1d372a1b728a3951c6a355c50369c69799c4c5318797efe9bc18506b12427775aaf61ea46b9'
+            '00811ea408983d2e4d951cafdc4d771ad05107daf4e3271161831dfdab36b6cde2b2a97dac678e82137bb0ee268f91d2b6ae5dacb5b6ef493bd7b08a45b8f177'
             'SKIP'
             '80d68f74afc6eee65bbb7448f0be902fe83c099f9ff12055cde9748d932a0ca05768ce9776130536dd1c33d52022e749a9c2032fefc5de5f752eb669b9cd8cce')
 
