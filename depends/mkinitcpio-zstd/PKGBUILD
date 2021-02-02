@@ -6,7 +6,7 @@
 pkgname=mkinitcpio-zstd
 _pkgname=mkinitcpio
 pkgver=29
-pkgrel=6
+pkgrel=7
 pkgdesc="Modular initramfs image creation utility"
 arch=('any')
 url="https://projects.archlinux.org/mkinitcpio.git/"
@@ -46,14 +46,15 @@ validpgpkeys=('ECCAC84C1BA08A6CC8E63FBBF22FB1D78A77AEAB'    # Giancarlo Razzolin
 
 prepare() {
  cd $_pkgname-$pkgver
- # 0001-Add-zstd-module-decompression.patch
- patch -Np1 < $srcdir/0001-Add-zstd-module-decompression.patch
- # 0002-Set-default-compressor-to-zstd.patch
- patch -Np1 < $srcdir/0002-Set-default-compressor-to-zstd.patch
- # 0003-Allow-user-to-override-default-compression-options.patch
- patch -Np1 < $srcdir/0003-Allow-user-to-override-default-compression-options.patch
- # 0004-mkinitcpio-Lower-zstd-compression-level-to-15.patch
- patch -Np1 < $srcdir/0004-mkinitcpio-Lower-zstd-compression-level-to-15.patch
+
+ local src
+  for src in "${source[@]}"; do
+    src="${src%%::*}"
+    src="${src##*/}"
+    [[ $src = *.patch ]] || continue
+    echo "Applying patch $src..."
+    patch -Np1 < "../$src"
+  done
 }
 
 check() {
