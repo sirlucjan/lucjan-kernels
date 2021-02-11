@@ -107,11 +107,11 @@ _linux_lucjan='actual'
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.10
-_minor=14
+_minor=15
 _minorc=$((_minor+1))
 _rcver=rc1
 _patches=${_major}-dev
-pkgver=5.10.15.ll79
+pkgver=5.10.16.ll79
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -541,9 +541,9 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('8e5016bfc7f5c090af6247ddac41cb3f811576bd078b2e145d798be6f214f72ee77bbff09d48d54a0154a9b137166650c88a1d178d50d5901dcaa03bb2c5e6f1'
+sha512sums=('7b2c38920ebfc9c9aea8cb319949f089a374b6604de4fb01dc6957234970d96830761d784c6f94a5f165f5792dfa9d3a6d8691d18147dc05cc0f03c78efbb61a'
             'SKIP'
-            '22a423ed542cd0f9440c1dbd05af30ba599b63620ae40afea0643702de0b2d86438469e12aaa15547695093049de797502a9b23b1d22e7446db8d61f64de248c'
+            '261ba4e92200f353a295ca284481e92a7a8f20713254bb9909847460c3e7f07532061bcf7e0c94a4ca0b4814cd065616a090a9e4af5662bb86bd4a395c7a78a0'
             'SKIP'
             'e0952a1c0e6375af06aa53f2abc219f7b94f3b94f75e3067944b586fc1eb3f1b36598602fd3731993e4ef14bf0580760df41fc4a654ab528d7d202dd40960272'
             'SKIP'
