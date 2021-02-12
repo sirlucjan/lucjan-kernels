@@ -110,7 +110,7 @@ _pkgbase=linux-lucjan
 _major=5.10
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.10.15.r0.g2d18b3ee633e.ll79
+pkgver=5.10.15.r0.g2d18b3ee633e.ll80
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -161,7 +161,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll79'
+ _lucjanrev='ll80'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -532,9 +532,9 @@ done
 sha512sums=('SKIP'
             'e0952a1c0e6375af06aa53f2abc219f7b94f3b94f75e3067944b586fc1eb3f1b36598602fd3731993e4ef14bf0580760df41fc4a654ab528d7d202dd40960272'
             'SKIP'
-            'bddf4ffb7f4ac356270ebbc659464570c511cccbad478fd2521cf34a1dd65ea45f556f079e99263319e8abd836d364131d23849f430bd6897dcf8649530e90b7'
+            '2a985eff90a1a22859b1165067989af98bf2ed451dcdc4d144ff80a3c801f60d062125b4e309d14aae932d9455c63f8c91711a67b984fe2ea63c543db6129573'
             'SKIP'
-            'b74d0ead667cbf9bc3b961af606c338d1a458008af01d2d725a5dee6d577566eac157864d0ebfd705b029b11de247a55db26977e34aa1ccc15f901c4b1dd3218')
+            '39d292a52e03cb0c703351ed2e7634d18c1fa77cca978be31b889132e91551f833e2f4bfbc6e9de4617df8992d7890ffbcab4a17ab33979fc2faeac10bbb03d8')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
