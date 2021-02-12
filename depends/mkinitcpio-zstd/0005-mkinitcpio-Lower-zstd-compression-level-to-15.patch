@@ -1,7 +1,7 @@
-From 56e81b902258556ff487cffc6f7b4b357a956e6c Mon Sep 17 00:00:00 2001
+From cdabf6ff24ff9b9b667a7a34bb1339d5e1e39e3e Mon Sep 17 00:00:00 2001
 From: Giancarlo Razzolini <grazzolini@archlinux.org>
 Date: Tue, 5 Jan 2021 16:14:40 -0300
-Subject: [PATCH 4/4] mkinitcpio: Lower zstd compression level to 15
+Subject: [PATCH 5/5] mkinitcpio: Lower zstd compression level to 15
 
 After extensive testing, lowering the compression level to 15 seems to achieve
 a compression time on the ball park of gzip, while also having ~10% savings on
@@ -24,5 +24,5 @@ index 31d0d02..f28b1ff 100755
      esac
  
 -- 
-2.30.0
+2.30.0.452.gfb7fa4a1fd
 

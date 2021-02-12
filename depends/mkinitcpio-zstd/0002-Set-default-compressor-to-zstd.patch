@@ -1,7 +1,7 @@
-From aa9745ca4ff99afee98433d648aa69b8ca5c8867 Mon Sep 17 00:00:00 2001
+From 948faf396cfd29d4d1b760d5210a6ffeb074bca4 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Wed, 6 Jan 2021 20:45:53 +0100
-Subject: [PATCH 2/4] Set default compressor to zstd
+Subject: [PATCH 2/5] Set default compressor to zstd
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -36,5 +36,5 @@ index ba1cce3..b07aa28 100644
  #COMPRESSION="gzip"
  #COMPRESSION="bzip2"
 -- 
-2.30.0
+2.30.0.452.gfb7fa4a1fd
 

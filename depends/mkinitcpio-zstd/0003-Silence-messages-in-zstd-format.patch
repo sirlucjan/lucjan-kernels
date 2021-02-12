@@ -1,0 +1,26 @@
+From 559366a890607c379e68a32a1296bf043180caff Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Fri, 12 Feb 2021 13:42:55 +0100
+Subject: [PATCH 3/5] Silence messages in zstd format
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ functions | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/functions b/functions
+index 88652b6..a1f5be4 100644
+--- a/functions
++++ b/functions
+@@ -803,7 +803,7 @@ install_modules() {
+     done
+     (( ${#xz_comp[*]} )) && xz -d "${xz_comp[@]}"
+     (( ${#gz_comp[*]} )) && gzip -d "${gz_comp[@]}"
+-    (( ${#zst_comp[*]} )) && zstd -d "${zst_comp[@]}"
++    (( ${#zst_comp[*]} )) && zstd -d -q "${zst_comp[@]}"
+ 
+     msg "Generating module dependencies"
+     install -m644 -t "$moduledest" "$_d_kmoduledir"/modules.builtin
+-- 
+2.30.0.452.gfb7fa4a1fd
+

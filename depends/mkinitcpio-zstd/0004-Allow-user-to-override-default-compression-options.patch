@@ -1,7 +1,7 @@
-From 76c462cbee4a7ac9e837a9360977c400dc942a26 Mon Sep 17 00:00:00 2001
+From 0d162cc5136a14a1b921b203db7e066950c44d16 Mon Sep 17 00:00:00 2001
 From: Chocobo1 <Chocobo1@users.noreply.github.com>
 Date: Fri, 30 Oct 2020 12:20:28 +0800
-Subject: [PATCH 3/4] Allow user to override default compression options
+Subject: [PATCH 4/5] Allow user to override default compression options
 
 ---
  mkinitcpio | 6 +++---
@@ -29,5 +29,5 @@ index 38ed8be..31d0d02 100755
      esac
  
 -- 
-2.30.0
+2.30.0.452.gfb7fa4a1fd
 
