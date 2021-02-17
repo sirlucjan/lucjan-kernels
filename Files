@@ -2,10 +2,7 @@
 ├── depends
 │   └── mkinitcpio-zstd
 │       ├── 0001-Add-zstd-module-decompression.patch
-│       ├── 0002-Set-default-compressor-to-zstd.patch
-│       ├── 0003-Silence-messages-in-zstd-format.patch
-│       ├── 0004-Allow-user-to-override-default-compression-options.patch
-│       ├── 0005-mkinitcpio-Lower-zstd-compression-level-to-15.patch
+│       ├── 0002-Silence-messages-in-zstd-format.patch
 │       ├── mkinitcpio.install
 │       └── PKGBUILD
 ├── Files
@@ -40,4 +37,4 @@
 │       └── PKGBUILD
 └── README.md
 
-15 directories, 25 files
+15 directories, 22 files

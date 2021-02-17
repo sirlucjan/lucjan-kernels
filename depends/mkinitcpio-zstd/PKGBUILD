@@ -5,8 +5,8 @@
 
 pkgname=mkinitcpio-zstd
 _pkgname=mkinitcpio
-pkgver=29
-pkgrel=8
+pkgver=30
+pkgrel=1
 pkgdesc="Modular initramfs image creation utility"
 arch=('any')
 url="https://projects.archlinux.org/mkinitcpio.git/"
@@ -14,36 +14,27 @@ license=('GPL')
 depends=('awk' 'mkinitcpio-busybox>=1.19.4-2' 'kmod' 'util-linux>=2.23' 'libarchive' 'coreutils'
          'bash' 'diffutils' 'findutils' 'grep' 'filesystem>=2011.10-1' 'zstd' 'systemd')
 makedepends=('asciidoc')
-optdepends=('xz: Use lzma or xz compression for the initramfs image'
+optdepends=('gzip: Use gzip compression for the initramfs image'
+            'xz: Use lzma or xz compression for the initramfs image'
             'bzip2: Use bzip2 compression for the initramfs image'
             'lzop: Use lzo compression for the initramfs image'
             'lz4: Use lz4 compression for the initramfs image'
-            'gzip: Use gzip compression for the initramfs image'
             'mkinitcpio-nfs-utils: Support for root filesystem on NFS')
 provides=('initramfs' 'initramfs-zstd' "mkinitcpio=$pkgver")
 conflicts=('mkinitcpio')
 backup=('etc/mkinitcpio.conf')
 source=("https://sources.archlinux.org/other/$_pkgname/$_pkgname-$pkgver.tar.gz"{,.sig}
         "0001-Add-zstd-module-decompression.patch"
-        "0002-Set-default-compressor-to-zstd.patch"
-        "0003-Silence-messages-in-zstd-format.patch"
-        "0004-Allow-user-to-override-default-compression-options.patch"
-        "0005-mkinitcpio-Lower-zstd-compression-level-to-15.patch")
+        "0002-Silence-messages-in-zstd-format.patch")
 install=mkinitcpio.install
-sha512sums=('cc03159f16ae12a0d1ebf6a1827f8cdaf73ad0910bf2b1b0f30b737b1cff472130eb41c3669c180291a9861c3c3167498d1f9d60cb9782aeb1ef1d0cd2156068'
+sha512sums=('ef43a8ddc01697fa43bede4eebad3271bbc89efa57ba7e4e9f321e8174ff2af74d857b308c5c0f37b42a91906c91c1b022f9a651c70d5d3e9dfc8dc441a60ee4'
             'SKIP'
-            '64041dd60dd7727ca0502e63403afc1bf9a79bf5f99ad946c0c8fc6a7890b1c1c4e92cb37ba2276866beff83bd63352f88f8b8bc43a091d944f01a43b999f317'
-            '45b71fae41aa9e933d37934c3e02f09eb794d6171a56a84ecdbfe6d9da02fc0e936ca7bfb31963b13a6b458c9290a502ae42890eb1d8a586727302f69e1043ae'
-            'c084a7edb9329680870af152d6a9ba4ad4130b3350e6fbc316de27e978a3e91b9b7c55eb012ca18d9bdcc09e9bcdd1120ad2a6e9ae9ae196533ea409c4147300'
-            '664cf92761bf633c8811ed4ac0f9604dc968c3c9a21ceda6d26a0457227e6f382c6aa3088cd4947d76c0502fd6bf7442e4f4b9d815b829dca305f5cca23e7139'
-            'c22bb94aae89404c1403c908005e688a5f5fe6f0d5fb880a7783731f6e0829a871866197398f36e6d95a111d123b5ed3832c13c5662ec6c853e160c9bdd107b8')
-b2sums=('4303216cc3c020bf58491a18b13785660e08f418a333f5b975b29b1da4f6b4427f5bbda358018a34e6894217c6368fdf3fe73d361e770a4b6e40abb12ba2fd02'
+            '8bcf8e53fd8a24bd8f8b62b2ac97ede1b8513bfe9e95e6129acef9bbf482314ce1edbaefbbf826d7c9b35664b072937de034e9cb73454b6588a2af9ef6b43c8a'
+            'eaae662928f68f1897536bf1aa386e8509f124ddeef907c8e1b5d73a81824daeff7c3f3d2b1ce7881268fec917499457a43275dce0a1ba73f19e4ceda6ee60fe')
+b2sums=('2001f9ac12bfa7369ad32842956cd21b2a786cd28133b6d3256e4aa77210c78ec6cac8a710ff8c2feb5a4797c1a33ce8c8c7dfabd84d7927c08bf8377e330300'
         'SKIP'
-        '15130e28a4d6356bd36bf66cfe5bad21d0429ca0d4737d9987e3ba91f4c41c2bc27cc0533ba760894e20549755bdcd777fb7771c8298c7562d0d7b502468f0f5'
-        'badcfde7ba7d633680150e6b7a6a6df9055f5172255703b25707fa7367de0b4270327b9c56a36e0659d9f421ed45dea1f810616b567a042ed02df77c5d18f412'
-        '68e3a049f38c2d22c4a975cbf962861eb403f7608f2c94bd0b9a858da7d11bac3a6904ba0eab4c85ed90482ade9f818e3673570e0f7cc1d5cb27f7c6c8fc5e45'
-        'e683bfba58a14b0f20fd6e971b7ed5cae177c16b7229099e43f2fd535d29ca8e134acc907d7dd8c726c36d067e79238444e730f63d6091586368660d1f26ac1c'
-        '1c832c711cb99a36c683c1c24aea2d3ea4472e2ca7577e86d4730bd950e8d4e7ccbd822922783c3832ed4360772c67053264e4fae8d04d031c554ba1de2b045f')
+        '695b2dad1ed4925002222e40a6790811be8ba3b4076c3e7e00dee39d89ce086661f86ff5ca85e03302b0a31cad2b39142896c2909878c8fc9cad92b3c32afaa2'
+        '2baa30bdf1cde6ba198a15ed834e9a74bd90c57899d4442bcffd8bba5eeb8a0e84caba01971eeb316e14b966ccf54729c900733a36f819415e30a44a1812a031')
 validpgpkeys=('ECCAC84C1BA08A6CC8E63FBBF22FB1D78A77AEAB'    # Giancarlo Razzolini
               '86CFFCA918CF3AF47147588051E8B148A9999C34')   # Evangelos Foutras
 

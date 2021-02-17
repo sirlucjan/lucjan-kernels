@@ -1,7 +1,7 @@
-From 3a7d7cd60b62a8a4c98b1208f5e2fe7e2805809d Mon Sep 17 00:00:00 2001
+From 69c7809956ba70eec0e509484c5606c894ff4249 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 17 Dec 2020 21:52:56 +0100
-Subject: [PATCH 1/5] Add zstd module decompression
+Subject: [PATCH 1/2] Add zstd module decompression
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -37,5 +37,5 @@ index 5094c25..88652b6 100644
      msg "Generating module dependencies"
      install -m644 -t "$moduledest" "$_d_kmoduledir"/modules.builtin
 -- 
-2.30.0.452.gfb7fa4a1fd
+2.30.1.457.gf011795891
 
