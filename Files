@@ -6,13 +6,6 @@
 │       ├── mkinitcpio.install
 │       └── PKGBUILD
 ├── Files
-├── lucjan-kernels-experimental
-│   ├── linux-lucjan
-│   │   ├── config
-│   │   └── PKGBUILD
-│   └── linux-lucjan-git
-│       ├── config
-│       └── PKGBUILD
 ├── lucjan-kernels-rolling
 │   └── linux-lucjan-git
 │       ├── config
@@ -40,4 +33,4 @@
 │       └── PKGBUILD
 └── README.md
 
-16 directories, 24 files
+13 directories, 20 files
