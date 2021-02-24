@@ -10,23 +10,23 @@
 
 * [bfq-dev-lucjan](https://github.com/sirlucjan/bfq-mq-lucjan/tree/dev-bfq-on-5.6-lucjan) - latest fixes authored by Paolo Valente and BFQ Team and forked by Piotr Gorski
 
-* [bfq-dev-lucjan-rc](https://github.com/sirlucjan/kernel-patches/tree/master/5.10/bfq-dev-lucjan) / [bfq-dev-lucjan-rc](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.10/bfq-dev-lucjan) - specific patches authored by Paolo Valente and Piotr Gorski
+* [bfq-dev-lucjan-rc](https://github.com/sirlucjan/kernel-patches/tree/master/5.11/bfq-dev-lucjan) / [bfq-dev-lucjan-rc](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.10/bfq-dev-lucjan) - specific patches authored by Paolo Valente and Piotr Gorski
 
 * [graysky's GCC patch](https://github.com/graysky2/kernel_gcc_patch) - version for gcc 10.1
 
-* [Project C](https://gitlab.com/alfredchen/linux-prjc/tree/linux-5.10.y-prjc) / [Project C blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
+* [Project C](https://gitlab.com/alfredchen/linux-prjc/tree/linux-5.11.y-prjc) / [Project C blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
 
-* [random fixes from zen-kernel](https://github.com/zen-kernel/zen-kernel/tree/5.10/master) - specific patches authored by Jan Alexander Steffens and ZEN Kernel Team
+* [random fixes from zen-kernel](https://github.com/zen-kernel/zen-kernel/tree/5.11/master) - specific patches authored by Jan Alexander Steffens and ZEN Kernel Team
 
-* [random fixes from pfkernel](https://github.com/pfactum/pf-kernel/tree/pf-5.10) / [random fixes from pfkernel](https://gitlab.com/post-factum/pf-kernel/tree/pf-5.10) - for example patches from Arch Linux or specific patches authored by Oleksandr Natalenko
+* [random fixes from pfkernel](https://github.com/pfactum/pf-kernel/tree/pf-5.11) / [random fixes from pfkernel](https://gitlab.com/post-factum/pf-kernel/tree/pf-5.11) - for example patches from Arch Linux or specific patches authored by Oleksandr Natalenko
 
 * [fixes from ClearLinux](https://github.com/clearlinux-pkgs/linux) - specific patches authored by ClearLinux Team
 
 * [UKSM (sources)](https://github.com/dolohow/uksm) / [UKSM (info)](https://www.usenix.org/sites/default/files/conference/protected-files/fast18_slides_xia.pdf) - resync from dolohow’s github
 
-* [LL-patches](https://github.com/sirlucjan/kernel-patches/tree/master/5.10/ll-patches) / [LL-patches](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.10/ll-patches) - specific patches authored by Piotr Gorski
+* [LL-patches](https://github.com/sirlucjan/kernel-patches/tree/master/5.11/ll-patches) / [LL-patches](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.11/ll-patches) - specific patches authored by Piotr Gorski
 
-* [LL-branding](https://github.com/sirlucjan/kernel-patches/tree/master/5.10/ll-branding) / [LL-branding](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.10/ll-branding) - specific patches authored by Piotr Gorski
+* [LL-branding](https://github.com/sirlucjan/kernel-patches/tree/master/5.11/ll-branding) / [LL-branding](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.11/ll-branding) - specific patches authored by Piotr Gorski
 
 ***
 
@@ -34,7 +34,7 @@
 
 ###### To use lucjan-kernels smoothly apply ll-reverts before linux-lucjan patch. Otherwise the kernel will not compile.
 
-* [ll-reverts](https://github.com/sirlucjan/kernel-patches/tree/master/5.10-dev/ll-reverts) / [ll-reverts](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.10-dev/ll-reverts) - specific patches authored by Piotr Gorski
+* [ll-reverts](https://github.com/sirlucjan/kernel-patches/tree/master/5.11-dev/ll-reverts) / [ll-reverts](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.11-dev/ll-reverts) - specific patches authored by Piotr Gorski
 
 ***
 # Download:
