@@ -100,23 +100,24 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='trunk'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
-_major=5.10
-_minor=17
+_major=5.11
+_minor=0
 _minorc=$((_minor+1))
 _rcver=rc1
 _patches=${_major}-dev
-pkgver=5.10.18.ll86
+pkgver=5.11.1.ll19
 _pkgver=${_major}.${_minorc}
-_stable=${_major}.${_minor}
+#_stable=${_major}.${_minor}
+_stable=${_major}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -166,7 +167,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll86'
+ _lucjanrev='ll19'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -174,7 +175,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll65'
+ _lucjanrev='ll19'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -182,7 +183,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll86'
+ _lucjanrev='ll19'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -191,7 +192,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll16'
+ _lucjanrev='ll19'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -339,9 +340,9 @@ prepare() {
     ### Enable protect file mappings under memory pressure
 	if [ -n "$_mm_protect" ]; then
 		echo "Enabling protect file mappings under memory pressure..."
-		scripts/config --enable CONFIG_UNEVICTABLE_ACTIVEFILE
-		scripts/config --set-val CONFIG_UNEVICTABLE_ACTIVEFILE_KBYTES_LOW 524288
-		scripts/config --set-val CONFIG_UNEVICTABLE_ACTIVEFILE_KBYTES_MIN 262144
+		scripts/config --enable CONFIG_UNEVICTABLE_FILE
+		scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_LOW 262144
+		scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_MIN 131072
 	fi
 
     ### Optionally disable NUMA for 64-bit kernels only
@@ -434,7 +435,7 @@ _package-kernel() {
 
 _package-headers() {
   pkgdesc="Headers and scripts for building modules for the $pkgdesc kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
-  depends=('linux-lucjan-kernel')
+  depends=('linux-lucjan-kernel' 'pahole')
   groups=('linux-lucjan')
 
   cd $_srcname
@@ -541,15 +542,15 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('2d8700ceee0c027597415de2b9fa478a651c6f5074b68d60609a4c46398ac5a854f9323fc07b187caca5294759bf99832d7496c4f4cca222240b07435b27bd60'
+sha512sums=('a567ec133018bb5ec00c60281479b466c26e02137a93a9c690e83997947df02b6fd94e76e8df748f6d70ceb58a19bacc3b1467de10b7a1fad2763db32b3f1330'
             'SKIP'
-            'faad41636ff2dd4134146b0e22a052dff4aff9bb9dcbd88304922660753e860ce85dd731d42168984eac63619a1358ee880660cb3c419eabd9110bcd1534b89a'
+            'b79459f3d80ed45e16b132ba0838b97355dc1d8215fdd9c548b180c95242e048b7f434a0f6ef62fc0a3a98e96fba364004de56b11420fb9001a4631d21212728'
             'SKIP'
-            'e0952a1c0e6375af06aa53f2abc219f7b94f3b94f75e3067944b586fc1eb3f1b36598602fd3731993e4ef14bf0580760df41fc4a654ab528d7d202dd40960272'
+            'da15889d0ef6765242305ba586f7699983f8d35d677581e8c287d576880e00ae457609f69733b4c241750659ba5851313fae1491e31ad9d5215ab5a2bc92483f'
             'SKIP'
-            'c84bf616a26b1175ad12c1faf0c1be665c8238f1e333e8b67f52820c474cdb54d51a59091e899bd62756f0f4d24551c6005de831d3f7991afa396a5a95d0ea6a'
+            '3349959ce784d62db0bd206cdc38112e5fd5bd18ed910541fb488519314f7166f0e0ca43a94692a2786111ca020fb4909e0cdcf17e35a75b4c2296d2523011e7'
             'SKIP'
-            '39d292a52e03cb0c703351ed2e7634d18c1fa77cca978be31b889132e91551f833e2f4bfbc6e9de4617df8992d7890ffbcab4a17ab33979fc2faeac10bbb03d8')
+            'c46dab6f3443c017cb58b9ef0083116b87cafec9e0669f429c2e3c4782d823ef0ca00b7f0d3f3d91b7ffb71e1c0946da6ca05353d3fec5f5ec55e307855258d1')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
