@@ -100,7 +100,7 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -545,7 +545,7 @@ sha512sums=('16090ec6dea7a8c417ca7483b296902c9b55b423482ad8a881dffcaae76411806bc
             'SKIP'
             '7c89394c3cdf7130c2c67b2aabed026f9b77e11d943304c6a1af41301cb85a14551eec6210619a6587e4b8647f49feab738f2c7e9dfda11212156c39c910a807'
             'SKIP'
-            '5dff2a1f7beca9686a31aab8ebb398abc9ca295e2e10451ca736d0efd1fc3f019d8330b1f5d1cafd7cdea378bb5cf110dfe94522ccf3d461d0590eb1390d3691'
+            '6167162130c4a1da3f4bb8fc7b503ba0d96c4eafb1597188b504b80a7a36dcd7f00147eec0393e651bf3d9e9739bb3ab436afb43810aa76251357a6a57f37199'
             'SKIP'
             'c46dab6f3443c017cb58b9ef0083116b87cafec9e0669f429c2e3c4782d823ef0ca00b7f0d3f3d91b7ffb71e1c0946da6ca05353d3fec5f5ec55e307855258d1')
 
