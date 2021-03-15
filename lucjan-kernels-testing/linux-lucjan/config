@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.11.3.ll28 Kernel Configuration
+# Linux/x86 5.11.6.ll36 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 10.2.0"
 CONFIG_CC_IS_GCC=y
@@ -406,7 +406,12 @@ CONFIG_ACRN_GUEST=y
 # CONFIG_MCASCADELAKE is not set
 # CONFIG_MCOOPERLAKE is not set
 # CONFIG_MTIGERLAKE is not set
+# CONFIG_MSAPPHIRERAPIDS is not set
+# CONFIG_MALDERLAKE is not set
 CONFIG_GENERIC_CPU=y
+# CONFIG_GENERIC_CPU2 is not set
+# CONFIG_GENERIC_CPU3 is not set
+# CONFIG_GENERIC_CPU4 is not set
 # CONFIG_MNATIVE is not set
 CONFIG_X86_INTERNODE_CACHE_SHIFT=6
 CONFIG_X86_L1_CACHE_SHIFT=6
