@@ -1,7 +1,7 @@
-From beae4351528defcbc2ebce68df801a8d8fabf523 Mon Sep 17 00:00:00 2001
+From c2d11a6184db3ff10297fed824d91f0c6ad7eb06 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
-Date: Fri, 12 Feb 2021 13:42:55 +0100
-Subject: [PATCH 2/3] Silence messages in zstd format
+Date: Fri, 19 Mar 2021 19:32:59 +0100
+Subject: [PATCH 3/3] Add --rm flag to minimize the size of initramfs
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -9,15 +9,15 @@ Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/functions b/functions
-index 88652b6..a1f5be4 100644
+index a1f5be4..9539a60 100644
 --- a/functions
 +++ b/functions
 @@ -803,7 +803,7 @@ install_modules() {
      done
      (( ${#xz_comp[*]} )) && xz -d "${xz_comp[@]}"
      (( ${#gz_comp[*]} )) && gzip -d "${gz_comp[@]}"
--    (( ${#zst_comp[*]} )) && zstd -d "${zst_comp[@]}"
-+    (( ${#zst_comp[*]} )) && zstd -d -q "${zst_comp[@]}"
+-    (( ${#zst_comp[*]} )) && zstd -d -q "${zst_comp[@]}"
++    (( ${#zst_comp[*]} )) && zstd -d --rm -q "${zst_comp[@]}"
  
      msg "Generating module dependencies"
      install -m644 -t "$moduledest" "$_d_kmoduledir"/modules.builtin
