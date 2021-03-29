@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.11.9.ll49 Kernel Configuration
+# Linux/x86 5.11.10.ll54 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 10.2.0"
 CONFIG_CC_IS_GCC=y
@@ -412,7 +412,8 @@ CONFIG_GENERIC_CPU=y
 # CONFIG_GENERIC_CPU2 is not set
 # CONFIG_GENERIC_CPU3 is not set
 # CONFIG_GENERIC_CPU4 is not set
-# CONFIG_MNATIVE is not set
+# CONFIG_MNATIVE_INTEL is not set
+# CONFIG_MNATIVE_AMD is not set
 CONFIG_X86_INTERNODE_CACHE_SHIFT=6
 CONFIG_X86_L1_CACHE_SHIFT=6
 CONFIG_X86_TSC=y
