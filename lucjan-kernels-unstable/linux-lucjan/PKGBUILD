@@ -100,18 +100,18 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.11
-_minor=8
+_minor=10
 _minorc=$((_minor+1))
 _rcver=rc1
 _patches=${_major}-dev
-pkgver=5.11.9.ll53
+pkgver=5.11.11.ll54
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -182,7 +182,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll39'
+ _lucjanrev='ll54'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -541,11 +541,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('2b78607a2cafab6bd49c18cc4f79f26df3694f3984d6d24936dc722e72dca567f86eff3ae87f8560ed9bb363410a6ec7bccc33f3d1c9ab2bc3385be5f6a99da6'
+sha512sums=('504f73124e730df2a9e1399b64ba388fea4adf66b52f145cc39a9807a0476b998ea66b6de6d5aafdf9cc1930c1dc8de7bb8c1ae0da93d9ee9ca409ce0b0aff38'
             'SKIP'
-            'f050b2e70cf0260b769611d9373499fa721fa880fe133f7b1087153adfa3f07c469bfaad4ecb3788cfc6703879f6b8a9467db5ec663e1e4f0b8ab7181864461f'
+            '8cde1d17bd5f8230fb83990565a86595d5c03059bcac70de6f4d3283c075f3acba1e69ca82307e1ff8fc3ef783e58fe036bc70d695c40f7f35a661919d3772b7'
             'SKIP'
-            '47422dbbd6dac7c095e8036d7555dc0edab6b35af5e82c84a8db5f2e6030b426a498b14c09f02ec27b458db0ac69fb5b4b44a803b6d97eef031e718d3edfc48d'
+            'b64fa1315420a054105d27d7f614f20cbaa86e18bd13fc1d002dfd0f9343fea8453c4db114919933ba69114665e921ac0f81180e52dbf7b5b134426a1f3d4dcb'
             'SKIP'
             'e8e82e6c4bc37f5a9caffec4ed95247e6bd353b89fd73f32c8840291b6736e0fc3788f5c80ccee8ba81cb61d646952b8d69f7c7d8aea36d87dab23e66296db6d')
 
