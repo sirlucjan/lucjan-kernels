@@ -109,7 +109,7 @@ pkgbase=linux-lucjan
 _major=5.11
 _minor=11
 _patches=${_major}-dev
-pkgver=5.11.11.ll63
+pkgver=5.11.11.ll64
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -162,7 +162,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll63'
+ _lucjanrev='ll64'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -344,6 +344,7 @@ prepare() {
 		echo "Enabling ZSTD module compression..."
 		scripts/config --disable CONFIG_MODULE_COMPRESS_XZ
 		scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD
+		scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19
 	fi
 
     ### Optionally load needed modules for the make localmodconfig
@@ -531,9 +532,9 @@ done
 
 sha512sums=('cb4f3e3d2cc8b59527f439b704e9fd8dc515424171fe2db720047f56fa987ea1736fd2cce1a20b2fe4ebf33306d6affe79024225bb5e67d617ae37574b316408'
             'SKIP'
-            'b0af0e9f052f36d0d111750bae8dd8d7098e4239ff1be645f7fde5cd3f8e8f61e3bce5e22eb2281b8eed6173d3ac3a47289612e2ccd8af369c35bb1454d5fd15'
+            'd100ed79eecea7c45dfd4069a33de107678c217dc83e5e0fc677329d6828f1b3e2adee50c4c0cc28755c2c4c8ebc8b4bc7615217439473a5532e83bd6afe51e8'
             'SKIP'
-            'cd9fe63fb842e500b11a696693283f7e58f3ab16ba668c2fa65ded37ae9a9f73a3df589c3487df9a1f3e0647afabc4190cdfb9c5a642f76a3b49523bb2b865a1')
+            'eeb4ee7e642c213c17202b01420fc0b1d90201c65f9308a866669b2fea088195b5438812ca2a559369fab4a0d1d6f24bda18fd6f0fb58f653ec30533a217cf78')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
