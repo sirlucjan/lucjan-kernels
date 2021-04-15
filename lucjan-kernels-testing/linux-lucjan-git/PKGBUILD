@@ -76,6 +76,12 @@ _1k_HZ_ticks=y
 ### Enable protect file mappings under memory pressure
 _mm_protect=y
 
+### Selecting the ZSTD compression level
+# ATTENTION - one of two predefined values should be selected!
+# 'ultra' - highest compression ratio
+# 'normal' - standard compression ratio
+_zstd_level='ultra'
+
 ### Enable MODULE_COMPRESS_ZSTD
 # WARNING Not recommended.
 # An experimental solution, still in testing phase.
@@ -111,7 +117,7 @@ _major=5.11
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.11.14.r0.gdfe7059bf16b.ll80
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -337,6 +343,17 @@ prepare() {
 	if [ -n "$_NUMAdisable" ]; then
 		echo "Disabling NUMA from kernel config..."
 		scripts/config --disable CONFIG_NUMA
+	fi
+
+    ### Selecting the ZSTD compression level
+	if [ "$_zstd_level" = "ultra" ]; then
+		echo "Enabling highest ZSTD compression ratio..."
+		scripts/config --set-val CONFIG_KERNEL_ZSTD_LEVEL 19
+		scripts/config --enable CONFIG_KERNEL_ZSTD_LEVEL_ULTRA
+	elif [ "$_zstd_level" = "normal" ]; then
+		echo "Enabling standard ZSTD compression ratio..."
+		scripts/config --set-val CONFIG_KERNEL_ZSTD_LEVEL 19
+		scripts/config --disable CONFIG_KERNEL_ZSTD_LEVEL_ULTRA
 	fi
 
     ### Enable MODULE_COMPRESS_ZSTD
