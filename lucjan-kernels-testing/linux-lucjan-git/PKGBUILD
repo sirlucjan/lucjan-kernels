@@ -116,7 +116,7 @@ _pkgbase=linux-lucjan
 _major=5.11
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.11.14.r0.gdfe7059bf16b.ll80
+pkgver=5.11.15.r0.g2aa8861eab09.ll80
 pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -550,7 +550,7 @@ done
 sha512sums=('SKIP'
             '53c7dcff25bb5bc78d9e772007836901774b47ffc9200cdee2582e197c67892fc37255e3119f9874ddd9263db3686bdfafc3fa193137a36e2dfe68087191d013'
             'SKIP'
-            '0005c2d88574212150d540801aad3f56c7892a2c8b9792c80e7ab4a855700f1529410a4668b26b830bcee7bfdce3f981347730af5e4e906d0c4c9984056c7dbe')
+            'dec0cd198d642646576195fd742c437dfb19bbc1f1653d86297960dab16f8cec51ba4e7dc87dd15b6e9942e0ded16361e271148b27606bf8c96b9ef3b64cf56b')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
