@@ -46,8 +46,12 @@ _use_current=
 # 'no' - disable linux-lucjan branding
 _ll_branding='yes'
 
-### Setting GCC Flags for CONFIG_MHASWELL
-_gcc_haswell=y
+### Setting GCC Flags GCC flags for your processor
+# To see which option to select, run the command:
+# gcc -c -Q -march=native --help=target | grep march
+# You can find the full list below:
+# https://github.com/graysky2/kernel_gcc_patch#expanded-cpus-include
+_gcc_tune=y
 
 ### Enable fancontrol for DELL
 _dell_fancontrol=y
@@ -117,7 +121,7 @@ _major=5.11
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.11.16.r0.ge2d9bf3473cc.ll85
-pkgrel=2
+pkgrel=3
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -267,7 +271,7 @@ prepare() {
 	fi
 
     ### Set GCC flags
-	if [ -n "$_gcc_haswell" ]; then
+	if [ -n "$_gcc_tune" ]; then
 		echo "Setting GCC flags for Intel Haswell CPU..."
 		scripts/config --disable CONFIG_GENERIC_CPU
 		scripts/config --enable CONFIG_MHASWELL
