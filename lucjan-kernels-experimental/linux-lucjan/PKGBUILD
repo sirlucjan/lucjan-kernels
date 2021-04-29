@@ -80,6 +80,9 @@ _1k_HZ_ticks=y
 ### Enable protect file mappings under memory pressure
 _mm_protect=y
 
+### Enable multigenerational LRU
+_lru_enable=y
+
 ### Selecting the ZSTD compression level
 # ATTENTION - one of two predefined values should be selected!
 # 'ultra' - highest compression ratio
@@ -119,7 +122,7 @@ pkgbase=linux-lucjan
 _major=5.12
 _minor=0
 _patches=${_major}-dev
-pkgver=5.12.ll6
+pkgver=5.12.ll7
 #_pkgver=${_major}.${_minor}
 _pkgver=${_major}
 _srcname=linux-${_pkgver}
@@ -173,7 +176,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll6'
+ _lucjanrev='ll7'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -181,7 +184,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll6'
+ _lucjanrev='ll7'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -189,7 +192,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll6'
+ _lucjanrev='ll7'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -198,7 +201,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll6'
+ _lucjanrev='ll7'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -341,6 +344,16 @@ prepare() {
 		scripts/config --enable CONFIG_UNEVICTABLE_FILE
 		scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_LOW 262144
 		scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_MIN 131072
+	fi
+
+    ### Enable multigenerational LRU
+	if [ -n "$_lru_enable" ]; then
+		echo "Enabling multigenerational LRU..."
+		scripts/config --enable CONFIG_LRU_GEN
+		scripts/config --set-val CONFIG_NR_LRU_GENS 7
+		scripts/config --set-val CONFIG_TIERS_PER_GEN 4
+		scripts/config --enable CONFIG_LRU_GEN_ENABLED
+		scripts/config --enable CONFIG_LRU_GEN_STATS
 	fi
 
     ### Optionally disable NUMA for 64-bit kernels only
@@ -554,9 +567,9 @@ done
 
 sha512sums=('be03b6fee1d1ea8087b09874d27c0a602c0b04fd90ad38b975bd2c8455a07e83c29b56814aaf1389e82305fae0e4c2d1701075a7f0a7295dd28149f967ec5b3d'
             'SKIP'
-            '8f1476868c933a218199818ce7ec47c7d02174819179ff7ce01ad956800347deac5d82fddac1ad5c9f47824435a270fdc1042e8ea2375a3d4a69ce9b60f77541'
+            '724e6f6fc6ccf9a003c19bdcffc6619f148dd136020a9e139900b4a264542f86e14404d6b6dbbb8ccbf8cb4d212ccb692239b901b8d9b33b2c0183988935098d'
             'SKIP'
-            '19f15fb4650c77cbd6f5c66b198d14824bf804aff17be1306a55347c3b8858b9d0682676f78509fcfda4e8fa112b6ac5e131ccb49fb0251ab59a8173b62fca25')
+            'ad952f16df4cd9a26ef87cd9e7d1ba133115f6eb62a81afc589235738998377b6f65f9eb1c562c25b635863aacceea1532db47cd81f758f106e8e10a91758da0')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
