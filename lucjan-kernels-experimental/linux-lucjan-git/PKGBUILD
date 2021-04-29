@@ -77,9 +77,6 @@ _cc_harder=y
 ### Running with a 1000 HZ tick rate
 _1k_HZ_ticks=y
 
-### Enable protect file mappings under memory pressure
-_mm_protect=y
-
 ### Enable multigenerational LRU
 _lru_enable=y
 
@@ -123,7 +120,7 @@ _pkgbase=linux-lucjan
 _major=5.12
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.12.r0.g9f4ad9e425a1.ll7
+pkgver=5.12.r0.g9f4ad9e425a1.ll8
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -174,7 +171,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll7'
+ _lucjanrev='ll8'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -182,7 +179,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll7'
+ _lucjanrev='ll8'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -190,7 +187,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll7'
+ _lucjanrev='ll8'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -199,7 +196,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll7'
+ _lucjanrev='ll8'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -335,14 +332,6 @@ prepare() {
 		scripts/config --disable CONFIG_HZ_300
 		scripts/config --enable CONFIG_HZ_1000
 		scripts/config --set-val CONFIG_HZ 1000
-	fi
-
-    ### Enable protect file mappings under memory pressure
-	if [ -n "$_mm_protect" ]; then
-		echo "Enabling protect file mappings under memory pressure..."
-		scripts/config --enable CONFIG_UNEVICTABLE_FILE
-		scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_LOW 262144
-		scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_MIN 131072
 	fi
 
     ### Enable multigenerational LRU
@@ -565,9 +554,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '724e6f6fc6ccf9a003c19bdcffc6619f148dd136020a9e139900b4a264542f86e14404d6b6dbbb8ccbf8cb4d212ccb692239b901b8d9b33b2c0183988935098d'
+            '804fb38dde131ddd8d354890a73e406f56390f762a5b7bd8f75a64ce068359b4ea8a36bdeae30ffb34a539a6fac6be6f29f2eff8534ebd694353ca8ff353a6fc'
             'SKIP'
-            'ad952f16df4cd9a26ef87cd9e7d1ba133115f6eb62a81afc589235738998377b6f65f9eb1c562c25b635863aacceea1532db47cd81f758f106e8e10a91758da0')
+            '5a91ef9d6ca3116da4c84fe43182f9e24f24bad82fd6c390e821f4e7fbb1cfc1ef87cb28205bb884c8bb6453d291b06c3d8c94a51abd438ad9efe41dee27991d')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
