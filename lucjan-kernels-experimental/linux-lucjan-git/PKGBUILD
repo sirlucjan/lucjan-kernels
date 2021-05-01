@@ -80,6 +80,9 @@ _1k_HZ_ticks=y
 ### Enable multigenerational LRU
 _lru_enable=y
 
+### Enable TCP_CONG_BBR2
+_tcp_bbr2=y
+
 ### Selecting the ZSTD compression level
 # ATTENTION - one of two predefined values should be selected!
 # 'ultra' - highest compression ratio
@@ -121,7 +124,7 @@ _major=5.12
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.12.r0.g9f4ad9e425a1.ll10
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -332,6 +335,17 @@ prepare() {
 		scripts/config --disable CONFIG_HZ_300
 		scripts/config --enable CONFIG_HZ_1000
 		scripts/config --set-val CONFIG_HZ 1000
+	fi
+
+    ### Enable TCP_CONG_BBR2
+	if [ -n "$_tcp_bbr2" ]; then
+		echo "Disabling TCP_CONG_CUBIC..."
+		scripts/config --module CONFIG_TCP_CONG_CUBIC
+		scripts/config --disable CONFIG_DEFAULT_CUBIC
+		echo "Enabling TCP_CONG_BBR2..."
+		scripts/config --enable CONFIG_TCP_CONG_BBR2
+		scripts/config --enable CONFIG_DEFAULT_BBR2
+		scripts/config --set-str CONFIG_DEFAULT_TCP_CONG bbr2
 	fi
 
     ### Enable multigenerational LRU
