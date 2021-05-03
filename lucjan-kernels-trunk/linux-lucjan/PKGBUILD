@@ -77,6 +77,9 @@ _cc_harder=y
 ### Running with a 1000 HZ tick rate
 _1k_HZ_ticks=y
 
+### Enable protect file mappings under memory pressure
+_mm_protect=y
+
 ### Enable multigenerational LRU
 _lru_enable=y
 
@@ -124,7 +127,7 @@ _minor=0
 _minorc=$((_minor+1))
 _rcver=rc1
 _patches=${_major}-dev
-pkgver=5.12.1.ll11
+pkgver=5.12.1.ll12
 _pkgver=${_major}.${_minorc}
 #_stable=${_major}.${_minor}
 _stable=${_major}
@@ -180,7 +183,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll11'
+ _lucjanrev='ll12'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -188,7 +191,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll11'
+ _lucjanrev='ll12'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -196,7 +199,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll11'
+ _lucjanrev='ll12'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -205,7 +208,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll11'
+ _lucjanrev='ll12'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -359,6 +362,14 @@ prepare() {
 		scripts/config --enable CONFIG_TCP_CONG_BBR2
 		scripts/config --enable CONFIG_DEFAULT_BBR2
 		scripts/config --set-str CONFIG_DEFAULT_TCP_CONG bbr2
+	fi
+
+    ### Enable protect file mappings under memory pressure
+	if [ -n "$_mm_protect" ]; then
+		echo "Enabling protect file mappings under memory pressure..."
+		scripts/config --enable CONFIG_UNEVICTABLE_FILE
+		scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_LOW 262144
+		scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_MIN 131072
 	fi
 
     ### Enable multigenerational LRU
@@ -585,9 +596,9 @@ sha512sums=('be03b6fee1d1ea8087b09874d27c0a602c0b04fd90ad38b975bd2c8455a07e83c29
             'SKIP'
             '91bd8f444c55702c52f128cbe7fd602fae609bdb8fb39bedff6c29dee5524d2f6b51cf63034cdac7985b2598f44740f9d5baee6b7a9c53831e1fe50a084b0b91'
             'SKIP'
-            '3ef9af41e4a45a9f37969d8fbfb70294c084ed7f8c84cb4a55b1c74f14d9bf84e982bf2d8253e6e19ec5737788544dad297575d80a9cdd1ad70b44cf7d75e8d3'
+            '6fb8a1a797b7c473e8ad511c304a186ef4362a609dfbe9da0060034f7cab3555d997474843e2ed402dff1cc6e218b373bf0a956f37b2d20f0dd6feefc4b10d49'
             'SKIP'
-            '5eef1a986523ab0125384db1be62e5c1802f76bce23922ec68dd84b4ae94d33b27f05a0290ea2f7adaaf69106b5a585e39700f8c687c6c5fc68daacac11bc175')
+            '44400131d7b223158c736a6232abddf518ce1c96bca8b1151e6e8e475ddeda9bad892f18080147f7734ce2163b9aace49b85162ad74c748a8762fc58a2dd1806')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
