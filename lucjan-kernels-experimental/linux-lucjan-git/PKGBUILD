@@ -123,8 +123,8 @@ _pkgbase=linux-lucjan
 _major=5.12
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.12.1.r0.g9f29b08688ca.ll10
-pkgrel=2
+pkgver=5.12.1.r0.g9f29b08688ca.ll11
+pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -174,7 +174,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll10'
+ _lucjanrev='ll11'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -182,7 +182,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll10'
+ _lucjanrev='ll11'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -190,7 +190,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll10'
+ _lucjanrev='ll11'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -199,7 +199,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll10'
+ _lucjanrev='ll11'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -569,7 +569,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '394850df8a756d79010599b2e30f0ee2f0f74775108e4bf1b1739ba37c6b4e93908f29b3463d86f1910126b2f0306f7e96b3144c4b42062ad7b0efd4dc274e59'
+            '3ef9af41e4a45a9f37969d8fbfb70294c084ed7f8c84cb4a55b1c74f14d9bf84e982bf2d8253e6e19ec5737788544dad297575d80a9cdd1ad70b44cf7d75e8d3'
             'SKIP'
             '5eef1a986523ab0125384db1be62e5c1802f76bce23922ec68dd84b4ae94d33b27f05a0290ea2f7adaaf69106b5a585e39700f8c687c6c5fc68daacac11bc175')
 
