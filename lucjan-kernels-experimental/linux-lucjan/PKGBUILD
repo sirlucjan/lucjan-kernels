@@ -125,7 +125,7 @@ pkgbase=linux-lucjan
 _major=5.12
 _minor=1
 _patches=${_major}-dev
-pkgver=5.12.1.ll14
+pkgver=5.12.1.ll15
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -178,7 +178,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll14'
+ _lucjanrev='ll15'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -186,7 +186,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll14'
+ _lucjanrev='ll15'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -194,7 +194,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll14'
+ _lucjanrev='ll15'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -203,7 +203,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll14'
+ _lucjanrev='ll15'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -581,7 +581,7 @@ done
 
 sha512sums=('9bb9831459557a87ecb822ee5862b27ec1cb0de7df1a0131f534bd57a152b6ea75b710fa319cf533a8f89b8cbaa6b4844bd260c4bd825e83e1d62e7734510240'
             'SKIP'
-            '470229c96458c8d3410bad733f3fb6e654d4f522786f7aeb2e9a122e0694b1845ad56813c92416416e8e3fc99489b023ad209de52ce8a43614eea45b21ce428a'
+            'dea509dd4e9f979f7a402c4144ad8e2f5206294a06c67322a4b583cf39bc5f844d4e4abcd12daa984ad16e7069d80c5fce201089add289431448893f0a4db16c'
             'SKIP'
             '44400131d7b223158c736a6232abddf518ce1c96bca8b1151e6e8e475ddeda9bad892f18080147f7734ce2163b9aace49b85162ad74c748a8762fc58a2dd1806')
 
