@@ -127,7 +127,7 @@ _major=5.12
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.12.1.r0.g9f29b08688ca.ll18
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -367,7 +367,7 @@ prepare() {
 		scripts/config --set-val CONFIG_NR_LRU_GENS 7
 		scripts/config --set-val CONFIG_TIERS_PER_GEN 4
 		scripts/config --enable CONFIG_LRU_GEN_ENABLED
-		scripts/config --enable CONFIG_LRU_GEN_STATS
+		scripts/config --disable CONFIG_LRU_GEN_STATS
 	fi
 
     ### Optionally disable NUMA for 64-bit kernels only
