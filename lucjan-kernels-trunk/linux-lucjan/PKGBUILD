@@ -133,7 +133,7 @@ _pkgver=${_major}.${_minorc}
 _stable=${_major}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -380,7 +380,7 @@ prepare() {
 		scripts/config --set-val CONFIG_NR_LRU_GENS 7
 		scripts/config --set-val CONFIG_TIERS_PER_GEN 4
 		scripts/config --enable CONFIG_LRU_GEN_ENABLED
-		scripts/config --enable CONFIG_LRU_GEN_STATS
+		scripts/config --disable CONFIG_LRU_GEN_STATS
 	fi
 
     ### Optionally disable NUMA for 64-bit kernels only
