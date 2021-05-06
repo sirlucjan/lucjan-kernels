@@ -81,7 +81,7 @@ _1k_HZ_ticks=y
 _mm_protect=y
 
 ### Enable multigenerational LRU
-_lru_enable=y
+_lru_enable=
 
 ### Enable TCP_CONG_BBR2
 _tcp_bbr2=y
@@ -116,7 +116,7 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='trunk'
+_linux_lucjan='actual'
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -126,8 +126,8 @@ _pkgbase=linux-lucjan
 _major=5.12
 _patches=${_major}-dev
 _srcname=linux-stable-rc
-pkgver=5.12.1.r17.gb3226f805af4.ll20
-pkgrel=0
+pkgver=5.12.1.r18.g77358801e46c.ll20
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -580,7 +580,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '20fe69c469bb2c0c102bf85c8dbe1b1e8efeae1094232d8ca0f4198dc7f179ee8f4071417394c6b310ce803d2c8427edc6f0eae3e31bdab0136635ae420efb59'
+            '42cad2b3114f636e38b19fcad911a6571da66baac30d9e90e357c1f3a7378b9dd341e4d14cb989c8aa4f5966503d7a228bde72c1579f1e15735c84031d719a86'
             'SKIP'
             '44400131d7b223158c736a6232abddf518ce1c96bca8b1151e6e8e475ddeda9bad892f18080147f7734ce2163b9aace49b85162ad74c748a8762fc58a2dd1806')
 
