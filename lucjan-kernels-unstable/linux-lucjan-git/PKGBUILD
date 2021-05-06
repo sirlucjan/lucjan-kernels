@@ -80,6 +80,12 @@ _1k_HZ_ticks=y
 ### Enable protect file mappings under memory pressure
 _mm_protect=y
 
+### Enable multigenerational LRU
+_lru_enable=y
+
+### Enable TCP_CONG_BBR2
+_tcp_bbr2=y
+
 ### Selecting the ZSTD compression level
 # ATTENTION - one of two predefined values should be selected!
 # 'ultra' - highest compression ratio
@@ -110,18 +116,18 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='trunk'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan-git
 _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
-_major=5.11
+_major=5.12
 _patches=${_major}-dev
 _srcname=linux-stable-rc
-pkgver=5.11.16.r0.ge2d9bf3473cc.ll86
-pkgrel=1
+pkgver=5.12.1.r17.gb3226f805af4.ll20
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -171,7 +177,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll86'
+ _lucjanrev='ll20'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -179,7 +185,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll79'
+ _lucjanrev='ll20'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -187,7 +193,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll58'
+ _lucjanrev='ll20'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -196,7 +202,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll19'
+ _lucjanrev='ll20'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -334,12 +340,34 @@ prepare() {
 		scripts/config --set-val CONFIG_HZ 1000
 	fi
 
+    ### Enable TCP_CONG_BBR2
+	if [ -n "$_tcp_bbr2" ]; then
+		echo "Disabling TCP_CONG_CUBIC..."
+		scripts/config --module CONFIG_TCP_CONG_CUBIC
+		scripts/config --disable CONFIG_DEFAULT_CUBIC
+		echo "Enabling TCP_CONG_BBR2..."
+		scripts/config --enable CONFIG_TCP_CONG_BBR2
+		scripts/config --enable CONFIG_DEFAULT_BBR2
+		scripts/config --set-str CONFIG_DEFAULT_TCP_CONG bbr2
+	fi
+
     ### Enable protect file mappings under memory pressure
 	if [ -n "$_mm_protect" ]; then
 		echo "Enabling protect file mappings under memory pressure..."
 		scripts/config --enable CONFIG_UNEVICTABLE_FILE
 		scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_LOW 262144
 		scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_MIN 131072
+	fi
+
+    ### Enable multigenerational LRU
+	if [ -n "$_lru_enable" ]; then
+		echo "Enabling multigenerational LRU..."
+		scripts/config --enable CONFIG_HAVE_ARCH_PARENT_PMD_YOUNG
+		scripts/config --enable CONFIG_LRU_GEN
+		scripts/config --set-val CONFIG_NR_LRU_GENS 7
+		scripts/config --set-val CONFIG_TIERS_PER_GEN 4
+		scripts/config --enable CONFIG_LRU_GEN_ENABLED
+		scripts/config --disable CONFIG_LRU_GEN_STATS
 	fi
 
     ### Optionally disable NUMA for 64-bit kernels only
@@ -552,9 +580,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '5e85367a3dbb3d33ca8185b50a37bbbbf1c5d020b49a6fd65a13af755b339cbc9e876f8ecdc65fa7358886ca3f31946d4026a6ee98b9e0e4e7f3276bfcd2f939'
+            '20fe69c469bb2c0c102bf85c8dbe1b1e8efeae1094232d8ca0f4198dc7f179ee8f4071417394c6b310ce803d2c8427edc6f0eae3e31bdab0136635ae420efb59'
             'SKIP'
-            '7d6b99adcb93aebdaeff8ef43fc1c6ea8179e6fb930f4d1180bb22c22d7240dd9e21b12b7d3da6f6b74a0299b5907b5923d795a3bc7226cf5622c8e453f252c6')
+            '44400131d7b223158c736a6232abddf518ce1c96bca8b1151e6e8e475ddeda9bad892f18080147f7734ce2163b9aace49b85162ad74c748a8762fc58a2dd1806')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
