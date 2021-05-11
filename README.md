@@ -12,23 +12,23 @@
 
 * ~~[bfq-dev-lucjan-rc](https://github.com/sirlucjan/kernel-patches/tree/master/5.11/bfq-dev-lucjan) / [bfq-dev-lucjan-rc](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.11/bfq-dev-lucjan) - specific patches authored by Paolo Valente and Piotr Gorski~~
 
-* [bfq-lucjan](https://github.com/sirlucjan/kernel-patches/tree/master/5.11/bfq-lucjan) / [bfq-lucjan](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.11/bfq-lucjan) - specific patches authored by Paolo Valente and Piotr Gorski
+* [bfq-lucjan](https://github.com/sirlucjan/kernel-patches/tree/master/5.12/bfq-lucjan) / [bfq-lucjan](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.12/bfq-lucjan) - specific patches authored by Paolo Valente and Piotr Gorski
 
 * [graysky's GCC patch](https://github.com/graysky2/kernel_gcc_patch) - version for gcc v10/v11
 
-* [Project C](https://gitlab.com/alfredchen/linux-prjc/tree/linux-5.11.y-prjc) / [Project C blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
+* [Project C](https://gitlab.com/alfredchen/linux-prjc/tree/linux-5.12.y-prjc) / [Project C blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
 
-* [random fixes from zen-kernel](https://github.com/zen-kernel/zen-kernel/tree/5.11/master) - specific patches authored by Jan Alexander Steffens and ZEN Kernel Team
+* [random fixes from zen-kernel](https://github.com/zen-kernel/zen-kernel/tree/5.12/master) - specific patches authored by Jan Alexander Steffens and ZEN Kernel Team
 
-* [random fixes from pfkernel](https://github.com/pfactum/pf-kernel/tree/pf-5.11) / [random fixes from pfkernel](https://gitlab.com/post-factum/pf-kernel/tree/pf-5.11) - for example patches from Arch Linux or specific patches authored by Oleksandr Natalenko
+* [random fixes from pfkernel](https://github.com/pfactum/pf-kernel/tree/pf-5.12) / [random fixes from pfkernel](https://gitlab.com/post-factum/pf-kernel/tree/pf-5.12) - for example patches from Arch Linux or specific patches authored by Oleksandr Natalenko
 
 * [fixes from ClearLinux](https://github.com/clearlinux-pkgs/linux) - specific patches authored by ClearLinux Team
 
 * [UKSM (sources)](https://github.com/dolohow/uksm) / [UKSM (info)](https://www.usenix.org/sites/default/files/conference/protected-files/fast18_slides_xia.pdf) - resync from dolohow’s github
 
-* [LL-patches](https://github.com/sirlucjan/kernel-patches/tree/master/5.11/ll-patches) / [LL-patches](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.11/ll-patches) - specific patches authored by Piotr Gorski
+* [LL-patches](https://github.com/sirlucjan/kernel-patches/tree/master/5.12/ll-patches) / [LL-patches](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.12/ll-patches) - specific patches authored by Piotr Gorski
 
-* [LL-branding](https://github.com/sirlucjan/kernel-patches/tree/master/5.11/ll-branding) / [LL-branding](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.11/ll-branding) - specific patches authored by Piotr Gorski
+* [LL-branding](https://github.com/sirlucjan/kernel-patches/tree/master/5.12/ll-branding) / [LL-branding](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.12/ll-branding) - specific patches authored by Piotr Gorski
 
 ***
 
