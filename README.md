@@ -14,7 +14,7 @@
 
 * [bfq-lucjan](https://github.com/sirlucjan/kernel-patches/tree/master/5.12/bfq-lucjan) / [bfq-lucjan](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.12/bfq-lucjan) - specific patches authored by Paolo Valente and Piotr Gorski
 
-* [graysky's GCC patch](https://github.com/graysky2/kernel_gcc_patch) - version for gcc v10/v11
+* [graysky's GCC/Clang patch](https://github.com/graysky2/kernel_compiler_patch) - version for gcc v11/clang v12
 
 * [Project C](https://gitlab.com/alfredchen/linux-prjc/tree/linux-5.12.y-prjc) / [Project C blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
 
