@@ -60,7 +60,7 @@ _dell_fancontrol=y
 _per_gov=y
 
 ### Disable Deadline I/O scheduler
-_deadline_disable=y
+_deadline_disable=
 
 ### Disable Kyber I/O scheduler
 _kyber_disable=y
@@ -127,7 +127,7 @@ _major=5.12
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.12.12.r14863.gb6bf7bc66a6c.ll69
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
