@@ -132,7 +132,7 @@ _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.4
+pkgrel=0.3
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -319,8 +319,6 @@ prepare() {
 		echo "Disabling MQ-Deadline I/O scheduler with cgroup support..."
 		scripts/config --disable CONFIG_MQ_IOSCHED_DEADLINE
 		scripts/config --disable CONFIG_MQ_IOSCHED_DEADLINE_CGROUP
-		echo "Disabling Cgroup I/O controller for assigning an I/O priority class..."
-		scripts/config --disable CONFIG_BLK_CGROUP_IOPRIO
 	fi
 
     ### Disable Kyber I/O scheduler
