@@ -105,6 +105,16 @@ _zstd_level='ultra'
 _zstd_modules=y
 
 ### Enable MODULE_COMPRESS_ZSTD_ULTRA
+# WARNING Not recommended.
+# An experimental solution, still in testing phase.
+# Possible compilation and installation errors.
+# Leave it unselected.
+# However, if you want to test the new solution,
+# first enable "_zstd_modules" (above flag).
+# ATTENTION Without selecting the previous flag
+# this one will not work!
+# Remember: the ultra settings can sometimes
+# be counterproductive in both size and speed.
 _zstd_modules_ultra=
 
 ### Download ll-reverts patchset
