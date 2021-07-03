@@ -115,7 +115,7 @@ _zstd_modules=y
 # this one will not work!
 # Remember: the ultra settings can sometimes
 # be counterproductive in both size and speed.
-_zstd_modules_ultra=
+_zstd_modules_ultra=y
 
 ### Download ll-reverts patchset
 # ATTENTION - one of two predefined values should be selected!
@@ -140,7 +140,7 @@ _major=5.12
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.12.14.r14865.gd2896d0b76bf.ll75
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
