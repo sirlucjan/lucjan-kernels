@@ -20,6 +20,8 @@
 
 * [random fixes from zen-kernel](https://github.com/zen-kernel/zen-kernel/tree/5.12/master) - specific patches authored by Jan Alexander Steffens and ZEN Kernel Team
 
+* [random fixes from xanmod-linux](https://github.com/xanmod/linux/tree/5.12) - specific patches authored by Alexandre Frade
+
 * [random fixes from pfkernel](https://github.com/pfactum/pf-kernel/tree/pf-5.12) / [random fixes from pfkernel](https://gitlab.com/post-factum/pf-kernel/tree/pf-5.12) - for example patches from Arch Linux or specific patches authored by Oleksandr Natalenko
 
 * [fixes from ClearLinux](https://github.com/clearlinux-pkgs/linux) - specific patches authored by ClearLinux Team
