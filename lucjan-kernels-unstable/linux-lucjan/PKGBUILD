@@ -144,6 +144,10 @@ if [ -n "$_zstd_modules" ]; then
     depends+=('initramfs-zstd')
 fi
 
+### Stable-review
+# In case the stable-review repository ever stopped working,
+# a solution to build rc kernels had to be prepared.
+
 if [ "$_minor" = 0 ]; then
 _patchver=${_major}
 else
