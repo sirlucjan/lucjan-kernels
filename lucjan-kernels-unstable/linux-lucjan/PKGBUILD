@@ -144,6 +144,12 @@ if [ -n "$_zstd_modules" ]; then
     depends+=('initramfs-zstd')
 fi
 
+if [ "$_minor" = 0 ]; then
+_patchver=${_major}
+else
+_patchver=${_major}.${_minor}
+fi
+
 ### LL reverts
 # Some patches for BFQ/block-stable conflict with
 # patches for BFQ-dev/block-mainline.
@@ -216,7 +222,7 @@ fi
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar"{.xz,.sign}
         "https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-${_stablerc}"{.xz,.sign}
          # https://lkml.org/lkml/2019/8/23/712
-         # "patch-${_stablerc}.diff::https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-${_major}.y&id2=v${_major}.${_minor}"
+         # "patch-${_stablerc}.diff::https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-${_major}.y&id2=v${_patchver}"
          # ll-reverts
          # "${_llrevpath}/${_llrevpatch}"{,.sig}
          # linux-lucjan
