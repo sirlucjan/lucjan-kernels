@@ -1,4 +1,11 @@
-# Enable zstd compressed modules
+# mkinitcpio-zstd
+
+##### mkinitcpio in the current version 30 does not support modules compressed in zstd format.
+##### A pull request has been approved by the developers and the next version 31 will support decompression of modules in this format without any problems.
+##### Source: https://github.com/archlinux/mkinitcpio/pull/43/commits
+##### I have been testing this solution since December 2020 and have not found any irregularities. Please report any bugs in this exact repository.
+
+## Enable zstd compressed modules
 
 ###### To build a kernel with modules compressed in zstd format, insert any character here (it can be "y", "x" or any other value):
 
@@ -25,7 +32,7 @@ makepkg -srci
 
 ###### NOTE: mkinitcpio-zstd will overwrite the mkinitcpio.conf file and the old one will be saved as mkinitcpio.conf.pacsave - however, I recommend backing up this file before installing the modified mkinitcpio version.
 
-# Enable zstd ultra compressed modules
+## Enable zstd ultra compressed modules
 
 ###### To build a kernel with modules compressed with ultra flag insert any character here (it can be "y", "x" or any other value):
 
