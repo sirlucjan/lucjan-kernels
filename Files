@@ -5,7 +5,8 @@
 │       ├── 0002-Silence-messages-in-zstd-format.patch
 │       ├── 0003-Add-rm-flag-to-minimize-the-size-of-initramfs.patch
 │       ├── mkinitcpio.install
-│       └── PKGBUILD
+│       ├── PKGBUILD
+│       └── README.md
 ├── Files
 ├── lucjan-kernels-rolling
 │   └── linux-lucjan-git
@@ -27,4 +28,4 @@
 │       └── PKGBUILD
 └── README.md
 
-10 directories, 17 files
+10 directories, 18 files
