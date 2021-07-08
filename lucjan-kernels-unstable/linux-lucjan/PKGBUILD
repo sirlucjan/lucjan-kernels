@@ -261,7 +261,7 @@ prepare() {
     cd $_srcname
 
     ### Applying patch from stable-review
-        # echo "Applying patch from stable-review..."
+        echo "Applying patch from stable-review..."
         # patch -p1 -i ../patch-${_stablerc}
         patch -p1 -i ../patch-${_stablerc}.diff
 
