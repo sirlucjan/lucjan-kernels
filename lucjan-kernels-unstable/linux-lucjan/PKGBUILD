@@ -145,7 +145,7 @@ _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -237,9 +237,9 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 fi
 
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar"{.xz,.sign}
-         # "https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-${_stablerc}"{.xz,.sign}
+        "https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-${_stablerc}"{.xz,.sign}
          # https://lkml.org/lkml/2019/8/23/712
-        "patch-${_stablerc}.diff::https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-${_major}.y&id2=v${_patchver}"
+         # "patch-${_stablerc}.diff::https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-${_major}.y&id2=v${_patchver}"
          # ll-reverts
          # "${_llrevpath}/${_llrevpatch}"{,.sig}
          # linux-lucjan
@@ -262,8 +262,8 @@ prepare() {
 
     ### Applying patch from stable-review
         echo "Applying patch from stable-review..."
-        # patch -p1 -i ../patch-${_stablerc}
-        patch -p1 -i ../patch-${_stablerc}.diff
+        patch -p1 -i ../patch-${_stablerc}
+        # patch -p1 -i ../patch-${_stablerc}.diff
 
     ### Setting version
         echo "Setting version..."
@@ -627,7 +627,8 @@ done
 
 sha512sums=('99ac7c8550548f2626ff891024c9e613c98011f3513b17b46d4a0af98242449ff373e7429ccad7c893dddcd413961d1726b121242b3f1f6f4eace523b70754c2'
             'SKIP'
-            '6d8fe6d76fd735ac0a8eb28398a7df6eae71cedbcc7813804586d039c37befbfbfd2f77b07d1dd4eedd80117a3bd2b017b076e9bfd26f76696d28bbd8823addb'
+            '376d84c653c75286f744c33a1c83726a5d9229d1a169e82e8682b862fc6e997bb22e24a35e379f4f34d2227d2b44c49a51a07cae443d737f063324a1adc28e95'
+            'SKIP'
             '66e287dcb8f8b60fbfc345448035ead14760467b0519a0b0ea24c73abc58f36d80312f80dc4c2d1a24b3275210fd8747ab5d030107d91264aa0ef9bc7f754c00'
             'SKIP'
             '9dafda923159331b383242b9f45fea38d51d27f080b87ccbf55af1d8aadf5ba8a162e8c1789cf7fc33119b7e1fd2292032bbb4176cb979c2c170db9b9e2c8a6a')
