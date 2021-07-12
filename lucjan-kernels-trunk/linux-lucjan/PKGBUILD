@@ -78,7 +78,10 @@ _cc_harder=y
 _1k_HZ_ticks=y
 
 ### Enable protect file mappings under memory pressure
-_mm_protect=y
+_mm_file=y
+
+### Enable protect anonymous mappings under memory pressure
+_mm_anon=y
 
 ### Enable multigenerational LRU
 _lru_enable=
@@ -139,7 +142,7 @@ _minor=1
 _minorc=$((_minor+1))
 _rcver=rc1
 _patches=${_major}-dev
-pkgver=5.13.2.ll18
+pkgver=5.13.2.ll19
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -203,7 +206,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll18'
+ _lucjanrev='ll19'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -211,7 +214,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll18'
+ _lucjanrev='ll19'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -219,7 +222,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll18'
+ _lucjanrev='ll19'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -228,7 +231,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll18'
+ _lucjanrev='ll19'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -393,11 +396,19 @@ prepare() {
 	fi
 
     ### Enable protect file mappings under memory pressure
-	if [ -n "$_mm_protect" ]; then
+	if [ -n "$_mm_file" ]; then
 		echo "Enabling protect file mappings under memory pressure..."
 		scripts/config --enable CONFIG_UNEVICTABLE_FILE
 		scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_LOW 262144
 		scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_MIN 131072
+	fi
+
+	### Enable protect anonymous mappings under memory pressure
+	if [ -n "$_mm_anon" ]; then
+		echo "Enabling protect anonymous mappings under memory pressure..."
+		scripts/config --enable CONFIG_UNEVICTABLE_ANON
+		scripts/config --set-val CONFIG_UNEVICTABLE_ANON_KBYTES_LOW 65536
+		scripts/config --set-val CONFIG_UNEVICTABLE_ANON_KBYTES_MIN 32768
 	fi
 
     ### Enable multigenerational LRU
@@ -631,9 +642,9 @@ done
 sha512sums=('ca54c415f368160d0c5c22e1a98e835eb9c5ebbdce2a1f9c49b916b1fb2562a3813a56d03bbf36f20e659d4371a8b61555a21c1d03cd298a802f05540c71905d'
             'SKIP'
             'ca984b09a59a343f5b6f7e6d018193ed6648e27ada1442d6e6f2bf4384e4a72b76b380ee1ac5dfef71e9d6a77e6601b84c2d73fcfd0dcccd823511211cb2f868'
-            'c2bf63fa54fa46484b98c2e5db3863992a5b096c70b4a354fbe8e643d447c521f6e9e923c0318a3240d24068bb7c1b7d7ee4d1fb452674f136186db483ecfa33'
+            '9e7b07314d3af8e853b5b5de56e514705ac08937dbb646a3d49be00fd32d1df351bf49e6ccf64ed105d94649fadb8cb3583bed24895ee9831338f82fbedfed01'
             'SKIP'
-            '4d3e0fd01713eaac9ab4295baa6bccf744617b4f848451f22138d174bf353a561f2a035c6fc3d0fdfc6664c2cf05b958e26e3f373d3544e2a01f5b10c2c0f739')
+            'd0b8fe9ff7e7d978bb00de025556a803ecdef736c2d70da9ff7d263d37af1f45d30ff1db9c931e1e61b091f3ccbac81213ea7a3b4cea4a0de137bffd9694664d')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
