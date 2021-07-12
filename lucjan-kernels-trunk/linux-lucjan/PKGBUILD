@@ -142,7 +142,7 @@ _minor=1
 _minorc=$((_minor+1))
 _rcver=rc1
 _patches=${_major}-dev
-pkgver=5.13.2.ll19
+pkgver=5.13.2.ll20
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -206,7 +206,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll19'
+ _lucjanrev='ll20'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -214,7 +214,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll19'
+ _lucjanrev='ll20'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -222,7 +222,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll19'
+ _lucjanrev='ll20'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -231,16 +231,16 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll19'
+ _lucjanrev='ll20'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 fi
 
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar"{.xz,.sign}
-         # "https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-${_stablerc}"{.xz,.sign}
+        "https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-${_stablerc}"{.xz,.sign}
          # https://lkml.org/lkml/2019/8/23/712
-        "patch-${_stablerc}.diff::https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-${_major}.y&id2=v${_patchver}"
+         # "patch-${_stablerc}.diff::https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-${_major}.y&id2=v${_patchver}"
          # ll-reverts
          # "${_llrevpath}/${_llrevpatch}"{,.sig}
          # linux-lucjan
@@ -262,9 +262,9 @@ prepare() {
     cd $_srcname
 
     ### Applying patch from stable-review
-        # echo "Applying patch from stable-review..."
-        # patch -p1 -i ../patch-${_stablerc}
-        patch -p1 -i ../patch-${_stablerc}.diff
+        echo "Applying patch from stable-review..."
+        patch -p1 -i ../patch-${_stablerc}
+        # patch -p1 -i ../patch-${_stablerc}.diff
 
     ### Setting version
         echo "Setting version..."
@@ -641,8 +641,9 @@ done
 
 sha512sums=('ca54c415f368160d0c5c22e1a98e835eb9c5ebbdce2a1f9c49b916b1fb2562a3813a56d03bbf36f20e659d4371a8b61555a21c1d03cd298a802f05540c71905d'
             'SKIP'
-            'ca984b09a59a343f5b6f7e6d018193ed6648e27ada1442d6e6f2bf4384e4a72b76b380ee1ac5dfef71e9d6a77e6601b84c2d73fcfd0dcccd823511211cb2f868'
-            '9e7b07314d3af8e853b5b5de56e514705ac08937dbb646a3d49be00fd32d1df351bf49e6ccf64ed105d94649fadb8cb3583bed24895ee9831338f82fbedfed01'
+            '3cda7ee14897c07f9f516a76cada7f41d7b9f056ce04aee9097c1cc7cb02f0db8f76366239da135f2885e24b824bd4ea97a905db43f75c1339bb69fbd33a0515'
+            'SKIP'
+            '50b0af2235073236bed4859e4249e07b1073fb98afca86b64f4fd11b5a36482bc8210ac79e0e7d1d431be7d23131a7d0bc33f45f2609fdfd4dc102d98a743262'
             'SKIP'
             'd0b8fe9ff7e7d978bb00de025556a803ecdef736c2d70da9ff7d263d37af1f45d30ff1db9c931e1e61b091f3ccbac81213ea7a3b4cea4a0de137bffd9694664d')
 
