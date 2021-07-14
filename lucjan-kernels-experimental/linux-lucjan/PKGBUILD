@@ -141,9 +141,9 @@ _linux_lucjan='trunk'
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.13
-_minor=1
+_minor=2
 _patches=${_major}-dev
-pkgver=5.13.1.ll25
+pkgver=5.13.2.ll27
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -196,7 +196,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll25'
+ _lucjanrev='ll27'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -204,7 +204,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll25'
+ _lucjanrev='ll27'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -212,7 +212,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll25'
+ _lucjanrev='ll27'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -221,7 +221,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll25'
+ _lucjanrev='ll27'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -640,9 +640,9 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('ca54c415f368160d0c5c22e1a98e835eb9c5ebbdce2a1f9c49b916b1fb2562a3813a56d03bbf36f20e659d4371a8b61555a21c1d03cd298a802f05540c71905d'
+sha512sums=('57abdab075be0d8905a592201337a879633090b07ba1b399f7b8226a58ed93912ed3128b1997fc1d5afc8fff4bc4acec68f2add48c0537e36954f96780ef7f31'
             'SKIP'
-            '8fc9108a910d5f09ad6bc7545e31f359fc28ba677d3e30e63151f97a3fb350cc68d474b846768709d48e0fedf90122e7a72fed7b36f83018f7b895a9f3410fe8'
+            '54a664731d259b6406190304dd21e6ede4b52dc425670db4154d77736583da3d952f29337cc4ffafb49f16c5dd5fb78826a3e7abde7f725010c6deb937477ce0'
             'SKIP'
             'e28122894f3d6bb4edf0a2851fb4b472bda96efd02358c854f2335450ea3b3319b434bd17b003e72954352ab4e21f3e8b205d35c2fb36b153929ffb3cc97cee5')
 
