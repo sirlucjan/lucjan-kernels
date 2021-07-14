@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.13.1.ll19 Kernel Configuration
+# Linux/x86 5.13.1.ll25 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 11.1.0"
 CONFIG_CC_IS_GCC=y
@@ -4397,6 +4397,7 @@ CONFIG_TCG_TIS_ST33ZP24_SPI=m
 CONFIG_TELCLOCK=m
 CONFIG_XILLYBUS=m
 CONFIG_XILLYBUS_PCIE=m
+# CONFIG_LRNG is not set
 # end of Character devices
 
 # CONFIG_RANDOM_TRUST_CPU is not set
