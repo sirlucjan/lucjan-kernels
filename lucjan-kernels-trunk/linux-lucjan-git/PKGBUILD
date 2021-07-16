@@ -105,22 +105,18 @@ _fork_brute=
 # 'normal' - standard compression ratio
 _zstd_level='ultra'
 
-### Enable MODULE_COMPRESS_ZSTD_LEVEL
+### Selecting the ZSTD module compression level
 # If you want to use ZSTD compression,
 # first install mkinitcpio-zstd:
 # https://gitlab.com/sirlucjan/lucjan-kernels/tree/master/depends
 # or
 # https://github.com/sirlucjan/lucjan-kernels/tree/master/depends
-_zstd_modules_standard=y
-
-### Enable MODULE_COMPRESS_ZSTD_LEVEL_ULTRA
-# WARNING Not recommended.
-# An experimental solution, still in testing phase.
-# Possible compilation and installation errors.
-# Leave it unselected.
-# ATTENTION: the ultra settings can sometimes
+# ATTENTION - one of two predefined values should be selected!
+# 'ultra' - highest compression ratio
+# 'normal' - standard compression ratio
+# WARNING: the ultra settings can sometimes
 # be counterproductive in both size and speed.
-_zstd_modules_ultra=y
+_zstd_module_level='ultra'
 
 ### Download ll-reverts patchset
 # ATTENTION - one of two predefined values should be selected!
@@ -144,8 +140,8 @@ _pkgbase=linux-lucjan
 _major=5.13
 _patches=${_major}-dev
 _srcname=linux-stable-rc
-pkgver=5.13.2.r254.g761e4411c50e.ll32
-pkgrel=0
+pkgver=5.13.2.r267.g7e5885df1870.ll32
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -153,9 +149,6 @@ license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'bc' 'libelf' 'git' 'python-sphinx' 'python-sphinx_rtd_theme'
              'graphviz' 'imagemagick' 'pahole' 'cpio' 'perl' 'tar' 'xz')
-if [ -n "$_zstd_modules_standard" ]; then
-    depends+=('initramfs-zstd')
-fi
 
 ### LL reverts
 # Some patches for BFQ/block-stable conflict with
@@ -442,17 +435,16 @@ prepare() {
 		scripts/config --disable CONFIG_KERNEL_ZSTD_LEVEL_ULTRA
 	fi
 
-    ### Enable MODULE_COMPRESS_ZSTD_LEVEL
-	if [ -n "$_zstd_modules_standard" ]; then
-		echo "Enabling ZSTD module compression level..."
+    ### Selecting the ZSTD module compression level
+	if [ "$_zstd_module_level" = "ultra" ]; then
+		echo "Enabling highest ZSTD module compression ratio..."
 		scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19
-	fi
-
-    ### Enable MODULE_COMPRESS_ZSTD_LEVEL_ULTRA
-	if [ -n "$_zstd_modules_ultra" ]; then
-		echo "Enabling ZSTD module ultra compression level..."
 		scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA
 		scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL_ULTRA 22
+	elif [ "$_zstd_module_level" = "normal" ]; then
+		echo "Enabling standard ZSTD module compression ratio..."
+		scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19
+		scripts/config --disable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA
 	fi
 
     ### Optionally load needed modules for the make localmodconfig
@@ -502,7 +494,7 @@ build() {
 
 _package-kernel() {
   pkgdesc="The $pkgdesc kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset. Fourth Gen Intel Core i3/i5/i7 optimized."
-  depends=('coreutils' 'kmod' 'initramfs')
+  depends=('coreutils' 'kmod' 'initramfs-zstd')
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices'
               'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig'
@@ -644,7 +636,7 @@ done
 sha512sums=('SKIP'
             '34066758d7d8330d74a24e787063ad50c0a8d8115733bca2d76a719860a30b31110b88b6a132d45d9a371b0f9e00c6b4b42716bcfecde312c5e5e00d8ba67e80'
             'SKIP'
-            'e28122894f3d6bb4edf0a2851fb4b472bda96efd02358c854f2335450ea3b3319b434bd17b003e72954352ab4e21f3e8b205d35c2fb36b153929ffb3cc97cee5')
+            'a0be3d29ece10593591c0348a99ff174ac1f583ff7785178b931b7da18060841018ec45bf978982c90753725eeaa849db2146bc7b2844f9bbc7097208a4474ea')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
