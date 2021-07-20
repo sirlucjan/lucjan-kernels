@@ -142,7 +142,7 @@ _patches=${_major}-dev
 pkgver=5.13.4.ll39
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
-pkgrel=3
+pkgrel=4
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -367,7 +367,7 @@ prepare() {
 	if [ -n "$_fork_brute" ]; then
 		echo "Enabling SECURITY_FORK_BRUTE..."
 		scripts/config --enable CONFIG_SECURITY_FORK_BRUTE
-		scripts/config --set-str CONFIG_LSM landlock,lockdown,yama,bpf,brute
+		scripts/config --set-str CONFIG_LSM landlock,lockdown,brute,yama,bpf
 	fi
 
     ### Enable protect file mappings under memory pressure
