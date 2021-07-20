@@ -140,8 +140,8 @@ _pkgbase=linux-lucjan
 _major=5.13
 _patches=${_major}-dev
 _srcname=linux-stable-rc
-pkgver=5.13.3.r350.g6c45a6a40dde.ll39
-pkgrel=0
+pkgver=5.13.3.r349.g1d9dba03aebe.ll39
+pkgrel=0.2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -402,13 +402,24 @@ prepare() {
 		echo "Enabling Linux Random Number Generator ..."
 		scripts/config --enable CONFIG_LRNG
 		scripts/config --disable CONFIG_LRNG_OVERSAMPLE_ENTROPY_SOURCES
+		scripts/config --set-val CONFIG_CONFIG_LRNG_OVERSAMPLE_ES_BITS 0
+		scripts/config --set-val CONFIG_LRNG_SEED_BUFFER_INIT_ADD_BITS 0
 		scripts/config --enable CONFIG_LRNG_CONTINUOUS_COMPRESSION_ENABLED
 		scripts/config --disable CONFIG_LRNG_CONTINUOUS_COMPRESSION_DISABLED
 		scripts/config --disable CONFIG_LRNG_SWITCHABLE_CONTINUOUS_COMPRESSION
+		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_32
+		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_256
+		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_512
 		scripts/config --enable CONFIG_LRNG_COLLECTION_SIZE_1024
+		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_2048
+		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_4096
+		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_8192
+		scripts/config --set-val CONFIG_LRNG_COLLECTION_SIZE 1024
 		scripts/config --disable CONFIG_LRNG_HEALTH_TESTS
+		scripts/config --set-val CONFIG_LRNG_RCT_CUTOFF 31
+		scripts/config --set-val CONFIG_LRNG_APT_CUTOFF 325
 		scripts/config --set-val CONFIG_LRNG_IRQ_ENTROPY_RATE 256
-		scripts/config --disable CONFIG_LRNG_JENT
+		scripts/config --enable CONFIG_LRNG_JENT
 		scripts/config --set-val CONFIG_LRNG_JENT_ENTROPY_RATE 16
 		scripts/config --set-val CONFIG_LRNG_CPU_ENTROPY_RATE 8
 		scripts/config --disable CONFIG_LRNG_DRNG_SWITCH
