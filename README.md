@@ -12,25 +12,25 @@
 
 * ~~[bfq-dev-lucjan-rc](https://github.com/sirlucjan/kernel-patches/tree/master/5.11/bfq-dev-lucjan) / [bfq-dev-lucjan-rc](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.11/bfq-dev-lucjan) - specific patches authored by Paolo Valente and Piotr Gorski~~
 
-* [bfq-mq-deadline-lucjan](https://github.com/sirlucjan/kernel-patches/tree/master/5.12/bfq-mq-deadline-lucjan) / [bfq-mq-deadline-lucjan](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.12/bfq-mq-deadline-lucjan) - specific patches authored by Paolo Valente, Bart Van Assche and Piotr Gorski
+* [bfq-mq-deadline-lucjan](https://github.com/sirlucjan/kernel-patches/tree/master/5.13/bfq-mq-deadline-lucjan) / [bfq-mq-deadline-lucjan](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.13/bfq-mq-deadline-lucjan) - specific patches authored by Paolo Valente, Bart Van Assche and Piotr Gorski
 
 * [graysky's GCC/Clang patch](https://github.com/graysky2/kernel_compiler_patch) - version for gcc v11/clang v12
 
-* [Project C](https://gitlab.com/alfredchen/linux-prjc/tree/linux-5.12.y-prjc) / [Project C blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
+* [Project C](https://gitlab.com/alfredchen/linux-prjc/tree/linux-5.13.y-prjc) / [Project C blog](http://cchalpha.blogspot.com) - contains the newest vesion with latest fixes
 
-* [random fixes from zen-kernel](https://github.com/zen-kernel/zen-kernel/tree/5.12/master) - specific patches authored by Jan Alexander Steffens and ZEN Kernel Team
+* [random fixes from zen-kernel](https://github.com/zen-kernel/zen-kernel/tree/5.13/master) - specific patches authored by Jan Alexander Steffens and ZEN Kernel Team
 
-* [random fixes from xanmod-linux](https://github.com/xanmod/linux/tree/5.12) - specific patches authored by Alexandre Frade
+* [random fixes from xanmod-linux](https://github.com/xanmod/linux/tree/5.13) - specific patches authored by Alexandre Frade
 
-* [random fixes from pfkernel](https://github.com/pfactum/pf-kernel/tree/pf-5.12) / [random fixes from pfkernel](https://gitlab.com/post-factum/pf-kernel/tree/pf-5.12) - for example patches from Arch Linux or specific patches authored by Oleksandr Natalenko
+* [random fixes from pfkernel](https://github.com/pfactum/pf-kernel/tree/pf-5.13) / [random fixes from pfkernel](https://gitlab.com/post-factum/pf-kernel/tree/pf-5.1) - for example patches from Arch Linux or specific patches authored by Oleksandr Natalenko
 
 * [fixes from ClearLinux](https://github.com/clearlinux-pkgs/linux) - specific patches authored by ClearLinux Team
 
 * [UKSM (sources)](https://github.com/dolohow/uksm) / [UKSM (info)](https://www.usenix.org/sites/default/files/conference/protected-files/fast18_slides_xia.pdf) - resync from dolohow’s github
 
-* [LL-patches](https://github.com/sirlucjan/kernel-patches/tree/master/5.12/ll-patches) / [LL-patches](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.12/ll-patches) - specific patches authored by Piotr Gorski
+* [LL-patches](https://github.com/sirlucjan/kernel-patches/tree/master/5.13/ll-patches) / [LL-patches](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.13/ll-patches) - specific patches authored by Piotr Gorski
 
-* [LL-branding](https://github.com/sirlucjan/kernel-patches/tree/master/5.12/ll-branding) / [LL-branding](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.12/ll-branding) - specific patches authored by Piotr Gorski
+* [LL-branding](https://github.com/sirlucjan/kernel-patches/tree/master/5.13/ll-branding) / [LL-branding](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.13/ll-branding) - specific patches authored by Piotr Gorski
 
 ***
 
@@ -103,53 +103,4 @@ For now, bfq is enabled by default! [(since 5.0-lucjan-ll1-rc1.patch and LL-elev
 
 ***
 
-***
-# Enable zstd compressed modules
-
-###### To build a kernel with modules compressed in zstd format, insert any character here (it can be "y", "x" or any other value):
-
-```
-### Enable MODULE_COMPRESS_ZSTD
-# WARNING Not recommended.
-# An experimental solution, still in testing phase.
-# Possible compilation and installation errors.
-# Leave it unselected.
-# However, if you want to test the new solution,
-# first install mkinitcpio-zstd:
-# https://gitlab.com/sirlucjan/lucjan-kernels/tree/master/depends
-# or
-# https://github.com/sirlucjan/lucjan-kernels/tree/master/depends
-_zstd_modules=
-```
-###### Remember that to do this you need to install modified version of mkinitcpio (mkinitcpio-zstd). To do this, run the following command:
-
-```
-cd /some_path/lucjan-kernels/depends/package_name
-makepkg -srci
-
-```
-
-###### NOTE: mkinitcpio-zstd will overwrite the mkinitcpio.conf file and the old one will be saved as mkinitcpio.conf.pacsave - however, I recommend backing up this file before installing the modified mkinitcpio version.
-
-# Enable zstd ultra compressed modules
-
-###### To build a kernel with modules compressed with ultra flag insert any character here (it can be "y", "x" or any other value):
-
-```
-### Enable MODULE_COMPRESS_ZSTD_ULTRA
-# WARNING Not recommended.
-# An experimental solution, still in testing phase.
-# Possible compilation and installation errors.
-# Leave it unselected.
-# However, if you want to test the new solution,
-# first enable "_zstd_modules" (above flag).
-# ATTENTION Without selecting the previous flag
-# this one will not work!
-# Remember: the ultra settings can sometimes
-# be counterproductive in both size and speed.
-_zstd_modules_ultra=
-```
-###### It is worth mentioning once again that the ultra flag does not guarantee that you will build significantly smaller modules - on the contrary, you may achieve the counterproductive effect.
-
-***
 # You've been warned.
