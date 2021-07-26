@@ -78,13 +78,26 @@ _cc_harder=y
 _1k_HZ_ticks=y
 
 ### Enable protect file mappings under memory pressure
-_mm_protect=y
+_mm_file=y
+
+### Enable protect anonymous mappings under memory pressure
+_mm_anon=y
 
 ### Enable multigenerational LRU
 _lru_enable=
 
+### Enable Linux Random Number Generator 
+_lrng_enable=
+
 ### Enable TCP_CONG_BBR2
 _tcp_bbr2=y
+
+### Enable SECURITY_FORK_BRUTE
+# WARNING Not recommended.
+# An experimental solution, still in testing phase.
+# Possible compilation and installation errors.
+# Leave it unselected.
+_fork_brute=
 
 ### Selecting the ZSTD compression level
 # ATTENTION - one of two predefined values should be selected!
@@ -92,30 +105,18 @@ _tcp_bbr2=y
 # 'normal' - standard compression ratio
 _zstd_level='ultra'
 
-### Enable MODULE_COMPRESS_ZSTD
-# WARNING Not recommended.
-# An experimental solution, still in testing phase.
-# Possible compilation and installation errors.
-# Leave it unselected.
-# However, if you want to test the new solution,
+### Selecting the ZSTD module compression level
+# If you want to use ZSTD compression,
 # first install mkinitcpio-zstd:
 # https://gitlab.com/sirlucjan/lucjan-kernels/tree/master/depends
 # or
 # https://github.com/sirlucjan/lucjan-kernels/tree/master/depends
-_zstd_modules=y
-
-### Enable MODULE_COMPRESS_ZSTD_ULTRA
-# WARNING Not recommended.
-# An experimental solution, still in testing phase.
-# Possible compilation and installation errors.
-# Leave it unselected.
-# However, if you want to test the new solution,
-# first enable "_zstd_modules" (above flag).
-# ATTENTION Without selecting the previous flag
-# this one will not work!
-# Remember: the ultra settings can sometimes
+# ATTENTION - one of two predefined values should be selected!
+# 'ultra' - highest compression ratio
+# 'normal' - standard compression ratio
+# WARNING: the ultra settings can sometimes
 # be counterproductive in both size and speed.
-_zstd_modules_ultra=y
+_zstd_module_level='ultra'
 
 ### Download ll-reverts patchset
 # ATTENTION - one of two predefined values should be selected!
@@ -129,23 +130,23 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='actual'
+_linux_lucjan='trunk'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
-_major=5.12
-_minor=18
+_major=5.13
+_minor=5
 _minorc=$((_minor+1))
-_rcver=rc2
+_rcver=rc1
 _patches=${_major}-dev
-pkgver=5.12.19.ll80
+pkgver=5.13.6.ll45
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -153,14 +154,10 @@ license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'bc' 'libelf' 'python-sphinx' 'python-sphinx_rtd_theme'
              'graphviz' 'imagemagick' 'pahole' 'cpio' 'perl' 'tar' 'xz')
-if [ -n "$_zstd_modules" ]; then
-    depends+=('initramfs-zstd')
-fi
 
 ### Stable-review
 # In case the stable-review repository ever stopped working,
 # a solution to build rc kernels had to be prepared.
-
 if [ "$_minor" = 0 ]; then
 _patchver=${_major}
 else
@@ -205,7 +202,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll80'
+ _lucjanrev='ll45'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -213,7 +210,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll70'
+ _lucjanrev='ll45'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -221,7 +218,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll80'
+ _lucjanrev='ll45'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -230,7 +227,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll20'
+ _lucjanrev='ll45'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -387,12 +384,27 @@ prepare() {
 		scripts/config --set-str CONFIG_DEFAULT_TCP_CONG bbr2
 	fi
 
+    ### Enable SECURITY_FORK_BRUTE
+	if [ -n "$_fork_brute" ]; then
+		echo "Enabling SECURITY_FORK_BRUTE..."
+		scripts/config --enable CONFIG_SECURITY_FORK_BRUTE
+		scripts/config --set-str CONFIG_LSM landlock,lockdown,brute,yama,bpf
+	fi
+
     ### Enable protect file mappings under memory pressure
-	if [ -n "$_mm_protect" ]; then
+	if [ -n "$_mm_file" ]; then
 		echo "Enabling protect file mappings under memory pressure..."
 		scripts/config --enable CONFIG_UNEVICTABLE_FILE
 		scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_LOW 262144
 		scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_MIN 131072
+	fi
+
+	### Enable protect anonymous mappings under memory pressure
+	if [ -n "$_mm_anon" ]; then
+		echo "Enabling protect anonymous mappings under memory pressure..."
+		scripts/config --enable CONFIG_UNEVICTABLE_ANON
+		scripts/config --set-val CONFIG_UNEVICTABLE_ANON_KBYTES_LOW 65536
+		scripts/config --set-val CONFIG_UNEVICTABLE_ANON_KBYTES_MIN 32768
 	fi
 
     ### Enable multigenerational LRU
@@ -404,6 +416,37 @@ prepare() {
 		scripts/config --set-val CONFIG_TIERS_PER_GEN 4
 		scripts/config --enable CONFIG_LRU_GEN_ENABLED
 		scripts/config --disable CONFIG_LRU_GEN_STATS
+	fi
+
+    ### Enable Linux Random Number Generator 
+	if [ -n "$_lrng_enable" ]; then
+		echo "Enabling Linux Random Number Generator ..."
+		scripts/config --enable CONFIG_LRNG
+		scripts/config --disable CONFIG_LRNG_OVERSAMPLE_ENTROPY_SOURCES
+		scripts/config --set-val CONFIG_CONFIG_LRNG_OVERSAMPLE_ES_BITS 0
+		scripts/config --set-val CONFIG_LRNG_SEED_BUFFER_INIT_ADD_BITS 0
+		scripts/config --enable CONFIG_LRNG_CONTINUOUS_COMPRESSION_ENABLED
+		scripts/config --disable CONFIG_LRNG_CONTINUOUS_COMPRESSION_DISABLED
+		scripts/config --disable CONFIG_LRNG_SWITCHABLE_CONTINUOUS_COMPRESSION
+		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_32
+		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_256
+		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_512
+		scripts/config --enable CONFIG_LRNG_COLLECTION_SIZE_1024
+		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_2048
+		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_4096
+		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_8192
+		scripts/config --set-val CONFIG_LRNG_COLLECTION_SIZE 1024
+		scripts/config --disable CONFIG_LRNG_HEALTH_TESTS
+		scripts/config --set-val CONFIG_LRNG_RCT_CUTOFF 31
+		scripts/config --set-val CONFIG_LRNG_APT_CUTOFF 325
+		scripts/config --set-val CONFIG_LRNG_IRQ_ENTROPY_RATE 256
+		scripts/config --enable CONFIG_LRNG_JENT
+		scripts/config --set-val CONFIG_LRNG_JENT_ENTROPY_RATE 16
+		scripts/config --set-val CONFIG_LRNG_CPU_ENTROPY_RATE 8
+		scripts/config --disable CONFIG_LRNG_DRNG_SWITCH
+		scripts/config --disable CONFIG_LRNG_DRBG
+		scripts/config --disable CONFIG_LRNG_TESTING_MENU
+		scripts/config --disable CONFIG_LRNG_SELFTEST
 	fi
 
     ### Optionally disable NUMA for 64-bit kernels only
@@ -424,19 +467,16 @@ prepare() {
 		scripts/config --disable CONFIG_KERNEL_ZSTD_LEVEL_ULTRA
 	fi
 
-    ### Enable MODULE_COMPRESS_ZSTD
-	if [ -n "$_zstd_modules" ]; then
-		echo "Enabling ZSTD module compression..."
-		scripts/config --disable CONFIG_MODULE_COMPRESS_XZ
-		scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD
+    ### Selecting the ZSTD module compression level
+	if [ "$_zstd_module_level" = "ultra" ]; then
+		echo "Enabling highest ZSTD module compression ratio..."
 		scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19
-	fi
-
-    ### Enable MODULE_COMPRESS_ZSTD_ULTRA
-	if [ -n "$_zstd_modules" ] && [ -n "$_zstd_modules_ultra" ]; then
-		echo "Enabling ZSTD module ultra compression..."
 		scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA
 		scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL_ULTRA 22
+	elif [ "$_zstd_module_level" = "normal" ]; then
+		echo "Enabling standard ZSTD module compression ratio..."
+		scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19
+		scripts/config --disable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA
 	fi
 
     ### Optionally load needed modules for the make localmodconfig
@@ -486,7 +526,7 @@ build() {
 
 _package-kernel() {
   pkgdesc="The $pkgdesc kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset. Fourth Gen Intel Core i3/i5/i7 optimized."
-  depends=('coreutils' 'kmod' 'initramfs')
+  depends=('coreutils' 'kmod' 'initramfs-zstd')
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices'
               'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig'
@@ -625,13 +665,13 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('c2153220d4ace13ffa506f2e1fb2ae74c89e86b5fe751b437b1a18fb6468368a5af9dfd42ebd2dd74c3dccde97f26071fa8f02fba88be69441191a799ee5e722'
+sha512sums=('887a907f5923630224d2bbadd1e60e49856460ee5fde9fd6de770d908bada5c6fe1669f9ed64418695e9101a8e5069854beb23714dc8138cdf9ea7e319b10743'
             'SKIP'
-            '3944269983cd7d56fc51606d0409d54ba68acf3fda4879b293f5261ae38797d206e25915550e38a8c27b553ba33839cb536de47e4a75f72f21521b232ccddf31'
+            'e5082664a9578c75a98904d368de3925548a47d74e7deb8fdb9518520206d01461134a8561be48917fc70e7ba7afcc2b358626184c0ae7acee09eaae739ebdc1'
             'SKIP'
-            'ea777106291a22f8abbeb6ca7efc742a32e0b87de562214684f613266b094de90ca210edfb36a3122328d90e5b3facc7623b78dd7cce3ed5cbd4ddbec1d31416'
+            '9b438726e47823ae716db1f0d4995d4cbfeefff5c7d8764289d63ba821847478665eab461d7df0142aea382ccac599d470245d15cca43beffeb51879ae37d6e5'
             'SKIP'
-            '9dafda923159331b383242b9f45fea38d51d27f080b87ccbf55af1d8aadf5ba8a162e8c1789cf7fc33119b7e1fd2292032bbb4176cb979c2c170db9b9e2c8a6a')
+            '5f70ee9870950316afd0a3cefa6b18c8445658e8924d115bde1351504a73c4b000a188730a2cc18b0da2eb1bd9907fe2b76e474df1b9848772b0fb5c4a10b673')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
