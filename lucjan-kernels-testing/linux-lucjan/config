@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.13.4.ll39 Kernel Configuration
+# Linux/x86 5.13.5.ll47 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 11.1.0"
 CONFIG_CC_IS_GCC=y
@@ -973,8 +973,14 @@ CONFIG_MODULE_SIG_HASH="sha512"
 # CONFIG_MODULE_COMPRESS_GZIP is not set
 # CONFIG_MODULE_COMPRESS_XZ is not set
 CONFIG_MODULE_COMPRESS_ZSTD=y
+
+#
+# ZSTD module compression options
+#
 CONFIG_MODULE_COMPRESS_ZSTD_LEVEL=19
 # CONFIG_MODULE_COMPRESS_ZSTD_ULTRA is not set
+# end of ZSTD module compression options
+
 CONFIG_MODULE_ALLOW_MISSING_NAMESPACE_IMPORTS=y
 CONFIG_MODPROBE_PATH="/sbin/modprobe"
 CONFIG_MODULES_TREE_LOOKUP=y
