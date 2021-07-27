@@ -141,12 +141,12 @@ _minor=5
 _minorc=$((_minor+1))
 _rcver=rc2
 _patches=${_major}-dev
-pkgver=5.13.6.ll46
+pkgver=5.13.6.ll47
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -202,7 +202,7 @@ if [ "$_linux_lucjan" = "actual" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/actual"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/actual"
  _lucjanname='lucjan'
- _lucjanrev='ll46'
+ _lucjanrev='ll47'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -210,7 +210,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll46'
+ _lucjanrev='ll47'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -669,9 +669,9 @@ sha512sums=('887a907f5923630224d2bbadd1e60e49856460ee5fde9fd6de770d908bada5c6fe1
             'SKIP'
             '55c5067c71cabff291af1c6907a150ab9b4ebaec29200c1f848b27521e53bff9b055b6b877dd42041d2cfdf232844288f6623f789cbc432f0d9c3e028c2e4d1a'
             'SKIP'
-            '170a204ac09e16c547ac69f8ab8d218f36c77c5f56e633fba51dce055413c9f2d6658ca5d51aed34801687f7ed220c8f0fe668b2c66b40ce28ab7d263dd2fad8'
+            '06ee910aa135b4ca29e642d97ebd7d77119633e8cbc36ea84b9ee1f9c9588ed585046ee3a49cdae7fe690a7c187ae5b4781b62c4ab599dee34a949f2ea7e38d2'
             'SKIP'
-            '5f70ee9870950316afd0a3cefa6b18c8445658e8924d115bde1351504a73c4b000a188730a2cc18b0da2eb1bd9907fe2b76e474df1b9848772b0fb5c4a10b673')
+            '51ec2e5ebc1cf90dd35e5c6d7a93991ff4be5f800cb7ffe94b68d5dcb928bb77bd6472e400dccbb91fcae06495ffeacb1008bfabe7578f5c1d9c976ae40371cd')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
