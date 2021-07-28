@@ -140,7 +140,7 @@ _pkgbase=linux-lucjan
 _major=5.13
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.13.5.r0.g25423f4bd9a9.ll47
+pkgver=5.13.6.r0.g6fdb13a7e573.ll47
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -644,7 +644,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'e184e7653d37201a7dae782e3ea609fc5e64009eb15a9799f32e2baacff2e4e4be921ae306cbc3b331482ad16ea6087be14e8754fb0db6c3dafb713a63d4dc72'
+            '06ee910aa135b4ca29e642d97ebd7d77119633e8cbc36ea84b9ee1f9c9588ed585046ee3a49cdae7fe690a7c187ae5b4781b62c4ab599dee34a949f2ea7e38d2'
             'SKIP'
             '51ec2e5ebc1cf90dd35e5c6d7a93991ff4be5f800cb7ffe94b68d5dcb928bb77bd6472e400dccbb91fcae06495ffeacb1008bfabe7578f5c1d9c976ae40371cd')
 
