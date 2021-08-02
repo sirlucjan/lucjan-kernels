@@ -140,7 +140,7 @@ _pkgbase=linux-lucjan
 _major=5.13
 _patches=${_major}-dev
 _srcname=linux-stable-rc
-pkgver=5.13.7.r34.g5c86ce80c94b.ll52
+pkgver=5.13.7.r105.gcd55ef855022.ll52
 pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -205,7 +205,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
  _lucjanrev='ll52'
- _lucjanrc='rc1'
+ _lucjanrc='rc2'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 elif [ "$_linux_lucjan" = "trunk" ]; then
@@ -645,7 +645,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'e7c7963f5e53a182d712a958438135f1d9fefa7f55a443e706340595ccde64936110d6c48c49253d9e739b44c68389027f2866b985138d6f8ac15aee9dd0c7ed'
+            '4ac5aa4470e16742d52bbb0b4528f21927e591f40f219492fcb55f91cb32077984e23bd03e447d373ed1745b395e2645eb317cad39bef2a39bb9a18615c253fb'
             'SKIP'
             '51ec2e5ebc1cf90dd35e5c6d7a93991ff4be5f800cb7ffe94b68d5dcb928bb77bd6472e400dccbb91fcae06495ffeacb1008bfabe7578f5c1d9c976ae40371cd')
 
