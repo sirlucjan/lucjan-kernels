@@ -126,7 +126,7 @@ _ll_rev='stable'
 
 ### Download linux-lucjan patchset
 # ATTENTION - one of four predefined values should be selected!
-# 'actual' - stable releases (recommended)
+# 'current' - stable releases (recommended)
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
@@ -141,7 +141,7 @@ _major=5.13
 _patches=${_major}-dev
 _srcname=linux-stable-rc
 pkgver=5.13.7.r105.gcd55ef855022.ll54
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -178,15 +178,15 @@ fi
 
 ### linux-lucjan
 # If you do not use the kernel development version (stable-rc)
-# only the actual branch will be used. Pending and testing branches
+# only the current branch will be used. Pending and testing branches
 # are used only in development versions (stable-rc)
 # and the trunk branch is used only in the first releases
 # of the new kernel line or contains only temporary solutions.
 
-if [ "$_linux_lucjan" = "actual" ]; then
+if [ "$_linux_lucjan" = "current" ]; then
 
-# _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/actual"
- _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/actual"
+# _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/current"
+ _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/current"
  _lucjanname='lucjan'
  _lucjanrev='ll53'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
