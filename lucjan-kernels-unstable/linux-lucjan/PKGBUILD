@@ -146,7 +146,7 @@ _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0.2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -306,6 +306,10 @@ prepare() {
 	elif [ "$_ll_branding" = "no" ]; then
 		echo "Disabling linux-lucjan branding..."
 		scripts/config --disable CONFIG_LL_BRANDING
+        else
+		warning "Make sure you select the correct value!"
+		warning "Aborting!"
+		exit
 	fi
 
     ### Set GCC/Clang flags
@@ -356,6 +360,10 @@ prepare() {
 		echo "Selecting PDS CPU scheduler..."
 		scripts/config --disable CONFIG_SCHED_BMQ
 		scripts/config --enable CONFIG_SCHED_PDS
+	else
+		warning "Make sure you select the correct value!"
+		warning "Aborting!"
+		exit
 	fi
 
     ### Enable KBUILD_CFLAGS -O3
@@ -465,6 +473,10 @@ prepare() {
 		echo "Enabling standard ZSTD compression ratio..."
 		scripts/config --set-val CONFIG_KERNEL_ZSTD_LEVEL 19
 		scripts/config --disable CONFIG_KERNEL_ZSTD_LEVEL_ULTRA
+	else
+		warning "Make sure you select the correct value!"
+		warning "Aborting!"
+		exit
 	fi
 
     ### Selecting the ZSTD module compression level
@@ -477,6 +489,10 @@ prepare() {
 		echo "Enabling standard ZSTD module compression ratio..."
 		scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19
 		scripts/config --disable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA
+	else
+		warning "Make sure you select the correct value!"
+		warning "Aborting!"
+		exit
 	fi
 
     ### Optionally load needed modules for the make localmodconfig
