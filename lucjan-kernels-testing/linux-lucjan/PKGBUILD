@@ -142,7 +142,7 @@ _patches=${_major}-dev
 pkgver=5.13.7.ll53
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
-pkgrel=3
+pkgrel=4
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -286,8 +286,8 @@ prepare() {
 		echo "Disabling linux-lucjan branding..."
 		scripts/config --disable CONFIG_LL_BRANDING
         else
-		warning "Make sure you select the correct value!"
-		warning "Aborting!"
+		error "Make sure you select the correct value!"
+		error "Aborting!"
 		exit
 	fi
 
@@ -340,8 +340,8 @@ prepare() {
 		scripts/config --disable CONFIG_SCHED_BMQ
 		scripts/config --enable CONFIG_SCHED_PDS
 	else
-		warning "Make sure you select the correct value!"
-		warning "Aborting!"
+		error "Make sure you select the correct value!"
+		error "Aborting!"
 		exit
 	fi
 
@@ -453,8 +453,8 @@ prepare() {
 		scripts/config --set-val CONFIG_KERNEL_ZSTD_LEVEL 19
 		scripts/config --disable CONFIG_KERNEL_ZSTD_LEVEL_ULTRA
 	else
-		warning "Make sure you select the correct value!"
-		warning "Aborting!"
+		error "Make sure you select the correct value!"
+		error "Aborting!"
 		exit
 	fi
 
@@ -469,8 +469,8 @@ prepare() {
 		scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19
 		scripts/config --disable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA
 	else
-		warning "Make sure you select the correct value!"
-		warning "Aborting!"
+		error "Make sure you select the correct value!"
+		error "Aborting!"
 		exit
 	fi
 
