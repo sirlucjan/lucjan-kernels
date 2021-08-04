@@ -130,7 +130,7 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='testing'
+_linux_lucjan='current'
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -202,7 +202,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll55'
+ _lucjanrev='ll56'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -685,7 +685,7 @@ sha512sums=('d50ff2c639f89187b261225223e1c1a599e6face488574325f5f2e2fd43cc551a96
             'SKIP'
             'd3f6a9ccea65c2c154198e65a81a21dd45c187e5cf05f77762f43573e83e365a4f92725b3bf0f3edad4764ac29d0865408a1720edcc10580791d43efe33d1c26'
             'SKIP'
-            'deb5542d83ed4147740f051a3f84f57bac8a570bcd8d32514c454036bcf61069c49125f093d85dff571ab06cdd4abdbce35736b87b08e51ac560a1196df9940c'
+            '688f48f21329c08ec1148942ec2cfda6ba46fcdedec8087522e1d6606a235203ab08a7e54ab2aa13300f6c8e3799766c479ca65e32f264bbac71b584c11a2fac'
             'SKIP'
             '51ec2e5ebc1cf90dd35e5c6d7a93991ff4be5f800cb7ffe94b68d5dcb928bb77bd6472e400dccbb91fcae06495ffeacb1008bfabe7578f5c1d9c976ae40371cd')
 
