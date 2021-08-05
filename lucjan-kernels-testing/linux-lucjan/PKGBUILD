@@ -399,7 +399,7 @@ prepare() {
 		scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_MIN 131072
 	fi
 
-	### Enable protect anonymous mappings under memory pressure
+    ### Enable protect anonymous mappings under memory pressure
 	if [ -n "$_mm_anon" ]; then
 		echo "Enabling protect anonymous mappings under memory pressure..."
 		scripts/config --enable CONFIG_UNEVICTABLE_ANON
