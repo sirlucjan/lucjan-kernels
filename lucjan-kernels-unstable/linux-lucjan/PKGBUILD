@@ -310,7 +310,7 @@ prepare() {
 	elif [ "$_ll_branding" = "no" ]; then
 		echo "Disabling linux-lucjan branding..."
 		scripts/config --disable CONFIG_LL_BRANDING
-        else
+	else
 		error "The value $_ll_branding is invalid. Choose the correct one again."
 		error "Selecting linux-lucjan branding failed!"
 		exit
@@ -363,7 +363,7 @@ prepare() {
 		echo "Selecting PDS CPU scheduler..."
 		scripts/config --disable CONFIG_SCHED_BMQ
 		scripts/config --enable CONFIG_SCHED_PDS
-        elif [ "$_projectc" = "none" ]; then
+	elif [ "$_projectc" = "none" ]; then
 		echo "Selecting Completely Fair Scheduler..."
 		scripts/config --disable CONFIG_SCHED_ALT
 	else
