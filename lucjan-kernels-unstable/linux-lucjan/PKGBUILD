@@ -66,9 +66,10 @@ _mq_deadline_disable=
 _kyber_disable=y
 
 ### Selecting the CPU scheduler
-# ATTENTION - one of two predefined values should be selected!
+# ATTENTION - one of three predefined values should be selected!
 # 'bmq' - select 'BitMap Queue CPU scheduler'
 # 'pds' - select 'Priority and Deadline based Skip list multiple queue CPU scheduler'
+# 'none' - select 'Completely Fair Scheduler'
 _projectc='pds'
 
 ### Enable KBUILD_CFLAGS -O3
@@ -149,7 +150,7 @@ _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -363,6 +364,11 @@ prepare() {
 		echo "Selecting PDS CPU scheduler..."
 		scripts/config --disable CONFIG_SCHED_BMQ
 		scripts/config --enable CONFIG_SCHED_PDS
+        elif [ "$_projectc" = "none" ]; then
+		echo "Selecting Completely Fair Scheduler..."
+		scripts/config --disable CONFIG_SCHED_ALT
+		scripts/config --disable CONFIG_SCHED_BMQ
+		scripts/config --disable CONFIG_SCHED_PDS
 	else
 		error "Make sure you select the correct value!"
 		error "Aborting!"
