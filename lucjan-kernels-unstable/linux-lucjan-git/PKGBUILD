@@ -145,7 +145,7 @@ _major=5.13
 _patches=${_major}-dev
 _srcname=linux-stable-rc
 pkgver=5.13.8.r0.g3cfdd7252e00.ll58
-pkgrel=4
+pkgrel=5
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -290,8 +290,13 @@ prepare() {
 		echo "Disabling linux-lucjan branding..."
 		scripts/config --disable CONFIG_LL_BRANDING
 	else
-		error "The value $_ll_branding is invalid. Choose the correct one again."
-		error "Selecting linux-lucjan branding failed!"
+		if [ -n "$_ll_branding" ]; then
+			error "The value $_ll_branding is invalid. Choose the correct one again."
+			error "Selecting linux-lucjan branding failed!"
+		else
+			error "The value is empty. Choose the correct one again."
+			error "Selecting linux-lucjan branding failed!"
+		fi
 		exit
 	fi
 
@@ -346,8 +351,13 @@ prepare() {
 		echo "Selecting Completely Fair Scheduler..."
 		scripts/config --disable CONFIG_SCHED_ALT
 	else
-		error "The value $_projectc is invalid. Choose the correct one again."
-		error "Selecting the CPU scheduler failed!"
+		if [ -n "$_projectc" ]; then
+			error "The value $_projectc is invalid. Choose the correct one again."
+			error "Selecting the CPU scheduler failed!"
+		else
+			error "The value is empty. Choose the correct one again."
+			error "Selecting the CPU scheduler failed!"
+		fi
 		exit
 	fi
 
@@ -466,8 +476,13 @@ prepare() {
 		scripts/config --set-val CONFIG_KERNEL_ZSTD_LEVEL 19
 		scripts/config --disable CONFIG_KERNEL_ZSTD_LEVEL_ULTRA
 	else
-		error "The value $_zstd_level is invalid. Choose the correct one again."
-		error "Selecting the ZSTD compression level failed!"
+		if [ -n "$_zstd_level" ]; then
+			error "The value $_zstd_level is invalid. Choose the correct one again."
+			error "Selecting the ZSTD compression level failed!"
+		else
+			error "The value is empty. Choose the correct one again."
+			error "Selecting the ZSTD compression level failed!"
+		fi
 		exit
 	fi
 
@@ -482,8 +497,13 @@ prepare() {
 		scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19
 		scripts/config --disable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA
 	else
-		error "The value $_zstd_module_level is invalid. Choose the correct one again."
-		error "Selecting the ZSTD module compression level failed!"
+		if [ -n "$_zstd_module_level" ]; then
+			error "The value $_zstd_module_level is invalid. Choose the correct one again."
+			error "Selecting the ZSTD module compression level failed!"
+		else
+			error "The value is empty. Choose the correct one again."
+			error "Selecting the ZSTD module compression level failed!"
+		fi
 		exit
 	fi
 
