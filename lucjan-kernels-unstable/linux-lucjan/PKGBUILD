@@ -150,7 +150,7 @@ _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.2
+pkgrel=0.3
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -311,8 +311,8 @@ prepare() {
 		echo "Disabling linux-lucjan branding..."
 		scripts/config --disable CONFIG_LL_BRANDING
         else
-		error "Make sure you select the correct value!"
-		error "Aborting!"
+		error "The value $_ll_branding is invalid. Choose the correct one again."
+		error "Selecting linux-lucjan branding failed!"
 		exit
 	fi
 
@@ -367,8 +367,8 @@ prepare() {
 		echo "Selecting Completely Fair Scheduler..."
 		scripts/config --disable CONFIG_SCHED_ALT
 	else
-		error "Make sure you select the correct value!"
-		error "Aborting!"
+		error "The value $_projectc is invalid. Choose the correct one again."
+		error "Selecting the CPU scheduler failed!"
 		exit
 	fi
 
@@ -487,8 +487,8 @@ prepare() {
 		scripts/config --set-val CONFIG_KERNEL_ZSTD_LEVEL 19
 		scripts/config --disable CONFIG_KERNEL_ZSTD_LEVEL_ULTRA
 	else
-		error "Make sure you select the correct value!"
-		error "Aborting!"
+		error "The value $_zstd_level is invalid. Choose the correct one again."
+		error "Selecting the ZSTD compression level failed!"
 		exit
 	fi
 
@@ -503,8 +503,8 @@ prepare() {
 		scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19
 		scripts/config --disable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA
 	else
-		error "Make sure you select the correct value!"
-		error "Aborting!"
+		error "The value $_zstd_module_level is invalid. Choose the correct one again."
+		error "Selecting the ZSTD module compression level failed!"
 		exit
 	fi
 
