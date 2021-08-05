@@ -145,7 +145,7 @@ _major=5.13
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.13.8.r18715.gcba59dce4032.ll58
-pkgrel=2
+pkgrel=3
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -325,7 +325,6 @@ prepare() {
 	if [ -n "$_mq_deadline_disable" ]; then
 		echo "Disabling MQ-Deadline I/O scheduler with cgroup support..."
 		scripts/config --disable CONFIG_MQ_IOSCHED_DEADLINE
-		scripts/config --disable CONFIG_MQ_IOSCHED_DEADLINE_CGROUP
 	fi
 
     ### Disable Kyber I/O scheduler
@@ -346,8 +345,6 @@ prepare() {
         elif [ "$_projectc" = "none" ]; then
 		echo "Selecting Completely Fair Scheduler..."
 		scripts/config --disable CONFIG_SCHED_ALT
-		scripts/config --disable CONFIG_SCHED_BMQ
-		scripts/config --disable CONFIG_SCHED_PDS
 	else
 		error "Make sure you select the correct value!"
 		error "Aborting!"
