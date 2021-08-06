@@ -145,7 +145,7 @@ _major=5.13
 _patches=${_major}-dev
 _srcname=linux-stable-rc
 pkgver=5.13.8.r36.g1eb1590ab470.ll60
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -292,11 +292,10 @@ prepare() {
 	else
 		if [ -n "$_ll_branding" ]; then
 			error "The value $_ll_branding is invalid. Choose the correct one again."
-			error "Selecting linux-lucjan branding failed!"
 		else
 			error "The value is empty. Choose the correct one again."
-			error "Selecting linux-lucjan branding failed!"
 		fi
+		error "Selecting linux-lucjan branding failed!"
 		exit
 	fi
 
@@ -353,11 +352,10 @@ prepare() {
 	else
 		if [ -n "$_projectc" ]; then
 			error "The value $_projectc is invalid. Choose the correct one again."
-			error "Selecting the CPU scheduler failed!"
 		else
 			error "The value is empty. Choose the correct one again."
-			error "Selecting the CPU scheduler failed!"
 		fi
+		error "Selecting the CPU scheduler failed!"
 		exit
 	fi
 
@@ -478,11 +476,10 @@ prepare() {
 	else
 		if [ -n "$_zstd_level" ]; then
 			error "The value $_zstd_level is invalid. Choose the correct one again."
-			error "Selecting the ZSTD compression level failed!"
 		else
 			error "The value is empty. Choose the correct one again."
-			error "Selecting the ZSTD compression level failed!"
 		fi
+		error "Selecting the ZSTD compression level failed!"
 		exit
 	fi
 
@@ -499,11 +496,10 @@ prepare() {
 	else
 		if [ -n "$_zstd_module_level" ]; then
 			error "The value $_zstd_module_level is invalid. Choose the correct one again."
-			error "Selecting the ZSTD module compression level failed!"
 		else
 			error "The value is empty. Choose the correct one again."
-			error "Selecting the ZSTD module compression level failed!"
 		fi
+		error "Selecting the ZSTD module compression level failed!"
 		exit
 	fi
 
