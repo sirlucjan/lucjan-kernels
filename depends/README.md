@@ -1,53 +1,54 @@
 # mkinitcpio-zstd
 
-##### mkinitcpio in the current version 30 does not support modules compressed in zstd format.
+##### mkinitcpio in the current version 30 does not full support modules compressed in zstd format.
 ##### A pull request has been approved by the developers and the next version 31 will support decompression of modules in this format without any problems.
 ##### Source: https://github.com/archlinux/mkinitcpio/pull/43/commits
 ##### I have been testing this solution since December 2020 and have not found any irregularities. Please report any bugs in this exact repository.
 
-## Enable zstd compressed modules
+###### NOTE: mkinitcpio-zstd will overwrite the mkinitcpio.conf file and the old one will be saved as mkinitcpio.conf.pacsave - however, I recommend backing up this file before installing the modified mkinitcpio version.
 
-###### To build a kernel with modules compressed in zstd format, insert any character here (it can be "y", "x" or any other value):
+## Selecting the ZSTD module compression level
+
+###### To select the compression level, choose between "normal" and "ultra". 
 
 ```
-### Enable MODULE_COMPRESS_ZSTD
-# WARNING Not recommended.
-# An experimental solution, still in testing phase.
-# Possible compilation and installation errors.
-# Leave it unselected.
-# However, if you want to test the new solution,
+# If you want to use ZSTD compression,
 # first install mkinitcpio-zstd:
 # https://gitlab.com/sirlucjan/lucjan-kernels/tree/master/depends
 # or
 # https://github.com/sirlucjan/lucjan-kernels/tree/master/depends
-_zstd_modules=
-```
-###### Remember that to do this you need to install modified version of mkinitcpio (mkinitcpio-zstd). To do this, run the following command:
-
-```
-cd /some_path/lucjan-kernels/depends/package_name
-makepkg -srci
-
-```
-
-###### NOTE: mkinitcpio-zstd will overwrite the mkinitcpio.conf file and the old one will be saved as mkinitcpio.conf.pacsave - however, I recommend backing up this file before installing the modified mkinitcpio version.
-
-## Enable zstd ultra compressed modules
-
-###### To build a kernel with modules compressed with ultra flag insert any character here (it can be "y", "x" or any other value):
-
-```
-### Enable MODULE_COMPRESS_ZSTD_ULTRA
-# WARNING Not recommended.
-# An experimental solution, still in testing phase.
-# Possible compilation and installation errors.
-# Leave it unselected.
-# However, if you want to test the new solution,
-# first enable "_zstd_modules" (above flag).
-# ATTENTION Without selecting the previous flag
-# this one will not work!
-# Remember: the ultra settings can sometimes
+# ATTENTION - one of two predefined values should be selected!
+# 'ultra' - highest compression ratio
+# 'normal' - standard compression ratio
+# WARNING: the ultra settings can sometimes
 # be counterproductive in both size and speed.
-_zstd_modules_ultra=
+_zstd_module_level=''
 ```
+###### The normal flag allows you to select a value between 1 and 19 (the default value zstd offers is 3), while the ultra flag allows you to select a value between 20 and 22. Values other than those suggested (so 19 for the normal flag and 22 for the ultra flag) should be entered here:
+
+```
+### Selecting the ZSTD module compression level
+	if [ "$_zstd_module_level" = "ultra" ]; then
+		echo "Enabling highest ZSTD module compression ratio..."
+		scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19
+		scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA
+		scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL_ULTRA 22
+	elif [ "$_zstd_module_level" = "normal" ]; then
+		echo "Enabling standard ZSTD module compression ratio..."
+		scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19
+		scripts/config --disable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA
+	else
+		if [ -n "$_zstd_module_level" ]; then
+			error "The value $_zstd_module_level is invalid. Choose the correct one again."
+			error "Selecting the ZSTD module compression level failed!"
+		else
+			error "The value is empty. Choose the correct one again."
+			error "Selecting the ZSTD module compression level failed!"
+		fi
+		exit
+	fi
+```
+
+###### Entering any values other than "normal" and "ultra" as well as leaving the checkbox empty will immediately abort the compilation. 
+
 ###### It is worth mentioning once again that the ultra flag does not guarantee that you will build significantly smaller modules - on the contrary, you may achieve the counterproductive effect. 
