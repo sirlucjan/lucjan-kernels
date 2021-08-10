@@ -6,10 +6,10 @@
 pkgname=mkinitcpio-zstd
 _pkgname=mkinitcpio
 pkgver=30
-pkgrel=2
+pkgrel=3
 pkgdesc="Modular initramfs image creation utility"
 arch=('any')
-url="https://projects.archlinux.org/mkinitcpio.git/"
+url='https://github.com/archlinux/mkinitcpio'
 license=('GPL')
 depends=('awk' 'mkinitcpio-busybox>=1.19.4-2' 'kmod' 'util-linux>=2.23' 'libarchive' 'coreutils'
          'bash' 'diffutils' 'findutils' 'grep' 'filesystem>=2011.10-1' 'zstd' 'systemd')
