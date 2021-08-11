@@ -59,8 +59,8 @@ _dell_fancontrol=y
 ### Set performance governor as default
 _per_gov=y
 
-### Disable MQ-Deadline I/O scheduler
-_mq_deadline_disable=y
+### Disable MQ-Deadline I/O scheduler with cgroup support
+_mq_deadline_disable=
 
 ### Disable Kyber I/O scheduler
 _kyber_disable=y
@@ -192,7 +192,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll64'
+ _lucjanrev='ll63'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -200,7 +200,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll64'
+ _lucjanrev='ll63'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -325,9 +325,9 @@ prepare() {
 		scripts/config --disable CONFIG_CPU_FREQ_GOV_SCHEDUTIL
         fi
 
-    ### Disable MQ-Deadline I/O scheduler
+    ### Disable MQ-Deadline I/O scheduler with cgroup support
 	if [ -n "$_mq_deadline_disable" ]; then
-		echo "Disabling MQ-Deadline I/O scheduler..."
+		echo "Disabling MQ-Deadline I/O scheduler with cgroup support..."
 		scripts/config --disable CONFIG_MQ_IOSCHED_DEADLINE
 	fi
 
@@ -690,9 +690,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '773f0426068fd57fa619fe4e81468ddc61c9fc29c4e94145f1554183e6de8335d7c20b89eb86124e63065fa3769117f29f66a1050bbc51a629dbf50e9ea76d24'
+            '4291538da47a8df6464376014909df10ea40b82acfa1cbd44e5eecf352ff23cc8c940d5151e301471e86c2a6bfd1f7f607ca63f659824da2bf1c5d14ac09b2bb'
             'SKIP'
-            'b2aa4c00a66c2b9e4fb4056c8e7f0c12849a03e6b77729cbb12708279fdb1acbffeb5dfda3b7fea1c4f5f2422c17afc828fd12f0782b5f506a5710e74ebc6806')
+            '91e817b0315898d7d55d4890806b686edc1b8f631dcf1ba7ade83004676d2999370e3b040029961a24b0e14e4f65f8f0ba8d82eba22fe14b39f473c0eebe1778')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
