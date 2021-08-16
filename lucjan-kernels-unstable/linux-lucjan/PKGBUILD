@@ -143,14 +143,14 @@ pkgbase=linux-lucjan
 _major=5.13
 _minor=11
 _minorc=$((_minor+1))
-_rcver=rc1
+_rcver=rc2
 _patches=${_major}-dev
 pkgver=5.13.12.ll70
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0.2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -712,7 +712,7 @@ done
 
 sha512sums=('3918f81128a312d4bc469a7dda7cc7b5cf74d3469428425c41840e729f5f1720bf79d764e7e751a00ccd5917b29da7d6575fc5fcfdd5bba118b10d94919d0b9a'
             'SKIP'
-            '8c7002b4ac699df74836643148de75be1d43e5fc422be9b130f297960ae1d35f69a7550313e6c8a9815469daeefb15afb402a09077995efb8283f199101cf113'
+            'b127db43543b4c49b03030565b2ae07e1702c5a073190110ce06fc75d6f68a0109d917b8ed5e98189ccb3b7abdf536990c10e96b1a894075b7495b592c067796'
             'SKIP'
             'c19b95d6776d53002152a59e1eb8741726e09a6224b207ae785814bf874ef2fe953206039b4097df95baf5ac7e8fcc9ca552adc5419e06d224befb1aba5e600b'
             'SKIP'
