@@ -85,7 +85,11 @@ _mm_file=y
 _mm_anon=y
 
 ### Enable multigenerational LRU
-_lru_enable=
+# ATTENTION - one of three predefined values should be selected!
+# 'zen' - enable multigenerational LRU with zenkernel config
+# 'xanmod' - enable multigenerational LRU with xanmod config
+# 'none' - disable multigenerational LRU
+_lru_config='none'
 
 ### Enable Linux Random Number Generator 
 _lrng_enable=
@@ -146,7 +150,7 @@ _patches=${_major}-dev
 pkgver=5.13.12.ll72
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -416,14 +420,33 @@ prepare() {
 	fi
 
     ### Enable multigenerational LRU
-	if [ -n "$_lru_enable" ]; then
-		echo "Enabling multigenerational LRU..."
+	if [ "$_lru_config" = "zen" ]; then
+		echo "Enabling multigenerational LRU with zenkernel config..."
 		scripts/config --enable CONFIG_HAVE_ARCH_PARENT_PMD_YOUNG
 		scripts/config --enable CONFIG_LRU_GEN
 		scripts/config --set-val CONFIG_NR_LRU_GENS 7
 		scripts/config --set-val CONFIG_TIERS_PER_GEN 4
 		scripts/config --enable CONFIG_LRU_GEN_ENABLED
 		scripts/config --disable CONFIG_LRU_GEN_STATS
+	elif [ "$_lru_config" = "xanmod" ]; then
+		echo "Enabling multigenerational LRU with xanmod config..."
+		scripts/config --enable CONFIG_HAVE_ARCH_PARENT_PMD_YOUNG
+		scripts/config --enable CONFIG_LRU_GEN
+		scripts/config --set-val CONFIG_NR_LRU_GENS 4
+		scripts/config --set-val CONFIG_TIERS_PER_GEN 2
+		scripts/config --disable CONFIG_LRU_GEN_ENABLED
+		scripts/config --disable CONFIG_LRU_GEN_STATS
+	elif [ "$_lru_config" = "none" ]; then
+		echo "Disabling multigenerational LRU..."
+		scripts/config --disable CONFIG_LRU_GEN
+	else
+		if [ -n "$_lru_config" ]; then
+			error "The value $_lru_config is invalid. Choose the correct one again."
+		else
+			error "The value is empty. Choose the correct one again."
+		fi
+		error "Enabling multigenerational LRU failed!"
+		exit
 	fi
 
     ### Enable Linux Random Number Generator 
