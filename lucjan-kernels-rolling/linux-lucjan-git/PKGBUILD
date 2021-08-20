@@ -149,7 +149,7 @@ _major=5.13
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.13.12.r18719.gf24c1bd97842.ll72
-pkgrel=2
+pkgrel=3
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -449,7 +449,7 @@ prepare() {
 		exit
 	fi
 
-    ### Enable Linux Random Number Generator 
+    ### Enable Linux Random Number Generator
 	if [ -n "$_lrng_enable" ]; then
 		echo "Enabling Linux Random Number Generator ..."
 		scripts/config --enable CONFIG_LRNG
@@ -458,6 +458,7 @@ prepare() {
 		scripts/config --set-val CONFIG_LRNG_SEED_BUFFER_INIT_ADD_BITS 0
 		scripts/config --enable CONFIG_LRNG_CONTINUOUS_COMPRESSION_ENABLED
 		scripts/config --disable CONFIG_LRNG_CONTINUOUS_COMPRESSION_DISABLED
+		scripts/config --enable CONFIG_LRNG_ENABLE_CONTINUOUS_COMPRESSION
 		scripts/config --disable CONFIG_LRNG_SWITCHABLE_CONTINUOUS_COMPRESSION
 		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_32
 		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_256
