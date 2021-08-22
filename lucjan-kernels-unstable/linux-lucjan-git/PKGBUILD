@@ -78,11 +78,8 @@ _cc_harder=y
 ### Running with a 1000 HZ tick rate
 _1k_HZ_ticks=y
 
-### Enable protect file mappings under memory pressure
-_mm_file=y
-
-### Enable protect anonymous mappings under memory pressure
-_mm_anon=y
+### Enable protect mappings under memory pressure
+_mm_protect=y
 
 ### Enable multigenerational LRU
 # ATTENTION - one of three predefined values should be selected!
@@ -149,7 +146,7 @@ _major=5.13
 _patches=${_major}-dev
 _srcname=linux-stable-rc
 pkgver=5.13.12.r0.gf428e49b8cb1.ll73
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -403,16 +400,12 @@ prepare() {
 		scripts/config --set-str CONFIG_LSM landlock,lockdown,brute,yama,bpf
 	fi
 
-    ### Enable protect file mappings under memory pressure
-	if [ -n "$_mm_file" ]; then
+    ### Enable protect mappings under memory pressure
+	if [ -n "$_mm_protect" ]; then
 		echo "Enabling protect file mappings under memory pressure..."
 		scripts/config --enable CONFIG_UNEVICTABLE_FILE
 		scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_LOW 262144
 		scripts/config --set-val CONFIG_UNEVICTABLE_FILE_KBYTES_MIN 131072
-	fi
-
-    ### Enable protect anonymous mappings under memory pressure
-	if [ -n "$_mm_anon" ]; then
 		echo "Enabling protect anonymous mappings under memory pressure..."
 		scripts/config --enable CONFIG_UNEVICTABLE_ANON
 		scripts/config --set-val CONFIG_UNEVICTABLE_ANON_KBYTES_LOW 65536
