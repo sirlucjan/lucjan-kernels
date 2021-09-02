@@ -4,6 +4,7 @@
 │   │   ├── 0001-Add-zstd-module-decompression.patch
 │   │   ├── 0002-Silence-messages-in-zstd-format.patch
 │   │   ├── 0003-Add-rm-flag-to-minimize-the-size-of-initramfs.patch
+│   │   ├── 0004-Merge-mkinitcpio-libalpm-scripts-into-one.patch
 │   │   ├── mkinitcpio.install
 │   │   └── PKGBUILD
 │   └── README.md
@@ -28,4 +29,4 @@
 │       └── PKGBUILD
 └── README.md
 
-10 directories, 18 files
+10 directories, 19 files
