@@ -10,7 +10,7 @@
 
 ## Selecting the ZSTD module compression level
 
-###### To select the compression level, choose between "normal" and "ultra". 
+###### To select the compression level, choose between "normal" and "ultra".
 
 ```
 ### Selecting the ZSTD module compression level
@@ -50,6 +50,6 @@ _zstd_module_level=''
 	fi
 ```
 
-###### Entering any values other than "normal" and "ultra" as well as leaving the checkbox empty will immediately abort the compilation. 
+###### Entering any values other than "normal" and "ultra" as well as leaving the checkbox empty will immediately abort the compilation.
 
-###### It is worth mentioning once again that the ultra flag does not guarantee that you will build significantly smaller modules - on the contrary, you may achieve the counterproductive effect. 
+###### It is worth mentioning once again that the ultra flag does not guarantee that you will build significantly smaller modules - on the contrary, you may achieve the counterproductive effect.
