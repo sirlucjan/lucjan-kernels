@@ -66,11 +66,12 @@ _mq_deadline_disable=y
 _kyber_disable=y
 
 ### Selecting the CPU scheduler
-# ATTENTION - one of three predefined values should be selected!
+# ATTENTION - one of four predefined values should be selected!
 # 'bmq' - select 'BitMap Queue CPU scheduler'
 # 'pds' - select 'Priority and Deadline based Skip list multiple queue CPU scheduler'
+# 'cacule' - select 'CacULE scheduler'
 # 'none' - select 'Completely Fair Scheduler'
-_projectc='pds'
+_cpusched='pds'
 
 ### Enable KBUILD_CFLAGS -O3
 _cc_harder=y
@@ -142,10 +143,10 @@ _linux_lucjan='current'
 pkgbase=linux-lucjan-git
 _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
-_major=5.13
+_major=5.14
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.13.14.r18721.gf4270346b8fb.ll82
+pkgver=5.13.18.r34980.g9d5d6ba5c53a.ll39
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -193,7 +194,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll82'
+ _lucjanrev='ll39'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -201,7 +202,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll75'
+ _lucjanrev='ll36'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -209,7 +210,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll82'
+ _lucjanrev='ll39'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -218,7 +219,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll45'
+ _lucjanrev='ll36'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -339,20 +340,26 @@ prepare() {
 	fi
 
     ### Selecting the CPU scheduler
-	if [ "$_projectc" = "bmq" ]; then
+	if [ "$_cpusched" = "bmq" ]; then
 		echo "Selecting BMQ CPU scheduler..."
 		scripts/config --enable CONFIG_SCHED_BMQ
 		scripts/config --disable CONFIG_SCHED_PDS
-	elif [ "$_projectc" = "pds" ]; then
+	elif [ "$_cpusched" = "pds" ]; then
 		echo "Selecting PDS CPU scheduler..."
 		scripts/config --disable CONFIG_SCHED_BMQ
 		scripts/config --enable CONFIG_SCHED_PDS
-	elif [ "$_projectc" = "none" ]; then
+	elif [ "$_cpusched" = "cacule" ]; then
+		echo "Selecting CacULE scheduler..."
+		scripts/config --disable CONFIG_SCHED_ALT
+		scripts/config --enable CONFIG_CACULE_SCHED
+		scripts/config --enable CONFIG_CACULE_RDB
+		scripts/config --set-val CONFIG_RDB_INTERVAL 19
+	elif [ "$_cpusched" = "none" ]; then
 		echo "Selecting Completely Fair Scheduler..."
 		scripts/config --disable CONFIG_SCHED_ALT
 	else
-		if [ -n "$_projectc" ]; then
-			error "The value $_projectc is invalid. Choose the correct one again."
+		if [ -n "$_cpusched" ]; then
+			error "The value $_cpusched is invalid. Choose the correct one again."
 		else
 			error "The value is empty. Choose the correct one again."
 		fi
@@ -415,7 +422,7 @@ prepare() {
     ### Enable multigenerational LRU
 	if [ "$_lru_config" = "zen" ]; then
 		echo "Enabling multigenerational LRU with zenkernel config..."
-		scripts/config --enable CONFIG_HAVE_ARCH_PARENT_PMD_YOUNG
+		scripts/config --enable CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG
 		scripts/config --enable CONFIG_LRU_GEN
 		scripts/config --set-val CONFIG_NR_LRU_GENS 7
 		scripts/config --set-val CONFIG_TIERS_PER_GEN 4
@@ -423,7 +430,7 @@ prepare() {
 		scripts/config --disable CONFIG_LRU_GEN_STATS
 	elif [ "$_lru_config" = "xanmod" ]; then
 		echo "Enabling multigenerational LRU with xanmod config..."
-		scripts/config --enable CONFIG_HAVE_ARCH_PARENT_PMD_YOUNG
+		scripts/config --enable CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG
 		scripts/config --enable CONFIG_LRU_GEN
 		scripts/config --set-val CONFIG_NR_LRU_GENS 4
 		scripts/config --set-val CONFIG_TIERS_PER_GEN 2
@@ -706,9 +713,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '23be838ec854b301f1d938a9ffe39a62300a78a90fad7c4ed53823af44020ab5353c0a09dff751ab566b78cef6b98d1beb0005f343bc300bbaee73cf30be8c69'
+            'bdaa7f460edc9366bf7837a844f73cf1dae8bc8780e9b5ebe250e1a7bb9dcf745ee1a448f1d62b604b19be724f9ab5dc835713df6c4edc0889ec2a832d13c307'
             'SKIP'
-            '147827cbf776af47ed81a84d44aaa39e4ef5de13a2e6ebe9b7b875f8edc9e98ba068f46a7225bc6a9c81fa1aa3ef1e22860312ecbf79d506b8704af799408376')
+            '014276deae685aff059bb58d5f0693f8d5f5f0fb4efd5877174e58207600e877b31816e092d06e8dacbcc6b6a51c246aac626c6a2f9e94f54fc3de1cce0940fc')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
