@@ -92,6 +92,9 @@ _lru_config='none'
 ### Enable Linux Random Number Generator 
 _lrng_enable=
 
+### Enable SMB3 Kernel Server
+_ksmbd_enable=
+
 ### Enable TCP_CONG_BBR2
 _tcp_bbr2=y
 
@@ -148,7 +151,7 @@ _patches=${_major}-dev
 pkgver=5.14.8.ll66
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -211,7 +214,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll64'
+ _lucjanrev='ll67'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -479,6 +482,15 @@ prepare() {
 		scripts/config --disable CONFIG_LRNG_DRBG
 		scripts/config --disable CONFIG_LRNG_TESTING_MENU
 		scripts/config --disable CONFIG_LRNG_SELFTEST
+	fi
+
+    ### Enable SMB3 Kernel Server
+	if [ -n "$_ksmbd_enable" ]; then
+		echo "SMB3 Kernel Server..."
+		scripts/config --module CONFIG_SMB_SERVER
+		scripts/config --enable CONFIG_SMB_SERVER_SMBDIRECT
+		scripts/config --enable CONFIG_SMB_SERVER_CHECK_CAP_NET_ADMIN
+		scripts/config --enable CONFIG_SMB_SERVER_KERBEROS5
 	fi
 
     ### Optionally disable NUMA for 64-bit kernels only
