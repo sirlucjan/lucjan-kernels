@@ -154,7 +154,7 @@ _major=5.14
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.14.11.r21623.g66035107bbad.ll85
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -611,6 +611,7 @@ prepare() {
         echo "Rewrite configuration..."
         make prepare
         yes "" | make config >/dev/null
+        diff -u ../config .config || :
 
     ### Prepared version
         make -s kernelrelease > version
