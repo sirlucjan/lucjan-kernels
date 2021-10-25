@@ -143,18 +143,18 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='current'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.14
-_minor=13
+_minor=14
 _minorc=$((_minor+1))
-_rcver=rc2
+_rcver=rc1
 _patches=${_major}-dev
-pkgver=5.14.14.ll110
+pkgver=5.14.15.ll111
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -231,7 +231,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll105'
+ _lucjanrev='ll111'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -808,11 +808,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('b3c662115585b358a05807ebf4953b0fa1ab2c3002835d8b99b3fb203cf1ff080025d476114b022d2e372f53c3c2d93e5460cffac9fdf450fe6d8b86bc65916e'
+sha512sums=('bd21aee0d84e213c4ed387a9da825594d2d576690d0b82ad6aaf123a1d8340b9804d4e99f909ba39f927c524409e35d26ed175c50d5236a8f3f66c7f5837e4a1'
             'SKIP'
-            'd85f9c651455d75166c8c0e9393555b845ca22216b141313966c906bdf5acc488b47f09887dd7cb9c6353e875dccfda2c16896913dc7358ca69892fc752138ea'
+            '158ec229247f1194fa89554f8475183f24fa876d29897769648c67420cbffb065e6ccb8320dd907ed3a590bb179a33b901fb5cedbe102e777588aa3098f95230'
             'SKIP'
-            '2566e17424c97cdc0962c2dff9daad05b33e312ef5b83b43e6e485ea711550741e466f8f7eb174d68252a34d618c1c2382dafcac002b78b97d7e9f15dc49e552'
+            '53d3d0b1a9e2d9d7d631a084ed84eed61f537ff7b1a4c3c01a32b7d31fa896b6f0433e03fa95feac216a1ac351ff02ab56bbcc915681aecf722c77b871eafb1b'
             'SKIP'
             'c4915f5fcc48ff00c6930e09c426b15e92693dcadd0a6835b8d099370920be04f79474351e1d798355254a306f47d298229450b03eaea50664c90b157a524519')
 
