@@ -1,7 +1,7 @@
-From 6c64ec2eacd374510a182670250758b02602057e Mon Sep 17 00:00:00 2001
+From 10916bb693a90672b209c8d5dcf40c37bd6d4b6d Mon Sep 17 00:00:00 2001
 From: Hugo Osvaldo Barrera <hugo@barrera.io>
 Date: Sun, 29 Aug 2021 18:55:30 +0200
-Subject: [PATCH 4/4] Merge mkinitcpio libalpm scripts into one
+Subject: [PATCH 4/5] Merge mkinitcpio libalpm scripts into one
 
 Fixes #10
 
@@ -278,5 +278,5 @@ index 17b4b31..0000000
 -    shopt -u nullglob
 -fi
 -- 
-2.33.0
+2.33.1.711.g9d530dc002
 

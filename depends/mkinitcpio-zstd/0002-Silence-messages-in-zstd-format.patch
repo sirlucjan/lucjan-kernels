@@ -1,7 +1,7 @@
-From 757942a31205747074c3e029c0a0948cbcb94e5a Mon Sep 17 00:00:00 2001
+From 17215faf768e61491ba0b8b6ceea5fe6c341ca8a Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 12 Feb 2021 13:42:55 +0100
-Subject: [PATCH 2/4] Silence messages in zstd format
+Subject: [PATCH 2/5] Silence messages in zstd format
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -22,5 +22,5 @@ index 88652b6..a1f5be4 100644
      msg "Generating module dependencies"
      install -m644 -t "$moduledest" "$_d_kmoduledir"/modules.builtin
 -- 
-2.33.0
+2.33.1.711.g9d530dc002
 

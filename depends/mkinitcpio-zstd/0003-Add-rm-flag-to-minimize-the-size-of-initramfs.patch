@@ -1,7 +1,7 @@
-From 6c422dd54805d88f045a744b78a3d6f25e1a6c5f Mon Sep 17 00:00:00 2001
+From e2935d11a393f6347e6f0a9988edbf0735fcca98 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 19 Mar 2021 19:32:59 +0100
-Subject: [PATCH 3/4] Add --rm flag to minimize the size of initramfs
+Subject: [PATCH 3/5] Add --rm flag to minimize the size of initramfs
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -22,5 +22,5 @@ index a1f5be4..9539a60 100644
      msg "Generating module dependencies"
      install -m644 -t "$moduledest" "$_d_kmoduledir"/modules.builtin
 -- 
-2.33.0
+2.33.1.711.g9d530dc002
 

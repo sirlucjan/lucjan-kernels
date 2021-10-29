@@ -1,0 +1,29 @@
+From 303beefeec6d6477620d8a60c54114f1506202ef Mon Sep 17 00:00:00 2001
+From: nl6720 <nl6720@gmail.com>
+Date: Mon, 26 Jul 2021 19:31:37 +0300
+Subject: [PATCH 5/5] install/block: include vmd module
+
+The vmd module may allow to use the disk on some systems that use the Intel Volume Management Device technology.
+
+Fixes https://bugs.archlinux.org/task/68704 .
+---
+ install/block | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/install/block b/install/block
+index 98ea509..20eb7cb 100644
+--- a/install/block
++++ b/install/block
+@@ -26,6 +26,9 @@ build() {
+ 
+     # nvdimm
+     add_checked_modules '/drivers/nvdimm/'
++
++    # Intel Volume Management Device
++    add_checked_modules 'vmd'
+ }
+ 
+ help() {
+-- 
+2.33.1.711.g9d530dc002
+
