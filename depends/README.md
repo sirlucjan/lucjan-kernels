@@ -14,11 +14,6 @@
 
 ```
 ### Selecting the ZSTD module compression level
-# If you want to use ZSTD compression,
-# first install mkinitcpio-zstd:
-# https://gitlab.com/sirlucjan/lucjan-kernels/tree/master/depends
-# or
-# https://github.com/sirlucjan/lucjan-kernels/tree/master/depends
 # ATTENTION - one of two predefined values should be selected!
 # 'ultra' - highest compression ratio
 # 'normal' - standard compression ratio
