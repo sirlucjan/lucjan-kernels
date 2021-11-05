@@ -100,7 +100,7 @@ _lrng_config='none'
 _tcp_bbr2=y
 
 ### Enable FULLCONENAT
-_nf_cone=y
+_nf_cone=
 
 ### Enable SECURITY_FORK_BRUTE
 # WARNING Not recommended.
@@ -153,7 +153,7 @@ pkgver=5.15.ll10
 #_pkgver=${_major}.${_minor}
 _pkgver=${_major}
 _srcname=linux-${_pkgver}
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
