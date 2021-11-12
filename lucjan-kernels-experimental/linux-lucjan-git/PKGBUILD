@@ -113,6 +113,9 @@ _nf_cone=
 # Leave it unselected.
 _fork_brute=
 
+### Enable DAMON
+_pf_damon=
+
 ### Selecting the ZSTD compression level
 # ATTENTION - one of two predefined values should be selected!
 # 'ultra' - highest compression ratio
@@ -154,7 +157,7 @@ _pkgbase=linux-lucjan
 _major=5.15
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.15.2.r0.g7cc36c3e14ae.ll21
+pkgver=5.15.2.r0.g7cc36c3e14ae.ll23
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -202,7 +205,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll22'
+ _lucjanrev='ll23'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -210,7 +213,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll22'
+ _lucjanrev='ll23'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -218,7 +221,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll22'
+ _lucjanrev='ll23'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -227,7 +230,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll22'
+ _lucjanrev='ll23'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -413,6 +416,16 @@ prepare() {
 		echo "Enabling SECURITY_FORK_BRUTE..."
 		scripts/config --enable CONFIG_SECURITY_FORK_BRUTE
 		scripts/config --set-str CONFIG_LSM landlock,lockdown,brute,yama,bpf
+	fi
+
+    ### Enable DAMON
+	if [ -n "$_pf_damon" ]; then
+		echo "Enabling DAMON..."
+		scripts/config --enable CONFIG_DAMON
+		scripts/config --enable CONFIG_DAMON_VADDR
+		scripts/config --enable CONFIG_DAMON_DBGFS
+		scripts/config --enable CONFIG_DAMON_PADDR
+		scripts/config --enable CONFIG_DAMON_RECLAIM
 	fi
 
     ### Enable protect mappings under memory pressure
@@ -779,9 +792,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '272a0d4da48f52238e36f9b99d4b6b444acbff1ab014a7ee8db214ed92abc18a67fdbaf62b051b477ab6fef69b1ebf8f1f409b6cd219decc265f748f2a659079'
+            '370cf2264b1d869d198d7e313f4273e8974e48385b70e3658be0e218660bb11c72a2d311e00ef565cc58e58bba9f9e76e03b0eee93a118956a6b2f6685c3c285'
             'SKIP'
-            '3f349f6a3249ce06fb17817cf9487b93fb5d7a14b6cbb00f95dac4becc76209b0f5b3847a93eb4e2513f61d24347ae4590b3265bd925077ee737b12387b02382')
+            '6006f9f566ff63e7cb7726d048223800eb246760e9c64780f0d3fe8a9f273b2b6b59673a231ea1e2b1142f6a29033f68cfed7acbe50fdc265825d9bd078d8f91')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
