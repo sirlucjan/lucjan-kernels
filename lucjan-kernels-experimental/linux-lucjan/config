@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.15.2.ll22 Kernel Configuration
+# Linux/x86 5.15.1.ll15 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 11.1.0"
 CONFIG_CC_IS_GCC=y
@@ -1134,6 +1134,8 @@ CONFIG_SECRETMEM=y
 # end of Data Access Monitoring
 
 # CONFIG_LRU_GEN is not set
+# CONFIG_ARCH_SUPPORTS_SPECULATIVE_PAGE_FAULT is not set
+# CONFIG_SPECULATIVE_PAGE_FAULT is not set
 # end of Memory Management options
 
 CONFIG_NET=y
