@@ -113,13 +113,6 @@ _nf_cone=
 # Leave it unselected.
 _fork_brute=
 
-### Enable SPECULATIVE_PAGE
-# ATTENTION - one of three predefined values should be selected!
-# 'full' - enable full SPECULATIVE_PAGE
-# 'basic' - enable basic SPECULATIVE_PAGE
-# 'none' - disable SPECULATIVE_PAGE
-_speculative_page='none'
-
 ### Selecting the ZSTD compression level
 # ATTENTION - one of two predefined values should be selected!
 # 'ultra' - highest compression ratio
@@ -161,7 +154,7 @@ _pkgbase=linux-lucjan
 _major=5.15
 _patches=${_major}-dev
 _srcname=linux-stable-rc
-pkgver=5.15.1.r27.g12d0445d66e0.ll21
+pkgver=5.15.1.r27.g12d0445d66e0.ll22
 pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -209,7 +202,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll21'
+ _lucjanrev='ll22'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -217,7 +210,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll21'
+ _lucjanrev='ll22'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -225,7 +218,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll21'
+ _lucjanrev='ll22'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -234,7 +227,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll21'
+ _lucjanrev='ll22'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -420,30 +413,6 @@ prepare() {
 		echo "Enabling SECURITY_FORK_BRUTE..."
 		scripts/config --enable CONFIG_SECURITY_FORK_BRUTE
 		scripts/config --set-str CONFIG_LSM landlock,lockdown,brute,yama,bpf
-	fi
-
-    ### Enable SPECULATIVE_PAGE
-	if [ "$_speculative_page" = "full" ]; then
-		echo "Enabling full SPECULATIVE_PAGE..."
-		scripts/config --enable CONFIG_ARCH_SUPPORTS_SPECULATIVE_PAGE_FAULT
-		scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT
-		scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT_STATS
-	elif [ "$_speculative_page" = "basic" ]; then
-		echo "Enabling basic SPECULATIVE_PAGE..."
-		scripts/config --enable CONFIG_ARCH_SUPPORTS_SPECULATIVE_PAGE_FAULT
-		scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT
-		scripts/config --disable CONFIG_SPECULATIVE_PAGE_FAULT_STATS
-	elif [ "$_speculative_page" = "none" ]; then
-		echo "Disabling SPECULATIVE_PAGE..."
-		scripts/config --disable CONFIG_SPECULATIVE_PAGE_FAULT
-	else
-		if [ -n "$_speculative_page" ]; then
-			error "The value $_speculative_page is invalid. Choose the correct one again."
-		else
-			error "The value is empty. Choose the correct one again."
-		fi
-		error "Selecting SPECULATIVE_PAGE failed!"
-		exit
 	fi
 
     ### Enable protect mappings under memory pressure
@@ -810,9 +779,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'cbf2b7009842e338a030a0c4d88bbeb64572baabb934456e68cd3807920cbf12aafecbde2db6578baddb2f288d4df984de806e39cc1baf147e63b0e3cbad2347'
+            '272a0d4da48f52238e36f9b99d4b6b444acbff1ab014a7ee8db214ed92abc18a67fdbaf62b051b477ab6fef69b1ebf8f1f409b6cd219decc265f748f2a659079'
             'SKIP'
-            '19476e89ac6bbb66fe24b274c7f2374a3620f069b148c1d7fb0c634cc3b74b72f083452861100e190b2132cc8112b4102c08360bad1a75ba353a71a898f3d6d2')
+            '3f349f6a3249ce06fb17817cf9487b93fb5d7a14b6cbb00f95dac4becc76209b0f5b3847a93eb4e2513f61d24347ae4590b3265bd925077ee737b12387b02382')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
