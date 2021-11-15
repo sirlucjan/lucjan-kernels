@@ -157,8 +157,8 @@ _pkgbase=linux-lucjan
 _major=5.15
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.15.2.r0.g7cc36c3e14ae.ll24
-pkgrel=2
+pkgver=5.15.2.r0.g7cc36c3e14ae.ll26
+pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -205,7 +205,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll24'
+ _lucjanrev='ll26'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -213,7 +213,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll24'
+ _lucjanrev='ll26'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -221,7 +221,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll24'
+ _lucjanrev='ll26'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -230,7 +230,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll24'
+ _lucjanrev='ll26'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -792,7 +792,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '720ff4b40addd5da2b39206568c76af96fceead1fe43217444bd780e2109200b218b697bb675cc6222ecde5d7ea63d99d81a9b7c512db2ade074959648c81a06'
+            '08dbec928dabf9a00e87cd1dafd8c76a2d6829494bcd3de161c8b93213e25525ea80fdf8ee6487f4d543403d4bb1aa0466af4ac424d0284f488f76272aec49fc'
             'SKIP'
             'c67a8e77a053e8142f4c70f466f95667f0b21c626bc3579a4d3d621efae83c94b6e2ea695cb8789853b87bf61e3365168c1ff1f45136dbadbe439cbeb4fee186')
 
