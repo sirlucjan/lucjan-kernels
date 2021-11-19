@@ -150,16 +150,16 @@ _linux_lucjan='current'
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.14
-_minor=18
+_minor=20
 _minorc=$((_minor+1))
-_rcver=rc2
+_rcver=rc1
 _patches=${_major}-dev
-pkgver=5.14.19.ll121
+pkgver=5.14.21.ll122
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.3
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -215,7 +215,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll121'
+ _lucjanrev='ll122'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -807,11 +807,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('c35c6ebda708779748d58f1807ae3e97835c6573699285ff92928899010039753d4ec9e93bfbc804253536da0f9132fa60911a8ebd751857b62ec912661297cb'
+sha512sums=('bbf4166ef6a74948faecfb025761290484c8ad15d88376311dc0a92df7717d900a6d642e206ba0160ecec0e1c360ba1db9fa5dfd375bce580abe9320a41b649e'
             'SKIP'
-            '661c9bf141316f119b678341d13532bb97dca57574d7d7d51a492b77b745ef5694114b2a1dc1d8755f5994dc4f1d8b72b0c3e5b3d11d220fdc80124269b2cf95'
+            'b5fd7c42f400e71df681631caff6f2b7ed5495aca574a9e3513794a5a757cdf5e37afb5cd541fe7f113c79fdcd7747cd6d445b8003e6e7a46667f6e89ac94ab4'
             'SKIP'
-            '6197f43a62e4a64cc3bdeb1d1bcab19b4aa5032e1dde51681dec003075c9c046e258d00925c95d5de0be8ee741c13a2d6e366e641828cb38daa13eef70c0456a'
+            '81700cfbb8ed51f89b0bdb445583729623fcbb6976f6355ccea1cc67a3e0902ce7f0db07bc327e550a1d755b25b59dc5f0b386339977af76f28736ea3db19570'
             'SKIP'
             '549112d9185c705fcb564f69137b837ce95df23546a915bcd1fd97c53f187109c70371e4cfede735156a0587706eb508756a6aadf694a72472eb7226bdd1dd05')
 
