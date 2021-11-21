@@ -163,7 +163,7 @@ _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -443,8 +443,8 @@ prepare() {
 	if [ -n "$_pf_damon" ]; then
 		echo "Enabling DAMON..."
 		scripts/config --enable CONFIG_DAMON
-		scripts/config --enable CONFIG_DAMON_VADDR
-		scripts/config --enable CONFIG_DAMON_DBGFS
+		scripts/config --disable CONFIG_DAMON_VADDR
+		scripts/config --disable CONFIG_DAMON_DBGFS
 		scripts/config --enable CONFIG_DAMON_PADDR
 		scripts/config --enable CONFIG_DAMON_RECLAIM
 	fi
