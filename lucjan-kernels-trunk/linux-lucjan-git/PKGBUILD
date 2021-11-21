@@ -158,7 +158,7 @@ _major=5.15
 _patches=${_major}-dev
 _srcname=linux-stable-rc
 pkgver=5.15.3.r21.g9f5b4a585c82.ll47
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -422,8 +422,8 @@ prepare() {
 	if [ -n "$_pf_damon" ]; then
 		echo "Enabling DAMON..."
 		scripts/config --enable CONFIG_DAMON
-		scripts/config --enable CONFIG_DAMON_VADDR
-		scripts/config --enable CONFIG_DAMON_DBGFS
+		scripts/config --disable CONFIG_DAMON_VADDR
+		scripts/config --disable CONFIG_DAMON_DBGFS
 		scripts/config --enable CONFIG_DAMON_PADDR
 		scripts/config --enable CONFIG_DAMON_RECLAIM
 	fi
