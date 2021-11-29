@@ -154,11 +154,11 @@ _linux_lucjan='trunk'
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.15
-_minor=4
+_minor=5
 _minorc=$((_minor+1))
 _rcver=rc1
 _patches=${_major}-dev
-pkgver=5.15.5.ll66
+pkgver=5.15.6.ll67
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -219,7 +219,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll66'
+ _lucjanrev='ll67'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -227,7 +227,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll66'
+ _lucjanrev='ll67'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -235,7 +235,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll66'
+ _lucjanrev='ll67'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -244,7 +244,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll66'
+ _lucjanrev='ll67'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -812,11 +812,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('27c38e4772616852710671c4c9d2301e2bf4eea05e47ecd6493c3edddd23ae8e2a08ee9134f2f0e2bf599e095e1b8ccc92b124be2a9a943367dfe6afde3eb369'
+sha512sums=('7b9a78c734a24e8b67f93c8de65fb57cce498f18f4ce6a5c4cff0b834407dbf66cda6834118e67cfef3101979f2df78a7cc45854d943ffecee60a990783497df'
             'SKIP'
-            'a5a009f3d3f00c2c1a7e07a88f3d1695eaf6d60cf400b4c35c039b8d49aa88a52f56f2ce34e2182dc8feb1a5b2ee4de90065bbc9b0509312004797ad7d45ca48'
+            '4e2b3ab323c4914651a15f2f786bda2ebf677264c4286aaf61f052907102e5d7c1c8e6d6bfc25ec17632ada63c3333069dd7d51d556d86405be3247366a4a5ab'
             'SKIP'
-            '11f7d75f3fe833607bbcefe2e7563eb1d87e703349e7a3fe5d0aca44b78267a603db521ebe1f246cb00feee65c50525a9c8a63b970ca315872f761a76bc80cb3'
+            '2c364e0d02422215fc4de6367d3c106330071fc270265a2d5dda324c0b056be9d3388633b15c512869b4a40562837cb597d67d48becb1021bc771b35e47a1f55'
             'SKIP'
             '2f4599dfd31ff795d6f04b1f6a8429f4054d5e9e84f2d3d9c241ea64fc048307d2bcba36ce4fa9669563c0e775d4490509a186f1f38dddc38e9617e9e1809a07')
 
