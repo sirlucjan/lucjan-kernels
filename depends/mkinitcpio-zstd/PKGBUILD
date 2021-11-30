@@ -5,8 +5,8 @@
 
 pkgname=mkinitcpio-zstd
 _pkgname=mkinitcpio
-pkgver=30
-pkgrel=5
+pkgver=31
+pkgrel=1
 pkgdesc="Modular initramfs image creation utility"
 arch=('any')
 url='https://github.com/archlinux/mkinitcpio'
@@ -24,28 +24,15 @@ provides=('initramfs' 'initramfs-zstd' "mkinitcpio=$pkgver")
 conflicts=('mkinitcpio')
 backup=('etc/mkinitcpio.conf')
 source=("https://sources.archlinux.org/other/$_pkgname/$_pkgname-$pkgver.tar.gz"{,.sig}
-        "0001-Add-zstd-module-decompression.patch"
-        "0002-Silence-messages-in-zstd-format.patch"
-        "0003-Add-rm-flag-to-minimize-the-size-of-initramfs.patch"
-        "0004-Merge-mkinitcpio-libalpm-scripts-into-one.patch"
-        "0005-install-block-include-vmd-module.patch")
+        "0001-Merge-mkinitcpio-libalpm-scripts-into-one.patch")
 install=mkinitcpio.install
-sha512sums=('ef43a8ddc01697fa43bede4eebad3271bbc89efa57ba7e4e9f321e8174ff2af74d857b308c5c0f37b42a91906c91c1b022f9a651c70d5d3e9dfc8dc441a60ee4'
+sha512sums=('4ef87c2e4f579b292c38f9c487e78b3b99f6db77909cab322e860e5ca70aca3747fcfc272e2e15c9a3605c924ab178057b8b23151f98debc5d96e65f3c0c49d5'
             'SKIP'
-            'e3b42c83e0d292db6cc10592b51054da0771f25297b97b07e5c2c1c6d3ee50044cad6e63f8a999a9aa26f68fa243cc5eb37c70d65f3142d882607fcf906c7d85'
-            'd64a96804f37ad41b73eeb140e91272b1fc8b1ff7391f462cc60d87941228435f39074e064bae5237a9ffe4854a8f9d8284c9fe63675ae005ffc1f5f3d452227'
-            '643da86b5f8874ac5889b4fc37fe5e49343b64e283fff8ac91c1637656492e62e5ecf19ab6d4f0f8462b10eb427e3c1785b4a2178d1b976bedd6a2d6825e4ab0'
-            '74a3efffda1e57b922e8a5cd1a7e51509eead9b2b25e3007ef5543d1bfdff870992b51f82c7193ac3c3d507abb93d50fd40279eff61c3ef914f4e74c49399431'
-            '8cd9b70cdd0df908a307f562953b46484f7ee3858ee90fa727e88f3a99da45f80cb3fbe004ef5a6b8af2649f0d6af632f8a2b0e82e39e5c19b862ca2648c8d90')
-b2sums=('2001f9ac12bfa7369ad32842956cd21b2a786cd28133b6d3256e4aa77210c78ec6cac8a710ff8c2feb5a4797c1a33ce8c8c7dfabd84d7927c08bf8377e330300'
+            'ed65267bc52de27d4a1ee4e18a68f4c6b3c72669ae5af55f78d137354feb08f1da38748ba93253eb273c2feb8c4763e5f3cb0c6c031eddfbfd68c5fbcc7c9224')
+b2sums=('0113e288906e3b5fa485c29c00e7df60d85addd96718c45531031a686f18c739fa18303b6cac374d35b85edb7b663e221c8dc9158dff08c75858a4ed4dd154bf'
         'SKIP'
-        '9e026476e1a1b292609421cfa93179773211342ac1e287ec35e852e9a7ceb8d2e491b15daf293550d69a096d73498a8ed36c946a0f04a0d29da577001e8daf8c'
-        'a20e78cf07e03440b7aed2a15b629cb680a1d812193a48b00bf2f99017edd10f8f252663d4c6136ab7fe4afed3a708cde0ab3eb42ac1d9f522fb23e5b9140e03'
-        '4839c4c50275107874cc393bd26545d23fe12a103357b6ddae26d53e1400bebe0b35ca10b6ab36abdb400faaffcdd57f7bec9779ec3f4777646d7b541c275f6a'
-        '6e56f85ef5e1d9142a508dd6af707a708043677fd087a6c4fa403e5342d150695c9b42532f9362eb2fb1397cf70ee11a017d1b857907fbf0cd95cd7aa541faa9'
-        '52f69244d0c68537d0754b5c55fc4bb20f76310e78ead79aa827979ea6ffa333047142631a4bb31d6f55b07acdc92ed3a3dd503cd216b24cf1cc2d033f2e086c')
-validpgpkeys=('ECCAC84C1BA08A6CC8E63FBBF22FB1D78A77AEAB'    # Giancarlo Razzolini
-              '86CFFCA918CF3AF47147588051E8B148A9999C34')   # Evangelos Foutras
+        '3d858df6694544583ce8da612359e713c8179941b1033c60527f71204c052b0b7a4688f00d70773cfbbf252cc5ad44ee0091d229479a8ee09ec9b5667b20dc87')
+validpgpkeys=('ECCAC84C1BA08A6CC8E63FBBF22FB1D78A77AEAB')    # Giancarlo Razzolini
 
 prepare() {
  cd $_pkgname-$pkgver

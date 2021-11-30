@@ -1,11 +1,7 @@
 .
 ├── depends
 │   ├── mkinitcpio-zstd
-│   │   ├── 0001-Add-zstd-module-decompression.patch
-│   │   ├── 0002-Silence-messages-in-zstd-format.patch
-│   │   ├── 0003-Add-rm-flag-to-minimize-the-size-of-initramfs.patch
-│   │   ├── 0004-Merge-mkinitcpio-libalpm-scripts-into-one.patch
-│   │   ├── 0005-install-block-include-vmd-module.patch
+│   │   ├── 0001-Merge-mkinitcpio-libalpm-scripts-into-one.patch
 │   │   ├── mkinitcpio.install
 │   │   └── PKGBUILD
 │   └── README.md
@@ -44,4 +40,4 @@
 │       └── PKGBUILD
 └── README.md
 
-16 directories, 28 files
+16 directories, 24 files
