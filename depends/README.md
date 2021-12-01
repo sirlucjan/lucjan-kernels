@@ -1,10 +1,4 @@
-# mkinitcpio-zstd
-
-##### mkinitcpio in the current version 30 does not full support modules compressed in zstd format.
-##### These changes will significantly reduce the size of initramfs and also simplify the format of system logs.
-##### A pull request has been approved by the developers and the next version 31 will support decompression of modules in this format without any problems.
-##### Source: https://github.com/archlinux/mkinitcpio/pull/43/commits
-##### I have been testing this solution since December 2020 and have not found any irregularities. Please report any bugs in this exact repository.
+# mkinitcpio-lucjan
 
 ###### NOTE: mkinitcpio-zstd will overwrite the mkinitcpio.conf file and the old one will be saved as mkinitcpio.conf.pacsave - however, I recommend backing up this file before installing the modified mkinitcpio version.
 
@@ -14,11 +8,6 @@
 
 ```
 ### Selecting the ZSTD module compression level
-# If you want to use ZSTD compression,
-# first install mkinitcpio-zstd:
-# https://gitlab.com/sirlucjan/lucjan-kernels/tree/master/depends
-# or
-# https://github.com/sirlucjan/lucjan-kernels/tree/master/depends
 # ATTENTION - one of two predefined values should be selected!
 # 'ultra' - highest compression ratio
 # 'normal' - standard compression ratio
