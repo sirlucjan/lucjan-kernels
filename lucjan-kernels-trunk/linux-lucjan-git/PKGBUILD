@@ -123,11 +123,6 @@ _pf_damon=
 _zstd_level='ultra'
 
 ### Selecting the ZSTD module compression level
-# If you want to use ZSTD compression,
-# first install mkinitcpio-zstd:
-# https://gitlab.com/sirlucjan/lucjan-kernels/tree/master/depends
-# or
-# https://github.com/sirlucjan/lucjan-kernels/tree/master/depends
 # ATTENTION - one of two predefined values should be selected!
 # 'ultra' - highest compression ratio
 # 'normal' - standard compression ratio
@@ -157,8 +152,8 @@ _pkgbase=linux-lucjan
 _major=5.15
 _patches=${_major}-dev
 _srcname=linux-stable-rc
-pkgver=5.15.5.r173.g0378d8e52f9b.ll67
-pkgrel=0
+pkgver=5.15.6.r0.ga2547651bc89.ll67
+pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -653,7 +648,7 @@ build() {
 
 _package-kernel() {
   pkgdesc="The $pkgdesc kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset. Fourth Gen Intel Core i3/i5/i7 optimized."
-  depends=('coreutils' 'kmod' 'initramfs-zstd')
+  depends=('coreutils' 'kmod' 'initramfs-lucjan')
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices'
               'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
