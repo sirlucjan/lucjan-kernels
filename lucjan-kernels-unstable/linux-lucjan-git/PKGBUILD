@@ -96,14 +96,15 @@ _lru_config='none'
 # 'none' - disable Linux Random Number Generator 
 _lrng_config='none'
 
-### Enable SMB3 Kernel Server
-_ksmbd_enable=
-
 ### Enable TCP_CONG_BBR2
 _tcp_bbr2=y
 
 ### Enable FULLCONENAT
-_nf_cone=y
+# WARNING Not recommended.
+# An experimental solution, still in testing phase.
+# Possible compilation and installation errors.
+# Leave it unselected.
+_nf_cone=
 
 ### Enable SECURITY_FORK_BRUTE
 # WARNING Not recommended.
@@ -112,6 +113,9 @@ _nf_cone=y
 # Leave it unselected.
 _fork_brute=
 
+### Enable DAMON
+_pf_damon=
+
 ### Selecting the ZSTD compression level
 # ATTENTION - one of two predefined values should be selected!
 # 'ultra' - highest compression ratio
@@ -119,11 +123,6 @@ _fork_brute=
 _zstd_level='ultra'
 
 ### Selecting the ZSTD module compression level
-# If you want to use ZSTD compression,
-# first install mkinitcpio-zstd:
-# https://gitlab.com/sirlucjan/lucjan-kernels/tree/master/depends
-# or
-# https://github.com/sirlucjan/lucjan-kernels/tree/master/depends
 # ATTENTION - one of two predefined values should be selected!
 # 'ultra' - highest compression ratio
 # 'normal' - standard compression ratio
@@ -143,17 +142,17 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='current'
+_linux_lucjan='trunk'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan-git
 _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
-_major=5.14
+_major=5.15
 _patches=${_major}-dev
 _srcname=linux-stable-rc
-pkgver=5.14.20.r0.gff7124b91f52.ll122
+pkgver=5.15.6.r0.ga2547651bc89.ll71
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -201,7 +200,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll122'
+ _lucjanrev='ll71'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -209,7 +208,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll47'
+ _lucjanrev='ll71'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -217,8 +216,8 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll121'
- _lucjanrc='rc2'
+ _lucjanrev='ll71'
+ _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 elif [ "$_linux_lucjan" = "trunk" ]; then
@@ -226,7 +225,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll36'
+ _lucjanrev='ll71'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -414,6 +413,16 @@ prepare() {
 		scripts/config --set-str CONFIG_LSM landlock,lockdown,brute,yama,bpf
 	fi
 
+    ### Enable DAMON
+	if [ -n "$_pf_damon" ]; then
+		echo "Enabling DAMON..."
+		scripts/config --enable CONFIG_DAMON
+		scripts/config --disable CONFIG_DAMON_VADDR
+		scripts/config --disable CONFIG_DAMON_DBGFS
+		scripts/config --enable CONFIG_DAMON_PADDR
+		scripts/config --enable CONFIG_DAMON_RECLAIM
+	fi
+
     ### Enable protect mappings under memory pressure
 	if [ -n "$_mm_protect" ]; then
 		echo "Enabling protect file mappings under memory pressure..."
@@ -545,15 +554,6 @@ prepare() {
 		exit
 	fi
 
-    ### Enable SMB3 Kernel Server
-	if [ -n "$_ksmbd_enable" ]; then
-		echo "Enabling SMB3 Kernel Server..."
-		scripts/config --module CONFIG_SMB_SERVER
-		scripts/config --enable CONFIG_SMB_SERVER_SMBDIRECT
-		scripts/config --enable CONFIG_SMB_SERVER_CHECK_CAP_NET_ADMIN
-		scripts/config --enable CONFIG_SMB_SERVER_KERBEROS5
-	fi
-
     ### Optionally disable NUMA for 64-bit kernels only
         # (x86 kernels do not support NUMA)
 	if [ -n "$_NUMAdisable" ]; then
@@ -648,7 +648,7 @@ build() {
 
 _package-kernel() {
   pkgdesc="The $pkgdesc kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset. Fourth Gen Intel Core i3/i5/i7 optimized."
-  depends=('coreutils' 'kmod' 'initramfs-zstd')
+  depends=('coreutils' 'kmod' 'initramfs-lucjan')
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices'
               'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
@@ -787,9 +787,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '81700cfbb8ed51f89b0bdb445583729623fcbb6976f6355ccea1cc67a3e0902ce7f0db07bc327e550a1d755b25b59dc5f0b386339977af76f28736ea3db19570'
+            'cdd43d92228394460a103143e8e61b4ed5afc7b6450fabc123516a78a540250f74ef7bee9e1dd6737f8fd871ba7180d6b883ff83b761186da61db10f0d43a738'
             'SKIP'
-            '549112d9185c705fcb564f69137b837ce95df23546a915bcd1fd97c53f187109c70371e4cfede735156a0587706eb508756a6aadf694a72472eb7226bdd1dd05')
+            '2f4599dfd31ff795d6f04b1f6a8429f4054d5e9e84f2d3d9c241ea64fc048307d2bcba36ce4fa9669563c0e775d4490509a186f1f38dddc38e9617e9e1809a07')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
