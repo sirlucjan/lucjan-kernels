@@ -100,11 +100,7 @@ _lrng_config='none'
 _tcp_bbr2=y
 
 ### Enable FULLCONENAT
-# WARNING Not recommended.
-# An experimental solution, still in testing phase.
-# Possible compilation and installation errors.
-# Leave it unselected.
-_nf_cone=
+_nf_cone=y
 
 ### Enable SECURITY_FORK_BRUTE
 # WARNING Not recommended.
@@ -152,8 +148,8 @@ _pkgbase=linux-lucjan
 _major=5.15
 _patches=${_major}-dev
 _srcname=linux-stable-rc
-pkgver=5.15.6.r208.g47c02c404f4a.ll78
-pkgrel=0.1
+pkgver=5.15.6.r208.g47c02c404f4a.ll79
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -200,7 +196,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll78'
+ _lucjanrev='ll79'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -787,7 +783,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'df58a3e00c3335eed0bfe3f5a167b8881282b2b2f40d629b501f67113c0e502ea9c61a8f5ac0566067c9535ba7c2c1ed5f62e5f0f128deb9d2b77992f3bc318f'
+            'c771abba01611e066f465cd7a3ead873733f735c31aa7b437ed2246d7984dc6d5968900a9007102a3b6b2a33f1e3bf7083fe16fe3714d4a3c29702637edff226'
             'SKIP'
             '2f4599dfd31ff795d6f04b1f6a8429f4054d5e9e84f2d3d9c241ea64fc048307d2bcba36ce4fa9669563c0e775d4490509a186f1f38dddc38e9617e9e1809a07')
 
