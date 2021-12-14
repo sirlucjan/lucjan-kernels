@@ -1,0 +1,33 @@
+From ee6fe41857a7154311c1d41a4f8cdd81cec983b4 Mon Sep 17 00:00:00 2001
+From: Qu Wenruo <wqu@suse.com>
+Date: Thu, 9 Dec 2021 17:42:27 +0800
+Subject: [PATCH 2/2] functions: allow tailing `+` for custom kernel build upon
+ git trees
+
+For kernels build upon git trees, any non-tag commit will append a '+'
+char to kernel version.
+
+This means the current fallback method will cut off the tailing '+' and
+cause mkinitcpio failure for suck cases.
+
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+---
+ functions | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/functions b/functions
+index 48cfd7a..5b18b9c 100644
+--- a/functions
++++ b/functions
+@@ -158,7 +158,7 @@ kver_generic() {
+     # https://elixir.bootlin.com/linux/v5.7.2/source/init/version.c#L46
+     local kver=
+ 
+-    read _ _ kver _ < <(grep -m1 -aoE 'Linux version .(\.[-[:alnum:]]+)+' "$1")
++    read _ _ kver _ < <(grep -m1 -aoE 'Linux version .(\.[-[:alnum:]+]+)+' "$1")
+ 
+     printf '%s' "$kver"
+ }
+-- 
+2.34.1.75.gabe6bb3905
+

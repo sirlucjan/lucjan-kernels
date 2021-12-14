@@ -2,6 +2,7 @@
 ├── depends
 │   ├── mkinitcpio-lucjan
 │   │   ├── 0001-Merge-mkinitcpio-libalpm-scripts-into-one.patch
+│   │   ├── 0002-functions-allow-tailing-for-custom-kernel-build-upon.patch
 │   │   ├── mkinitcpio.install
 │   │   └── PKGBUILD
 │   └── README.md
@@ -26,4 +27,4 @@
 │       └── PKGBUILD
 └── README.md
 
-10 directories, 16 files
+10 directories, 17 files
