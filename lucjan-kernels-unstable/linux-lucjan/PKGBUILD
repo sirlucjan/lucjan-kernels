@@ -138,18 +138,18 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='current'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.15
-_minor=8
+_minor=10
 _minorc=$((_minor+1))
 _rcver=rc1
 _patches=${_major}-dev
-pkgver=5.15.9.ll92
+pkgver=5.15.11.ll93
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -226,8 +226,8 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll83'
- _lucjanrc='rc2'
+ _lucjanrev='ll93'
+ _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 elif [ "$_linux_lucjan" = "trunk" ]; then
@@ -803,11 +803,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('fa00febbe6d655e7736ce989a3dd88d24d8e906d50e2801bc26080108a3a47733b228430555b22eb0797d1ee59c4d36feb9450727eed0f3a367b230015b1ca2a'
+sha512sums=('cd57fcb1e10ab380d3e9f99b46f3bd38bd4a05e00f53655f5a1a644da2612c9ec2dbc87fa3f87f06f1ef334f6e669025e8f144a11e9a4d64184f60e922b269f9'
             'SKIP'
-            '219512ee2068f9f5938fee35ac874a29312dd32e09986fa2774692fa4f3513b98f9b8865f9980529bb59f920f019d1e7c6d0774aa27f479c33a5a757ef786b95'
+            '48ab7a4aef9dcdeb5417be16e8fb1e76475f5ebe38ef1c029fac7eabcbc5a0cfb7dd3aa2b1e51fb3ab4bf8bdb9ceb36eae8c04565ee18889eaa538d3a1ea433d'
             'SKIP'
-            '20d7a321dfcb4cba2366b702147003152855f32cfa4172479506d0af1fd71c8b8de5e7786a18219dfc17c7966962e2e209824320f817b19c24e9ed54ef990338'
+            '609816d943f65e09d361464c086945755ebf2251a03569c0212481b2db2d36be96bef59509d8322d965d4f845240874b2eba67fa9b38843f50bb8e9a56ad69e4'
             'SKIP'
             '6fb96cf1c6657c6ec8c109ef2923d893e61c427b7ee53b3711cc57c1022867788ba6c3d60431ee59f1a740190452d1e023ef2152e4a71360d97a4f70a00899e9')
 
