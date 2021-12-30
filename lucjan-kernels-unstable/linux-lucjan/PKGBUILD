@@ -145,16 +145,12 @@ _linux_lucjan='current'
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.15
-_minor=11
-_minorc=$((_minor+1))
-_rcver=rc1
+_minor=12
 _patches=${_major}-dev
-pkgver=5.15.12.ll102
-_pkgver=${_major}.${_minorc}
-_stable=${_major}.${_minor}
-_stablerc=${_pkgver}-${_rcver}
-_srcname=linux-${_stable}
-pkgrel=0.2
+pkgver=5.15.12.ll103
+_pkgver=${_major}.${_minor}
+_srcname=linux-${_pkgver}
+pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -162,15 +158,6 @@ license=('GPL2')
 options=('!strip')
 makedepends=('kmod' 'bc' 'libelf' 'python-sphinx' 'python-sphinx_rtd_theme'
              'graphviz' 'imagemagick' 'pahole' 'cpio' 'perl' 'tar' 'xz')
-
-### Stable-review
-# In case the stable-review repository ever stopped working,
-# a solution to build rc kernels had to be prepared.
-if [ "$_minor" = 0 ]; then
-_patchver=${_major}
-else
-_patchver=${_major}.${_minor}
-fi
 
 ### LL reverts
 # Some patches for BFQ/block-stable conflict with
@@ -210,7 +197,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll102'
+ _lucjanrev='ll103'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -242,9 +229,6 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 fi
 
 source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar"{.xz,.sign}
-        "https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-${_stablerc}"{.xz,.sign}
-         # https://lkml.org/lkml/2019/8/23/712
-         # "patch-${_stablerc}.diff::https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-${_major}.y&id2=v${_patchver}"
          # ll-reverts
          # "${_llrevpath}/${_llrevpatch}"{,.sig}
          # linux-lucjan
@@ -264,11 +248,6 @@ pkgver() {
 
 prepare() {
     cd $_srcname
-
-    ### Applying patch from stable-review
-        echo "Applying patch from stable-review..."
-        patch -p1 -i ../patch-${_stablerc}
-        # patch -p1 -i ../patch-${_stablerc}.diff
 
     ### Setting version
         echo "Setting version..."
@@ -803,11 +782,9 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('5abe52981a9f493174afb908bc1c1a4901bc522c38c2da7ba15d5b907f06f9c4a684a47436697d79df8f598e166064d46add5661632a48275e0268411563f6b2'
+sha512sums=('8b79f30c26a865578d771b0c1a8273ecbf19135e4844210cb31c81784311601b8f7adfe1b3a9bc75c6bed99dcad9a5ff5e1976494b64f0de45be3a6570336890'
             'SKIP'
-            'a659509cf90d40623843e76d3f63c27ec155628a8c1b974ee117e115ace2ea9689ee3fc6ee8333a466c7d9080c60ec435811f870423d64865f240b34559dcd18'
-            'SKIP'
-            '5e857175bf1b8518612e9d7d7e6f596ab3178015fbcfddcb6a94a1d5a85657e263bad0880e47277972598e530c9ee413193e21d7f322422ecd6f4745561f7a51'
+            '8bedd2fe2400e322fce5bd03a9715f3aab6c1709088d8b5ac720e5940297db7aac0c085673ed436f715adafde0e2d4bf175a209ac0c221f6bd054fa77e8578bd'
             'SKIP'
             'b67c5557e31b9ff90b24695cf0964320af4b22f445aeb5880ae4fa93c70041d83af182c8e275e671d5133ef657e92e3319481a35eaa3b3a346105e58dfce2e39')
 
