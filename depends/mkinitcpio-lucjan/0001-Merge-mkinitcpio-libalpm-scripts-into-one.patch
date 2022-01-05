@@ -1,7 +1,7 @@
-From 9a8672c2db279d5f66ad688fd7a5ccb6b6659217 Mon Sep 17 00:00:00 2001
+From 2193cd4294b10dbe87fe7d9f13e0e7d6ea08bdab Mon Sep 17 00:00:00 2001
 From: Hugo Osvaldo Barrera <hugo@barrera.io>
 Date: Sun, 29 Aug 2021 18:55:30 +0200
-Subject: [PATCH 1/8] Merge mkinitcpio libalpm scripts into one
+Subject: [PATCH 1/9] Merge mkinitcpio libalpm scripts into one
 
 Fixes #10
 

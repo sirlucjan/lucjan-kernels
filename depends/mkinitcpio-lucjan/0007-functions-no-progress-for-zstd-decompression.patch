@@ -1,7 +1,7 @@
-From ff99c5fe2ea09c94cd8641d0107bdff16b3d64ad Mon Sep 17 00:00:00 2001
+From 0d03258060d37091b2337aac8afa0168dee677c6 Mon Sep 17 00:00:00 2001
 From: Christian Hesse <mail@eworm.de>
 Date: Thu, 30 Dec 2021 00:48:50 +0100
-Subject: [PATCH 7/8] functions: no progress for zstd decompression
+Subject: [PATCH 7/9] functions: no progress for zstd decompression
 
 ---
  functions | 2 +-

@@ -1,0 +1,52 @@
+From 34357389abf84489e8bcd00abf3a7cc2d178ecdb Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?=D0=94=D0=B0=D0=BC=D1=98=D0=B0=D0=BD=20=D0=93=D0=B5=D0=BE?=
+ =?UTF-8?q?=D1=80=D0=B3=D0=B8=D0=B5=D0=B2=D1=81=D0=BA=D0=B8?=
+ <gdamjan@gmail.com>
+Date: Wed, 15 Dec 2021 16:19:19 +0100
+Subject: [PATCH 9/9] presets: when using _efi_image, make _image optional
+
+fixes #77
+---
+ mkinitcpio | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
+
+diff --git a/mkinitcpio b/mkinitcpio
+index 970f3d2..e0535b0 100755
+--- a/mkinitcpio
++++ b/mkinitcpio
+@@ -403,11 +403,18 @@ process_preset() (
+             continue
+         fi
+ 
++        preset_efi_image=${p}_efi_image
++        if [[ ${!preset_efi_image:-$ALL_efi_image} ]]; then
++            preset_cmd+=(-U "${!preset_efi_image:-$ALL_efi_image}")
++        fi
++
+         preset_image=${p}_image
+         if [[ ${!preset_image} ]]; then
+             preset_cmd+=(-g "${!preset_image}")
+-        else
+-            warning "No image file specified. Skipping image \`%s'" "$p"
++        fi
++
++        if [[ "${!preset_efi_image:-$ALL_efi_image}" == "" && "${!preset_image}" == "" ]]; then
++            warning "No UEFI or CPIO image file specified. Skipping image \`%s'" "$p"
+             continue
+         fi
+ 
+@@ -416,11 +423,6 @@ process_preset() (
+             preset_cmd+=(${!preset_options}) # intentional word splitting
+         fi
+ 
+-        preset_efi_image=${p}_efi_image
+-        if [[ ${!preset_efi_image:-$ALL_efi_image} ]]; then
+-            preset_cmd+=(-U "${!preset_efi_image:-$ALL_efi_image}")
+-        fi
+-
+         preset_microcode=${p}_microcode[@]
+         if [[ ${!preset_microcode:-$ALL_microcode} ]]; then
+             for mc in "${!preset_microcode:-${ALL_microcode[@]}}"; do
+-- 
+2.34.1.75.gabe6bb3905
+
