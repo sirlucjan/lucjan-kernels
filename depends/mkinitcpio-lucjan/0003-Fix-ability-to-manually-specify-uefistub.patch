@@ -1,0 +1,43 @@
+From f3af5f73193e007ca4c82a13cc3ef660c29ec1b7 Mon Sep 17 00:00:00 2001
+From: Markus Weippert <markus@gekmihesg.de>
+Date: Mon, 20 Dec 2021 13:41:11 +0100
+Subject: [PATCH 3/8] Fix ability to manually specify uefistub
+
+---
+ mkinitcpio | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/mkinitcpio b/mkinitcpio
+index 549f381..c912685 100755
+--- a/mkinitcpio
++++ b/mkinitcpio
+@@ -264,7 +264,7 @@ build_image() {
+ }
+ 
+ build_uefi(){
+-    local out=$1 initramfs=$2 cmdline=$3 osrelease=$4 splash=$5 kernelimg=$6 uefistub=$7 microcode=(${@:7}) errmsg=
++    local out=$1 initramfs=$2 cmdline=$3 osrelease=$4 splash=$5 kernelimg=$6 uefistub=$7 microcode=(${@:8}) errmsg=
+     OBJCOPYARGS=()
+ 
+     msg "Creating UEFI executable: %s" "$out"
+@@ -277,7 +277,7 @@ build_uefi(){
+                 break
+             fi
+         done
+-    elif [[ ! -f "$uefisub" ]]; then
++    elif [[ ! -f "$uefistub" ]]; then
+         error "UEFI stub '%s' not found" "$uefistub"
+         return 1
+     fi
+@@ -559,7 +559,7 @@ while :; do
+             ;;
+         --uefistub)
+             shift
+-             _optkernelimage=$1
++             _optuefistub=$1
+             ;;
+         -M|--automods)
+             _optshowautomods=1
+-- 
+2.34.1.75.gabe6bb3905
+

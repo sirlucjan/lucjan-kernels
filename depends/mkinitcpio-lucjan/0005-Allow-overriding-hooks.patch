@@ -1,0 +1,38 @@
+From 54b8ea7bf952920f99717668c8ec73557233a83f Mon Sep 17 00:00:00 2001
+From: Markus Weippert <markus@gekmihesg.de>
+Date: Tue, 21 Dec 2021 09:31:09 +0100
+Subject: [PATCH 5/8] Allow overriding hooks
+
+---
+ mkinitcpio | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/mkinitcpio b/mkinitcpio
+index 4e6805c..01f8fcb 100755
+--- a/mkinitcpio
++++ b/mkinitcpio
+@@ -464,16 +464,19 @@ run_post_hooks() {
+     local args=("$@")
+     local hook status
+     local -i count=0
+-    local -a paths
++    local -a paths seen
+ 
+     IFS=: read -ra paths <<<"$_d_post"
+ 
+     for path in "${paths[@]}"; do
+         for hook in "$path"/*; do
++            [[ -e $hook ]] && ! in_array "${hook##*/}" "${seen[@]}" || continue
++            seen+=("${hook##*/}")
++
+             [[ -x $hook ]] || continue
+ 
+             (( count++ )) || msg "Running post hooks"
+-            msg2 "Running post hook: %s" "$hook"
++            msg2 "Running post hook: [%s]" "${hook##*/}"
+ 
+             KERNELVERSION="$KERNELVERSION" "$hook" "${args[@]}"
+             status=$?
+-- 
+2.34.1.75.gabe6bb3905
+

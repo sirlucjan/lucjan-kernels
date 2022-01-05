@@ -1,0 +1,25 @@
+From ff99c5fe2ea09c94cd8641d0107bdff16b3d64ad Mon Sep 17 00:00:00 2001
+From: Christian Hesse <mail@eworm.de>
+Date: Thu, 30 Dec 2021 00:48:50 +0100
+Subject: [PATCH 7/8] functions: no progress for zstd decompression
+
+---
+ functions | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/functions b/functions
+index 5b18b9c..389e1b9 100644
+--- a/functions
++++ b/functions
+@@ -873,7 +873,7 @@ install_modules() {
+     done
+     (( ${#xz_comp[*]} )) && xz -d "${xz_comp[@]}"
+     (( ${#gz_comp[*]} )) && gzip -d "${gz_comp[@]}"
+-    (( ${#zst_comp[*]} )) && zstd -d --rm -q "${zst_comp[@]}"
++    (( ${#zst_comp[*]} )) && zstd -d --rm -q --no-progress "${zst_comp[@]}"
+ 
+     msg "Generating module dependencies"
+     install -m644 -t "$moduledest" "$_d_kmoduledir"/modules.builtin
+-- 
+2.34.1.75.gabe6bb3905
+

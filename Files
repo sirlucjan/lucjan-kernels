@@ -3,6 +3,12 @@
 │   ├── mkinitcpio-lucjan
 │   │   ├── 0001-Merge-mkinitcpio-libalpm-scripts-into-one.patch
 │   │   ├── 0002-functions-allow-tailing-for-custom-kernel-build-upon.patch
+│   │   ├── 0003-Fix-ability-to-manually-specify-uefistub.patch
+│   │   ├── 0004-Add-support-for-post-generation-hooks.patch
+│   │   ├── 0005-Allow-overriding-hooks.patch
+│   │   ├── 0006-mkinitcpio-add-VERSION_ID-to-EFISTUB.patch
+│   │   ├── 0007-functions-no-progress-for-zstd-decompression.patch
+│   │   ├── 0008-mkinitcpio-Support-etc-kernel-cmdline.d.patch
 │   │   ├── mkinitcpio.install
 │   │   └── PKGBUILD
 │   └── README.md
@@ -27,4 +33,4 @@
 │       └── PKGBUILD
 └── README.md
 
-10 directories, 17 files
+10 directories, 23 files
