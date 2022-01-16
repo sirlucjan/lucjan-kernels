@@ -135,11 +135,10 @@ _linux_lucjan='trunk'
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.16
-_minor=0
+_minor=1
 _patches=${_major}-dev
-pkgver=5.16.ll6
-#_pkgver=${_major}.${_minor}
-_pkgver=${_major}
+pkgver=5.16.1.ll6
+_pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
 pkgdesc='Linux LL'
@@ -756,7 +755,7 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('7a257dd576bc8493595ec7d6f3c9cb6e22c772a8b2dbe735d2485c4f5c56e26a08695546e7e0f1f1cd04a533f25e829361958d4da0b98bf0ba8094dd57a85aaf'
+sha512sums=('f47cf92065c7445518452052566251642f701089494c8b5eb7d5b0e147d7177b016957481e0b98050840d79e2b838cfb088aeee1941fd41b75b681972f2fec5d'
             'SKIP'
             '6957204f5a73fcc518e357199e1fba145bed1008fad398f8416a8d2a1423bfbcfcd78ab5a026b86c627b71acf1f34289c842e8521d6a9dfff8c89bb04bfe7841'
             'SKIP'
