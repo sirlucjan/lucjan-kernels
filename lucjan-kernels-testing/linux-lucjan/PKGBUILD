@@ -102,16 +102,6 @@ _tcp_bbr2=y
 ### Enable FULLCONENAT
 _nf_cone=y
 
-### Enable SECURITY_FORK_BRUTE
-# WARNING Not recommended.
-# An experimental solution, still in testing phase.
-# Possible compilation and installation errors.
-# Leave it unselected.
-_fork_brute=
-
-### Enable DAMON
-_pf_damon=
-
 ### Selecting the ZSTD compression level
 # ATTENTION - one of two predefined values should be selected!
 # 'ultra' - highest compression ratio
@@ -138,16 +128,16 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='current'
+_linux_lucjan='trunk'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
-_major=5.15
-_minor=16
+_major=5.16
+_minor=2
 _patches=${_major}-dev
-pkgver=5.15.16.ll111
+pkgver=5.16.2.ll13
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -197,7 +187,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll111'
+ _lucjanrev='ll13'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -205,7 +195,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll71'
+ _lucjanrev='ll13'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -213,7 +203,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll108'
+ _lucjanrev='ll13'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -222,7 +212,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll71'
+ _lucjanrev='ll13'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -400,23 +390,6 @@ prepare() {
 		echo "Enabling FULLCONENAT..."
 		scripts/config --module CONFIG_IP_NF_TARGET_FULLCONENAT
 		scripts/config --module CONFIG_NETFILTER_XT_TARGET_FULLCONENAT
-	fi
-
-    ### Enable SECURITY_FORK_BRUTE
-	if [ -n "$_fork_brute" ]; then
-		echo "Enabling SECURITY_FORK_BRUTE..."
-		scripts/config --enable CONFIG_SECURITY_FORK_BRUTE
-		scripts/config --set-str CONFIG_LSM landlock,lockdown,brute,yama,bpf
-	fi
-
-    ### Enable DAMON
-	if [ -n "$_pf_damon" ]; then
-		echo "Enabling DAMON..."
-		scripts/config --enable CONFIG_DAMON
-		scripts/config --disable CONFIG_DAMON_VADDR
-		scripts/config --disable CONFIG_DAMON_DBGFS
-		scripts/config --enable CONFIG_DAMON_PADDR
-		scripts/config --enable CONFIG_DAMON_RECLAIM
 	fi
 
     ### Enable protect mappings under memory pressure
@@ -685,11 +658,11 @@ _package-headers() {
   install -Dt "$builddir/arch/x86" -m644 arch/x86/Makefile
   cp -t "$builddir" -a scripts
 
-  # add objtool for external module building and enabled VALIDATION_STACK option
+  # required when STACK_VALIDATION is enabled
   install -Dt "$builddir/tools/objtool" tools/objtool/objtool
 
-  # add xfs and shmem for aufs building
-  mkdir -p "$builddir"/{fs/xfs,mm}
+  # required when DEBUG_INFO_BTF_MODULES is enabled
+  install -Dt "$builddir/tools/bpf/resolve_btfids" tools/bpf/resolve_btfids/resolve_btfids
 
   echo "Installing headers..."
   cp -t "$builddir" -a include
@@ -782,11 +755,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('a2e3dbd92b2079a64af4d4a17db998381b5afe41ffb8b6b7fb43a69eb93b1c6d766b4b8ebba287d45f3de8392e4808cca5a7ccd5da5d42f7f58a57bf17ce5d10'
+sha512sums=('197f387d5e3a5029e354aaf50dc4fffc20a894c2579132678396e69c567c4072ea365ade7484a0b964572829f4bbfe518f21df5704ae1685f5786fddbb321097'
             'SKIP'
-            '2c9a04f5371f4ac3d1224153cbbc81f945da5ea4b52404c87ebe7ad088ce4f3e3a65931da5432f29bd0491054fa2d2c61cedb26a58e277e030575b88068009df'
+            '6df624a7f2ef5a327739bb4447fe42277422596c2ad904e522720d8bfd9e6487375a7c869a81bc4cd1f2664d5a5b76ab2f3ff9bb86c7c7fb1c80a5d6e71d01fa'
             'SKIP'
-            'b67c5557e31b9ff90b24695cf0964320af4b22f445aeb5880ae4fa93c70041d83af182c8e275e671d5133ef657e92e3319481a35eaa3b3a346105e58dfce2e39')
+            '1819856fa48682bd41bf0210e1f62925a01204c69a0f0e9c3e60627b4ed4256461b1ce16b71015f208925ab04a055cfc1c357eaa01630c8cbf56e10201ac5ecf')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
