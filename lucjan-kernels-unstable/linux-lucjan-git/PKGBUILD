@@ -382,13 +382,6 @@ prepare() {
 		scripts/config --module CONFIG_NETFILTER_XT_TARGET_FULLCONENAT
 	fi
 
-    ### Enable SECURITY_FORK_BRUTE
-	if [ -n "$_fork_brute" ]; then
-		echo "Enabling SECURITY_FORK_BRUTE..."
-		scripts/config --enable CONFIG_SECURITY_FORK_BRUTE
-		scripts/config --set-str CONFIG_LSM landlock,lockdown,brute,yama,bpf
-	fi
-
     ### Enable protect mappings under memory pressure
 	if [ -n "$_mm_protect" ]; then
 		echo "Enabling protect file mappings under memory pressure..."
