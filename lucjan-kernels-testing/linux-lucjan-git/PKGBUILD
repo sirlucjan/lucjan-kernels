@@ -53,9 +53,6 @@ _ll_branding='yes'
 # https://github.com/graysky2/kernel_compiler_patch#expanded-cpus-include
 _compiler_tune=y
 
-### Enable fancontrol for DELL
-_dell_fancontrol=y
-
 ### Set performance governor as default
 _per_gov=y
 
@@ -139,7 +136,7 @@ _major=5.16
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.16.2.r0.g5fd3e07fd10e.ll14
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -295,16 +292,9 @@ prepare() {
 
     ### Set GCC/Clang flags
 	if [ -n "$_compiler_tune" ]; then
-		echo "Setting GCC/Clang flags for Intel Haswell CPU..."
+		echo "Setting GCC/Clang flags for Intel Skylake CPU..."
 		scripts/config --disable CONFIG_GENERIC_CPU
-		scripts/config --enable CONFIG_MHASWELL
-	fi
-
-    ### Enable fancontrol
-	if [ -n "$_dell_fancontrol" ]; then
-		echo "Enabling I8K for Dell..."
-		scripts/config --enable CONFIG_I8K
-		scripts/config --enable CONFIG_SENSORS_DELL_SMM
+		scripts/config --enable CONFIG_MSKYLAKE
 	fi
 
     ### Set performance governor
@@ -616,7 +606,7 @@ build() {
 }
 
 _package-kernel() {
-  pkgdesc="The $pkgdesc kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset. Fourth Gen Intel Core i3/i5/i7 optimized."
+  pkgdesc="The $pkgdesc kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset. Sixth Gen Intel Core i3/i5/i7 optimized."
   depends=('coreutils' 'kmod' 'initramfs-lucjan')
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices'
@@ -644,7 +634,7 @@ _package-kernel() {
 }
 
 _package-headers() {
-  pkgdesc="Headers and scripts for building modules for the $pkgdesc kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
+  pkgdesc="Headers and scripts for building modules for the $pkgdesc kernel. Sixth Gen Intel Core i3/i5/i7 optimized."
   depends=('linux-lucjan-git-kernel' 'pahole')
   groups=('linux-lucjan-git')
 
@@ -727,7 +717,7 @@ _package-headers() {
 }
 
 _package-docs() {
-  pkgdesc="Documentation for the $pkgdesc kernel. Fourth Gen Intel Core i3/i5/i7 optimized."
+  pkgdesc="Documentation for the $pkgdesc kernel. Sixth Gen Intel Core i3/i5/i7 optimized."
   depends=('linux-lucjan-git-kernel')
   groups=('linux-lucjan-git')
 
