@@ -1,5 +1,5 @@
 # My own kernels. Use at your own risk.
-###### Dell Inspiron 15-3542 (3542-2538) with Fourth Gen Intel Core i3/i5/i7 optimized.
+###### HP 850 G3 with Sixth Gen Intel Core i3/i5/i7 optimized.
 ###### linux-lucjan varies considerably from stock kernel. 
 ***
 ###### linux-lucjan incorporates:
