@@ -128,23 +128,23 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='current'
+_linux_lucjan='pending'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.16
-_minor=3
+_minor=4
 _minorc=$((_minor+1))
 _rcver=rc1
 _patches=${_major}-dev
-pkgver=5.16.4.ll19
+pkgver=5.16.5.ll19
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -781,11 +781,11 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('1d6de1fef30459e6c9157d4a2610ba97a4980b11212a9cf13d872db9035193712c02ca06610cb63bd82d13e7206cbc70defc7f8f9afbd8634c7243407861a7db'
+sha512sums=('bfffb174fb1ac6a1c1c9c549481ad668e4edff67816de1f8ff596e4f8027fea78e2d0ef9149529bfdf93359c74e4193c99e6c97131d59c0872cd71188bb8da89'
             'SKIP'
-            'ce8ec814177b372cc4f3b40762a1993171a9b2c921db8774c1f7957414e595c3e3edf12e4e5fe39d670d41906b901d4ae1b0d15d1488f0175f5db41880da5bf9'
+            'bffce685680486e8c9c0bd9bcc1556d90b126c5b8a9c674dad181c5a5bcc1a6bfa5cdd39e112502a4951a56892178e94f2c51e0760bacf61a6bb83a5fe379177'
             'SKIP'
-            '12cdfa91f16d774f004fa84bcc39826f1c410593dbcb2833735b5403899f4f1d25be207485892b164f6cdc612b96e793e81e22a3396415eaf2af4ad691c5f983'
+            'e00a0effbfca590e8dea1ba3a61d5c604758abec6a23a9abba86266129f59f713584a0e702418c8f7136f20d4a0bab37b3baae471228d70b1efd52d76a13626f'
             'SKIP'
             '1819856fa48682bd41bf0210e1f62925a01204c69a0f0e9c3e60627b4ed4256461b1ce16b71015f208925ab04a055cfc1c357eaa01630c8cbf56e10201ac5ecf')
 
