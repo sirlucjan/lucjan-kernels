@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.16.8.l25 Kernel Configuration
+# Linux/x86 5.16.9.l29 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 11.1.0"
 CONFIG_CC_IS_GCC=y
@@ -1140,7 +1140,11 @@ CONFIG_SECRETMEM=y
 #
 # Data Access Monitoring
 #
-# CONFIG_DAMON is not set
+CONFIG_DAMON=y
+CONFIG_DAMON_VADDR=y
+CONFIG_DAMON_PADDR=y
+CONFIG_DAMON_DBGFS=y
+CONFIG_DAMON_RECLAIM=y
 # end of Data Access Monitoring
 # CONFIG_LRU_GEN is not set
 # end of Memory Management options
