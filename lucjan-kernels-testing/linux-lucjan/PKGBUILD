@@ -99,19 +99,13 @@ _tcp_bbr2=y
 ### Enable FULLCONENAT
 _nf_cone=y
 
-### Selecting the ZSTD compression level
-# ATTENTION - one of two predefined values should be selected!
-# 'ultra' - highest compression ratio
-# 'normal' - standard compression ratio
-_zstd_level='ultra'
-
-### Selecting the ZSTD module compression level
+### Selecting the ZSTD kernel and modules compression level
 # ATTENTION - one of two predefined values should be selected!
 # 'ultra' - highest compression ratio
 # 'normal' - standard compression ratio
 # WARNING: the ultra settings can sometimes
 # be counterproductive in both size and speed.
-_zstd_module_level='ultra'
+_zstd_level_value='ultra'
 
 # Enable zram/zswap ZSTD compression
 _zstd_compression=y
@@ -137,7 +131,7 @@ pkgbase=linux-lucjan
 _major=5.16
 _minor=10
 _patches=${_major}-dev
-pkgver=5.16.10.ll34
+pkgver=5.16.10.ll35
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -187,7 +181,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll34'
+ _lucjanrev='ll35'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -523,42 +517,27 @@ prepare() {
 		scripts/config --disable CONFIG_NUMA
 	fi
 
-    ### Selecting the ZSTD compression level
-	if [ "$_zstd_level" = "ultra" ]; then
-		echo "Enabling highest ZSTD compression ratio..."
-		scripts/config --set-val CONFIG_KERNEL_ZSTD_LEVEL 19
-		scripts/config --enable CONFIG_KERNEL_ZSTD_LEVEL_ULTRA
-	elif [ "$_zstd_level" = "normal" ]; then
-		echo "Enabling standard ZSTD compression ratio..."
-		scripts/config --set-val CONFIG_KERNEL_ZSTD_LEVEL 19
-		scripts/config --disable CONFIG_KERNEL_ZSTD_LEVEL_ULTRA
-	else
-		if [ -n "$_zstd_level" ]; then
-			error "The value $_zstd_level is invalid. Choose the correct one again."
-		else
-			error "The value is empty. Choose the correct one again."
-		fi
-		error "Selecting the ZSTD compression level failed!"
-		exit
-	fi
-
-    ### Selecting the ZSTD module compression level
-	if [ "$_zstd_module_level" = "ultra" ]; then
-		echo "Enabling highest ZSTD module compression ratio..."
+    ### Selecting the ZSTD modules and kernel compression level
+	if [ "$_zstd_level_value" = "ultra" ]; then
+		echo "Enabling highest ZSTD modules compression ratio..."
 		scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19
 		scripts/config --enable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA
 		scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL_ULTRA 22
-	elif [ "$_zstd_module_level" = "normal" ]; then
-		echo "Enabling standard ZSTD module compression ratio..."
+		echo "Enabling highest ZSTD kernel compression ratio..."
+		scripts/config --set-val CONFIG_ZSTD_COMP_VAL 22
+	elif [ "$__zstd_level_value" = "normal" ]; then
+		echo "Enabling standard ZSTD modules compression ratio..."
 		scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19
 		scripts/config --disable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA
+		echo "Enabling standard ZSTD kernel compression ratio..."
+		scripts/config --set-val CONFIG_ZSTD_COMP_VAL 19
 	else
-		if [ -n "$_zstd_module_level" ]; then
-			error "The value $_zstd_module_level is invalid. Choose the correct one again."
+		if [ -n "$__zstd_level_value" ]; then
+			error "The value $_zstd_level_value is invalid. Choose the correct one again."
 		else
 			error "The value is empty. Choose the correct one again."
 		fi
-		error "Selecting the ZSTD module compression level failed!"
+		error "Selecting the ZSTD modules and kernel compression level failed!"
 		exit
 	fi
 
@@ -762,9 +741,9 @@ done
 
 sha512sums=('2d1527623f96181c4797a8f73cb769e70321e673835113fbddd1374ca891d41b924220b8fdbaa46e2af7fc49a175e56524291b1816f4f6680128155c110f703e'
             'SKIP'
-            '69b69d362da80ed95bd76959d1db3f9716a0e38dff7eb92a01154886ec99bcc4501170a6c7b6adb0e8b22f52e0744aeb882948e9f00d7b38b2b9287508c962fe'
+            '62603137984fc0f2aa455f2e2f5f4f6388c90cdf15029ad6c79dcaf36fcd416bad7b3be795ff505903de88f3bee0a4c762ad0216c430c3a578b239549c4fc4ac'
             'SKIP'
-            'e6bef339cc8370ef29559b954d06c3fd3601de80d953b1f297d53fc390fb2e6bb5fcb1d71d224a9e66d0984fa4576c0547da202388ed78e7b80be827bca1adfc')
+            'd05f0671cd7d766be0e41f56c967425d0c6bc51f36a52413086d916f2bf5f29229baa7863368d1b600e42c6f7938f727e7e5151d84df9abccbf08d5573095234')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
