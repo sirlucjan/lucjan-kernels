@@ -2,18 +2,18 @@
 
 ###### NOTE: mkinitcpio-zstd will overwrite the mkinitcpio.conf file and the old one will be saved as mkinitcpio.conf.pacsave - however, I recommend backing up this file before installing the modified mkinitcpio version.
 
-## Selecting the ZSTD modules and kernel compression level
+## Selecting the ZSTD module compression level
 
 ###### To select the compression level, choose between "normal" and "ultra".
 
 ```
-### Selecting the ZSTD kernel and modules compression level
+### Selecting the ZSTD module compression level
 # ATTENTION - one of two predefined values should be selected!
 # 'ultra' - highest compression ratio
 # 'normal' - standard compression ratio
 # WARNING: the ultra settings can sometimes
 # be counterproductive in both size and speed.
-_zstd_level_value=''
+_zstd_module_level=''
 ```
 ###### The normal flag allows you to select a value between 1 and 19 (the default value zstd offers is 3), while the ultra flag allows you to select a value between 20 and 22. Values other than those suggested (so 19 for the normal flag and 22 for the ultra flag) should be entered here:
 
