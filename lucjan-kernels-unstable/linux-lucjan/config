@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.16.9.l30 Kernel Configuration
+# Linux/x86 5.16.10.l35 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 11.1.0"
 CONFIG_CC_IS_GCC=y
@@ -49,8 +49,7 @@ CONFIG_KERNEL_ZSTD=y
 #
 # ZSTD compression options
 #
-CONFIG_KERNEL_ZSTD_LEVEL=19
-CONFIG_KERNEL_ZSTD_LEVEL_ULTRA=y
+CONFIG_ZSTD_COMP_VAL=22
 # end of ZSTD compression options
 
 CONFIG_DEFAULT_INIT=""
