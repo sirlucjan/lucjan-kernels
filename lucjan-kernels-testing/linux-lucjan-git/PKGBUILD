@@ -525,14 +525,14 @@ prepare() {
 		scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL_ULTRA 22
 		echo "Enabling highest ZSTD kernel compression ratio..."
 		scripts/config --set-val CONFIG_ZSTD_COMP_VAL 22
-	elif [ "$__zstd_level_value" = "normal" ]; then
+	elif [ "$_zstd_level_value" = "normal" ]; then
 		echo "Enabling standard ZSTD modules compression ratio..."
 		scripts/config --set-val CONFIG_MODULE_COMPRESS_ZSTD_LEVEL 19
 		scripts/config --disable CONFIG_MODULE_COMPRESS_ZSTD_ULTRA
 		echo "Enabling standard ZSTD kernel compression ratio..."
 		scripts/config --set-val CONFIG_ZSTD_COMP_VAL 19
 	else
-		if [ -n "$__zstd_level_value" ]; then
+		if [ -n "$_zstd_level_value" ]; then
 			error "The value $_zstd_level_value is invalid. Choose the correct one again."
 		else
 			error "The value is empty. Choose the correct one again."
