@@ -86,11 +86,11 @@ _mm_protect=y
 # 'none' - disable multigenerational LRU
 _lru_config='none'
 
-### Enable Linux Random Number Generator 
+### Enable Linux Random Number Generator
 # ATTENTION - one of three predefined values should be selected!
 # 'pfkernel' - enable Linux Random Number Generator with pfkernel config
 # 'xanmod' - enable Linux Random Number Generator with xanmod config
-# 'none' - disable Linux Random Number Generator 
+# 'none' - disable Linux Random Number Generator
 _lrng_config='none'
 
 ### Enable TCP_CONG_BBR2
