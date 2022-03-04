@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.16.10.l35 Kernel Configuration
+# Linux/x86 5.16.12.l49 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 11.1.0"
 CONFIG_CC_IS_GCC=y
@@ -9638,6 +9638,7 @@ CONFIG_F2FS_FS_LZ4=y
 CONFIG_F2FS_FS_LZ4HC=y
 CONFIG_F2FS_FS_ZSTD=y
 CONFIG_F2FS_IOSTAT=y
+CONFIG_F2FS_UNFAIR_RWSEM=y
 CONFIG_ZONEFS_FS=m
 # CONFIG_SPADFS_FS is not set
 CONFIG_FS_DAX=y
