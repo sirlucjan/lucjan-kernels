@@ -19,7 +19,10 @@
 │       ├── config
 │       └── PKGBUILD
 ├── lucjan-kernels-testing
-│   └── linux-lucjan
+│   ├── linux-lucjan
+│   │   ├── config
+│   │   └── PKGBUILD
+│   └── linux-lucjan-git
 │       ├── config
 │       └── PKGBUILD
 ├── lucjan-kernels-unstable
@@ -31,4 +34,4 @@
 │       └── PKGBUILD
 └── README.md
 
-9 directories, 22 files
+10 directories, 24 files
