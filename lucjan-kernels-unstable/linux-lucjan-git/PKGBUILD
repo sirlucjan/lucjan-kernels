@@ -133,7 +133,7 @@ _major=5.16
 _patches=${_major}-dev
 _srcname=linux-stable-rc
 pkgver=5.16.13.r37.g22f5a43617b1.ll53
-pkgrel=0.1
+pkgrel=0.2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -742,7 +742,7 @@ done
 sha512sums=('SKIP'
             '2df5436eaae6b63909c6704181888e1a1928d235e07eeb667987a39473f22dc92846023fa7ff7754181314c209cc68dd6d885c9bf7d71525521f8601b58b475e'
             'SKIP'
-            'b7c0b63138cfcb2e68cb3118692cdf48ed4c00cfab89e7db56fb5a4834f48eafc3b612ce4cda9affd1bdd8280837ea7ece856f836230a6b2ee972b5cbee2b611')
+            '56f1186571db44a406f0e46a2fa6349a37f40531b5232a766bb112546bd2dcb83a96f06399895e8abcde4082a9caabc0ecf1b07c6c36473e6a90fdc2be4a430d')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
