@@ -10,6 +10,12 @@
 │   │   ├── 0007-functions-no-progress-for-zstd-decompression.patch
 │   │   ├── 0008-mkinitcpio-Support-etc-kernel-cmdline.d.patch
 │   │   ├── 0009-presets-when-using-_efi_image-make-_image-optional.patch
+│   │   ├── 0010-Revert-functions-no-progress-for-zstd-decompression.patch
+│   │   ├── 0011-add-zst-compressed-firmware-support-fpr-future-kerne.patch
+│   │   ├── 0012-add-real-symlink-support.patch
+│   │   ├── 0013-add-real-symlink-support.patch
+│   │   ├── 0014-add-MODULES_DECOMPRESS-switch.patch
+│   │   ├── 0015-fix-reproducibility-in-case-of-var-cache-is-included.patch
 │   │   ├── mkinitcpio.install
 │   │   └── PKGBUILD
 │   └── README.md
@@ -34,4 +40,4 @@
 │       └── PKGBUILD
 └── README.md
 
-10 directories, 24 files
+10 directories, 30 files

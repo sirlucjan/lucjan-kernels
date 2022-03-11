@@ -1,7 +1,7 @@
-From 9d368d69ebc8862fd72c8acacc943f822d1b9c99 Mon Sep 17 00:00:00 2001
+From e65380677cf6f4b6856732f129b6f3ef84f106b6 Mon Sep 17 00:00:00 2001
 From: Markus Weippert <markus@gekmihesg.de>
 Date: Mon, 20 Dec 2021 16:09:14 +0100
-Subject: [PATCH 4/9] Add support for post generation hooks
+Subject: [PATCH 04/15] Add support for post generation hooks
 
 ---
  Makefile             |  3 +++
@@ -162,5 +162,5 @@ index c912685..4e6805c 100755
  
  cleanup $(( !!_builderrors ))
 -- 
-2.34.1.75.gabe6bb3905
+2.35.1.354.g715d08a9e5
 

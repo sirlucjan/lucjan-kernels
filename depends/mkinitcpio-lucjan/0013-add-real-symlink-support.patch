@@ -1,0 +1,33 @@
+From d1c6bebdb66576ad62de830cadf70303ab871346 Mon Sep 17 00:00:00 2001
+From: Tobias Powalowski <tpowa@archlinux.org>
+Date: Fri, 11 Mar 2022 15:53:09 +0100
+Subject: [PATCH 13/15] add real symlink support
+
+---
+ functions | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/functions b/functions
+index 88bd563..4dce711 100644
+--- a/functions
++++ b/functions
+@@ -642,7 +642,15 @@ add_binary() {
+     mode=$(stat -c %a "$binary")
+ 
+     # always add the binary itself
+-    add_file "$binary" "$dest" "$mode"
++    # check if binary is a symlink
++    if [[ -L $binary ]]; then
++        # add the binary
++        add_file "$(realpath $binary)"
++        # create the symlink
++        add_symlink "$binary" "$(realpath $binary)"
++    else
++        add_file "$binary" "$dest" "$mode"
++    fi
+ 
+     # negate this so that the RETURN trap is not fired on non-binaries
+     ! lddout=$(ldd "$binary" 2>/dev/null) && return 0
+-- 
+2.35.1.354.g715d08a9e5
+

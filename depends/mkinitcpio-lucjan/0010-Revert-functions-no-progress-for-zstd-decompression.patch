@@ -1,0 +1,28 @@
+From 54bfa9504bd7fafcfe3d3d83bcce5855b8f9567f Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Fri, 11 Mar 2022 18:43:36 +0100
+Subject: [PATCH 10/15] Revert "functions: no progress for zstd decompression"
+
+This reverts commit 689ce7b16e49c5eaa2f569345a0d1c6e03a8409a.
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ functions | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/functions b/functions
+index 389e1b9..5b18b9c 100644
+--- a/functions
++++ b/functions
+@@ -873,7 +873,7 @@ install_modules() {
+     done
+     (( ${#xz_comp[*]} )) && xz -d "${xz_comp[@]}"
+     (( ${#gz_comp[*]} )) && gzip -d "${gz_comp[@]}"
+-    (( ${#zst_comp[*]} )) && zstd -d --rm -q --no-progress "${zst_comp[@]}"
++    (( ${#zst_comp[*]} )) && zstd -d --rm -q "${zst_comp[@]}"
+ 
+     msg "Generating module dependencies"
+     install -m644 -t "$moduledest" "$_d_kmoduledir"/modules.builtin
+-- 
+2.35.1.354.g715d08a9e5
+

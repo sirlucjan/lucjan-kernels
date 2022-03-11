@@ -1,0 +1,115 @@
+From b3b8ded88654d0c91d62823d6753981fe17bdf98 Mon Sep 17 00:00:00 2001
+From: Tobias Powalowski <tpowa@archlinux.org>
+Date: Fri, 11 Mar 2022 15:59:45 +0100
+Subject: [PATCH 14/15] add MODULES_DECOMPRESS switch
+
+---
+ functions                 | 32 +++++++++++++++++---------------
+ man/mkinitcpio.conf.5.txt |  8 +++++++-
+ mkinitcpio                |  2 ++
+ mkinitcpio.conf           |  6 ++++++
+ 4 files changed, 32 insertions(+), 16 deletions(-)
+
+diff --git a/functions b/functions
+index 4dce711..f523b53 100644
+--- a/functions
++++ b/functions
+@@ -865,7 +865,7 @@ try_enable_color() {
+ 
+ install_modules() {
+     local m moduledest=$BUILDROOT/lib/modules/$KERNELVERSION
+-    local -a xz_comp gz_comp zst_comp
++    MODULES_DECOMPRESS="yes" && local -a xz_comp gz_comp zst_comp
+ 
+     [[ $KERNELVERSION == none ]] && return 0
+ 
+@@ -876,20 +876,22 @@ install_modules() {
+ 
+     cp "$@" "$moduledest/kernel"
+ 
+-    # unzip modules prior to recompression
+-    for m in "$@"; do
+-        case $m in
+-            *.xz)
+-                xz_comp+=("$moduledest/kernel/${m##*/}")
+-                ;;
+-            *.gz)
+-                gz_comp+=("$moduledest/kernel/${m##*/}")
+-                ;;
+-            *.zst)
+-                zst_comp+=("$moduledest/kernel/${m##*/}")
+-                ;;
+-        esac
+-    done
++    if [[ $MODULES_DECOMPRESS == yes ]]; then
++        # unzip modules prior to recompression
++        for m in "$@"; do
++            case $m in
++                *.xz)
++                    xz_comp+=("$moduledest/kernel/${m##*/}")
++                    ;;
++                *.gz)
++                    gz_comp+=("$moduledest/kernel/${m##*/}")
++                    ;;
++                *.zst)
++                    zst_comp+=("$moduledest/kernel/${m##*/}")
++                    ;;
++            esac
++        done
++    fi
+     (( ${#xz_comp[*]} )) && xz -d "${xz_comp[@]}"
+     (( ${#gz_comp[*]} )) && gzip -d "${gz_comp[@]}"
+     (( ${#zst_comp[*]} )) && zstd -d --rm -q "${zst_comp[@]}"
+diff --git a/man/mkinitcpio.conf.5.txt b/man/mkinitcpio.conf.5.txt
+index 0383360..fdb8d91 100644
+--- a/man/mkinitcpio.conf.5.txt
++++ b/man/mkinitcpio.conf.5.txt
+@@ -69,6 +69,12 @@ despite being "valid".
+ 	program. This option is generally not used. It can be potentially dangerous
+ 	and may cause invalid images to be generated without any sign of an error.
+ 
++*DECOMPRESS_MODULES*::
++
++	Switch (yes/no) to decide wether kernel modules should be compressed or
++	uncompressed during initramfs creation. Enabled by default for faster bootup
++	and smaller initramfs size. Disable it to reduce RAM usage in early userspace.
++
+ See Also
+ --------
+ *mkinitcpio*(8)
+@@ -79,4 +85,4 @@ mkinitcpio is created and maintained by the Arch Linux Developer community.
+ 
+ Copyright
+ ---------
+-Copyright (c) Arch Linux 2006-2021
++Copyright (c) Arch Linux 2006-2022
+diff --git a/mkinitcpio b/mkinitcpio
+index e0535b0..834eb96 100755
+--- a/mkinitcpio
++++ b/mkinitcpio
+@@ -675,6 +675,8 @@ if [[ $KERNELVERSION != 'none' ]]; then
+     [[ -d $_d_kmoduledir ]] || die "'$_d_kmoduledir' is not a valid kernel module directory"
+ fi
+ 
++[[ -z $MODULES_DECOMPRESS ]] && MODULES_DECOMPRESS=yes
++
+ _d_workdir=$(initialize_buildroot "$KERNELVERSION" "$_opttargetdir") || cleanup 1
+ BUILDROOT=${_opttargetdir:-$_d_workdir/root}
+ 
+diff --git a/mkinitcpio.conf b/mkinitcpio.conf
+index 3494fab..19ec038 100644
+--- a/mkinitcpio.conf
++++ b/mkinitcpio.conf
+@@ -65,3 +65,9 @@ HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)
+ # COMPRESSION_OPTIONS
+ # Additional options for the compressor
+ #COMPRESSION_OPTIONS=()
++
++# MODULES_DECOMPRESS
++# Decompress kernel modules during initramfs creation.
++# Enable to speedup boot process, disable to save RAM
++# during early userspace. Switch (yes/no) default=yes
++#MODULES_DECOMPRESS=""
+-- 
+2.35.1.354.g715d08a9e5
+

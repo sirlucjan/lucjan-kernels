@@ -1,0 +1,26 @@
+From a48cf9294a8a26de92a6dc47d25a73f67c8b6823 Mon Sep 17 00:00:00 2001
+From: Tobias Powalowski <tpowa@archlinux.org>
+Date: Fri, 11 Mar 2022 16:04:51 +0100
+Subject: [PATCH 15/15] fix reproducibility, in case of /var/cache is included
+ in initramfs
+
+---
+ mkinitcpio | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/mkinitcpio b/mkinitcpio
+index 834eb96..ba9a911 100755
+--- a/mkinitcpio
++++ b/mkinitcpio
+@@ -747,6 +747,8 @@ trap -- ERR
+ 
+ # this is simply a nice-to-have -- it doesn't matter if it fails.
+ ldconfig -r "$BUILDROOT" &>/dev/null
++# remove /var/cache/ldconfig/aux-cache for reproducability
++[[ -e $BUILDROOT/var/cache/ldconfig/aux-cache ]] && rm $BUILDROOT/var/cache/ldconfig/aux-cache
+ 
+ # Set umask to create initramfs images and EFI images as 600
+ umask 077
+-- 
+2.35.1.354.g715d08a9e5
+

@@ -1,7 +1,7 @@
-From 8e5a4e8fb55d0d1ac27ca52c73e9e50c7ded98d6 Mon Sep 17 00:00:00 2001
+From aad2d10cb22d6a1b6346491af57eb71f10a187d9 Mon Sep 17 00:00:00 2001
 From: Markus Weippert <markus@gekmihesg.de>
 Date: Mon, 20 Dec 2021 13:41:11 +0100
-Subject: [PATCH 3/9] Fix ability to manually specify uefistub
+Subject: [PATCH 03/15] Fix ability to manually specify uefistub
 
 ---
  mkinitcpio | 6 +++---
@@ -39,5 +39,5 @@ index 549f381..c912685 100755
          -M|--automods)
              _optshowautomods=1
 -- 
-2.34.1.75.gabe6bb3905
+2.35.1.354.g715d08a9e5
 
