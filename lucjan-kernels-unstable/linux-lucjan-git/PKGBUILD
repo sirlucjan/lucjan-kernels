@@ -122,7 +122,7 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='pending'
+_linux_lucjan='current'
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -133,7 +133,7 @@ _major=5.16
 _patches=${_major}-dev
 _srcname=linux-stable-rc
 pkgver=5.16.13.r54.g8a3839d7a6f3.ll53
-pkgrel=0.4
+pkgrel=0.5
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
