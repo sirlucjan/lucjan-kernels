@@ -1,7 +1,7 @@
-From 54bfa9504bd7fafcfe3d3d83bcce5855b8f9567f Mon Sep 17 00:00:00 2001
+From 93660e6f4c8c9230b1695883d144d5e9ced46cea Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 11 Mar 2022 18:43:36 +0100
-Subject: [PATCH 10/15] Revert "functions: no progress for zstd decompression"
+Subject: [PATCH 10/19] Revert "functions: no progress for zstd decompression"
 
 This reverts commit 689ce7b16e49c5eaa2f569345a0d1c6e03a8409a.
 

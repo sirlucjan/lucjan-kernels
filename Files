@@ -16,6 +16,10 @@
 │   │   ├── 0013-add-real-symlink-support.patch
 │   │   ├── 0014-add-MODULES_DECOMPRESS-switch.patch
 │   │   ├── 0015-fix-reproducibility-in-case-of-var-cache-is-included.patch
+│   │   ├── 0016-Good-idea-add-the-default-value.patch
+│   │   ├── 0017-mkinitcpio-improve-MODULES_DECOMPRESS.patch
+│   │   ├── 0018-Replace-check-with-rm-f.patch
+│   │   ├── 0019-Fix-typo-in-commit-reproducibility.patch
 │   │   ├── mkinitcpio.install
 │   │   └── PKGBUILD
 │   └── README.md
@@ -40,4 +44,4 @@
 │       └── PKGBUILD
 └── README.md
 
-10 directories, 30 files
+10 directories, 34 files

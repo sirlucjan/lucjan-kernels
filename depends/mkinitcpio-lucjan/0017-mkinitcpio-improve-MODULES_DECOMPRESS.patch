@@ -1,0 +1,26 @@
+From bec5816011378a8654d68314e940acd207dc7ac7 Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Mon, 14 Mar 2022 12:11:36 +0100
+Subject: [PATCH 17/19] mkinitcpio: improve MODULES_DECOMPRESS
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ mkinitcpio | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mkinitcpio b/mkinitcpio
+index ba9a911..15b30fc 100755
+--- a/mkinitcpio
++++ b/mkinitcpio
+@@ -675,7 +675,7 @@ if [[ $KERNELVERSION != 'none' ]]; then
+     [[ -d $_d_kmoduledir ]] || die "'$_d_kmoduledir' is not a valid kernel module directory"
+ fi
+ 
+-[[ -z $MODULES_DECOMPRESS ]] && MODULES_DECOMPRESS=yes
++MODULES_DECOMPRESS=${MODULES_DECOMPRESS:-"yes"}
+ 
+ _d_workdir=$(initialize_buildroot "$KERNELVERSION" "$_opttargetdir") || cleanup 1
+ BUILDROOT=${_opttargetdir:-$_d_workdir/root}
+-- 
+2.35.1.354.g715d08a9e5
+

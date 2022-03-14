@@ -1,9 +1,9 @@
-From 645df0f80ff53be5e34d40a900f8719596d373ad Mon Sep 17 00:00:00 2001
+From 777aeda3fcf787a626e44b8759fe2601ba0f332f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?=D0=94=D0=B0=D0=BC=D1=98=D0=B0=D0=BD=20=D0=93=D0=B5=D0=BE?=
  =?UTF-8?q?=D1=80=D0=B3=D0=B8=D0=B5=D0=B2=D1=81=D0=BA=D0=B8?=
  <gdamjan@gmail.com>
 Date: Wed, 15 Dec 2021 16:19:19 +0100
-Subject: [PATCH 09/15] presets: when using _efi_image, make _image optional
+Subject: [PATCH 09/19] presets: when using _efi_image, make _image optional
 
 fixes #77
 ---
