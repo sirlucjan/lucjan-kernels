@@ -1,7 +1,7 @@
-From 8a9dc48bd1e1646e9488e4d9df12f43cc3433f1f Mon Sep 17 00:00:00 2001
+From ca6dd05a045a633669f414c95a0af5e89639cc54 Mon Sep 17 00:00:00 2001
 From: Tobias Powalowski <tpowa@archlinux.org>
 Date: Fri, 11 Mar 2022 15:47:59 +0100
-Subject: [PATCH 12/19] add real symlink support
+Subject: [PATCH 12/20] add real symlink support
 
 ---
  functions | 10 +++++++++-

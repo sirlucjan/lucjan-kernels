@@ -1,7 +1,7 @@
-From 656421b5b07b51387df5db895117cf403b4a3521 Mon Sep 17 00:00:00 2001
+From a375cda7e8eb39129829b0cecbd3f2f07c02e8ae Mon Sep 17 00:00:00 2001
 From: Tobias Powalowski <tobias.powalowski@googlemail.com>
 Date: Sun, 13 Mar 2022 20:46:26 +0100
-Subject: [PATCH 19/19] Fix typo in commit reproducibility
+Subject: [PATCH 19/20] Fix typo in commit reproducibility
 
 ---
  mkinitcpio | 2 +-

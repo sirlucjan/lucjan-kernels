@@ -1,7 +1,7 @@
-From eedc7b6390af5f9f8c2b2ed6651b496546ea67b4 Mon Sep 17 00:00:00 2001
+From 82eb9a4d19df6052d4d59f76bff6059055202e1b Mon Sep 17 00:00:00 2001
 From: Tobias Powalowski <tpowa@archlinux.org>
 Date: Fri, 11 Mar 2022 15:59:45 +0100
-Subject: [PATCH 14/19] add MODULES_DECOMPRESS switch
+Subject: [PATCH 14/20] add MODULES_DECOMPRESS switch
 
 ---
  functions                 | 32 +++++++++++++++++---------------

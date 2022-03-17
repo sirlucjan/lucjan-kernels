@@ -1,7 +1,7 @@
-From 271a57660b2700a10bda0f96e0b19393fb8f5d16 Mon Sep 17 00:00:00 2001
+From cd7f1014630254b0d33c8a19664f319979c55b3d Mon Sep 17 00:00:00 2001
 From: Morten Linderud <morten@linderud.pw>
 Date: Sat, 4 Dec 2021 15:10:41 +0100
-Subject: [PATCH 08/19] mkinitcpio: Support /etc/kernel/cmdline.d
+Subject: [PATCH 08/20] mkinitcpio: Support /etc/kernel/cmdline.d
 
 Signed-off-by: Morten Linderud <morten@linderud.pw>
 ---

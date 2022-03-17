@@ -1,7 +1,7 @@
-From fd1b3b4f5f77c7722277ad45d5c8dc8acf8bad4f Mon Sep 17 00:00:00 2001
+From b38e4294e3c96bccbae3e05e057b1b24f9f37cc3 Mon Sep 17 00:00:00 2001
 From: Tobias Powalowski <tpowa@archlinux.org>
 Date: Fri, 11 Mar 2022 16:04:51 +0100
-Subject: [PATCH 15/19] fix reproducibility, in case of /var/cache is included
+Subject: [PATCH 15/20] fix reproducibility, in case of /var/cache is included
  in initramfs
 
 ---

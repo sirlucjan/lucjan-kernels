@@ -1,0 +1,61 @@
+From c112da9f20a48e978631d3668ad25252e81e4ccc Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Thu, 17 Mar 2022 20:29:57 +0100
+Subject: [PATCH 20/20] mkinitcpio: preserve module dir by the kernel, remove
+ modules.order hack
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ functions | 21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
+
+diff --git a/functions b/functions
+index f523b53..f6f67ee 100644
+--- a/functions
++++ b/functions
+@@ -874,20 +874,20 @@ install_modules() {
+         return 0
+     fi
+ 
+-    cp "$@" "$moduledest/kernel"
+-
+     if [[ $MODULES_DECOMPRESS == yes ]]; then
+-        # unzip modules prior to recompression
++
+         for m in "$@"; do
++        install -D -m644 "$m" "$BUILDROOT/$m"
++        # unzip modules prior to recompression
+             case $m in
+                 *.xz)
+-                    xz_comp+=("$moduledest/kernel/${m##*/}")
++                    xz_comp+=("$BUILDROOT/$m")
+                     ;;
+                 *.gz)
+-                    gz_comp+=("$moduledest/kernel/${m##*/}")
++                    gz_comp+=("$BUILDROOT/$m")
+                     ;;
+                 *.zst)
+-                    zst_comp+=("$moduledest/kernel/${m##*/}")
++                    zst_comp+=("$BUILDROOT/$m")
+                     ;;
+             esac
+         done
+@@ -898,14 +898,7 @@ install_modules() {
+ 
+     msg "Generating module dependencies"
+     install -m644 -t "$moduledest" "$_d_kmoduledir"/modules.builtin
+-
+-    # we install all modules into kernel/, making the .order file incorrect for
+-    # the module tree. munge it, so that we have an accurate index. This avoids
+-    # some rare and subtle issues with module loading choices when an alias
+-    # resolves to multiple modules, only one of which can claim a device.
+-    awk -F'/' '{ print "kernel/" $NF }' \
+-        "$_d_kmoduledir"/modules.order >"$moduledest/modules.order"
+-
++    install -m644 -t "$moduledest" "$_d_kmoduledir"/modules.order
+     depmod -b "$BUILDROOT" "$KERNELVERSION"
+ 
+     # remove all non-binary module.* files (except devname for on-demand module loading)
+-- 
+2.35.1.354.g715d08a9e5
+

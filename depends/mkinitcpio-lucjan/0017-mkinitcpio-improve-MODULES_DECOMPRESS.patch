@@ -1,7 +1,7 @@
-From bec5816011378a8654d68314e940acd207dc7ac7 Mon Sep 17 00:00:00 2001
+From 882620270a8efa1aaf6fe2a120dc6afb03d695d9 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 14 Mar 2022 12:11:36 +0100
-Subject: [PATCH 17/19] mkinitcpio: improve MODULES_DECOMPRESS
+Subject: [PATCH 17/20] mkinitcpio: improve MODULES_DECOMPRESS
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---

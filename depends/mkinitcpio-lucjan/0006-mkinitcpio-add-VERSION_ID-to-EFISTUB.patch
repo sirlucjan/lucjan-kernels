@@ -1,7 +1,7 @@
-From df7d1160b5465a92152de7b0e2d8d28420657070 Mon Sep 17 00:00:00 2001
+From 00b819fb15c5c228a1a189dceed41e4e90f5534a Mon Sep 17 00:00:00 2001
 From: Morten Linderud <morten@linderud.pw>
 Date: Tue, 30 Nov 2021 09:09:38 +0100
-Subject: [PATCH 06/19] mkinitcpio: add VERSION_ID to EFISTUB
+Subject: [PATCH 06/20] mkinitcpio: add VERSION_ID to EFISTUB
 
 This patch adds VERSION_ID to the built images. This helps distinguish
 between several kernel versions instead of having it fallback to showing

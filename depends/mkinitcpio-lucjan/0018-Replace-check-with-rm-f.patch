@@ -1,7 +1,7 @@
-From 1cf49425b840ab70a6a999ad327532c97b4729fe Mon Sep 17 00:00:00 2001
+From d849ed1a9c2bd50897f27ef86b21a4607e44c85c Mon Sep 17 00:00:00 2001
 From: Tobias Powalowski <tobias.powalowski@googlemail.com>
 Date: Sun, 13 Mar 2022 20:37:55 +0100
-Subject: [PATCH 18/19] Replace check with rm -f
+Subject: [PATCH 18/20] Replace check with rm -f
 
 Co-authored-by: nl6720 <nl6720@gmail.com>
 ---
