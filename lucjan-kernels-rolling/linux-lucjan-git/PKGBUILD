@@ -133,7 +133,7 @@ _major=5.16
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.16.15.r28070.g8fcd88bbe493.ll63
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -740,7 +740,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'b8ddac4a6c4b58a79b895b7c8f1a2d8b4fe2d83e45e3f503b651a625859048182a885dfb22b32ed79d38dd685e9ae2727054136581c45a9e65e82d2074bd6f96'
+            'cc3f1459f789fcb83019e241432692cbd2a927e794dc1ebbb5543f6c161043819acec7f0bbbffc29f499ab38b6f61a7a6eb44e9aaa99138a1703f7acc0ffaf72'
             'SKIP'
             'a0c6c4e2ff38a9a8d158f90a04cc3889ae50b4cdd2b88e138e0a835045d2f845abfdd8d8af2b74c9a039966e22bec5ecf4baa573c68cf72601016cdd8dbd72ae')
 
