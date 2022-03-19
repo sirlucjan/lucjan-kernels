@@ -133,12 +133,12 @@ _minor=15
 _minorc=$((_minor+1))
 _rcver=rc1
 _patches=${_major}-dev
-pkgver=5.16.16.ll64
+pkgver=5.16.16.ll65
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -194,7 +194,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll64'
+ _lucjanrev='ll65'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -445,7 +445,6 @@ prepare() {
     ### Enable Linux Random Number Generator
 	if [ "$_lrng_config" = "pfkernel" ]; then
 		echo "Enabling Linux Random Number Generator with pfkernel config..."
-		scripts/config --disable CONFIG_RANDOM_DEFAULT_IMPL
 		scripts/config --enable CONFIG_LRNG
 		scripts/config --enable CONFIG_LRNG_OVERSAMPLE_ENTROPY_SOURCES
 		scripts/config --set-val CONFIG_CONFIG_LRNG_OVERSAMPLE_ES_BITS 64
@@ -490,7 +489,6 @@ prepare() {
 		scripts/config --disable CONFIG_LRNG_SELFTEST_PANIC
 	elif [  "$_lrng_config" = "xanmod" ]; then
 		echo "Enabling Linux Random Number Generator with xanmod config..."
-		scripts/config --disable CONFIG_RANDOM_DEFAULT_IMPL
 		scripts/config --enable CONFIG_LRNG
 		scripts/config --disable CONFIG_LRNG_OVERSAMPLE_ENTROPY_SOURCES
 		scripts/config --set-val CONFIG_CONFIG_LRNG_OVERSAMPLE_ES_BITS 0
@@ -766,9 +764,9 @@ sha512sums=('6f0245740ebebc6aa687c5fb1226aee492d543fd202f88963a488cfa609e30d3d11
             'SKIP'
             '4173389597886a56562eab38cffc0e3ed51bd86c0abaf894ad3612bbb2437652f40b9dbe3a6aeb6d4c599d4f07fe2ed57d800d1649b9010c3e1865b77cddd86d'
             'SKIP'
-            'ad3aa7ba4ef7f76da470ebcf58a5e4348d899cd089ac083cd615588112914223adf0f57f0489ada26a56e97103801ec7271d3335030e63c8bb8d071d0af78d9f'
+            '73ac5560c25b3b880686652a2fde8f774b6f2856756371e2ebba26756a1d7c7afdf4bc3701466f5e21a143295c17de574149788a8bb92730290c69ba1d9494f6'
             'SKIP'
-            'b6ccf3bb5ad36a64e216c30273914992785b62416a3c2c17e0b618d5c9ad2351cd6fd2c456b082cfb097f353901b3a8bfc7317c4762374e9b39ff7a100a145ea')
+            'b7b4f2853d85e5e5d3b1fc308c9518524d12bd696666142a1981ec8e23d47a605b31d97037b3552276c6830fe4a522df28c853211e161e732d968e5f283391b1')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
