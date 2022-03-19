@@ -133,7 +133,7 @@ _major=5.16
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.16.16.r28071.g825204bd61bc.ll64
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -424,6 +424,7 @@ prepare() {
     ### Enable Linux Random Number Generator
 	if [ "$_lrng_config" = "pfkernel" ]; then
 		echo "Enabling Linux Random Number Generator with pfkernel config..."
+		scripts/config --disable CONFIG_RANDOM_DEFAULT_IMPL
 		scripts/config --enable CONFIG_LRNG
 		scripts/config --enable CONFIG_LRNG_OVERSAMPLE_ENTROPY_SOURCES
 		scripts/config --set-val CONFIG_CONFIG_LRNG_OVERSAMPLE_ES_BITS 64
@@ -468,6 +469,7 @@ prepare() {
 		scripts/config --disable CONFIG_LRNG_SELFTEST_PANIC
 	elif [  "$_lrng_config" = "xanmod" ]; then
 		echo "Enabling Linux Random Number Generator with xanmod config..."
+		scripts/config --disable CONFIG_RANDOM_DEFAULT_IMPL
 		scripts/config --enable CONFIG_LRNG
 		scripts/config --disable CONFIG_LRNG_OVERSAMPLE_ENTROPY_SOURCES
 		scripts/config --set-val CONFIG_CONFIG_LRNG_OVERSAMPLE_ES_BITS 0
@@ -742,7 +744,7 @@ done
 sha512sums=('SKIP'
             'ad3aa7ba4ef7f76da470ebcf58a5e4348d899cd089ac083cd615588112914223adf0f57f0489ada26a56e97103801ec7271d3335030e63c8bb8d071d0af78d9f'
             'SKIP'
-            'a0c6c4e2ff38a9a8d158f90a04cc3889ae50b4cdd2b88e138e0a835045d2f845abfdd8d8af2b74c9a039966e22bec5ecf4baa573c68cf72601016cdd8dbd72ae')
+            'b6ccf3bb5ad36a64e216c30273914992785b62416a3c2c17e0b618d5c9ad2351cd6fd2c456b082cfb097f353901b3a8bfc7317c4762374e9b39ff7a100a145ea')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
