@@ -26,7 +26,10 @@
 │   └── README.md
 ├── Files
 ├── lucjan-kernels-experimental
-│   └── linux-lucjan
+│   ├── linux-lucjan
+│   │   ├── config
+│   │   └── PKGBUILD
+│   └── linux-lucjan-git
 │       ├── config
 │       └── PKGBUILD
 ├── lucjan-kernels-rolling
@@ -49,4 +52,4 @@
 │       └── PKGBUILD
 └── README.md
 
-12 directories, 37 files
+13 directories, 39 files
