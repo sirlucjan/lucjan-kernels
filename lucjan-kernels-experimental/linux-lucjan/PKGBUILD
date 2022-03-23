@@ -142,7 +142,7 @@ pkgver=5.17.ll6
 #_pkgver=${_major}.${_minor}
 _pkgver=${_major}
 _srcname=linux-${_pkgver}
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -533,6 +533,7 @@ prepare() {
 		scripts/config --disable CONFIG_LRNG_SELFTEST
 	elif [ "$_lrng_config" = "none" ]; then
 		echo "Disabling Linux Random Number Generator..."
+		scripts/config --enable CONFIG_RANDOM_DEFAULT_IMPL
 		scripts/config --disable CONFIG_LRNG
 	else
 		if [ -n "$_lrng_config" ]; then
