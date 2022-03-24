@@ -139,7 +139,7 @@ _pkgbase=linux-lucjan
 _major=5.17
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.17.r0.gf443e374ae13.ll8
+pkgver=5.17.r0.gf443e374ae13.ll9
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -187,7 +187,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll8'
+ _lucjanrev='ll9'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -195,7 +195,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll8'
+ _lucjanrev='ll9'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -203,7 +203,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll8'
+ _lucjanrev='ll9'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -212,7 +212,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll8'
+ _lucjanrev='ll9'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -774,7 +774,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'd1fcdcbd891f6898e8a168730e0ad953a02fc75e97808a67f3aaf5ada05c080649181a9d0c5c74cfbffd1c914f5b30abccee5291db1ce4aa299cec4f4a4c428b'
+            '784896df12e2b0321a270e2b4f95398377f1d808c94b8f657084429b5d5fd3f6c489fe90272d12eaa37e8f461b04bc134740aa38c1689b38a316b6474bd824ca'
             'SKIP'
             'd9f72f83a6db43fb9b86133740bb69fcbc57a5807963ee0e2c88c20804bf4642214b529108ee720d04508f9c9e459b2235fea4a3e548902545d030736b0e9f08')
 
