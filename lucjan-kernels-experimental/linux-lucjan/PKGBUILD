@@ -84,7 +84,7 @@ _mm_protect=y
 # 'zen' - enable multigenerational LRU with zenkernel config
 # 'xanmod' - enable multigenerational LRU with xanmod config
 # 'none' - disable multigenerational LRU
-_lru_config='none'
+_lru_config='zen'
 
 ### Enable Linux Random Number Generator
 # ATTENTION - one of three predefined values should be selected!
@@ -100,11 +100,10 @@ _tcp_bbr2=y
 _nf_cone=y
 
 ### Enable SPECULATIVE_PAGE_FAULT
-# ATTENTION - one of three predefined values should be selected!
+# ATTENTION - one of two predefined values should be selected!
 # 'partial' - enable partial support SPECULATIVE_PAGE_FAULT
 # 'full' - enable full support SPECULATIVE_PAGE_FAULT
-# 'none' - disable support SPECULATIVE_PAGE_FAULT
-_spf_config='none'
+_spf_config='partial'
 
 ### Selecting the ZSTD kernel and modules compression level
 # ATTENTION - one of two predefined values should be selected!
@@ -142,7 +141,7 @@ pkgver=5.17.ll10
 #_pkgver=${_major}.${_minor}
 _pkgver=${_major}
 _srcname=linux-${_pkgver}
-pkgrel=1
+pkgrel=3
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -390,17 +389,12 @@ prepare() {
     ### Enable SPECULATIVE_PAGE_FAULT
 	if [ "$_spf_config" = "partial" ]; then
 		echo "Enabling partial SPECULATIVE_PAGE_FAULT..."
-		scripts/config --enable CONFIG_ARCH_SUPPORTS_SPECULATIVE_PAGE_FAULT
 		scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT
 		scripts/config --disable CONFIG_SPECULATIVE_PAGE_FAULT_STATS
 	elif [ "$_spf_config" = "full" ]; then
 		echo "Enabling full SPECULATIVE_PAGE_FAULT..."
-		scripts/config --enable CONFIG_ARCH_SUPPORTS_SPECULATIVE_PAGE_FAULT
 		scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT
 		scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT_STATS
-	elif [ "$_spf_config" = "none" ]; then
-		echo "Disabling SPECULATIVE_PAGE_FAULT..."
-		scripts/config --disable CONFIG_SPECULATIVE_PAGE_FAULT
 	else
 		if [ -n "$_spf_config" ]; then
 			error "The value $_spf_config is invalid. Choose the correct one again."
@@ -426,7 +420,6 @@ prepare() {
     ### Enable multigenerational LRU
 	if [ "$_lru_config" = "zen" ]; then
 		echo "Enabling multigenerational LRU with zenkernel config..."
-		scripts/config --enable CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG
 		scripts/config --enable CONFIG_LRU_GEN
 		scripts/config --set-val CONFIG_NR_LRU_GENS 7
 		scripts/config --set-val CONFIG_TIERS_PER_GEN 4
@@ -434,7 +427,6 @@ prepare() {
 		scripts/config --disable CONFIG_LRU_GEN_STATS
 	elif [ "$_lru_config" = "xanmod" ]; then
 		echo "Enabling multigenerational LRU with xanmod config..."
-		scripts/config --enable CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG
 		scripts/config --enable CONFIG_LRU_GEN
 		scripts/config --set-val CONFIG_NR_LRU_GENS 4
 		scripts/config --set-val CONFIG_TIERS_PER_GEN 2
@@ -778,7 +770,7 @@ sha512sums=('89f0a7ca69d20a539d4b612a7028a30a5e98b402e4b6b88516f14237e5da4b626d7
             'SKIP'
             'bcb5676e38ea2b7093c70cf9046606e432cc7a1dac5c0e45127a1bcfce018967c83a1646880012aae6d7a598e84388c4b0277b68ad47d8db247f01c4f2e113d2'
             'SKIP'
-            'd9f72f83a6db43fb9b86133740bb69fcbc57a5807963ee0e2c88c20804bf4642214b529108ee720d04508f9c9e459b2235fea4a3e548902545d030736b0e9f08')
+            '1b7dbd9df3655540988b4837188f6ae2f0ce33af8ab6fd9012c54091fe3aa9c1a236ad49c5ce1877271b9226e42dae6768700c3189860aaef92705e56e249a5f')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
