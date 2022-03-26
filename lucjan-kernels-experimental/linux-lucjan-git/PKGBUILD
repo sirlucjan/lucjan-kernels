@@ -139,7 +139,7 @@ _major=5.17
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.17.r0.gf443e374ae13.ll12
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -420,15 +420,11 @@ prepare() {
 	if [ "$_lru_config" = "zen" ]; then
 		echo "Enabling multigenerational LRU with zenkernel config..."
 		scripts/config --enable CONFIG_LRU_GEN
-		scripts/config --set-val CONFIG_NR_LRU_GENS 7
-		scripts/config --set-val CONFIG_TIERS_PER_GEN 4
 		scripts/config --enable CONFIG_LRU_GEN_ENABLED
 		scripts/config --disable CONFIG_LRU_GEN_STATS
 	elif [ "$_lru_config" = "xanmod" ]; then
 		echo "Enabling multigenerational LRU with xanmod config..."
 		scripts/config --enable CONFIG_LRU_GEN
-		scripts/config --set-val CONFIG_NR_LRU_GENS 4
-		scripts/config --set-val CONFIG_TIERS_PER_GEN 2
 		scripts/config --disable CONFIG_LRU_GEN_ENABLED
 		scripts/config --disable CONFIG_LRU_GEN_STATS
 	elif [ "$_lru_config" = "none" ]; then
