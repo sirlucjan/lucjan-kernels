@@ -137,7 +137,7 @@ pkgbase=linux-lucjan
 _major=5.17
 _minor=1
 _patches=${_major}-dev
-pkgver=5.17.1.ll16
+pkgver=5.17.1.ll17
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
 pkgrel=1
@@ -187,7 +187,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll16'
+ _lucjanrev='ll17'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -195,7 +195,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll16'
+ _lucjanrev='ll17'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -203,7 +203,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll16'
+ _lucjanrev='ll17'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -212,7 +212,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll16'
+ _lucjanrev='ll17'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -763,7 +763,7 @@ done
 
 sha512sums=('bb73202e770d10767739664b5320b47d78bc374b2bde38b289f1ede1b7b33a8be0adf0808dd82b49735534fe1aae7d83acbf6e42de214d2e179832f6e6c866dd'
             'SKIP'
-            '9c3ae043e2bb057a30c14dadf6309bb804c65b9a4fc2a19e460cfba4bc1f4f683f613c9873ae1a062e0d17b50263b1201549904944a9980b89b0085728fb2563'
+            '984e56b39193fd21e884ca685a41b7e17d3999029b324483a7909175cc22b67ba0c163877cd4aa9c5f009db44619d602653696ab834d5709b692fd0a113302d7'
             'SKIP'
             '1b7dbd9df3655540988b4837188f6ae2f0ce33af8ab6fd9012c54091fe3aa9c1a236ad49c5ce1877271b9226e42dae6768700c3189860aaef92705e56e249a5f')
 
