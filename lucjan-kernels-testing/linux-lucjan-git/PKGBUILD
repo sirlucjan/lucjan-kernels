@@ -84,7 +84,7 @@ _mm_protect=y
 # 'zen' - enable multigenerational LRU with zenkernel config
 # 'xanmod' - enable multigenerational LRU with xanmod config
 # 'none' - disable multigenerational LRU
-_lru_config='none'
+_lru_config='zen'
 
 ### Enable Linux Random Number Generator
 # ATTENTION - one of three predefined values should be selected!
@@ -98,6 +98,12 @@ _tcp_bbr2=y
 
 ### Enable FULLCONENAT
 _nf_cone=y
+
+### Enable SPECULATIVE_PAGE_FAULT
+# ATTENTION - one of two predefined values should be selected!
+# 'partial' - enable partial support SPECULATIVE_PAGE_FAULT
+# 'full' - enable full support SPECULATIVE_PAGE_FAULT
+_spf_config='partial'
 
 ### Selecting the ZSTD kernel and modules compression level
 # ATTENTION - one of two predefined values should be selected!
@@ -122,17 +128,17 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='current'
+_linux_lucjan='trunk'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan-git
 _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers' 'linux-lucjan-git-docs')
-_major=5.16
+_major=5.17
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.16.17.r0.gb90df4ec299a.ll66
+pkgver=5.17.1.r0.g59db887d13b3.ll20
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -180,7 +186,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll66'
+ _lucjanrev='ll20'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -188,7 +194,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll63'
+ _lucjanrev='ll20'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -196,7 +202,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll66'
+ _lucjanrev='ll20'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -205,7 +211,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll13'
+ _lucjanrev='ll20'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -379,6 +385,25 @@ prepare() {
 		scripts/config --module CONFIG_NETFILTER_XT_TARGET_FULLCONENAT
 	fi
 
+    ### Enable SPECULATIVE_PAGE_FAULT
+	if [ "$_spf_config" = "partial" ]; then
+		echo "Enabling partial SPECULATIVE_PAGE_FAULT..."
+		scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT
+		scripts/config --disable CONFIG_SPECULATIVE_PAGE_FAULT_STATS
+	elif [ "$_spf_config" = "full" ]; then
+		echo "Enabling full SPECULATIVE_PAGE_FAULT..."
+		scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT
+		scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT_STATS
+	else
+		if [ -n "$_spf_config" ]; then
+			error "The value $_spf_config is invalid. Choose the correct one again."
+		else
+			error "The value is empty. Choose the correct one again."
+		fi
+		error "Enabling SPECULATIVE_PAGE_FAULT failed!"
+		exit
+	fi
+
     ### Enable protect mappings under memory pressure
 	if [ -n "$_mm_protect" ]; then
 		echo "Enabling protect file mappings under memory pressure..."
@@ -394,18 +419,12 @@ prepare() {
     ### Enable multigenerational LRU
 	if [ "$_lru_config" = "zen" ]; then
 		echo "Enabling multigenerational LRU with zenkernel config..."
-		scripts/config --enable CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG
 		scripts/config --enable CONFIG_LRU_GEN
-		scripts/config --set-val CONFIG_NR_LRU_GENS 7
-		scripts/config --set-val CONFIG_TIERS_PER_GEN 4
 		scripts/config --enable CONFIG_LRU_GEN_ENABLED
 		scripts/config --disable CONFIG_LRU_GEN_STATS
 	elif [ "$_lru_config" = "xanmod" ]; then
 		echo "Enabling multigenerational LRU with xanmod config..."
-		scripts/config --enable CONFIG_ARCH_HAS_NONLEAF_PMD_YOUNG
 		scripts/config --enable CONFIG_LRU_GEN
-		scripts/config --set-val CONFIG_NR_LRU_GENS 4
-		scripts/config --set-val CONFIG_TIERS_PER_GEN 2
 		scripts/config --disable CONFIG_LRU_GEN_ENABLED
 		scripts/config --disable CONFIG_LRU_GEN_STATS
 	elif [ "$_lru_config" = "none" ]; then
@@ -424,6 +443,7 @@ prepare() {
     ### Enable Linux Random Number Generator
 	if [ "$_lrng_config" = "pfkernel" ]; then
 		echo "Enabling Linux Random Number Generator with pfkernel config..."
+		scripts/config --disable CONFIG_RANDOM_DEFAULT_IMPL
 		scripts/config --enable CONFIG_LRNG
 		scripts/config --enable CONFIG_LRNG_OVERSAMPLE_ENTROPY_SOURCES
 		scripts/config --set-val CONFIG_CONFIG_LRNG_OVERSAMPLE_ES_BITS 64
@@ -468,6 +488,7 @@ prepare() {
 		scripts/config --disable CONFIG_LRNG_SELFTEST_PANIC
 	elif [  "$_lrng_config" = "xanmod" ]; then
 		echo "Enabling Linux Random Number Generator with xanmod config..."
+		scripts/config --disable CONFIG_RANDOM_DEFAULT_IMPL
 		scripts/config --enable CONFIG_LRNG
 		scripts/config --disable CONFIG_LRNG_OVERSAMPLE_ENTROPY_SOURCES
 		scripts/config --set-val CONFIG_CONFIG_LRNG_OVERSAMPLE_ES_BITS 0
@@ -499,6 +520,7 @@ prepare() {
 		scripts/config --disable CONFIG_LRNG_SELFTEST
 	elif [ "$_lrng_config" = "none" ]; then
 		echo "Disabling Linux Random Number Generator..."
+		scripts/config --enable CONFIG_RANDOM_DEFAULT_IMPL
 		scripts/config --disable CONFIG_LRNG
 	else
 		if [ -n "$_lrng_config" ]; then
@@ -740,9 +762,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'aa6ccfbba759a53093519a6ed77b499bf31f5e17955f51caeadd341ae2068699f8a22582a22562c16bc80a9b09174b2bb987def7651999c8266794cfad7e982b'
+            '8774c9137ef7b78211c5f6cba0ad6b9a368fa348d0f27b15252b6d2b39028f8911a2d9b28ac5520d0458307155c598975e29967c9f8dcc8c37090706ecab54c7'
             'SKIP'
-            'b7b4f2853d85e5e5d3b1fc308c9518524d12bd696666142a1981ec8e23d47a605b31d97037b3552276c6830fe4a522df28c853211e161e732d968e5f283391b1')
+            '1f5259edfe608ccbe4965175872403870308b5d8f7f1f1b95856b14fe7ac18333b213ed1000c9c19bf8f802cec2b313bcc3fa7bc6dac1cd7f13d8ad01618e02b')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
