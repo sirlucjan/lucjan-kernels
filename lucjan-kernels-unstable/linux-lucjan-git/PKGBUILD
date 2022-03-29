@@ -128,7 +128,7 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='trunk'
+_linux_lucjan='current'
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -139,7 +139,7 @@ _major=5.17
 _patches=${_major}-dev
 _srcname=linux-stable-rc
 pkgver=5.17.1.r0.g59db887d13b3.ll20
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -762,7 +762,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '8774c9137ef7b78211c5f6cba0ad6b9a368fa348d0f27b15252b6d2b39028f8911a2d9b28ac5520d0458307155c598975e29967c9f8dcc8c37090706ecab54c7'
+            'e17f7cc3cb5971623ba4444a12a1355164e5958ef1c3e4accf30f95ecb441f3bfdf3aec5b4ab76766aa484f5f5101ff36cde77b544cb3e7a673c0a04d250d479'
             'SKIP'
             '1f5259edfe608ccbe4965175872403870308b5d8f7f1f1b95856b14fe7ac18333b213ed1000c9c19bf8f802cec2b313bcc3fa7bc6dac1cd7f13d8ad01618e02b')
 
