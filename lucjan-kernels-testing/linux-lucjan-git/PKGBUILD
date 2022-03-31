@@ -139,7 +139,7 @@ _major=5.17
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.17.1.r0.g59db887d13b3.ll20
-pkgrel=2
+pkgrel=3
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -624,7 +624,7 @@ build() {
 _package-kernel() {
   pkgdesc="The $pkgdesc kernel and modules with the ${_lucjanname}-${_lucjanrev} patchset. Sixth Gen Intel Core i3/i5/i7 optimized."
   depends=('coreutils' 'kmod' 'initramfs-lucjan')
-  optdepends=('crda: to set the correct wireless channels of your country'
+  optdepends=('wireless-regdb: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices'
               'modprobed-db: Keeps track of EVERY kernel module that has ever been probed - useful for those of us who make localmodconfig')
   provides=(VIRTUALBOX-GUEST-MODULES WIREGUARD-MODULE)
@@ -764,7 +764,7 @@ done
 sha512sums=('SKIP'
             'e17f7cc3cb5971623ba4444a12a1355164e5958ef1c3e4accf30f95ecb441f3bfdf3aec5b4ab76766aa484f5f5101ff36cde77b544cb3e7a673c0a04d250d479'
             'SKIP'
-            '1f5259edfe608ccbe4965175872403870308b5d8f7f1f1b95856b14fe7ac18333b213ed1000c9c19bf8f802cec2b313bcc3fa7bc6dac1cd7f13d8ad01618e02b')
+            '52c7941eab28c78a570ce17476a7b03e453d35c72bfa9dfcdc2fef4d62a2f365846cea90ef40535b5b7f50c2c6bbcf9c1c84d0edc323c43ff5bd3e1409d829fd')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
