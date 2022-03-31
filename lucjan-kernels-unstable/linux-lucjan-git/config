@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.17.1.ll19 Kernel Configuration
+# Linux/x86 5.17.1.ll20 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 11.2.0"
 CONFIG_CC_IS_GCC=y
@@ -2602,8 +2602,8 @@ CONFIG_BLK_DEV_RNBD_SERVER=m
 #
 # NVME Support
 #
-CONFIG_NVME_CORE=y
-CONFIG_BLK_DEV_NVME=y
+CONFIG_NVME_CORE=m
+CONFIG_BLK_DEV_NVME=m
 CONFIG_NVME_MULTIPATH=y
 CONFIG_NVME_HWMON=y
 CONFIG_NVME_FABRICS=m
