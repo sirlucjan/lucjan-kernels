@@ -128,7 +128,7 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='testing'
+_linux_lucjan='current'
 
 ### Do not edit below this line unless you know what you're doing
 
@@ -138,8 +138,8 @@ _pkgbase=linux-lucjan
 _major=5.17
 _patches=${_major}-dev
 _srcname=linux-stable-rc
-pkgver=5.17.1.r1005.g7c8106684b9e.ll23
-pkgrel=0.3
+pkgver=5.17.1.r0.g59db887d13b3.ll23
+pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -186,7 +186,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll22'
+ _lucjanrev='ll23'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -202,8 +202,8 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll23'
- _lucjanrc='rc3'
+ _lucjanrev='ll24'
+ _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
 elif [ "$_linux_lucjan" = "trunk" ]; then
@@ -762,7 +762,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            'e3ffdba3f0b1b9410e97ddc10249585a46c63dc5a442f6d684b62d234b78f6d29111dcbab98d0ac1ee332604f6f03d0ccbd02b93c65d2a68d6884c0fd5341002'
+            '5860bc530b51a57d1e1d7697258cafe56efc3a9adc588d27e3d20998abbda9d2bcbc80898bc7a0bf62c5e5a45db430c1c0774217dc98431a98b0dc7a7409641a'
             'SKIP'
             'e88499d2b7ef7f5ac0249f17763652d412bacbc36973c38fe11161127438a715a1adccb229adc0f781f80039d9a6446f0485f48fb4b6d0d4d92b4bf2a5ce87f9')
 
