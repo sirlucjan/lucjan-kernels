@@ -139,7 +139,7 @@ _major=5.17
 _patches=${_major}-dev
 _srcname=linux-stable-rc
 pkgver=5.17.1.r1120.g9b2c6cfeca34.ll25
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -762,9 +762,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '53d212ceb00a9ea4f516039538faaf336ee575a195d30989f115aed93f253c245ffb77901262182b0af26a037e1754f3e8354ee5f8bebbf0cb0e8060fa516d60'
+            '8335923dad857fa894b4c84b7bdf47267ea20fe6b028fb9ddffde4711e3c21697f70589d13ea7eedd0b839a533bf0779f99f94b1eb36626df0151e46a930fdf9'
             'SKIP'
-            'b0c98fefff6e1567c3207f946c1586106b8daccb7ae6a65958a3fb089dbf51d3205a30eff88053a3521392fc72224b8a5b2560e8410a25a045f7f4270e7d6d74')
+            '8942e2e33ad99e31d7beeb882da9f44604f808c7d5f5ee92bdb72f0d6705990fcd27ab3895c477b513d81225b85afc327d2321d81762dc032d8e10105a32bb3e')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
