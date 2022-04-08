@@ -139,7 +139,7 @@ _minor=1
 _minorc=$((_minor+1))
 _rcver=rc2
 _patches=${_major}-dev
-pkgver=5.17.2.ll32
+pkgver=5.17.2.ll33
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -150,7 +150,7 @@ arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
 options=('!strip')
-makedepends=('kmod' 'bc' 'libelf' 'python-sphinx' 'python-sphinx_rtd_theme'
+makedepends=('bc' 'libelf' 'python-sphinx' 'python-sphinx_rtd_theme'
              'graphviz' 'imagemagick' 'pahole' 'cpio' 'perl' 'tar' 'xz')
 
 ### Stable-review
@@ -200,7 +200,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll32'
+ _lucjanrev='ll33'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -664,7 +664,8 @@ _package-kernel() {
   echo "$pkgbase" | install -Dm644 /dev/stdin "$modulesdir/pkgbase"
 
   echo "Installing modules..."
-  make INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 modules_install
+  make INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 \
+    DEPMOD=/doesnt/exist modules_install  # Suppress depmod
 
   # remove build and source links
   rm "$modulesdir"/{source,build}
@@ -786,7 +787,7 @@ sha512sums=('bb73202e770d10767739664b5320b47d78bc374b2bde38b289f1ede1b7b33a8be0a
             'SKIP'
             '6088ee91c9a53ec6c37ae0774f082fc01a62626cf282e33e7361095d36a52d9aa3077b6ca459c972b50f2fea003e55ab578a4fce0797d595331f7a4104bc690d'
             'SKIP'
-            '4af97049e6dc9b9e93ea22f598d88984326d1b917c791a8fc217f5f7075c683daa66e4d10e0e8b43481834e507c7ae4c3e5d84bed0554d5dbd1fceb015fbfa4b'
+            'b940177e630e34082eaf67538ed259b7272cf81c7cd304b964e612def18da8c0344eefa81f67bc5593a478961840abda8f2c03a853a08cbc3062f49d4e611f6d'
             'SKIP'
             '8942e2e33ad99e31d7beeb882da9f44604f808c7d5f5ee92bdb72f0d6705990fcd27ab3895c477b513d81225b85afc327d2321d81762dc032d8e10105a32bb3e')
 
