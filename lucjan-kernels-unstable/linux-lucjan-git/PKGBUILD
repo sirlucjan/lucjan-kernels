@@ -139,14 +139,15 @@ _major=5.17
 _patches=${_major}-dev
 _srcname=linux-stable-rc
 pkgver=5.17.1.r1124.g8137844a8b59.ll34
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
 options=('!strip')
 makedepends=('bc' 'libelf' 'git' 'python-sphinx' 'python-sphinx_rtd_theme'
-             'graphviz' 'imagemagick' 'pahole' 'cpio' 'perl' 'tar' 'xz')
+             'graphviz' 'imagemagick' 'pahole' 'cpio' 'perl' 'tar' 'xz'
+             'texlive-latexextra' 'xmlto')
 
 ### LL reverts
 # Some patches for BFQ/block-stable conflict with
