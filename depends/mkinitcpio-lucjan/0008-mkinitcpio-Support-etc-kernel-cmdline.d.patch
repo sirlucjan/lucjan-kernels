@@ -1,7 +1,7 @@
-From cd7f1014630254b0d33c8a19664f319979c55b3d Mon Sep 17 00:00:00 2001
+From f569e84bc963442a352c23d94b221350d183e927 Mon Sep 17 00:00:00 2001
 From: Morten Linderud <morten@linderud.pw>
 Date: Sat, 4 Dec 2021 15:10:41 +0100
-Subject: [PATCH 08/20] mkinitcpio: Support /etc/kernel/cmdline.d
+Subject: [PATCH 08/21] mkinitcpio: Support /etc/kernel/cmdline.d
 
 Signed-off-by: Morten Linderud <morten@linderud.pw>
 ---
@@ -57,5 +57,5 @@ index 99830f4..970f3d2 100755
          --add-section .initrd=<(cat ${microcode[@]} "$initramfs") --change-section-vma .initrd=0x3000000 \
          ${OBJCOPYARGS[@]} "$uefistub" "$out"
 -- 
-2.35.1.354.g715d08a9e5
+2.35.1.677.gabf474a5dd
 

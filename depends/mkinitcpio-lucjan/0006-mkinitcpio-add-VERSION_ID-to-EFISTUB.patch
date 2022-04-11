@@ -1,7 +1,7 @@
-From 00b819fb15c5c228a1a189dceed41e4e90f5534a Mon Sep 17 00:00:00 2001
+From 04b6fa3f9c2572ad2dbed057b6fcb42bfb66d94e Mon Sep 17 00:00:00 2001
 From: Morten Linderud <morten@linderud.pw>
 Date: Tue, 30 Nov 2021 09:09:38 +0100
-Subject: [PATCH 06/20] mkinitcpio: add VERSION_ID to EFISTUB
+Subject: [PATCH 06/21] mkinitcpio: add VERSION_ID to EFISTUB
 
 This patch adds VERSION_ID to the built images. This helps distinguish
 between several kernel versions instead of having it fallback to showing
@@ -35,5 +35,5 @@ index 01f8fcb..99830f4 100755
          --add-section .linux="$kernelimg" --change-section-vma .linux=0x2000000 \
          --add-section .initrd=<(cat ${microcode[@]} "$initramfs") --change-section-vma .initrd=0x3000000 \
 -- 
-2.35.1.354.g715d08a9e5
+2.35.1.677.gabf474a5dd
 

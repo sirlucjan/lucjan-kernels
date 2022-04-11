@@ -1,7 +1,7 @@
-From b37ef3f68e98cb5e954bb716aea6599e5fb0c6f9 Mon Sep 17 00:00:00 2001
+From 3d0c4645b461d9028f5aa0caa77eef9344ead136 Mon Sep 17 00:00:00 2001
 From: Markus Weippert <markus@gekmihesg.de>
 Date: Tue, 21 Dec 2021 09:31:09 +0100
-Subject: [PATCH 05/20] Allow overriding hooks
+Subject: [PATCH 05/21] Allow overriding hooks
 
 ---
  mkinitcpio | 7 +++++--
@@ -34,5 +34,5 @@ index 4e6805c..01f8fcb 100755
              KERNELVERSION="$KERNELVERSION" "$hook" "${args[@]}"
              status=$?
 -- 
-2.35.1.354.g715d08a9e5
+2.35.1.677.gabf474a5dd
 

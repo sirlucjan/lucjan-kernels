@@ -1,7 +1,7 @@
-From 1919e1d957d0312d786055c28b8e8b0f21ff30d5 Mon Sep 17 00:00:00 2001
+From 267993d4209ee98c9ea2068af1add5b62640458a Mon Sep 17 00:00:00 2001
 From: Christian Hesse <mail@eworm.de>
 Date: Thu, 30 Dec 2021 00:48:50 +0100
-Subject: [PATCH 07/20] functions: no progress for zstd decompression
+Subject: [PATCH 07/21] functions: no progress for zstd decompression
 
 ---
  functions | 2 +-
@@ -21,5 +21,5 @@ index 5b18b9c..389e1b9 100644
      msg "Generating module dependencies"
      install -m644 -t "$moduledest" "$_d_kmoduledir"/modules.builtin
 -- 
-2.35.1.354.g715d08a9e5
+2.35.1.677.gabf474a5dd
 

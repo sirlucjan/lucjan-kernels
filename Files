@@ -21,6 +21,7 @@
 │   │   ├── 0018-Replace-check-with-rm-f.patch
 │   │   ├── 0019-Fix-typo-in-commit-reproducibility.patch
 │   │   ├── 0020-mkinitcpio-preserve-module-dir-by-the-kernel-remove-.patch
+│   │   ├── 0021-Typo-correction.patch
 │   │   ├── mkinitcpio.install
 │   │   └── PKGBUILD
 │   └── README.md
@@ -45,4 +46,4 @@
 │       └── PKGBUILD
 └── README.md
 
-10 directories, 35 files
+10 directories, 36 files

@@ -1,7 +1,7 @@
-From 0b345a4617a13b0931fd734d4493474fca403152 Mon Sep 17 00:00:00 2001
+From 5568a03f81da9953f4f5787ebf43788bc783fd21 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Fri, 11 Mar 2022 18:43:36 +0100
-Subject: [PATCH 10/20] Revert "functions: no progress for zstd decompression"
+Subject: [PATCH 10/21] Revert "functions: no progress for zstd decompression"
 
 This reverts commit 689ce7b16e49c5eaa2f569345a0d1c6e03a8409a.
 
@@ -24,5 +24,5 @@ index 389e1b9..5b18b9c 100644
      msg "Generating module dependencies"
      install -m644 -t "$moduledest" "$_d_kmoduledir"/modules.builtin
 -- 
-2.35.1.354.g715d08a9e5
+2.35.1.677.gabf474a5dd
 
