@@ -1,7 +1,7 @@
-From bb22470ccbb3bf7eb8008c54aefb790cd9d1175f Mon Sep 17 00:00:00 2001
+From 1658a91603e1f2448059cee6bcf388de02b9ab37 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Thu, 17 Mar 2022 20:29:57 +0100
-Subject: [PATCH 20/21] mkinitcpio: preserve module dir by the kernel, remove
+Subject: [PATCH 20/23] mkinitcpio: preserve module dir by the kernel, remove
  modules.order hack
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>

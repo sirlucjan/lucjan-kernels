@@ -1,7 +1,7 @@
-From 18edef4422f63f76ecd6a7b6c217cbaa0de6f451 Mon Sep 17 00:00:00 2001
+From 07b1c42a375de705ddfa738ab2418a0cf135298b Mon Sep 17 00:00:00 2001
 From: Tobias Powalowski <tpowa@archlinux.org>
 Date: Fri, 11 Mar 2022 15:01:22 +0100
-Subject: [PATCH 11/21] add zst compressed firmware support fpr future kernel
+Subject: [PATCH 11/23] add zst compressed firmware support fpr future kernel
  versions
 
 ---

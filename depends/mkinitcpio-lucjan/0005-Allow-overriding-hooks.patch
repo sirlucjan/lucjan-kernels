@@ -1,7 +1,7 @@
-From 3d0c4645b461d9028f5aa0caa77eef9344ead136 Mon Sep 17 00:00:00 2001
+From c614433c2d2bcdf32561e0202d5da287121764fa Mon Sep 17 00:00:00 2001
 From: Markus Weippert <markus@gekmihesg.de>
 Date: Tue, 21 Dec 2021 09:31:09 +0100
-Subject: [PATCH 05/21] Allow overriding hooks
+Subject: [PATCH 05/23] Allow overriding hooks
 
 ---
  mkinitcpio | 7 +++++--
