@@ -1,6 +1,10 @@
 # mkinitcpio-lucjan
 
-###### NOTE: mkinitcpio-zstd will overwrite the mkinitcpio.conf file and the old one will be saved as mkinitcpio.conf.pacsave - however, I recommend backing up this file before installing the modified mkinitcpio version.
+###### NOTE: mkinitcpio-lucjan will overwrite the mkinitcpio.conf file and the old one will be saved as mkinitcpio.conf.pacsave - however, I recommend backing up this file before installing the modified mkinitcpio version.
+
+##### Patchset linux-lucjan adds support for firmware compressed in zstd format.
+##### Unfortunately, the current version of mkinitcpio does NOT support such functionality.
+##### mkinitcpio-lucjan contains the appropriate patches to support firmware compressed in the zstd format.
 
 ## Selecting the ZSTD modules and kernel compression level
 
