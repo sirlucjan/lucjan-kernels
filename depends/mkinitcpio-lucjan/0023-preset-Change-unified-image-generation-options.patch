@@ -1,7 +1,7 @@
-From 978378605da08fd3a68a054cd8fc77b4ffb619fb Mon Sep 17 00:00:00 2001
+From 29e640f35f76a0b0d94cb1f18c9311dd1cac3b47 Mon Sep 17 00:00:00 2001
 From: Robin Ebert <ebertrobin2002@gmail.com>
 Date: Wed, 6 Apr 2022 23:10:23 +0200
-Subject: [PATCH 23/23] preset: Change unified image generation options
+Subject: [PATCH 23/24] preset: Change unified image generation options
 
 - Setting ALL_efi_image is nonsense (like it is for ALL_image) so don't allow it
 - Allow omitting *_image when *_efi_image is set
@@ -45,5 +45,5 @@ index 87a5f0f..a3de5ce 100755
          if [[ ${!preset_microcode:-$ALL_microcode} ]]; then
              for mc in "${!preset_microcode:-${ALL_microcode[@]}}"; do
 -- 
-2.35.1.677.gabf474a5dd
+2.36.0.rc1
 

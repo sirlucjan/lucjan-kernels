@@ -1,7 +1,7 @@
-From b16278b131266a5c92727f2ba68c1d89b6a4d780 Mon Sep 17 00:00:00 2001
+From c5fcee3778b82d9b73bb0690bf033abc429be9a9 Mon Sep 17 00:00:00 2001
 From: Tobias Powalowski <tpowa@archlinux.org>
 Date: Fri, 11 Mar 2022 15:53:09 +0100
-Subject: [PATCH 13/23] add real symlink support
+Subject: [PATCH 13/24] add real symlink support
 
 ---
  functions | 10 +++++++++-
@@ -29,5 +29,5 @@ index 88bd563..4dce711 100644
      # negate this so that the RETURN trap is not fired on non-binaries
      ! lddout=$(ldd "$binary" 2>/dev/null) && return 0
 -- 
-2.35.1.677.gabf474a5dd
+2.36.0.rc1
 

@@ -1,0 +1,26 @@
+From 9df0f219f957f70c4050e1126f7a11a4b6fe579a Mon Sep 17 00:00:00 2001
+From: Richard Kraus <richardkraus98@pm.me>
+Date: Fri, 15 Apr 2022 10:52:51 +0200
+Subject: [PATCH 24/24] fixed missing uefistub detection
+
+---
+ mkinitcpio | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/mkinitcpio b/mkinitcpio
+index a3de5ce..f7b3014 100755
+--- a/mkinitcpio
++++ b/mkinitcpio
+@@ -279,7 +279,8 @@ build_uefi(){
+                 break
+             fi
+         done
+-    elif [[ ! -f "$uefistub" ]]; then
++    fi
++    if [[ ! -f "$uefistub" ]]; then
+         error "UEFI stub '%s' not found" "$uefistub"
+         return 1
+     fi
+-- 
+2.36.0.rc1
+
