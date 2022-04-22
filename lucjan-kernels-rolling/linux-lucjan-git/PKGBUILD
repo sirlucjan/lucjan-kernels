@@ -138,7 +138,7 @@ _pkgbase=linux-lucjan
 _major=5.17
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.17.4.r31931.gd8b78dc2f582.ll40
+pkgver=5.17.4.r31931.gd8b78dc2f582.ll41
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -187,7 +187,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll40'
+ _lucjanrev='ll41'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -764,7 +764,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '6ffd1b1e4a51cd0dc26810f718d46f9b640bf61d33463a058b51d6fca9508250c4248e02bf950f1b161088088a0feee948f2c97a601a9363f6677fdcc7b5be0b'
+            '11eeb0769cc840f4f3067d72c7a34503991f5940c0898c7178ae41f16f38fb7ca87eb48be478b5c34afc7201ef4c53b360bc50f48f9e2200357cd59bd61fc7fa'
             'SKIP'
             '3f11495d6143163c08f4903d27d3ac6d70692c6bb900e5f3bcf6ef3bad7df758fe81af178b0826d85556154ac9f666c6751954cb5fac6983cf49d61d57848d06')
 
