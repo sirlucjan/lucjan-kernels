@@ -128,18 +128,18 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='current'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
 _major=5.17
-_minor=4
+_minor=5
 _minorc=$((_minor+1))
 _rcver=rc1
 _patches=${_major}-dev
-pkgver=5.17.4.ll55
+pkgver=5.17.6.ll56
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -217,7 +217,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll46'
+ _lucjanrev='ll56'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -784,13 +784,13 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('a0f1945eb61527aac886875a83ad720bff3d6cd06ed0ee92ff7795e4f854d797f7688a102f1e8aa4425e96aab789f4b4c82104591de32fdf34ffd5c13622bbf3'
+sha512sums=('9a0b97b0179094fa4c3f91ad1f94ac274b4b7946b3c5112995fd5f60b263389772491f1a756186bb638ee868d42ccd7449cb9aa3227f1637949b6b54418c6bab'
             'SKIP'
-            '7e4065d3bd7ccdbf7c6842759e5dec3730d9f2d062d145d570a12b23ca8ad1b10dca9bbe007e55759e7fa3a7aced1bf688f0bc7be4c7b6c4f0bf81fcee3cd879'
+            '33b9b855dc8a3cf6bb1840d11a88359229d826940b8efe345dfe3587b12c7d2707130bd442a37d40f488f01487bf73d5f06a52e5c08f03c0e870775a714c44a6'
             'SKIP'
-            '38c7cada9aa6c49c2b7e83f1fa70c7792d67dd76be2929ae50e778ad9ed72667e16bc21cb216b0fd66d01a4120d20c4b14ff81b46b2c66174cbb49f114536b77'
+            '8415a4a3391625070006214419ce6e74e7b0f743d92ba47d6e1d6aedbd65f78667601b5292641bac25028d027f772e4fcedcb51bbe834615bc214b9eefeff848'
             'SKIP'
-            'bd1b8b49b7a88eda82a700191b8b13544a5a62819a2cccff18191c3856c41f8bb3bc73af16efbb6a05012283c8641389eaeb31fdf3dc70091e836a60e6e71dd6')
+            'f75c1046d19053a2d4a819d55a9cb45ffea5a8d74b596a45eef225d8dd5b8526d8607a9bd9ee85b63237eeacb3d38d15d5d54d4fb4dc4ab1517d81fc7852b1ac')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
