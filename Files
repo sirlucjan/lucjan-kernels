@@ -27,7 +27,9 @@
 │   │   ├── 0024-fixed-missing-uefistub-detection.patch
 │   │   ├── mkinitcpio.install
 │   │   └── PKGBUILD
-│   └── README.md
+│   ├── README.md
+│   └── uksmd-git
+│       └── PKGBUILD
 ├── Files
 ├── lucjan-kernels-rolling
 │   └── linux-lucjan-git
@@ -49,4 +51,4 @@
 │       └── PKGBUILD
 └── README.md
 
-10 directories, 39 files
+11 directories, 40 files
