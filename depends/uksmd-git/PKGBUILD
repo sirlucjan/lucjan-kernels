@@ -3,8 +3,8 @@
 
 pkgname=uksmd-git
 _pkgname=uksmd
-pkgver=20220513.r31.ge9b06f4
-pkgrel=2
+pkgver=0.0.0.r31.e9b06f4
+pkgrel=1
 pkgdesc="Userspace KSM helper daemon"
 url="https://gitlab.com/post-factum/uksmd"
 license=(GPL3)
@@ -12,13 +12,13 @@ arch=(x86_64)
 depends=('UKSMD-BUILTIN' 'systemd' 'procps-ng' 'libcap-ng')
 makedepends=('meson' 'git')
 conflicts=('uksmd')
-provides=('uksmd')
+provides=("uksmd=${pkgver}")
 source=('git+https://gitlab.com/post-factum/uksmd')
 sha256sums=('SKIP')
 
 pkgver() {
   cd $_pkgname
-  echo "$(git show --format='%cI' -q master | sed 's/T.*//g;s/-//g').r$(git rev-list --count HEAD).g$(git rev-parse --short HEAD)"
+  echo $(cat meson.build | grep -o "[[:digit:]]*" | paste -sd'.').r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)
 }
 
 build() {
