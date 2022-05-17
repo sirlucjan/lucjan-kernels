@@ -50,3 +50,15 @@ _zstd_level_value=''
 ###### Entering any values other than "normal" and "ultra" as well as leaving the checkbox empty will immediately abort the compilation.
 
 ###### It is worth mentioning once again that the ultra flag does not guarantee that you will build significantly smaller modules - on the contrary, you may achieve the counterproductive effect.
+
+# UKSMD
+
+## Userspace KSM helper daemon.
+
+###### Install uksmd-git and run the command:
+
+```systemctl enable uksmd.service && systemctl start uksmd.service```
+
+###### Upstream info:
+
+https://gitlab.com/post-factum/uksmd
