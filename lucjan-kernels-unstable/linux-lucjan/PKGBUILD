@@ -99,6 +99,9 @@ _tcp_bbr2=y
 ### Enable FULLCONENAT
 _nf_cone=y
 
+### Enable RTW88
+_rtw88=
+
 ### Enable SPECULATIVE_PAGE_FAULT
 # ATTENTION - one of two predefined values should be selected!
 # 'partial' - enable partial support SPECULATIVE_PAGE_FAULT
@@ -144,7 +147,7 @@ _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -405,6 +408,16 @@ prepare() {
 		echo "Enabling FULLCONENAT..."
 		scripts/config --module CONFIG_IP_NF_TARGET_FULLCONENAT
 		scripts/config --module CONFIG_NETFILTER_XT_TARGET_FULLCONENAT
+	fi
+
+    ### Enable RTW88
+	if [ -n "$_rtw88" ]; then
+		echo "Enabling RTW88..."
+		scripts/config --module CONFIG_RTW88_USB
+		scripts/config --module CONFIG_RTW88_8822BU
+		scripts/config --module CONFIG_RTW88_8822CU
+		scripts/config --module CONFIG_RTW88_8723DU
+		scripts/config --module CONFIG_RTW88_8821CU
 	fi
 
     ### Enable SPECULATIVE_PAGE_FAULT
@@ -791,7 +804,7 @@ sha512sums=('032feea7138d0b9b016a50769e6f10889e0ec8cb532569b1aaecac957211e60cc92
             'SKIP'
             '209cd87169769cd9e06244231590f5b811c23cc5bce6a2ef3a400e3509a0caebe0c34354400fecd368295499f1397540021ce94efe3c97cb6e8741fd92a1d9d5'
             'SKIP'
-            '4744ca896596803edff6e2179d06a3afdccdf441cada267b4350f3f5a5cf4aa09da1733c252c2d9b237a8e284a741c3b6489baf5e35587da3928a24267407559')
+            '68950024c9cf5f573911d3959c0b1e2dd9e74db1e72c50a1bc1a4f3a77958ceaa854e248bd11f49b3e90ef648b84660115ab3f437f494f290e9aa531c350d6c4')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
