@@ -141,8 +141,8 @@ _pkgbase=linux-lucjan
 _major=5.17
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.17.9.r31936.gd0437845741c.ll77
-pkgrel=2
+pkgver=5.17.9.r31936.gd0437845741c.ll78
+pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -190,7 +190,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll77'
+ _lucjanrev='ll78'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -587,6 +587,9 @@ prepare() {
 		scripts/config --disable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_LZ4
 		scripts/config --enable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_ZSTD
 		scripts/config --set-str CONFIG_ZSWAP_COMPRESSOR_DEFAULT zstd
+		echo "Enabling zram entropy calculation..."
+		scripts/config --enable ZRAM_ENTROPY
+		scripts/config --set-val ZRAM_ENTROPY_THRESHOLD 100000
         fi
 
     ### Optionally load needed modules for the make localmodconfig
@@ -778,9 +781,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '209cd87169769cd9e06244231590f5b811c23cc5bce6a2ef3a400e3509a0caebe0c34354400fecd368295499f1397540021ce94efe3c97cb6e8741fd92a1d9d5'
+            '15127be741cbfedb6348d78c8cb3578b24eef0cbe091e41e69d65b724adef2a7260a0d04b449202f8df856cecb800ae2821ebc6cff59be4d2cb13ec7c67f9f48'
             'SKIP'
-            '68950024c9cf5f573911d3959c0b1e2dd9e74db1e72c50a1bc1a4f3a77958ceaa854e248bd11f49b3e90ef648b84660115ab3f437f494f290e9aa531c350d6c4')
+            '117aab6c3dc1a8da21301eccd36885be9e8a661189db3bdb7ffab790ec5fa451467083e766d07b665b6329174cd5f25940df0bccb7e24abdb2b9dd6e596a05c2')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
