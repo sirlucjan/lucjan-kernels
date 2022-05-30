@@ -142,7 +142,7 @@ _major=5.18
 _patches=${_major}-dev
 _srcname=linux-stable-rc
 pkgver=5.18.r48.g10e6e3d47333.ll23
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -781,7 +781,7 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '87464e4c59b15daa123fa14288598b9ed2915fe66cc202aaa37339b8bccd4a78453863d6ef2690d62f057fb29a018a2baafc6899468457acd319803eccad483c'
+            '0f0cce726988636e54ae51a65233626642defcd32ad5d39dca9d68d03926f1dca44b4314931b3d6462bdf07b4b58b88bb7bf034860bece54c0335cef59777c86'
             'SKIP'
             '58524e2e93d37e283d46ef557a7b599a730acfe434e2cf3d942642c064e4b5f6f43c87016155e99f8e3cb604654800229914385d73e0c7966e2be4d9a2590efd')
 
