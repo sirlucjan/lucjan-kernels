@@ -91,7 +91,7 @@ _lru_config='zen'
 # 'pfkernel' - enable Linux Random Number Generator with pfkernel config
 # 'xanmod' - enable Linux Random Number Generator with xanmod config (WARNING option temporarily not recommended during testing phase)
 # 'none' - disable Linux Random Number Generator
-_lrng_config='none'
+_lrng_config='pfkernel'
 
 ### Enable TCP_CONG_BBR2
 _tcp_bbr2=y
@@ -143,7 +143,7 @@ _patches=${_major}-dev
 pkgver=5.18.1.ll28
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
-pkgrel=2
+pkgrel=3
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
