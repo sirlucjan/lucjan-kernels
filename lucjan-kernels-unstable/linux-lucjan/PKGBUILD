@@ -89,7 +89,7 @@ _lru_config='zen'
 ### Enable Linux Random Number Generator
 # ATTENTION - one of three predefined values should be selected!
 # 'pfkernel' - enable Linux Random Number Generator with pfkernel config
-# 'xanmod' - enable Linux Random Number Generator with xanmod config
+# 'xanmod' - enable Linux Random Number Generator with xanmod config (WARNING option temporarily not recommended during testing phase)
 # 'none' - disable Linux Random Number Generator
 _lrng_config='none'
 
