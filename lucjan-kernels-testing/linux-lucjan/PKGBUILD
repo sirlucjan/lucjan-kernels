@@ -136,7 +136,7 @@ _linux_lucjan='current'
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
-# pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers' 'linux-lucjan-docs')
+# pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers')
 _major=5.18
 _minor=1
 _patches=${_major}-dev
@@ -149,9 +149,7 @@ arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
 options=('!strip')
-makedepends=('bc' 'libelf' 'python-sphinx' 'python-sphinx_rtd_theme'
-             'graphviz' 'imagemagick' 'pahole' 'cpio' 'perl' 'tar' 'xz'
-             'texlive-latexextra' 'xmlto')
+makedepends=('bc' 'libelf' 'pahole' 'cpio' 'perl' 'tar' 'xz')
 
 ### LL reverts
 # Some patches for BFQ/block-stable conflict with
@@ -678,7 +676,6 @@ build() {
   cd $_srcname
 
   make all
-  make htmldocs
 }
 
 _package-kernel() {
@@ -794,28 +791,7 @@ _package-headers() {
   ln -sr "$builddir" "$pkgdir/usr/src/$pkgbase"
 }
 
-_package-docs() {
-  pkgdesc="Documentation for the $pkgdesc kernel. Sixth Gen Intel Core i3/i5/i7 optimized."
-  depends=('linux-lucjan-kernel')
-  groups=('linux-lucjan')
-
-  cd $_srcname
-  local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
-
-  echo "Installing documentation..."
-  local src dst
-  while read -rd '' src; do
-    dst="${src#Documentation/}"
-    dst="$builddir/Documentation/${dst#output/}"
-    install -Dm644 "$src" "$dst"
-  done < <(find Documentation -name '.*' -prune -o ! -type d -print0)
-
-  echo "Adding symlink..."
-  mkdir -p "$pkgdir/usr/share/doc"
-  ln -sr "$builddir/Documentation" "$pkgdir/usr/share/doc/$pkgbase"
-}
-
-pkgname=("$pkgbase-kernel" "$pkgbase-headers" "$pkgbase-docs")
+pkgname=("$pkgbase-kernel" "$pkgbase-headers")
 for _p in "${pkgname[@]}"; do
   eval "package_$_p() {
     $(declare -f "_package${_p#$pkgbase}")
