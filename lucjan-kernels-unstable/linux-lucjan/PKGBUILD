@@ -81,10 +81,10 @@ _mm_protect=y
 
 ### Enable multigenerational LRU
 # ATTENTION - one of three predefined values should be selected!
-# 'partial' - enable partial support multigenerational LRU 
-# 'full' - enable full support multigenerational LRU
+# 'standard' - enable multigenerational LRU 
+# 'stats' - enable multigenerational LRU with stats
 # 'none' - disable multigenerational LRU
-_lru_config='partial'
+_lru_config='standard'
 
 ### Enable Linux Random Number Generator
 _lrng_enable=y
@@ -100,9 +100,9 @@ _rtw88=
 
 ### Enable SPECULATIVE_PAGE_FAULT
 # ATTENTION - one of two predefined values should be selected!
-# 'partial' - enable partial support SPECULATIVE_PAGE_FAULT
-# 'full' - enable full support SPECULATIVE_PAGE_FAULT
-_spf_config='partial'
+# 'standard' - enable SPECULATIVE_PAGE_FAULT
+# 'stats' - enable support SPECULATIVE_PAGE_FAULT with stats
+_spf_config='standard'
 
 ### Selecting the ZSTD kernel and modules compression level
 # ATTENTION - one of two predefined values should be selected!
@@ -143,7 +143,7 @@ _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0.2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -415,12 +415,12 @@ prepare() {
 	fi
 
     ### Enable SPECULATIVE_PAGE_FAULT
-	if [ "$_spf_config" = "partial" ]; then
-		echo "Enabling partial SPECULATIVE_PAGE_FAULT..."
+	if [ "$_spf_config" = "standard" ]; then
+		echo "Enabling SPECULATIVE_PAGE_FAULT..."
 		scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT
 		scripts/config --disable CONFIG_SPECULATIVE_PAGE_FAULT_STATS
-	elif [ "$_spf_config" = "full" ]; then
-		echo "Enabling full SPECULATIVE_PAGE_FAULT..."
+	elif [ "$_spf_config" = "stats" ]; then
+		echo "Enabling SPECULATIVE_PAGE_FAULT with stats..."
 		scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT
 		scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT_STATS
 	else
@@ -446,13 +446,13 @@ prepare() {
 	fi
 
     ### Enable multigenerational LRU
-	if [ "$_lru_config" = "partial" ]; then
-		echo "Enabling partial multigenerational LRU..."
+	if [ "$_lru_config" = "standard" ]; then
+		echo "Enabling multigenerational LRU..."
 		scripts/config --enable CONFIG_LRU_GEN
 		scripts/config --enable CONFIG_LRU_GEN_ENABLED
 		scripts/config --disable CONFIG_LRU_GEN_STATS
-	elif [ "$_lru_config" = "full" ]; then
-		echo "Enabling full multigenerational LRU..."
+	elif [ "$_lru_config" = "stats" ]; then
+		echo "Enabling multigenerational LRU with stats..."
 		scripts/config --enable CONFIG_LRU_GEN
 		scripts/config --enable CONFIG_LRU_GEN_ENABLED
 		scripts/config --enable CONFIG_LRU_GEN_STATS
