@@ -81,10 +81,10 @@ _mm_protect=y
 
 ### Enable multigenerational LRU
 # ATTENTION - one of three predefined values should be selected!
-# 'zen' - enable multigenerational LRU with zenkernel config
-# 'xanmod' - enable multigenerational LRU with xanmod config
+# 'partial' - enable partial support multigenerational LRU 
+# 'full' - enable full support multigenerational LRU
 # 'none' - disable multigenerational LRU
-_lru_config='zen'
+_lru_config='partial'
 
 ### Enable Linux Random Number Generator
 _lrng_enable=y
@@ -139,7 +139,7 @@ _patches=${_major}-dev
 pkgver=5.18.2.ll42
 _pkgver=${_major}.${_minor}
 _srcname=linux-${_pkgver}
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -425,16 +425,16 @@ prepare() {
 	fi
 
     ### Enable multigenerational LRU
-	if [ "$_lru_config" = "zen" ]; then
-		echo "Enabling multigenerational LRU with zenkernel config..."
+	if [ "$_lru_config" = "partial" ]; then
+		echo "Enabling partial multigenerational LRU..."
 		scripts/config --enable CONFIG_LRU_GEN
 		scripts/config --enable CONFIG_LRU_GEN_ENABLED
 		scripts/config --disable CONFIG_LRU_GEN_STATS
-	elif [ "$_lru_config" = "xanmod" ]; then
-		echo "Enabling multigenerational LRU with xanmod config..."
+	elif [ "$_lru_config" = "full" ]; then
+		echo "Enabling full multigenerational LRU..."
 		scripts/config --enable CONFIG_LRU_GEN
-		scripts/config --disable CONFIG_LRU_GEN_ENABLED
-		scripts/config --disable CONFIG_LRU_GEN_STATS
+		scripts/config --enable CONFIG_LRU_GEN_ENABLED
+		scripts/config --enable CONFIG_LRU_GEN_STATS
 	elif [ "$_lru_config" = "none" ]; then
 		echo "Disabling multigenerational LRU..."
 		scripts/config --disable CONFIG_LRU_GEN
