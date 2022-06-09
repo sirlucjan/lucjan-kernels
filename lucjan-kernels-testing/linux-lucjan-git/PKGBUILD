@@ -138,7 +138,7 @@ _major=5.18
 _patches=${_major}-dev
 _srcname=linux
 pkgver=5.18.3.r0.g3a82f34133ab.ll46
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -735,7 +735,7 @@ done
 sha512sums=('SKIP'
             '74751e9e93bd668a9c32600919c841b36190b87252e124b62f75c88e1d665968d367323dadc1f698cc589f3e6927d98ad14af74c210ceecd43b4201a62e52ed2'
             'SKIP'
-            '591c125e18cdb98b25b8f6d85c2897b26edcc5eee27c3ec69a3fc27893b8a254c60ac41eaf703f54e24e3b97ef45f4833fa17bfdece6e3ba7e843603527579d6')
+            '369db5f4fd0e2442e74ca82d3ee52b93bcebc4318ffcf1429a202a93d6b822b6211faeaeac3b158141e6ed2f90197c2a43c60047f3ccbe8da5e0730af6394568')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
