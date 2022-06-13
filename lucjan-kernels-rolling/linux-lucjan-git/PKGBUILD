@@ -81,17 +81,13 @@ _mm_protect=y
 
 ### Enable multigenerational LRU
 # ATTENTION - one of three predefined values should be selected!
-# 'zen' - enable multigenerational LRU with zenkernel config
-# 'xanmod' - enable multigenerational LRU with xanmod config
+# 'standard' - enable multigenerational LRU 
+# 'stats' - enable multigenerational LRU with stats
 # 'none' - disable multigenerational LRU
-_lru_config='zen'
+_lru_config='standard'
 
 ### Enable Linux Random Number Generator
-# ATTENTION - one of three predefined values should be selected!
-# 'pfkernel' - enable Linux Random Number Generator with pfkernel config
-# 'xanmod' - enable Linux Random Number Generator with xanmod config
-# 'none' - disable Linux Random Number Generator
-_lrng_config='none'
+_lrng_enable=y
 
 ### Enable TCP_CONG_BBR2
 _tcp_bbr2=y
@@ -104,9 +100,9 @@ _rtw88=
 
 ### Enable SPECULATIVE_PAGE_FAULT
 # ATTENTION - one of two predefined values should be selected!
-# 'partial' - enable partial support SPECULATIVE_PAGE_FAULT
-# 'full' - enable full support SPECULATIVE_PAGE_FAULT
-_spf_config='partial'
+# 'standard' - enable SPECULATIVE_PAGE_FAULT
+# 'stats' - enable support SPECULATIVE_PAGE_FAULT with stats
+_spf_config='standard'
 
 ### Selecting the ZSTD kernel and modules compression level
 # ATTENTION - one of two predefined values should be selected!
@@ -138,10 +134,10 @@ _linux_lucjan='current'
 pkgbase=linux-lucjan-git
 _pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-git-kernel' 'linux-lucjan-git-headers')
-_major=5.17
+_major=5.18
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.17.10.r31937.gaffa1a0b4d45.ll81
+pkgver=5.17.14.r49142.gb0f67965d0e5.ll47
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -188,7 +184,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll81'
+ _lucjanrev='ll47'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -196,7 +192,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll67'
+ _lucjanrev='ll22'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -204,7 +200,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll81'
+ _lucjanrev='ll44'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -213,7 +209,7 @@ elif [ "$_linux_lucjan" = "trunk" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/trunk"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/trunk"
  _lucjanname='lucjan'
- _lucjanrev='ll20'
+ _lucjanrev='ll22'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -398,12 +394,12 @@ prepare() {
 	fi
 
     ### Enable SPECULATIVE_PAGE_FAULT
-	if [ "$_spf_config" = "partial" ]; then
-		echo "Enabling partial SPECULATIVE_PAGE_FAULT..."
+	if [ "$_spf_config" = "standard" ]; then
+		echo "Enabling SPECULATIVE_PAGE_FAULT..."
 		scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT
 		scripts/config --disable CONFIG_SPECULATIVE_PAGE_FAULT_STATS
-	elif [ "$_spf_config" = "full" ]; then
-		echo "Enabling full SPECULATIVE_PAGE_FAULT..."
+	elif [ "$_spf_config" = "stats" ]; then
+		echo "Enabling SPECULATIVE_PAGE_FAULT with stats..."
 		scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT
 		scripts/config --enable CONFIG_SPECULATIVE_PAGE_FAULT_STATS
 	else
@@ -429,16 +425,16 @@ prepare() {
 	fi
 
     ### Enable multigenerational LRU
-	if [ "$_lru_config" = "zen" ]; then
-		echo "Enabling multigenerational LRU with zenkernel config..."
+	if [ "$_lru_config" = "standard" ]; then
+		echo "Enabling multigenerational LRU..."
 		scripts/config --enable CONFIG_LRU_GEN
 		scripts/config --enable CONFIG_LRU_GEN_ENABLED
 		scripts/config --disable CONFIG_LRU_GEN_STATS
-	elif [ "$_lru_config" = "xanmod" ]; then
-		echo "Enabling multigenerational LRU with xanmod config..."
+	elif [ "$_lru_config" = "stats" ]; then
+		echo "Enabling multigenerational LRU with stats..."
 		scripts/config --enable CONFIG_LRU_GEN
-		scripts/config --disable CONFIG_LRU_GEN_ENABLED
-		scripts/config --disable CONFIG_LRU_GEN_STATS
+		scripts/config --enable CONFIG_LRU_GEN_ENABLED
+		scripts/config --enable CONFIG_LRU_GEN_STATS
 	elif [ "$_lru_config" = "none" ]; then
 		echo "Disabling multigenerational LRU..."
 		scripts/config --disable CONFIG_LRU_GEN
@@ -453,18 +449,23 @@ prepare() {
 	fi
 
     ### Enable Linux Random Number Generator
-	if [ "$_lrng_config" = "pfkernel" ]; then
-		echo "Enabling Linux Random Number Generator with pfkernel config..."
+	if [ -n "$_lrng_enable" ]; then
+		echo "Enabling Linux Random Number Generator..."
 		scripts/config --disable CONFIG_RANDOM_DEFAULT_IMPL
 		scripts/config --enable CONFIG_LRNG
-		scripts/config --enable CONFIG_LRNG_OVERSAMPLE_ENTROPY_SOURCES
-		scripts/config --set-val CONFIG_CONFIG_LRNG_OVERSAMPLE_ES_BITS 64
-		scripts/config --set-val CONFIG_LRNG_SEED_BUFFER_INIT_ADD_BITS 128
-		scripts/config --enable CONFIG_LRNG_IRQ
-		scripts/config --enable CONFIG_LRNG_CONTINUOUS_COMPRESSION_ENABLED
-		scripts/config --disable CONFIG_LRNG_CONTINUOUS_COMPRESSION_DISABLED
-		scripts/config --enable CONFIG_LRNG_ENABLE_CONTINUOUS_COMPRESSION
-		scripts/config --enable CONFIG_LRNG_SWITCHABLE_CONTINUOUS_COMPRESSION
+		scripts/config --enable CONFIG_LRNG_SHA256
+		scripts/config --enable CONFIG_LRNG_COMMON_DEV_IF
+		scripts/config --enable CONFIG_LRNG_DRNG_ATOMIC
+		scripts/config --enable CONFIG_LRNG_SYSCTL
+		scripts/config --enable CONFIG_LRNG_RANDOM_IF
+		scripts/config --module CONFIG_LRNG_KCAPI_IF
+		scripts/config --module CONFIG_LRNG_HWRAND_IF
+		scripts/config --enable CONFIG_LRNG_DEV_IF
+		scripts/config --enable CONFIG_LRNG_RUNTIME_ES_CONFIG
+		scripts/config --enable CONFIG_LRNG_IRQ_DFLT_TIMER_ES
+		scripts/config --disable CONFIG_LRNG_SCHED_DFLT_TIMER_ES
+		scripts/config --enable CONFIG_LRNG_TIMER_COMMON
+		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_256
 		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_512
 		scripts/config --enable CONFIG_LRNG_COLLECTION_SIZE_1024
 		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_2048
@@ -474,74 +475,49 @@ prepare() {
 		scripts/config --enable CONFIG_LRNG_HEALTH_TESTS
 		scripts/config --set-val CONFIG_LRNG_RCT_CUTOFF 31
 		scripts/config --set-val CONFIG_LRNG_APT_CUTOFF 325
-		scripts/config --set-val CONFIG_LRNG_IRQ_ENTROPY_RATE 256
-		scripts/config --enable CONFIG_LRNG_JENT
-		scripts/config --set-val CONFIG_LRNG_JENT_ENTROPY_RATE 16
-		scripts/config --enable CONFIG_LRNG_CPU
-		scripts/config --set-val CONFIG_LRNG_CPU_ENTROPY_RATE 8
-		scripts/config --enable CONFIG_LRNG_DRNG_SWITCH
-		scripts/config --enable CONFIG_LRNG_KCAPI_HASH
-		scripts/config --module CONFIG_LRNG_DRBG
-		scripts/config --module CONFIG_LRNG_KCAPI
-		scripts/config --enable CONFIG_LRNG_TESTING_MENU
-		scripts/config --disable CONFIG_LRNG_RAW_HIRES_ENTROPY
-		scripts/config --disable CONFIG_LRNG_RAW_JIFFIES_ENTROPY
-		scripts/config --disable CONFIG_LRNG_RAW_IRQ_ENTROPY
-		scripts/config --disable CONFIG_LRNG_RAW_IRQFLAGS_ENTROPY
-		scripts/config --disable CONFIG_LRNG_RAW_RETIP_ENTROPY
-		scripts/config --disable CONFIG_LRNG_RAW_REGS_ENTROPY
-		scripts/config --disable CONFIG_LRNG_RAW_ARRAY
-		scripts/config --disable CONFIG_LRNG_IRQ_PERF
-		scripts/config --disable CONFIG_LRNG_ACVT_HASH
-		scripts/config --enable CONFIG_LRNG_RUNTIME_ES_CONFIG
-		scripts/config --disable CONFIG_LRNG_RUNTIME_MAX_WO_RESEED_CONFIG
-		scripts/config --disable CONFIG_LRNG_TEST_CPU_ES_COMPRESSION
-		scripts/config --enable CONFIG_LRNG_SELFTEST
-		scripts/config --disable CONFIG_LRNG_SELFTEST_PANIC
-	elif [  "$_lrng_config" = "xanmod" ]; then
-		echo "Enabling Linux Random Number Generator with xanmod config..."
-		scripts/config --disable CONFIG_RANDOM_DEFAULT_IMPL
-		scripts/config --enable CONFIG_LRNG
-		scripts/config --disable CONFIG_LRNG_OVERSAMPLE_ENTROPY_SOURCES
-		scripts/config --set-val CONFIG_CONFIG_LRNG_OVERSAMPLE_ES_BITS 0
-		scripts/config --set-val CONFIG_LRNG_SEED_BUFFER_INIT_ADD_BITS 0
 		scripts/config --enable CONFIG_LRNG_IRQ
 		scripts/config --enable CONFIG_LRNG_CONTINUOUS_COMPRESSION_ENABLED
 		scripts/config --disable CONFIG_LRNG_CONTINUOUS_COMPRESSION_DISABLED
 		scripts/config --enable CONFIG_LRNG_ENABLE_CONTINUOUS_COMPRESSION
-		scripts/config --disable CONFIG_LRNG_SWITCHABLE_CONTINUOUS_COMPRESSION
-		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_32
-		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_256
-		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_512
-		scripts/config --enable CONFIG_LRNG_COLLECTION_SIZE_1024
-		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_2048
-		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_4096
-		scripts/config --disable CONFIG_LRNG_COLLECTION_SIZE_8192
-		scripts/config --set-val CONFIG_LRNG_COLLECTION_SIZE 1024
-		scripts/config --disable CONFIG_LRNG_HEALTH_TESTS
-		scripts/config --set-val CONFIG_LRNG_RCT_CUTOFF 31
-		scripts/config --set-val CONFIG_LRNG_APT_CUTOFF 325
+		scripts/config --enable CONFIG_LRNG_SWITCHABLE_CONTINUOUS_COMPRESSION
 		scripts/config --set-val CONFIG_LRNG_IRQ_ENTROPY_RATE 256
 		scripts/config --enable CONFIG_LRNG_JENT
 		scripts/config --set-val CONFIG_LRNG_JENT_ENTROPY_RATE 16
 		scripts/config --enable CONFIG_LRNG_CPU
+		scripts/config --set-val CONFIG_LRNG_CPU_FULL_ENT_MULTIPLIER 1
 		scripts/config --set-val CONFIG_LRNG_CPU_ENTROPY_RATE 8
-		scripts/config --disable CONFIG_LRNG_DRNG_SWITCH
-		scripts/config --disable CONFIG_LRNG_DRBG
-		scripts/config --disable CONFIG_LRNG_TESTING_MENU
-		scripts/config --disable CONFIG_LRNG_SELFTEST
-	elif [ "$_lrng_config" = "none" ]; then
-		echo "Disabling Linux Random Number Generator..."
-		scripts/config --enable CONFIG_RANDOM_DEFAULT_IMPL
-		scripts/config --disable CONFIG_LRNG
-	else
-		if [ -n "$_lrng_config" ]; then
-			error "The value $_lrng_config is invalid. Choose the correct one again."
-		else
-			error "The value is empty. Choose the correct one again."
-		fi
-		error "Enabling Linux Random Number Generator failed!"
-		exit
+		scripts/config --enable CONFIG_LRNG_SCHED
+		scripts/config --set-val CONFIG_LRNG_SCHED_ENTROPY_RATE 4294967295
+		scripts/config --enable CONFIG_LRNG_DRNG_CHACHA20
+		scripts/config --module CONFIG_LRNG_DRBG
+		scripts/config --module CONFIG_LRNG_DRNG_KCAPI
+		scripts/config --enable CONFIG_LRNG_SWITCH
+		scripts/config --enable CONFIG_LRNG_SWITCH_HASH
+		scripts/config --module CONFIG_LRNG_HASH_KCAPI
+		scripts/config --enable CONFIG_LRNG_SWITCH_DRNG
+		scripts/config --module CONFIG_LRNG_SWITCH_DRBG
+		scripts/config --module CONFIG_LRNG_SWITCH_DRNG_KCAPI
+		scripts/config --enable CONFIG_LRNG_DFLT_DRNG_CHACHA20
+		scripts/config --disable CONFIG_LRNG_DFLT_DRNG_DRBG
+		scripts/config --disable CONFIG_LRNG_DFLT_DRNG_KCAPI
+		scripts/config --enable CONFIG_LRNG_TESTING_MENU
+		scripts/config --disable CONFIG_LRNG_RAW_HIRES_ENTROPY
+		scripts/config --disable CONFIG_LRNG_RAW_JIFFIES_ENTROPY
+		scripts/config --disable CONFIG_LRNG_RAW_IRQ_ENTROPY
+		scripts/config --disable CONFIG_LRNG_RAW_RETIP_ENTROPY
+		scripts/config --disable CONFIG_LRNG_RAW_REGS_ENTROPY
+		scripts/config --disable CONFIG_LRNG_RAW_ARRAY
+		scripts/config --disable CONFIG_LRNG_IRQ_PERF
+		scripts/config --disable CONFIG_LRNG_RAW_SCHED_HIRES_ENTROPY
+		scripts/config --disable CONFIG_LRNG_RAW_SCHED_PID_ENTROPY
+		scripts/config --disable CONFIG_LRNG_RAW_SCHED_START_TIME_ENTROPY
+		scripts/config --disable CONFIG_LRNG_RAW_SCHED_NVCSW_ENTROPY
+		scripts/config --disable CONFIG_LRNG_SCHED_PERF
+		scripts/config --disable CONFIG_LRNG_ACVT_HASH
+		scripts/config --disable CONFIG_LRNG_RUNTIME_MAX_WO_RESEED_CONFIG
+		scripts/config --disable CONFIG_LRNG_TEST_CPU_ES_COMPRESSION
+		scripts/config --enable CONFIG_LRNG_SELFTEST
+		scripts/config --disable CONFIG_LRNG_SELFTEST_PANIC
 	fi
 
     ### Optionally disable NUMA for 64-bit kernels only
@@ -757,9 +733,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '5a99e46caf373fe597d9becf9504e8cbed9b008b2018445e01a7da43c1bc5915151ad7979e2a63b481c2274eaa4fbbe5940596d7ce6e08f6f98ae7354f9875db'
+            'b37abbfa440c943f5335aec7ac64f243b9a38fa3f36f79a2e440a9c09fa13dbd5ceca0ae12d297d7f8366d9c8eccdad518ad4cdad2156e53ed11bb3119de54dd'
             'SKIP'
-            '117aab6c3dc1a8da21301eccd36885be9e8a661189db3bdb7ffab790ec5fa451467083e766d07b665b6329174cd5f25940df0bccb7e24abdb2b9dd6e596a05c2')
+            '369db5f4fd0e2442e74ca82d3ee52b93bcebc4318ffcf1429a202a93d6b822b6211faeaeac3b158141e6ed2f90197c2a43c60047f3ccbe8da5e0730af6394568')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
