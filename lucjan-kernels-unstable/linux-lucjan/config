@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/x86 5.18.3.ll49 Kernel Configuration
+# Linux/x86 5.18.3.ll50 Kernel Configuration
 #
 CONFIG_CC_VERSION_TEXT="gcc (GCC) 12.1.0"
 CONFIG_CC_IS_GCC=y
@@ -1162,7 +1162,7 @@ CONFIG_DAMON_PADDR=y
 CONFIG_DAMON_SYSFS=y
 CONFIG_DAMON_DBGFS=y
 CONFIG_DAMON_RECLAIM=y
-# CONFIG_DAMON_LRU_SORT is not set
+CONFIG_DAMON_LRU_SORT=y
 # end of Data Access Monitoring
 
 CONFIG_ARCH_SUPPORTS_SPECULATIVE_PAGE_FAULT=y
