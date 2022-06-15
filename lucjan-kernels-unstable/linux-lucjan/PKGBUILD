@@ -138,7 +138,7 @@ _minor=4
 _minorc=$((_minor+1))
 _rcver=rc1
 _patches=${_major}-dev
-pkgver=5.18.5.ll55
+pkgver=5.18.5.ll56
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
@@ -198,7 +198,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll55'
+ _lucjanrev='ll56'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -206,7 +206,7 @@ elif [ "$_linux_lucjan" = "pending" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/pending"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/pending"
  _lucjanname='lucjan'
- _lucjanrev='ll55'
+ _lucjanrev='ll56'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "testing" ]; then
@@ -757,9 +757,9 @@ sha512sums=('a8067e47195ce5ae6c8818989302ba9c01768190f1908541b4fa9230e23eb33a76f
             'SKIP'
             '83066a9f27eec716189e3d3071d366bd612e85d32aa4703a98bd198c4059059bae1098aa4f931fc072452fadf196a20c1546bcfdbcbbdf5d42fde7d654c97d98'
             'SKIP'
-            '84fdded514f4f9eca7ea1f08a895b9b304882b5e50b86f7e2ae03a5c7f40b40240b3b44d9cf14d5d3ae5ce68a94811998f5380088f7fb4146a821ab633f3dfac'
+            'd5259b3c9afaaddf64015af55435c1dc6414130fc3806668a7273f38b9cf14bf8fe4a20014a146e865ad5d6eac819b5fc80301847c69e93bef5f1f59464678cf'
             'SKIP'
-            '0ea0d3f51b974d9f693139e1db31a73a4e689d75e5981849fd8fbbda678037a9c1694b05b0c99b9fddd08e566f86563161d57ed47ae2c28908af49ff6e2b8f8f')
+            'e4cb7a9b1760abfbc3190d457e1450dbc1462b3080470d32740a0662354d1134c83dcdaea6b72cbe7cecf5f837d0cc0215542eea1116defc2de8fc616e119d61')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
