@@ -127,23 +127,23 @@ _ll_rev='stable'
 # 'pending' - resync stable releases (active only temporarily)
 # 'testing' - rc releases (active only temporarily)
 # 'trunk' - pre-rc releases (active only temporarily)
-_linux_lucjan='current'
+_linux_lucjan='testing'
 
 ### Do not edit below this line unless you know what you're doing
 
 pkgbase=linux-lucjan
 # pkgname=('linux-lucjan-kernel' 'linux-lucjan-headers')
 _major=5.18
-_minor=4
+_minor=5
 _minorc=$((_minor+1))
 _rcver=rc1
 _patches=${_major}-dev
-pkgver=5.18.5.ll70
+pkgver=5.18.6.ll71
 _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.1
+pkgrel=0
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -214,7 +214,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll54'
+ _lucjanrev='ll71'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -753,13 +753,13 @@ for _p in "${pkgname[@]}"; do
   }"
 done
 
-sha512sums=('a8067e47195ce5ae6c8818989302ba9c01768190f1908541b4fa9230e23eb33a76f99ad6dbc36484595522179b2b5116bffe9a31b8731bca5d07b02ac546ac42'
+sha512sums=('1872e2cf8cdd6e0033ce69f26f25526a30c237d220c02b20829fca31d6068fb816de2f2e5fd41f6807648cef8f28ddda392b199c7b1c3b48b2460c840fa1e150'
             'SKIP'
-            '83066a9f27eec716189e3d3071d366bd612e85d32aa4703a98bd198c4059059bae1098aa4f931fc072452fadf196a20c1546bcfdbcbbdf5d42fde7d654c97d98'
+            'cb46ac8bedfbe30d40bc478803b28bde2b7746ae749f84b51aedf90a5b6e7859e87c0a2aa99ba56a9c2a7663823140c731d12c873522a6b95674f8879aa07991'
             'SKIP'
-            '8c07c061bc393cbe26798b529c8195488e741cb6bb1ea10a63a6d6602a42e97f6cad54247a069d11cf3e3460cca92ed7756a3252ef0669db8bae2f48008a15de'
+            '49150d3e515b9c319db9fa221c5fcecbb85936581757419cf5b37b18fa9811b5b5a759bc903cf3ac6ce1b4899ae0b0920fc592e98f72b95d376b15a2c001d6ab'
             'SKIP'
-            '62528abbfa3768e82b974ec98905ea468d5000226595d8c417c8d1bc720d1b2ebc5ae16c55d7cb58ce1234a2592d1db3b3acfb1bbc5dd52cc3f67477f921b978')
+            'c68de90cf76a69def64441a523998e8b896c984eec2e72dee5bf3ce001438d5fdc48b475ab571d3beffa15ba22a031aee55239a9e22333b7c191fffc2bdced23')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
