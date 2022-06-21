@@ -63,10 +63,9 @@ _mq_deadline_disable=y
 _kyber_disable=y
 
 ### Selecting the CPU scheduler
-# ATTENTION - one of four predefined values should be selected!
+# ATTENTION - one of three predefined values should be selected!
 # 'bmq' - select 'BitMap Queue CPU scheduler'
 # 'pds' - select 'Priority and Deadline based Skip list multiple queue CPU scheduler'
-# 'cacule' - select 'CacULE scheduler'
 # 'none' - select 'Completely Fair Scheduler'
 _cpusched='pds'
 
@@ -137,7 +136,7 @@ _pkgbase=linux-lucjan
 _major=5.18
 _patches=${_major}-dev
 _srcname=linux
-pkgver=5.18.5.r35436.gea0b109ca823.ll76
+pkgver=5.18.5.r35436.gea0b109ca823.ll77
 pkgrel=1
 pkgdesc='Linux LL'
 arch=('x86_64')
@@ -184,7 +183,7 @@ if [ "$_linux_lucjan" = "current" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/current"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/current"
  _lucjanname='lucjan'
- _lucjanrev='ll76'
+ _lucjanrev='ll77'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}.patch"
 
 elif [ "$_linux_lucjan" = "pending" ]; then
@@ -200,7 +199,7 @@ elif [ "$_linux_lucjan" = "testing" ]; then
 # _lucjanpath="https://raw.githubusercontent.com/sirlucjan/${_pkgbase}/master/testing"
  _lucjanpath="https://gitlab.com/sirlucjan/${_pkgbase}/raw/master/testing"
  _lucjanname='lucjan'
- _lucjanrev='ll77'
+ _lucjanrev='ll78'
  _lucjanrc='rc1'
  _lucjanpatch="${_major}-${_lucjanname}-${_lucjanrev}-${_lucjanrc}.patch"
 
@@ -331,12 +330,6 @@ prepare() {
 		echo "Selecting PDS CPU scheduler..."
 		scripts/config --disable CONFIG_SCHED_BMQ
 		scripts/config --enable CONFIG_SCHED_PDS
-	elif [ "$_cpusched" = "cacule" ]; then
-		echo "Selecting CacULE scheduler..."
-		scripts/config --disable CONFIG_SCHED_ALT
-		scripts/config --enable CONFIG_CACULE_SCHED
-		scripts/config --enable CONFIG_CACULE_RDB
-		scripts/config --set-val CONFIG_RDB_INTERVAL 19
 	elif [ "$_cpusched" = "none" ]; then
 		echo "Selecting Completely Fair Scheduler..."
 		scripts/config --disable CONFIG_SCHED_ALT
@@ -733,9 +726,9 @@ for _p in "${pkgname[@]}"; do
 done
 
 sha512sums=('SKIP'
-            '698a1b14a19b4ad9fb9aaa28920fdffbf052de4874a4384446cc814d5e581d6b80946991c50986b935ce8fd4e759045814fa4de1ef52f9fbcc462ff0bf27e9da'
+            '946a5687cb7694b2666bf9a324b8dbf74d157f1dececccb3827153e6f8dac1f8d4f007b2fa113e1442fd8824d2a797678e44fd47a426e87427da1854d8fcd760'
             'SKIP'
-            '62528abbfa3768e82b974ec98905ea468d5000226595d8c417c8d1bc720d1b2ebc5ae16c55d7cb58ce1234a2592d1db3b3acfb1bbc5dd52cc3f67477f921b978')
+            '36cb35a3197eb18cbdb972a17a04af9dc6aef85ab545098e66e642e414347de845a99b59c21ae5a78bd03966c828216a841d1a258cc28e6409db95ca32a666e1')
 
 validpgpkeys=(
               '399521CE9D6D65B35EEF0F8C79AFA05ABDB26C5A' # Piotr Gorski
