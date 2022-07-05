@@ -1,0 +1,36 @@
+From 81ad1a5409cfec4f9a28e8f1287750d9718e6186 Mon Sep 17 00:00:00 2001
+From: Piotr Gorski <lucjan.lucjanov@gmail.com>
+Date: Tue, 5 Jul 2022 08:56:11 +0200
+Subject: [PATCH 25/27] Fix the warning about missing modules.builtin.modinfo
+
+> depmod: WARNING: could not open modules.builtin.modinfo at /tmp/mkinitcpio.EftMSK/root/lib/modules/5.15.52-1-lts: No such file or directory
+
+kmod wants modules.builtin.modinfo since v30 [1].
+
+Also adds modules.order as suggested by heftig. That file is used (if
+exists) since the first commit of depmod.
+
+[1] https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git/commit/?id=0246e06340df292b5dda4bc00e24cc9ae894e881
+
+Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
+---
+ functions | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/functions b/functions
+index f6f67ee..2d34909 100644
+--- a/functions
++++ b/functions
+@@ -897,8 +897,7 @@ install_modules() {
+     (( ${#zst_comp[*]} )) && zstd -d --rm -q "${zst_comp[@]}"
+ 
+     msg "Generating module dependencies"
+-    install -m644 -t "$moduledest" "$_d_kmoduledir"/modules.builtin
+-    install -m644 -t "$moduledest" "$_d_kmoduledir"/modules.order
++    install -m644 -t "$moduledest" "$_d_kmoduledir"/modules.{builtin,builtin.modinfo,order}
+     depmod -b "$BUILDROOT" "$KERNELVERSION"
+ 
+     # remove all non-binary module.* files (except devname for on-demand module loading)
+-- 
+2.37.0.rc0.15.g3b9a5a33c2
+

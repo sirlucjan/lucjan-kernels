@@ -1,7 +1,7 @@
-From 05ac6adc8cad78fa75873629fa61f74eeef33572 Mon Sep 17 00:00:00 2001
+From e27dc45a097458a4daf2bd8878e7529c66fb0a5f Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Tue, 12 Apr 2022 16:31:31 +0200
-Subject: [PATCH 22/24] Revert "presets: when using _efi_image, make _image
+Subject: [PATCH 22/27] Revert "presets: when using _efi_image, make _image
  optional"
 
 This reverts commit 0a6c5f474279ee76e4baa0fb13b3cad3b0acebcd.
@@ -49,5 +49,5 @@ index f923624..87a5f0f 100755
          if [[ ${!preset_microcode:-$ALL_microcode} ]]; then
              for mc in "${!preset_microcode:-${ALL_microcode[@]}}"; do
 -- 
-2.36.0.rc1
+2.37.0.rc0.15.g3b9a5a33c2
 

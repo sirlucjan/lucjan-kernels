@@ -1,0 +1,30 @@
+From 187bce0838c77c65462d1a56a7c11bfafd0a091e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?=D0=A1=D1=82=D1=80=D0=B0=D1=85=D0=B8=D1=9A=D0=B0=20=D0=A0?=
+ =?UTF-8?q?=D0=B0=D0=B4=D0=B8=D1=9B?= <contact@strahinja.org>
+Date: Fri, 22 Apr 2022 18:36:33 +0200
+Subject: [PATCH 26/27] Expand @() as it fails when extglob is not set
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Страхиња Радић <contact@strahinja.org>
+---
+ functions | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/functions b/functions
+index 2d34909..09f7ca6 100644
+--- a/functions
++++ b/functions
+@@ -698,7 +698,7 @@ add_udev_rule() {
+         for pair in "${rule[@]}"; do
+             IFS=' =' read -r key value <<< "$pair"
+             case $key in
+-                RUN@({program}|+)|IMPORT{program}|ENV{REMOVE_CMD})
++                RUN{program}|RUN+|IMPORT{program}|ENV{REMOVE_CMD})
+                     # strip quotes
+                     binary=${value//[\"\']/}
+                     # just take the first word as the binary name
+-- 
+2.37.0.rc0.15.g3b9a5a33c2
+

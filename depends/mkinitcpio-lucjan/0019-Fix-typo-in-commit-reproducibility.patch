@@ -1,7 +1,7 @@
-From a8ca342faf13824629011f25f32d8f350faf903e Mon Sep 17 00:00:00 2001
+From b589c2d6a8a3acabb12297504f3f0b76cf50a38f Mon Sep 17 00:00:00 2001
 From: Tobias Powalowski <tobias.powalowski@googlemail.com>
 Date: Sun, 13 Mar 2022 20:46:26 +0100
-Subject: [PATCH 19/24] Fix typo in commit reproducibility
+Subject: [PATCH 19/27] Fix typo in commit reproducibility
 
 ---
  mkinitcpio | 2 +-
@@ -21,5 +21,5 @@ index ee01f0b..8a512ec 100755
  
  # Set umask to create initramfs images and EFI images as 600
 -- 
-2.36.0.rc1
+2.37.0.rc0.15.g3b9a5a33c2
 

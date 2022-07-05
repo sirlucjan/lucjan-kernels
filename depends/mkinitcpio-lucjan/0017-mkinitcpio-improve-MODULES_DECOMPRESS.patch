@@ -1,7 +1,7 @@
-From f2ee1702560e9dcf142c887c3ec644ee98c71cc3 Mon Sep 17 00:00:00 2001
+From b6829b43e47cbd528358dbcb63509712e0840b91 Mon Sep 17 00:00:00 2001
 From: Piotr Gorski <lucjan.lucjanov@gmail.com>
 Date: Mon, 14 Mar 2022 12:11:36 +0100
-Subject: [PATCH 17/24] mkinitcpio: improve MODULES_DECOMPRESS
+Subject: [PATCH 17/27] mkinitcpio: improve MODULES_DECOMPRESS
 
 Signed-off-by: Piotr Gorski <lucjan.lucjanov@gmail.com>
 ---
@@ -22,5 +22,5 @@ index ba9a911..15b30fc 100755
  _d_workdir=$(initialize_buildroot "$KERNELVERSION" "$_opttargetdir") || cleanup 1
  BUILDROOT=${_opttargetdir:-$_d_workdir/root}
 -- 
-2.36.0.rc1
+2.37.0.rc0.15.g3b9a5a33c2
 

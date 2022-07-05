@@ -1,7 +1,7 @@
-From 3258ca1c632b00b174221b573e24048f0619223d Mon Sep 17 00:00:00 2001
+From 6d6d52f57a1e58f6c3e23624a3c7d56e22ca3063 Mon Sep 17 00:00:00 2001
 From: Tobias Powalowski <tpowa@archlinux.org>
 Date: Fri, 11 Mar 2022 15:47:59 +0100
-Subject: [PATCH 12/24] add real symlink support
+Subject: [PATCH 12/27] add real symlink support
 
 ---
  functions | 10 +++++++++-
@@ -29,5 +29,5 @@ index 36c773a..88bd563 100644
  
  add_runscript() {
 -- 
-2.36.0.rc1
+2.37.0.rc0.15.g3b9a5a33c2
 

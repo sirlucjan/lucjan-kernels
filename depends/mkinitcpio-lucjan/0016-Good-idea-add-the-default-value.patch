@@ -1,7 +1,7 @@
-From 5e9a66b2d84fae08ba5ac649cba5b04ff3e49f64 Mon Sep 17 00:00:00 2001
+From 8d3b83888c35bc42b32d1b4830f2f3c113c7e2a2 Mon Sep 17 00:00:00 2001
 From: Tobias Powalowski <tobias.powalowski@googlemail.com>
 Date: Sun, 13 Mar 2022 20:49:15 +0100
-Subject: [PATCH 16/24] Good idea, add the default value
+Subject: [PATCH 16/27] Good idea, add the default value
 
 Co-authored-by: nl6720 <nl6720@gmail.com>
 ---
@@ -21,5 +21,5 @@ index 19ec038..8acf414 100644
 +# during early userspace. Switch (yes/no).
 +#MODULES_DECOMPRESS="yes"
 -- 
-2.36.0.rc1
+2.37.0.rc0.15.g3b9a5a33c2
 

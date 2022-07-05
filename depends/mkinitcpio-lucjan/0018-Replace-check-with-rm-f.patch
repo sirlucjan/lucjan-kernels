@@ -1,7 +1,7 @@
-From 00ef73d347e271d7fbbfddbe6bf120599beb66bb Mon Sep 17 00:00:00 2001
+From 8842d8a055682eef8e710ba8fb792cc86127c863 Mon Sep 17 00:00:00 2001
 From: Tobias Powalowski <tobias.powalowski@googlemail.com>
 Date: Sun, 13 Mar 2022 20:37:55 +0100
-Subject: [PATCH 18/24] Replace check with rm -f
+Subject: [PATCH 18/27] Replace check with rm -f
 
 Co-authored-by: nl6720 <nl6720@gmail.com>
 ---
@@ -22,5 +22,5 @@ index 15b30fc..ee01f0b 100755
  # Set umask to create initramfs images and EFI images as 600
  umask 077
 -- 
-2.36.0.rc1
+2.37.0.rc0.15.g3b9a5a33c2
 

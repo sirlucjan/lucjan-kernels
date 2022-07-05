@@ -1,7 +1,7 @@
-From 87191ec5ea8f39b567a734b2137c1e553645d542 Mon Sep 17 00:00:00 2001
+From 0cbf3d5f008bb8ee052fd9bc524c20728aa261ca Mon Sep 17 00:00:00 2001
 From: Qu Wenruo <wqu@suse.com>
 Date: Thu, 9 Dec 2021 17:42:27 +0800
-Subject: [PATCH 02/24] functions: allow tailing `+` for custom kernel build
+Subject: [PATCH 02/27] functions: allow tailing `+` for custom kernel build
  upon git trees
 
 For kernels build upon git trees, any non-tag commit will append a '+'
@@ -29,5 +29,5 @@ index 48cfd7a..5b18b9c 100644
      printf '%s' "$kver"
  }
 -- 
-2.36.0.rc1
+2.37.0.rc0.15.g3b9a5a33c2
 
