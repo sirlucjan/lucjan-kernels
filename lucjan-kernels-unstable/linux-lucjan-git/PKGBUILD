@@ -114,6 +114,9 @@ _zstd_level_value='ultra'
 # Enable zram/zswap ZSTD compression
 _zstd_swap_compression=y
 
+# Disable DEBUG to lower the size of the kernel
+_disable_debug=y
+
 ### Download ll-reverts patchset
 # ATTENTION - one of two predefined values should be selected!
 # 'stable' - stable releases (recommended)
@@ -137,13 +140,16 @@ _major=5.18
 _patches=${_major}-dev
 _srcname=linux-stable-rc
 pkgver=5.18.9.r103.g7622cfa48fbd.ll112
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
 license=('GPL2')
 options=('!strip')
-makedepends=('bc' 'libelf' 'pahole' 'cpio' 'perl' 'tar' 'xz' 'git')
+makedepends=('bc' 'libelf' 'cpio' 'perl' 'tar' 'xz' 'git')
+if [ -z "$_disable_debug" ]; then
+    makedepends+=('pahole')
+fi
 
 ### LL reverts
 # Some patches for BFQ/block-stable conflict with
@@ -557,7 +563,26 @@ prepare() {
 		echo "Enabling zram entropy calculation..."
 		scripts/config --enable ZRAM_ENTROPY
 		scripts/config --set-val ZRAM_ENTROPY_THRESHOLD 100000
-        fi
+	fi
+
+    ### Disable DEBUG
+	if [ -n "$_disable_debug" ]; then
+		echo "Disabling DEBUG..."
+		scripts/config --disable DEBUG_INFO
+		scripts/config --disable DEBUG_INFO_BTF
+		scripts/config --disable DEBUG_INFO_DWARF4
+		scripts/config --disable DEBUG_INFO_DWARF5
+		scripts/config --disable PAHOLE_HAS_SPLIT_BTF
+		scripts/config --disable DEBUG_INFO_BTF_MODULES
+		scripts/config --disable SLUB_DEBUG
+		scripts/config --disable PM_DEBUG
+		scripts/config --disable PM_ADVANCED_DEBUG
+		scripts/config --disable PM_SLEEP_DEBUG
+		scripts/config --disable ACPI_DEBUG
+		scripts/config --disable SCHED_DEBUG
+		scripts/config --disable LATENCYTOP
+		scripts/config --disable DEBUG_PREEMPT
+	fi
 
     ### Optionally load needed modules for the make localmodconfig
         # See https://aur.archlinux.org/packages/modprobed-db
@@ -653,7 +678,9 @@ _package-headers() {
   install -Dt "$builddir/tools/objtool" tools/objtool/objtool
 
   # required when DEBUG_INFO_BTF_MODULES is enabled
-  install -Dt "$builddir/tools/bpf/resolve_btfids" tools/bpf/resolve_btfids/resolve_btfids
+  if [ -f tools/bpf/resolve_btfids/resolve_btfids ]; then
+        install -Dt "$builddir/tools/bpf/resolve_btfids" tools/bpf/resolve_btfids/resolve_btfids
+  fi
 
   echo "Installing headers..."
   cp -t "$builddir" -a include
