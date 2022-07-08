@@ -3,8 +3,8 @@
 
 pkgname=uksmd-git
 _pkgname=uksmd
-pkgver=0.0.0.r32.g8368d7e
-pkgrel=2
+pkgver=0.0.0.r34.g4293462
+pkgrel=1
 epoch=1
 pkgdesc="Userspace KSM helper daemon"
 url="https://codeberg.org/pf-kernel/uksmd"
@@ -14,10 +14,8 @@ depends=('UKSMD-BUILTIN' 'systemd' 'procps-ng' 'libcap-ng')
 makedepends=('meson' 'git')
 conflicts=('uksmd')
 provides=("uksmd=${pkgver}")
-source=('git+https://codeberg.org/pf-kernel/uksmd'
-        '0001-Add-new-URL.patch')
-sha256sums=('SKIP'
-            '1e7d9b0238764f0433a212e3e5117b4d7bc05c97b360d8d28008f00ce4603484')
+source=('git+https://codeberg.org/pf-kernel/uksmd')
+sha256sums=('SKIP')
 
 pkgver() {
   cd $_pkgname
