@@ -26,7 +26,7 @@
 
 * [random fixes from CachyOS](https://github.com/CachyOS/linux-cachyos) - specific patches authored by CachyOS Team
 
-* [UKSMD](https://gitlab.com/post-factum/uksmd) - Userspace KSM helper daemon authored by Oleksandr Natalenko
+* [UKSMD](https://codeberg.org/pf-kernel/uksmd) - Userspace KSM helper daemon authored by Oleksandr Natalenko
 
 * [LL-patches](https://github.com/sirlucjan/kernel-patches/tree/master/5.18/ll-patches) / [LL-patches](https://gitlab.com/sirlucjan/kernel-patches/tree/master/5.18/ll-patches) - specific patches authored by Piotr Gorski
 
