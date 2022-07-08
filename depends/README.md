@@ -61,4 +61,4 @@ _zstd_level_value=''
 
 ###### Upstream info:
 
-https://gitlab.com/post-factum/uksmd
+https://codeberg.org/pf-kernel/uksmd
