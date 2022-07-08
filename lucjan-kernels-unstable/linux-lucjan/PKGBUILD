@@ -145,7 +145,7 @@ _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0.2
+pkgrel=0.3
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -582,27 +582,29 @@ prepare() {
 		scripts/config --enable CONFIG_ZSWAP_COMPRESSOR_DEFAULT_ZSTD
 		scripts/config --set-str CONFIG_ZSWAP_COMPRESSOR_DEFAULT zstd
 		echo "Enabling zram entropy calculation..."
-		scripts/config --enable ZRAM_ENTROPY
-		scripts/config --set-val ZRAM_ENTROPY_THRESHOLD 100000
+		scripts/config --enable CONFIG_ZRAM_ENTROPY
+		scripts/config --set-val CONFIG_ZRAM_ENTROPY_THRESHOLD 100000
 	fi
 
     ### Disable DEBUG
 	if [ -n "$_disable_debug" ]; then
 		echo "Disabling DEBUG..."
-		scripts/config --disable DEBUG_INFO
-		scripts/config --disable DEBUG_INFO_BTF
-		scripts/config --disable DEBUG_INFO_DWARF4
-		scripts/config --disable DEBUG_INFO_DWARF5
-		scripts/config --disable PAHOLE_HAS_SPLIT_BTF
-		scripts/config --disable DEBUG_INFO_BTF_MODULES
-		scripts/config --disable SLUB_DEBUG
-		scripts/config --disable PM_DEBUG
-		scripts/config --disable PM_ADVANCED_DEBUG
-		scripts/config --disable PM_SLEEP_DEBUG
-		scripts/config --disable ACPI_DEBUG
-		scripts/config --disable SCHED_DEBUG
-		scripts/config --disable LATENCYTOP
-		scripts/config --disable DEBUG_PREEMPT
+		scripts/config --disable CONFIG_DEBUG_INFO
+		scripts/config --disable CONFIG_DEBUG_INFO_BTF
+		scripts/config --disable CONFIG_DEBUG_INFO_DWARF5
+		scripts/config --disable CONFIG_PAHOLE_HAS_SPLIT_BTF
+		scripts/config --disable CONFIG_DEBUG_INFO_BTF_MODULES
+		scripts/config --disable CONFIG_CGROUP_BPF
+		scripts/config --disable CONFIG_BPF_LSM
+		scripts/config --disable CONFIG_BPF_PRELOAD
+		scripts/config --disable CONFIG_BPF_LIRC_MODE2
+		scripts/config --disable CONFIG_BPF_KPROBE_OVERRIDE
+		scripts/config --disable CONFIG_PM_DEBUG
+		scripts/config --disable CONFIG_PM_SLEEP_DEBUG
+		scripts/config --disable CONFIG_ACPI_DEBUG
+		scripts/config --disable CONFIG_SCHED_DEBUG
+		scripts/config --disable CONFIG_LATENCYTOP
+		scripts/config --disable CONFIG_DEBUG_PREEMPT
 	fi
 
     ### Optionally load needed modules for the make localmodconfig
