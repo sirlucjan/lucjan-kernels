@@ -145,7 +145,7 @@ _pkgver=${_major}.${_minorc}
 _stable=${_major}.${_minor}
 _stablerc=${_pkgver}-${_rcver}
 _srcname=linux-${_stable}
-pkgrel=0
+pkgrel=0.1
 pkgdesc='Linux LL'
 arch=('x86_64')
 url="https://gitlab.com/sirlucjan/lucjan-kernels/wikis/README"
@@ -592,8 +592,6 @@ prepare() {
 		scripts/config --disable CONFIG_DEBUG_INFO
 		scripts/config --disable CONFIG_DEBUG_INFO_BTF
 		scripts/config --disable CONFIG_DEBUG_INFO_DWARF5
-		scripts/config --disable CONFIG_PAHOLE_HAS_SPLIT_BTF
-		scripts/config --disable CONFIG_DEBUG_INFO_BTF_MODULES
 		scripts/config --disable CONFIG_CGROUP_BPF
 		scripts/config --disable CONFIG_BPF_LSM
 		scripts/config --disable CONFIG_BPF_PRELOAD
@@ -781,7 +779,7 @@ sha512sums=('a60109ba386825cba6184942281c2e055d1dd836408138e7052feb385b15be00d8e
             'SKIP'
             '2c257f9ddde868b1a77fd1c632d5f8ca03ff6cd0575573d4bdfc4611990e24c49b7561e841f07748b7b98a48c4fd75d5aed2b60b644fd9c1fba45f47f230e6dc'
             'SKIP'
-            '276f1bb6104dcb818d83bdd7386493550f4e99448430745e268c89994d7e858e5e3bd900e852186d215253e09b0d93a0006170bede501153234f2f9a8e35d371')
+            '1ce4fc4567a16a87f24f73648cb727b9d7e1e6d38dcc482ebba82bb60aa4d48d555778867600498378f80c10331606642ae2c05abc73472424f354d9e6d932bf')
 
 validpgpkeys=(
               'ABAF11C65A2970B130ABE3C479BE3E4300411886' # Linus Torvalds
