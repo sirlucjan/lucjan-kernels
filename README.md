@@ -2,6 +2,10 @@
 ###### HP 850 G3 with Sixth Gen Intel Core i3/i5/i7 optimized.
 ###### linux-lucjan varies considerably from stock kernel. 
 ***
+
+# As of July 19, 2022, the project will cease to be developed. Thank you to all users for their willingness to use the project and bug reports.
+# I encourage all users to use [CachyOS kernels](https://github.com/CachyOS/linux-cachyos), in the development of which I will take an active part from now on.
+
 ###### linux-lucjan incorporates:
 
 * [bfq improvements](https://groups.google.com/forum/#!forum/bfq-iosched) - latest fixes authored by Paolo Valente and BFQ Team
